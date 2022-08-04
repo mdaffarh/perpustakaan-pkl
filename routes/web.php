@@ -15,9 +15,9 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('login.index');
+});
 
 // Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::controller(LoginController::class)->group(function(){
