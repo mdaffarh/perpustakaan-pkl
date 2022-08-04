@@ -16,7 +16,7 @@ class LoginController extends Controller
             }
         }
 
-        return view('login.login');
+        return view('login.index');
     }
 
     public function proses(Request $request){
@@ -49,7 +49,7 @@ class LoginController extends Controller
         ])->onlyInput('username');
     }
 
-        public function logout(Request $request)
+    public function logout(Request $request)
     {
         Auth::logout();
     

@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,20 +19,22 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('login', [LoginController::class, 'index'])->name('login');
+Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::controller(LoginController::class)->group(function(){
     Route::get('login','index')->name('login');
     Route::post('login/proses', 'proses');
-    Route::get('logout', 'logout');
-    Route::get('login/dashboard', function(){
-        return view('login.dashboard');
-    });
 });
 
-Route::group(['middleware' => ['auth']],function (){
-    Route::group(['middleware' => ['CheckUserLogin:staff']], function(){
-        Route::resource('dashboard', dashboard::class);
-    });
-});
+Route::post('logout',[LoginController::class, 'logout']);
 
 
+Route::get('/dashboard', function(){
+    return view('dashboard.index');
+})->middleware('auth');
+
+
+// Route::group(['middleware' => ['auth']],function (){
+//     Route::group(['middleware' => ['CheckUserLogin:staff']], function(){
+//         Route::resource('dashboard', dashboard::class);
+//     });
+// });
