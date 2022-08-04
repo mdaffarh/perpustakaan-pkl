@@ -19,14 +19,12 @@ use App\Http\Controllers\LoginController;
 //     return view('welcome');
 // });
 
-Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+// Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::controller(LoginController::class)->group(function(){
-    Route::get('login','index')->name('login');
+    Route::get('login','index')->name('login')->middleware('guest');
     Route::post('login/proses', 'proses');
+    Route::post('logout', 'logout');
 });
-
-Route::post('logout',[LoginController::class, 'logout']);
-
 
 Route::get('/dashboard', function(){
     return view('dashboard.index');
