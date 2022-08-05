@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -26,6 +27,9 @@ class BookController extends Controller
      */
     public function create()
     {
+        return view('dashboard.books.create',[
+            'books' => Book::all()
+        ]);
     }
 
     /**
@@ -36,7 +40,26 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //isbn,title,author,publisher,cover,category,subject
+        //slug ??
+
+        $validatedData = $request->validate([
+            'isbn' => 'required|unique:tb_books',
+            'title' => 'required',
+            'author' => 'required',//
+            'publisher' => 'required',//
+            'cover' => 'image|file',
+            'category' => 'required',
+            'subject'=> 'required'//
+        ]);
+
+        $validatedData['cover'] = $request->file('cover')->store('cover-images');
+
+        Book::create($validatedData);
+
+        return redirect('/dashboard/books')->with('success','Data Buku telah ditambahkan!');
+
+
     }
 
     /**
@@ -47,7 +70,9 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('dashboard.books.show',[
+            'book' => $book
+        ]);
     }
 
     /**
@@ -58,7 +83,9 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('dashboard.books.edit',[
+            'book' => $book
+        ]);
     }
 
     /**
@@ -70,7 +97,30 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        //isbn,title,author,publisher,cover,category,subject
+        //slug ??
+        $rules = [
+            'isbn' => 'required|unique:tb_books',
+            'title' => 'required',
+            'author' => 'required',//
+            'publisher' => 'required',//
+            'cover' => 'image|file',
+            'category' => 'required',
+            'subject'=> 'required'//
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        if($request->files('cover')){
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $validatedData['cover'] = $request->file('cover')->store('cover-images');
+        }
+        
+        Book::where('id',$book->id)->update($validatedData);
+        
+        return redirect('/dashboard/books')->with('success','Data Buku telah diedit!');
     }
 
     /**
@@ -81,6 +131,10 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        if($book->oldImage){
+            Storage::delete($book->oldImage);
+        }
+        Book::destroy($book->id);
+        return redirect('dashboard/books')->with('deleted','Data Buku telah dihapus!');
     }
 }
