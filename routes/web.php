@@ -36,3 +36,5 @@ Route::get('/dashboard', function(){
 //         Route::resource('dashboard', dashboard::class);
 //     });
 // });
+
+Route::resource('/dashboard/books', BookController::class)->middleware('auth');
