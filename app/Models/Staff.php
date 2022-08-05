@@ -14,8 +14,13 @@ class Staff extends Model
         'id'
     ];
 
-    public function StaffUser()
+    public function staffUser()
     {
         return $this->hasOne(StaffUser::class);  
+    }
+
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class);
     }
 }

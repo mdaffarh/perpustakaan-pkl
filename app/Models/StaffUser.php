@@ -43,7 +43,7 @@ class StaffUser extends Authenticatable
 
     protected $with = ['staff'];
 
-    public function Staff()
+    public function staff()
     {
         return $this->belongsTo(Staff::class, 'staff_id' );
     }

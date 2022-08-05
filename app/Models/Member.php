@@ -14,9 +14,14 @@ class Member extends Model
         'id'
     ];
 
-    public function MemberUser()
+    public function memberUser()
     {
         return $this->hasOne(MemberUser::class);  
+    }
+
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class);
     }
 
 }

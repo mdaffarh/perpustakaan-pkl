@@ -43,7 +43,7 @@ class MemberUser extends Authenticatable
 
     protected $with = ['member'];
 
-    public function Member()
+    public function member()
     {
         return $this->belongsTo(Member::class, 'member_id' );
     }
