@@ -133,5 +133,9 @@
         </a>
       </li>
     </ul>
+<form method="POST" action="/logout">
+    @csrf
+    <button class="btn btn-primary" type="submit" value="Logout">Logout</button>
+</form>
   </nav>
   <!-- /.navbar -->

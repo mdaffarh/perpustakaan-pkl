@@ -39,7 +39,11 @@
             <li class="nav-header">Transaksi</li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Pendaftaran Anggota
                 </p>
@@ -47,7 +51,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Pendaftaran Staff
                 </p>
@@ -55,7 +63,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Peminjaman Buku
                 </p>
@@ -63,7 +75,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Pengembalian Buku
                 </p>
@@ -71,7 +87,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Sumbangan Buku
                 </p>
@@ -79,7 +99,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Denda
                 </p>
@@ -87,7 +111,11 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon"></i>
+=======
+                <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
                 <p>
                   Jadwal Piket Staff
                 </p>
@@ -98,7 +126,11 @@
           <li class="nav-header">Tabel</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 Sekolah  
               </p>
@@ -106,7 +138,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 Anggota
               </p>
@@ -114,7 +150,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 Staff
               </p>
@@ -122,7 +162,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 Stok
               </p>
@@ -130,7 +174,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 User Anggota
               </p>
@@ -138,7 +186,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 User Staff
               </p>
@@ -146,7 +198,11 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
+<<<<<<< HEAD
               <i class="nav-icon"></i>
+=======
+              <i class="nav-icon far fa-calendar-alt"></i>
+>>>>>>> 3a3ab52ad6b07d9a48f7ec94677fccb13eac1ef8
               <p>
                 Shift Jaga
               </p>
