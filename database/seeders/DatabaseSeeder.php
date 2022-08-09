@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Staff;
+use App\Models\School;
 use App\Models\StaffUser;
 use Illuminate\Database\Seeder;
 
@@ -56,5 +57,16 @@ class DatabaseSeeder extends Seeder
             foreach($user as $key => $value) {
                 User::create($value);
             }
+        
+             School::create([
+            'name' => 'SMK NEGERI 1 Cibinong',
+            'address' => 'Jl. Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',
+            'city' => 'Kabupaten Bogor',
+            'post_code' => '16111',
+            'email' => 'admin@smkn1cibinong.sch.id',
+            'website' => 'https://smkn1cibinong.sch.id/',
+            'fax' => '+622518665558',
+            'phone_number' => '+622518663846'
+        ]);
     }
 }
