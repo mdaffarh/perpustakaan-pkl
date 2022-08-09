@@ -39,7 +39,7 @@
             <li class="nav-header">Transaksi</li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Pendaftaran Anggota
                 </p>
@@ -47,7 +47,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Pendaftaran Staff
                 </p>
@@ -55,7 +55,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Peminjaman Buku
                 </p>
@@ -63,7 +63,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Pengembalian Buku
                 </p>
@@ -71,7 +71,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Sumbangan Buku
                 </p>
@@ -79,7 +79,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Denda
                 </p>
@@ -87,7 +87,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon far fa-calendar-alt"></i>
+                <i class="nav-icon"></i>
                 <p>
                   Jadwal Piket Staff
                 </p>
@@ -98,7 +98,7 @@
           <li class="nav-header">Tabel</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 Sekolah  
               </p>
@@ -106,7 +106,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 Anggota
               </p>
@@ -114,7 +114,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 Staff
               </p>
@@ -122,7 +122,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 Stok
               </p>
@@ -130,7 +130,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 User Anggota
               </p>
@@ -138,7 +138,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 User Staff
               </p>
@@ -146,7 +146,7 @@
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
+              <i class="nav-icon"></i>
               <p>
                 Shift Jaga
               </p>
