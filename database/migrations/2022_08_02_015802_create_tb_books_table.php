@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('cover');
             $table->string('category');//
             $table->string('subject');
-            $table->date('date added');
             $table->timestamps();
         });
     }
