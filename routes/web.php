@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\tb_schoolController;
+use App\Http\Controllers\table\tb_schoolController;
 use App\Http\Controllers\SchoolController;
 /*
 |--------------------------------------------------------------------------

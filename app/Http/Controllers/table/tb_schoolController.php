@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\table;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\School;
 
 class tb_schoolController extends Controller
 {
     public function index()
     {
-        $tb_school = DB::table('tb_school')->get();
- 
-        return view('table.tb_school', ['tb_school' => $tb_school]);
+        return view('schools.index', [
+            'schools' => School::all()
+        ]);
     }
 
     // public function show($id){
