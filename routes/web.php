@@ -3,13 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
-<<<<<<< HEAD
 use App\Http\Controllers\tb_schoolController;
-=======
 use App\Http\Controllers\SchoolController;
-
->>>>>>> 52aee58ed61a6d75d8b6a197618701f48a3f9102
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,10 +39,7 @@ Route::get('/dashboard', function(){
 // });
 Route::resource('/dashboard/books', BookController::class)->middleware('auth');
 
-<<<<<<< HEAD
-Route::resource('tb_school',tb_schoolController::class)->middleware('auth');
-=======
 Route::resource('/books', BookController::class)->middleware('auth');
-
 Route::resource('/schools', SchoolController::class)->middleware('auth');
->>>>>>> 52aee58ed61a6d75d8b6a197618701f48a3f9102
+
+Route::resource('tb_school',tb_schoolController::class)->middleware('auth');
