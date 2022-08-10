@@ -1,9 +1,9 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="/dashboard" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">Perpustakaan</span>
     </a>
 
     <!-- Sidebar -->
@@ -36,9 +36,9 @@
           <!-- Add icons to the links using the .nav-icon class
             with font-awesome or any other icon font library -->
             {{-- Transaksi --}}
-            <li class="nav-header">Transaksi</li>
             <li class="nav-item">
               <a href="#" class="nav-link">
+<<<<<<< HEAD
                 <i class="nav-icon far fa-calendar-alt"></i>
                 <p>
                   Pendaftaran Anggota
@@ -90,11 +90,62 @@
                 <i class="nav-icon far fa-calendar-alt"></i>
                 <p>
                   Jadwal Piket Staff
+=======
+                <i class="nav-icon fas fa-th"></i>
+                <p>
+                  Transaksi
+                  <i class="fas fa-angle-left right"></i>
+>>>>>>> 52aee58ed61a6d75d8b6a197618701f48a3f9102
                 </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pendaftaran Anggota</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pendaftaran Staff</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Peminjaman Buku</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pengembalian Buku</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sumbangan Buku</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Denda</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Jadwal Piket Staff</S></p>
+                  </a>
+                </li>
+              </ul>
             </li>
 
             {{-- Tabel/Master --}}
+<<<<<<< HEAD
           <li class="nav-header">Tabel</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -153,6 +204,67 @@
             </a>
           </li>
           
+=======
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Tabel
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Anggota</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Staff</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Buku</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Stok</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/schools" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sekolah</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Shift Jaga</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>User Anggota</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>User Staffs</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+>>>>>>> 52aee58ed61a6d75d8b6a197618701f48a3f9102
       </nav>
       <!-- /.sidebar-menu -->
     </div>
