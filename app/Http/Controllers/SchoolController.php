@@ -43,14 +43,14 @@ class SchoolController extends Controller
         //slug ??
 
         $validatedData = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'post_code' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+            'kode_pos' => 'required',
             'email' => 'required',
             'website' => 'required',
             'fax' => 'required',
-            'phone_number' => 'required'
+            'nomor_telepon' => 'required'
         ]);
 
         School::create($validatedData);
@@ -96,14 +96,14 @@ class SchoolController extends Controller
     {
      
         $validatedData = $request->validate([
-            'name' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'post_code' => 'required',
+            'nama' => 'required',
+            'alamat' => 'required',
+            'kota' => 'required',
+            'kode_pos' => 'required',
             'email' => 'required',
             'website' => 'required',
             'fax' => 'required',
-            'phone_number' => 'required'
+            'nomor_telepon' => 'required'
         ]);
 
         School::where('id',$school->id)->update($validatedData);

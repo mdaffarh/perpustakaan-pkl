@@ -59,14 +59,14 @@ class DatabaseSeeder extends Seeder
             }
         
              School::create([
-            'name' => 'SMK NEGERI 1 Cibinong',
-            'address' => 'Jl. Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',
-            'city' => 'Kabupaten Bogor',
-            'post_code' => '16111',
+            'nama' => 'SMK NEGERI 1 Cibinong',
+            'alamat' => 'Jl. Karadenan No.7, Karadenan, Kec. Cibinong, Kabupaten Bogor, Jawa Barat 16111',
+            'kota' => 'Kabupaten Bogor',
+            'kode_pos' => '16111',
             'email' => 'admin@smkn1cibinong.sch.id',
             'website' => 'https://smkn1cibinong.sch.id/',
             'fax' => '+622518665558',
-            'phone_number' => '+622518663846'
+            'nomor_telepon' => '+622518663846'
         ]);
     }
 }

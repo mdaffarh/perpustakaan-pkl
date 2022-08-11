@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('tb_schools', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('post_code');
+            $table->string('nama');
+            $table->string('alamat');
+            $table->string('kota');
+            $table->string('kode_pos');
             $table->string('email');
             $table->string('website');
             $table->string('fax');
-            $table->string('phone_number');
+            $table->string('nomor_telepon');
             $table->timestamps();
         });
     }

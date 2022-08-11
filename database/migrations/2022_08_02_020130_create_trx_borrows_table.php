@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId('member_id')->unique();
             $table->foreignId('book_id')->unique();
             $table->foreignId('staff_id')->unique();
-            $table->date('borrow_date');
-            $table->date('due_date');
+            $table->date('tanggal_pinjam');
+            $table->date('tanggal_tempo');
             $table->foreignId('school_id')->unique();
-            $table->text('description');
+            $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
