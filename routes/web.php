@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\table\tb_schoolController;
 use App\Http\Controllers\SchoolController;
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +36,6 @@ Route::get('/dashboard', function(){
 //         Route::resource('dashboard', dashboard::class);
 //     });
 // });
+
 Route::resource('/dashboard/books', BookController::class)->middleware('auth');
-
-Route::resource('/books', BookController::class)->middleware('auth');
-Route::resource('/schools', SchoolController::class)->middleware('auth');
-
-Route::resource('tb_school',tb_schoolController::class)->middleware('auth');
+Route::resource('/dashboard/schools', SchoolController::class)->middleware('auth');

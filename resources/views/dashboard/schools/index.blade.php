@@ -40,7 +40,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
-                  <a href="/schools/create" class="nav-link btn btn-primary"><h5>Create +</h5></a>
+                  <a href="/dashboard/schools/create" class="nav-link btn btn-primary">Create</a>
                   <thead>
                   <tr>
                     <th>Nama</th>
@@ -65,7 +65,7 @@
                         <td>{{ $school->website }}</td>
                         <td>{{ $school->fax }}</td>
                         <td>{{ $school->phone_number }}</td>
-                        <td> <a href="" class="nav-link"><button class="btn btn-warning">Update</button></a> <br><br> 
+                        <td> <a href="" class="nav-link"><button class="btn btn-warning">Update</button></a>  
                           <a href="" class="nav-link"><button class="btn btn-danger">Delete</button></a></td>
                     </tr>
                     @endforeach
@@ -88,10 +88,6 @@
   </div>
   <script>
     $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
       $('#example2').DataTable({
         "paging": true,
         "lengthChange": false,
