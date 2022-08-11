@@ -40,7 +40,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
-                  <a href="/schools/create" class="nav-link"><button class="btn btn-primary" ><h5>Create +</h5></button></a>
+                  <a href="/schools/create" class="nav-link btn btn-primary"><h5>Create +</h5></a>
                   <thead>
                   <tr>
                     <th>Nama</th>
