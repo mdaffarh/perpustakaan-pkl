@@ -125,7 +125,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/dashboard/schools" class="nav-link">
+                  <a href="/schools" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Sekolah</p>
                   </a>

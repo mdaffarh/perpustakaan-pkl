@@ -14,7 +14,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        return view('dashboard.schools.index', [
+        return view('schools.index', [
             'schools' => School::all()
         ]);
     }
@@ -26,7 +26,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        return view('dashboard.schools.create', [
+        return view('schools.create', [
             'schools' => School::all()
         ]);
     }
@@ -55,7 +55,7 @@ class SchoolController extends Controller
 
         School::create($validatedData);
 
-        return redirect('/dashboard/schools')->with('success','Data School telah ditambahkan!');
+        return redirect('/schools')->with('success','Data Sekolah telah ditambahkan!');
 
     }
 
@@ -67,7 +67,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        return view('dashboard.schools.show',[
+        return view('schools.show',[
             'school' => $school
         ]);
     }
@@ -80,7 +80,7 @@ class SchoolController extends Controller
      */
     public function edit(School $school)
     {
-        return view('dashboard.schools.edit',[
+        return view('schools.edit',[
             'school' => $school
         ]);
     }
@@ -108,7 +108,7 @@ class SchoolController extends Controller
 
         School::where('id',$school->id)->update($validatedData);
 
-        return redirect('/dashboard/schools')->with('success','Data Sekolah telah diedit!');
+        return redirect('/schools')->with('success','Data Sekolah telah diedit!');
 
     }
 
@@ -121,7 +121,7 @@ class SchoolController extends Controller
     public function destroy(School $school)
     {
         School::destroy($school->id);
-        return redirect('/dashboard/schools')->with('deleted','Data Sekolah telah dihapus!');
+        return redirect('/schools')->with('deleted','Data Sekolah telah dihapus!');
 
     }
 }
