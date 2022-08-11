@@ -40,6 +40,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
+                  <a href="/schools/create" class="nav-link"><button class="btn btn-primary" ><h5>Create +</h5></button></a>
                   <thead>
                   <tr>
                     <th>Nama</th>
@@ -49,6 +50,7 @@
                     <th>Website</th>
                     <th>Fax</th>
                     <th>Phone Number</th>
+                    <th>Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -63,6 +65,8 @@
                         <td>{{ $school->website }}</td>
                         <td>{{ $school->fax }}</td>
                         <td>{{ $school->phone_number }}</td>
+                        <td> <a href="" class="nav-link"><button class="btn btn-warning">Update</button></a> <br><br> 
+                          <a href="" class="nav-link"><button class="btn btn-danger">Delete</button></a></td>
                     </tr>
                     @endforeach
                   </tbody>
