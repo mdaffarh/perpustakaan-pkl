@@ -131,12 +131,6 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/tb_school" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sekolah</p>
-                  </a>
-                </li>
-                <li class="nav-item">
                   <a href="" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Shift Jaga</p>
