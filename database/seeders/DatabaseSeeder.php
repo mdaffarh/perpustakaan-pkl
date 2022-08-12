@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Book;
 use App\Models\User;
 use App\Models\Staff;
 use App\Models\School;
@@ -37,6 +38,8 @@ class DatabaseSeeder extends Seeder
         //     'address' => 'Bogor'
         // ]);
 
+        // Book::factory(1)->create();
+
         $user = [
             [
                 'name' => 'Staff',
@@ -65,8 +68,8 @@ class DatabaseSeeder extends Seeder
             'kode_pos' => '16111',
             'email' => 'admin@smkn1cibinong.sch.id',
             'website' => 'https://smkn1cibinong.sch.id/',
-            'fax' => '+622518665558',
-            'nomor_telepon' => '+622518663846'
+            'fax' => '622518665558',
+            'nomor_telepon' => '622518663846'
         ]);
     }
 }
