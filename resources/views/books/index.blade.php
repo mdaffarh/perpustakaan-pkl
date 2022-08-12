@@ -33,7 +33,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="modal-body">
-                                    <form action="{{ route('books.store') }}" method="post" enctype="multipart/form-data">
+                                    <form action="/books" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">ISBN</label>

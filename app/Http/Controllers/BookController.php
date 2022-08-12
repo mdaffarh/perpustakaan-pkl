@@ -59,6 +59,9 @@ class BookController extends Controller
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
+
+        Book::create($validatedData);
+
         return redirect('/books')->with('success','Data Buku telah ditambahkan!');
 
 
@@ -102,12 +105,15 @@ class BookController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn' => 'required|unique:tb_books',
-            'judul' => 'required',
-            'penulis' => 'required',//
-            'penerbit' => 'required',//
-            'image' => 'image|file',
-            'kategori' => 'required'
+            'isbn'          => 'required|unique:tb_books',
+            'judul'         => 'required',
+            'penulis'       => 'required',
+            'penerbit'      => 'required',
+            'kategori'      => 'required',
+            'tglTerbit'     => 'required',
+            'tglMasuk'      => 'required',
+            'image'         => 'image|file',
+            'tglTerbit'     => 'required'
 
         ];
 
@@ -117,7 +123,7 @@ class BookController extends Controller
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('images');
+            $validatedData['image'] = $request->file('image')->store('image-images');
         }
         
         Book::where('id',$book->id)->update($validatedData);
