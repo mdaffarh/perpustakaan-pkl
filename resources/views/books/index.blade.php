@@ -65,7 +65,7 @@
                                         </div>
                                         <div class="form-floating mb-3">
                         					<label for="image" class="form-label">Foto</label>
-                        					<img class="img-preview-add img-fluid mb-3 col-sm-5">
+                        					<img class="img-preview img-fluid mb-3 col-sm-5">
                         					<input id="image" name="image" type="file" onchange="previewImage()"/> 
                         					<script>
         									// preview image
@@ -163,12 +163,19 @@
                             						<div class="form-floating mb-3">
                             							<label for="image" class="form-label">Foto</label>
 														<input type="hidden" name="oldImage" value="{{ $book->image }}">
-                                                            @if ($book->image)
-                                                                <img src="{{ asset('storage/' . $book->image) }}" class="img-preview img-fluid mb-3 col-sm-5">
-                                                            @else                           
-                                                                <img class="img-preview img-fluid mb-3 col-sm-5">
-                                                            @endif
-                                                                <input class="form-control" type="file" id="image" name="image" onchange="previewImage()"> 
+														@if ($book->image)
+															<img src="{{ asset('storage/' . $book->image) }}" class="img-preview img-fluid mb-3 col-sm-5">
+														@else                           
+															<img class="img-preview img-fluid 	mb-3 col-sm-5">
+														@endif
+
+														<input class="form-control @error('image') is-invalid @enderror" type="file" id="image" name="image" onchange="previewImage()">
+														@error('image')
+                    										<div class="invalid-feedback">
+                        										{{ $message }}
+                    										</div>
+                										@enderror
+
                                                         <script>
         												// preview image
         												function previewImage() {

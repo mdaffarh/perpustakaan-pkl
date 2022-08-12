@@ -10,7 +10,5 @@ class Book extends Model
     use HasFactory;
 
     protected $table = 'tb_books';
-    protected $guarded = [
-        'id'
-    ];
+    protected $guarded = ['id'];
 }
