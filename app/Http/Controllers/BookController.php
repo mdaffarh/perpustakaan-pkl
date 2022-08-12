@@ -124,7 +124,7 @@ class BookController extends Controller
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('image-images');
+            $validatedData['image'] = $request->file('image')->store('images');
         }
         
         Book::where('id',$book->id)->update($validatedData);
