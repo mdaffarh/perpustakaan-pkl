@@ -120,7 +120,7 @@ class BookController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        if($request->files('image')){
+        if($request->file('image')){
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
