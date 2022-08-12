@@ -59,9 +59,6 @@ class BookController extends Controller
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
-
-        $this->book->save($request, $id);
-
         return redirect('/books')->with('success','Data Buku telah ditambahkan!');
 
 
