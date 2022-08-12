@@ -44,20 +44,21 @@ class BookController extends Controller
         //slug ??
 
         $validatedData = $request->validate([
-            'isbn' => 'required|unique:tb_books',
-            'title' => 'required',
-            'author' => 'required',//
-            'publisher' => 'required',//
-            'cover' => 'image|file',
-            'category' => 'required',
-            'subject'=> 'required'//
+            'isbn'      => 'required|unique:tb_books',
+            'title'     => 'required',
+            'author'    => 'required',
+            'publisher' => 'required',
+            'category'  => 'required',
+            'cover'     => 'image|file'
         ]);
 
-        $validatedData['cover'] = $request->file('cover')->store('cover-images');
+        if ($request->file('cover') ) {
+            $validateData['cover'] = $request->file('cover')->store('images');
+        }
 
         Book::create($validatedData);
 
-        return redirect('/dashboard/books')->with('success','Data Buku telah ditambahkan!');
+        return redirect('/books')->with('success','Data Buku telah ditambahkan!');
 
 
     }
@@ -105,8 +106,7 @@ class BookController extends Controller
             'author' => 'required',//
             'publisher' => 'required',//
             'cover' => 'image|file',
-            'category' => 'required',
-            'subject'=> 'required'//
+            'category' => 'required'
         ];
 
         $validatedData = $request->validate($rules);
@@ -120,7 +120,7 @@ class BookController extends Controller
         
         Book::where('id',$book->id)->update($validatedData);
         
-        return redirect('/dashboard/books')->with('success','Data Buku telah diedit!');
+        return redirect('/books')->with('success','Data Buku telah diedit!');
     }
 
     /**
@@ -131,10 +131,13 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        if($book->oldImage){
-            Storage::delete($book->oldImage);
-        }
         Book::destroy($book->id);
-        return redirect('dashboard/books')->with('deleted','Data Buku telah dihapus!');
+
+        //untuk men delete gambar
+        if ($book->photobook) {
+            Storage::delete($book->photobook);
+        }
+
+        return redirect("/books")->with('success', "book data has been deleted");
     }
 }
