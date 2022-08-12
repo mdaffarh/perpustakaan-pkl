@@ -105,15 +105,16 @@ class BookController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn'          => 'required|unique:tb_books',
-            'judul'         => 'required',
-            'penulis'       => 'required',
-            'penerbit'      => 'required',
-            'kategori'      => 'required',
+            'isbn' => 'required|unique:tb_books',
+            'judul' => 'required',
+            'penulis' => 'required',//
+            'penerbit' => 'required',//
+            'image' => 'image|file',
+            'kategori' => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
             'image'         => 'image|file',
-            'tglTerbit'     => 'required'
+            'tglTerbit'     => 'required',
 
         ];
 
