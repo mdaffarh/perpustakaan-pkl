@@ -40,21 +40,28 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //isbn,title,author,publisher,cover,category,subject
+        //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
 
         $validatedData = $request->validate([
-            'isbn'      => 'required|unique:tb_books',
-            'title'     => 'required',
-            'author'    => 'required',
-            'publisher' => 'required',
-            'category'  => 'required',
-            'cover'     => 'image|file'
+            'isbn'          => 'required',
+            'judul'         => 'required',
+            'penulis'       => 'required',
+            'penerbit'      => 'required',
+            'kategori'      => 'required',
+            'tglTerbit'     => 'required',
+            'tglMasuk'      => 'required',
+            'image'         => 'image|file',
+            'tglTerbit'     => 'required'
         ]);
 
-        if ($request->file('cover') ) {
-            $validateData['cover'] = $request->file('cover')->store('images');
+        if($request->hasfile('image'))
+        {
+            $request->file('image')->move(public_path('img/book/'), $request->file('image')->getClientOriginalName());
+
+            $book->image = 'img/book/' . $request->file('image')->getClientOriginalName();
         }
+
 
         Book::create($validatedData);
 
@@ -98,24 +105,25 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //isbn,title,author,publisher,cover,category,subject
+        //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
             'isbn' => 'required|unique:tb_books',
-            'title' => 'required',
-            'author' => 'required',//
-            'publisher' => 'required',//
-            'cover' => 'image|file',
-            'category' => 'required'
+            'judul' => 'required',
+            'penulis' => 'required',//
+            'penerbit' => 'required',//
+            'image' => 'image|file',
+            'kategori' => 'required'
+
         ];
 
         $validatedData = $request->validate($rules);
 
-        if($request->files('cover')){
+        if($request->files('image')){
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['cover'] = $request->file('cover')->store('cover-images');
+            $validatedData['image'] = $request->file('image')->store('image-images');
         }
         
         Book::where('id',$book->id)->update($validatedData);

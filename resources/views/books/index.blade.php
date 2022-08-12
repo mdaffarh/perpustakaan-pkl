@@ -41,24 +41,32 @@
                                         </div>
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">Judul Buku</label>
-                                            <input required name="title" type="text" required class="form-control" id="floatingInput3">
+                                            <input required name="judul" type="text" required class="form-control" id="floatingInput3">
                                         </div>
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">Penulis</label>
-                                            <input required name="author" type="text" required class="form-control" id="floatingInput3">
+                                            <input required name="penulis" type="text" required class="form-control" id="floatingInput3">
                                         </div>
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">Penerbit</label>
-                                            <input required name="publisher" type="text" required class="form-control" id="floatingInput3">
+                                            <input required name="penerbit" type="text" required class="form-control" id="floatingInput3">
                                         </div>
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">Kategori</label>
-                                            <input required name="category" type="text" required class="form-control" id="floatingInput3">
+                                            <input required name="kategori" type="text" required class="form-control" id="floatingInput3">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Tanggal Terbit</label>
+                                            <input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Tanggal Masuk</label>
+                                            <input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3">
                                         </div>
                                         <div class="form-floating mb-3">
                         					<label for="image" class="form-label">Foto</label>
                         					<img class="img-preview img-fluid mb-3 col-sm-5">
-                        					<input name="cover" class="form-control" type="file" id="image" name="image" onchange="previewImage()">  
+                        					<input id="image" name="image" type="file"/> 
                         					<script>
         									// preview image
         										function previewImage() {
@@ -68,7 +76,7 @@
             										imgPreview.style.display = "block";
 
             										const oFReader = new FileReader();
-            										oFReader.readAsDataURL(image.file[0]);
+            										oFReader.readAsDataURL(images.file[0]);
 
             										oFReader.onload = function(oFEvent) {
                 										imgPreview.src = oFEvent.target.result;
@@ -96,7 +104,7 @@
 						<th>ISBN</th>
 						<th>Judul Buku</th>
 						<th>Penulis</th>
-						<th>Kategori</th>
+						<th>Tanggal Masuk</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -105,9 +113,9 @@
 					<tr>
 						<td>{{ $loop->iteration }}</td>
 						<td>{{ $book->isbn }}</td>
-						<td>{{ $book->title }}</td>
-						<td>{{ $book->author }}</td>
-						<td>{{ $book->category }}</td>
+						<td>{{ $book->judul }}</td>
+						<td>{{ $book->penulis }}</td>
+						<td>{{ $book->tglMasuk }}</td>
 						<td>
 							<a href="#modalEditData{{ $book->id }}" data-toggle="modal">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
@@ -133,20 +141,28 @@
                             						</div>
                             						<div class="form-floating mb-3">
                             							<label for="floatingInput3">Judul Buku</label>
-                            							<input required name="title" type="text" required class="form-control" id="floatingInput3" value="{{ $book->title }}">
+                            							<input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $book->judul }}">
                             						</div>
                             						<div class="form-floating mb-3">
                             							<label for="floatingInput3">Penulis</label>
-                            							<input required name="author" type="text" required class="form-control" id="floatingInput3" value="{{ $book->author }}">
+                            							<input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $book->penulis }}">
                             						</div>
                             						<div class="form-floating mb-3">
                             							<label for="floatingInput3">Penerbit</label>
-                            							<input required name="publisher" type="text" required class="form-control" id="floatingInput3"value="{{ $book->publisher }}">
+                            							<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $book->penerbit }}">
                             						</div>
                             						<div class="form-floating mb-3">
                             							<label for="floatingInput3">Kategori</label>
-                            							<input required name="category" type="text" required class="form-control" id="floatingInput3" value="{{ $book->category }}">
+                            							<input required name="kategori" type="text" required class="form-control" id="floatingInput3" value="{{ $book->kategori }}">
                             						</div>
+                                                    <div class="form-floating mb-3">
+                                                        <label for="floatingInput3">Tanggal Terbit</label>
+                                                        <input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3" value="{{ $book->tglTerbit }}">
+                                                    </div>
+                                                    <div class="form-floating mb-3">
+                                                        <label for="floatingInput3">Tanggal Masuk</label>
+                                                        <input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $book->tglMasuk }}">
+                                                    </div>
                             						<div class="form-floating mb-3">
                             							<label for="image" class="form-label">Foto</label>
                                                             @if ($book->cover)
