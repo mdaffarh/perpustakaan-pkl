@@ -53,7 +53,7 @@ class BookController extends Controller
             'kategori'      => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
-            'image'         => 'image|file',
+            'image'         => 'image|file|required',
         ]);
 
         if($request->file('image')){
