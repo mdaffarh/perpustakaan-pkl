@@ -165,12 +165,13 @@
                                                     </div>
                             						<div class="form-floating mb-3">
                             							<label for="image" class="form-label">Foto</label>
-                                                            @if ($book->cover)
-                                                                <img src="{{ asset('storage/' . $book->cover) }}" class="img-preview img-fluid mb-3 col-sm-5">
+														<input type="hidden" name="oldImage" value="{{ $book->image }}">
+                                                            @if ($book->image)
+                                                                <img src="{{ asset('storage/' . $book->image) }}" class="img-preview img-fluid mb-3 col-sm-5">
                                                             @else                           
                                                                 <img class="img-preview img-fluid mb-3 col-sm-5">
                                                             @endif
-                                                                <input name="cover" class="form-control" type="file" id="image" name="image" onchange="previewImage()"> 
+                                                                <input class="form-control" type="file" id="image" name="image" onchange="previewImage()"> 
                                                         <script>
         												// preview image
         												function previewImage() {

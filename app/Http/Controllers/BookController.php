@@ -55,11 +55,8 @@ class BookController extends Controller
             'tglTerbit'     => 'required'
         ]);
 
-        if($request->hasfile('image'))
-        {
-            $request->file('image')->move(public_path('img/book/'), $request->file('image')->getClientOriginalName());
-
-            $book->image = 'img/book/' . $request->file('image')->getClientOriginalName();
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('images');
         }
 
 
