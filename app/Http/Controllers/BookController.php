@@ -59,6 +59,9 @@ class BookController extends Controller
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
+
+        Book::create($validatedData);
+
         return redirect('/books')->with('success','Data Buku telah ditambahkan!');
 
 
@@ -117,7 +120,7 @@ class BookController extends Controller
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('images');
+            $validatedData['image'] = $request->file('image')->store('image-images');
         }
         
         Book::where('id',$book->id)->update($validatedData);
@@ -136,8 +139,8 @@ class BookController extends Controller
         Book::destroy($book->id);
 
         //untuk men delete gambar
-        if ($book->image) {
-            Storage::delete($book->image);
+        if ($book->photobook) {
+            Storage::delete($book->photobook);
         }
 
         return redirect("/books")->with('success', "book data has been deleted");
