@@ -205,7 +205,7 @@
 
                             <a href="">
 
-                                <form action="/book/{{ $book->id }}" method="POST" class="d-inline">
+                                <form action="/books/{{ $book->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                         <button type="submit" onclick="return confirm('Sure?')" class="btn btn-danger btn-sm">

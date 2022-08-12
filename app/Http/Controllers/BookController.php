@@ -139,8 +139,8 @@ class BookController extends Controller
         Book::destroy($book->id);
 
         //untuk men delete gambar
-        if ($book->photobook) {
-            Storage::delete($book->photobook);
+        if ($book->image) {
+            Storage::delete($book->image);
         }
 
         return redirect("/books")->with('success', "book data has been deleted");
