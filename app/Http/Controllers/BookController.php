@@ -55,15 +55,16 @@ class BookController extends Controller
             'tglTerbit'     => 'required'
         ]);
 
-        if($request->hasfile('image'))
-        {
-            $request->file('image')->move(public_path('img/book/'), $request->file('image')->getClientOriginalName());
+        if ($request->hasFile('image')) {
+           $image = $request->file('image');
+           $filename = time() . '.' . $image->getClientOriginalExtension();
+           $path = 'storage/images/' . $filename;
+           Book::make($image->getRealPath())->resize(300, 300)->save($path);
+           $request->replace(['image' => $path]);
+       }
 
-            $book->image = 'img/book/' . $request->file('image')->getClientOriginalName();
-        }
 
-
-        Book::create($validatedData);
+        $this->book->save($request, $id);
 
         return redirect('/books')->with('success','Data Buku telah ditambahkan!');
 
