@@ -55,13 +55,9 @@ class BookController extends Controller
             'tglTerbit'     => 'required'
         ]);
 
-        if ($request->hasFile('image')) {
-           $image = $request->file('image');
-           $filename = time() . '.' . $image->getClientOriginalExtension();
-           $path = 'storage/images/' . $filename;
-           Book::make($image->getRealPath())->resize(300, 300)->save($path);
-           $request->replace(['image' => $path]);
-       }
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('images');
+        }
 
 
         $this->book->save($request, $id);
@@ -124,7 +120,7 @@ class BookController extends Controller
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('image-images');
+            $validatedData['image'] = $request->file('image')->store('images');
         }
         
         Book::where('id',$book->id)->update($validatedData);
@@ -143,8 +139,8 @@ class BookController extends Controller
         Book::destroy($book->id);
 
         //untuk men delete gambar
-        if ($book->photobook) {
-            Storage::delete($book->photobook);
+        if ($book->image) {
+            Storage::delete($book->image);
         }
 
         return redirect("/books")->with('success', "book data has been deleted");
