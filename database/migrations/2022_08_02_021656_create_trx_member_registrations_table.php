@@ -16,14 +16,14 @@ return new class extends Migration
         Schema::create('trx_member_registrations', function (Blueprint $table) {
             $table->id();
             $table->string('nis')->unique();
-            $table->string('name');
-            $table->boolean('gender');//
-            $table->string('class');//
-            $table->string('major');//
-            $table->date('birth_date');
-            $table->string('phone_number');
-            $table->string('address');
-            $table->text('description');
+            $table->string('nama');
+            $table->boolean('jenis_kelamin');//
+            $table->string('kelas');//
+            $table->string('jurusan');//
+            $table->date('tanggal_lahir');
+            $table->string('nomor_telepon');
+            $table->string('alamat');
+            $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

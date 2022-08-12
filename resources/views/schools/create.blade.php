@@ -12,7 +12,7 @@
 @section('content')
 <div class="content-wrapper">
 {{-- Form test --}}
-    <form action="/dashboard/schools" method="post">
+    <form action="/schools" method="post">
        @csrf
        <h5>Nama</h5>
        <input type="text" name="name" id="name"> 

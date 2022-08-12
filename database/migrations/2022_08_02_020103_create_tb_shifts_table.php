@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('tb_shifts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->unique();
-            $table->string('shift_category');
-            $table->time('time_start');
-            $table->time('time_end');
+            $table->string('kategori_shift');
+            $table->time('waktu_mulai');
+            $table->time('waktu_selesai');
             $table->timestamps();
         });
     }

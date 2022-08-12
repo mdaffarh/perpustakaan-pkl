@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('tb_members', function (Blueprint $table) {
             $table->id();
             $table->integer('nis')->unique();
-            $table->string('name');
-            $table->boolean('gender');//
-            $table->string('class');//
-            $table->string('major');//
-            $table->date('birth_date');
-            $table->string('phone_number');
-            $table->string('address');
+            $table->string('nama');
+            $table->boolean('jenis_kelamin');//
+            $table->string('kelas');//
+            $table->string('jurusan');//
+            $table->date('tanggal_lahir');
+            $table->string('nomor_telepon');
+            $table->string('alamat');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

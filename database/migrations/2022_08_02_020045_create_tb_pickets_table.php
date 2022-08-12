@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('tb_pickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('staff_id')->unique();
-            $table->boolean('mon');
-            $table->boolean('tue');
-            $table->boolean('wed');
-            $table->boolean('thu');
-            $table->boolean('fri');
+            $table->boolean('senin');
+            $table->boolean('selasa');
+            $table->boolean('rabu');
+            $table->boolean('kamis');
+            $table->boolean('jumat');
             $table->timestamps();
         });
     }

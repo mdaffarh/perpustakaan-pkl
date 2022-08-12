@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('trx_staff_registrations', function (Blueprint $table) {
             $table->id();
             $table->string('nip')->unique();
-            $table->string('name');
-            $table->boolean('gender');//
-            $table->date('birth_date');
-            $table->string('phone_number');
-            $table->string('address');
-            $table->text('description');
+            $table->string('nama');
+            $table->boolean('jenis_kelas');//
+            $table->date('tanggal_lahir');
+            $table->string('nomor_telepon');
+            $table->string('alamat');
+            $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

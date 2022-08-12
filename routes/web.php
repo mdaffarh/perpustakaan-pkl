@@ -37,5 +37,5 @@ Route::get('/dashboard', function(){
 //     });
 // });
 
+Route::resource('/schools', SchoolController::class)->middleware('auth');
 Route::resource('/books', BookController::class)->middleware('auth');
-Route::resource('/dashboard/schools', SchoolController::class)->middleware('auth');

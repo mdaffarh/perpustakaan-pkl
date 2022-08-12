@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('member_id')->unique();
             $table->double('total');
-            $table->text('description');
+            $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

@@ -16,12 +16,11 @@ return new class extends Migration
         Schema::create('tb_books', function (Blueprint $table) {
             $table->id();
             $table->string('isbn');
-            $table->string('title');
-            $table->string('author');//
-            $table->string('publisher');//
+            $table->string('judul');
+            $table->string('penulis');//
+            $table->string('penerbit');//
             $table->string('cover');
-            $table->string('category');//
-            $table->string('subject');
+            $table->string('kategori');//
             $table->timestamps();
         });
     }

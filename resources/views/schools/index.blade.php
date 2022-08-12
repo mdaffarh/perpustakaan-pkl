@@ -40,7 +40,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example2" class="table table-bordered table-hover">
-                  <a href="/dashboard/schools/create" class="nav-link btn btn-primary">Create</a>
+                  <a href="/schools/create" class="nav-link btn btn-primary">Create</a>
                   <thead>
                   <tr>
                     <th>Nama</th>
@@ -58,13 +58,13 @@
                         
                     
                     <tr>
-                        <td>{{ $school->name }}</td>
-                        <td>{{ $school->address }}</td>
-                        <td>{{ $school->post_code }}</td>
+                        <td>{{ $school->nama }}</td>
+                        <td>{{ $school->alamat }}</td>
+                        <td>{{ $school->kode_pos }}</td>
                         <td>{{ $school->email }}</td>
                         <td>{{ $school->website }}</td>
                         <td>{{ $school->fax }}</td>
-                        <td>{{ $school->phone_number }}</td>
+                        <td>{{ $school->nomor_telepon }}</td>
                         <td> <a href="" class="nav-link"><button class="btn btn-warning">Update</button></a>  
                           <a href="" class="nav-link"><button class="btn btn-danger">Delete</button></a></td>
                     </tr>
