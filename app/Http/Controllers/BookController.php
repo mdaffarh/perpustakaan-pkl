@@ -110,7 +110,11 @@ class BookController extends Controller
             'penulis' => 'required',//
             'penerbit' => 'required',//
             'image' => 'image|file',
-            'kategori' => 'required'
+            'kategori' => 'required',
+            'tglTerbit'     => 'required',
+            'tglMasuk'      => 'required',
+            'image'         => 'image|file',
+            'tglTerbit'     => 'required',
 
         ];
 

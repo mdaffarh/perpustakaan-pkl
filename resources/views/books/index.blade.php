@@ -65,19 +65,16 @@
                                         </div>
                                         <div class="form-floating mb-3">
                         					<label for="image" class="form-label">Foto</label>
-                        					<img class="img-preview img-fluid mb-3 col-sm-5">
-                        					<input id="image" name="image" type="file"/> 
+                        					<img class="img-preview-add img-fluid mb-3 col-sm-5">
+                        					<input id="image" name="image" type="file" onchange="previewImage()"/> 
                         					<script>
         									// preview image
         										function previewImage() {
             										const image = document.querySelector("#image");
             										const imgPreview = document.querySelector(".img-preview");
-
             										imgPreview.style.display = "block";
-
             										const oFReader = new FileReader();
             										oFReader.readAsDataURL(images.file[0]);
-
             										oFReader.onload = function(oFEvent) {
                 										imgPreview.src = oFEvent.target.result;
             										}
@@ -177,12 +174,9 @@
         												function previewImage() {
             												const image = document.querySelector("#image");
             												const imgPreview = document.querySelector(".img-preview");
-
             												imgPreview.style.display = "block";
-
            	 												const oFReader = new FileReader();
             												oFReader.readAsDataURL(image.file[0]);
-
             												oFReader.onload = function(oFEvent) {
                 												imgPreview.src = oFEvent.target.result;
             												}
