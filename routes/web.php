@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\MemberController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,3 +40,4 @@ Route::get('/dashboard', function(){
 
 Route::resource('/schools', SchoolController::class)->middleware('auth');
 Route::resource('/books', BookController::class)->middleware('auth');
+Route::resource('/members', MemberController::class)->middleware('auth');
