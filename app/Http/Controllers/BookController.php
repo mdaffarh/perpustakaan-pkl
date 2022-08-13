@@ -6,6 +6,8 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
+
 class BookController extends Controller
 {
     /**
@@ -44,15 +46,14 @@ class BookController extends Controller
         //slug ??
 
         $validatedData = $request->validate([
-            'isbn'          => 'required',
+            'isbn'          => 'required|unique:tb_books',
             'judul'         => 'required',
             'penulis'       => 'required',
             'penerbit'      => 'required',
             'kategori'      => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
-            'image'         => 'image|file',
-            'tglTerbit'     => 'required'
+            'image'         => 'image|file|required',
         ]);
 
         if($request->file('image')){
@@ -105,29 +106,31 @@ class BookController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn' => 'required|unique:tb_books',
+            'isbn' => 'required',
             'judul' => 'required',
             'penulis' => 'required',//
             'penerbit' => 'required',//
             'image' => 'image|file',
             'kategori' => 'required',
-            'tglTerbit'     => 'required',
-            'tglMasuk'      => 'required',
-            'image'         => 'image|file',
-            'tglTerbit'     => 'required',
-
+            'tglTerbit' => 'required',
+            'tglMasuk' => 'required'
         ];
+
+        if($request->isbn != $book->isbn){
+            $rules['isbn'] = 'required|unique:tb_books';
+        }
 
         $validatedData = $request->validate($rules);
 
-        if($request->files('image')){
+        if($request->file('image')){
             if($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validatedData['image'] = $request->file('image')->store('image-images');
+            $validatedData['image'] = $request->file('image')->store('images');
         }
-        
-        Book::where('id',$book->id)->update($validatedData);
+
+        Book::where('id',$book->id)
+            ->update($validatedData);
         
         return redirect('/books')->with('success','Data Buku telah diedit!');
     }
