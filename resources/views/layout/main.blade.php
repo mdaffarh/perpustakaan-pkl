@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+
+    
    
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -42,10 +44,10 @@
   {{-- <!-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60"> --> --}}
   </div>
-@yield('right')
-@yield('left')
+@include('layout.right')
+@include('layout.left')
 @yield('content')
-@yield('footer')
+@include('layout.footer')
 </div>
 <!-- ./wrapper -->
 

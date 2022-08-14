@@ -1,14 +1,6 @@
 @extends('layout.main')
 @section('title', "Perpustakaan")
 
-@section('right')
-@include('layout.right')
-@endsection
-
-@section('left')
-@include('layout.left')
-@endsection
-
 @section('content')
 
 
@@ -16,7 +8,7 @@
 
 	<div class="card">
 		<div class="card-header">
-			<h3 class="card-title">DATA SEKOLAH</h3>
+			<h3 class="card-title">Data Anggota</h3>
 		</div>
 
 		<div class="card-body">
@@ -33,42 +25,44 @@
 							</div>
 							<div class="modal-body">
 								<div class="modal-body">
-                                    <form action="/schools" method="post" enctype="multipart/form-data">
+                                    <form action="/table/members" method="post" enctype="multipart/form-data">
                                         @csrf
+										<div class="form-floating mb-3">
+                                            <label for="floatingInput3">NIS</label>
+                                            <input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3">
+                                        </div>
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">Nama</label>
                                             <input required name="nama" type="text" required class="form-control" id="floatingInput3">
                                         </div>
                                         <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Jenis Kelamin</label>
+											<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
+										        <option value="" selected disabled></option>
+												<option value="Laki-laki">Laki-laki</option>
+												<option value="Perempuan">Perempuan</option>
+											</select>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Kelas</label>
+                                            <input required name="kelas" type="text" required class="form-control" id="floatingInput3">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Jurusan</label>
+                                            <input required name="jurusan" type="text" required class="form-control" id="floatingInput3">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Tanggal Lahir</label>
+                                            <input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3">
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <label for="floatingInput3">Nomor Telepon</label>
+                                            <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3">
+                                        </div>
+										<div class="form-floating mb-3">
                                             <label for="floatingInput3">Alamat</label>
                                             <input required name="alamat" type="text" required class="form-control" id="floatingInput3">
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <label for="floatingInput3">Kota</label>
-                                            <input required name="kota" type="text" required class="form-control" id="floatingInput3">
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <label for="floatingInput3">Kode Pos</label>
-                                            <input required name="kode_pos" type="number" maxlength="5" required class="form-control" id="floatingInput3">
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <label for="floatingInput3">Email</label>
-                                            <input required name="email" type="text" required class="form-control" id="floatingInput3">
-                                        </div>
-                                        <div class="form-floating mb-3">
-                                            <label for="floatingInput3">Website</label>
-                                            <input required name="website" type="text" required class="form-control" id="floatingInput3">
-                                        </div>
-										<div class="form-floating mb-3">
-                                            <label for="floatingInput3">Fax</label>
-                                            <input required name="fax" type="number" maxlength="13" required class="form-control" id="floatingInput3">
-                                        </div>
-										<div class="form-floating mb-3">
-                                            <label for="floatingInput3">Nomor Telepon</label>
-                                            <input required name="nomor_telepon" type="number" maxlength="13" required class="form-control" id="floatingInput3">
-                                        </div>
-
-
                     					<div class="input-group">
                         					<button class="btn btn-success rounded me-1" type="submit">Submit</button>
                     					</div>
@@ -86,24 +80,35 @@
 				<thead>
 					<tr>
 						<th>No</th>
+						<th>NIS</th>
 						<th>Nama</th>
+						<th>Jenis Kelamin</th>
+						<th>Kelas</th>
+						<th>Jurusan</th>
+						<th>Tanggal Lahir</th>
+						<th>Nomor Telepon</th>
 						<th>Alamat</th>
-						<th>Email</th>
+						<th>Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($schools as $school)
+					@foreach($members as $member)
 					<tr>
 						<td>{{ $loop->iteration }}</td>
-						<td>{{ $school->nama }}</td>
-						<td>{{ $school->alamat }}</td>
-						<td>{{ $school->email }}</td>
+						<td>{{ $member->nis }}</td>
+						<td>{{ $member->nama }}</td>
+						<td>{{ $member->jenis_kelamin }}</td>
+						<td>{{ $member->kelas }}</td>
+						<td>{{ $member->jurusan }}</td>
+						<td>{{ $member->tanggal_lahir }}</td>
+						<td>{{ $member->nomor_telepon }}</td>
+						<td>{{ $member->alamat }}</td>
 						<td>
-							<a href="#modalEditData{{ $school->id }}" data-toggle="modal">
+							<a href="#modalEditData{{ $member->id }}" data-toggle="modal">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
 							</a>
                             
-                            <div class="modal fade" id="modalEditData{{ $school->id }}">
+                            <div class="modal fade" id="modalEditData{{ $member->id }}">
                             	<div class="modal-dialog">
                             		<div class="modal-content">
                             			<div class="modal-header">
@@ -114,42 +119,45 @@
                             			</div>
                             			<div class="modal-body">
                             				<div class="modal-body">
-                            					<form action="/schools/{{ $school->id }}" method="post" enctype="multipart/form-data">
+                            					<form action="/table/members/{{ $member->id }}" method="post" enctype="multipart/form-data">
                             						@method('put')
                             						@csrf
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Nama</label>
-                            							<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $school->nama }}">
-                            						</div>
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Alamat</label>
-                            							<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $school->alamat }}">
-                            						</div>
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Kota</label>
-                            							<input required name="kota" type="text" required class="form-control" id="floatingInput3" value="{{ $school->kota }}">
-                            						</div>
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Kode Pos</label>
-                            							<input required name="kode_pos" type="number" maxlength="5" required class="form-control" id="floatingInput3" value="{{ $school->kode_pos }}">
-                            						</div>
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Email</label>
-                            							<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $school->email }}">
-                            						</div>
-                            						<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Website</label>
-                            							<input required name="website" type="text" required class="form-control" id="floatingInput3" value="{{ $school->website }}">
-                            						</div>
 													<div class="form-floating mb-3">
-                            							<label for="floatingInput3">Fax</label>
-                            							<input required name="fax" type="number" maxlength="13" required class="form-control" id="floatingInput3" value="{{ $school->fax }}">
-                            						</div>
+														<label for="floatingInput3">NIS</label>
+														<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->nis }}">
+													</div>
 													<div class="form-floating mb-3">
+														<label for="floatingInput3">Nama</label>
+														<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $member->nama }}">
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Jenis Kelamin</label>
+														<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
+															<option value="" selected disabled></option>
+															<option value="Laki-laki" {{ $member->jenis_kelamin == "Laki-laki" ? 'selected' : ''  }}>Laki-laki</option>
+															<option value="Perempuan" {{ $member->jenis_kelamin == "Perempuan" ? 'selected' : ''  }}>Perempuan</option>
+														</select>
+													</div>
+                            						<div class="form-floating mb-3">
+                            							<label for="floatingInput3">Kelas</label>
+                            							<input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $member->kelas }}">
+                            						</div>
+                            						<div class="form-floating mb-3">
+                            							<label for="floatingInput3">Jurusan</label>
+                            							<input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $member->jurusan }}">
+                            						</div>
+                            						<div class="form-floating mb-3">
+                            							<label for="floatingInput3">Tanggal Lahir</label>
+                            							<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $member->tanggal_lahir }}">
+                            						</div>
+                            						<div class="form-floating mb-3">
                             							<label for="floatingInput3">Nomor Telepon</label>
-                            							<input required name="nomor_telepon" type="number" maxlength="13" required class="form-control" id="floatingInput3" value="{{ $school->nomor_telepon }}">
+                            							<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $member->nomor_telepon }}">
                             						</div>
-                            	
+													<div class="form-floating mb-3">
+                            							<label for="floatingInput3">Alamat</label>
+                            							<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}">
+                            						</div>
                     								<div class="input-group">
                         								<button class="btn btn-success rounded me-1" type="submit">Submit</button>
                     								</div>
@@ -166,7 +174,7 @@
 
                             <a href="">
 
-                                <form action="/schools/{{ $school->id }}" method="POST" class="d-inline">
+                                <form action="/table/members/{{ $member->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                         <button type="submit" onclick="return confirm('Sure?')" class="btn btn-danger btn-sm">
@@ -225,7 +233,4 @@
   });
 </script>
 
-@endsection
-@section('footer')
-@include('layout.footer')
 @endsection

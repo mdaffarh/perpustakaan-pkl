@@ -17,7 +17,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('books.index',[
+        return view('table.books.index',[
             'books' => Book::all()
         ]);
     }
@@ -29,7 +29,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('dashboard.books.create',[
+        return view('table.books.create',[
             'books' => Book::all()
         ]);
     }
@@ -76,7 +76,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return view('dashboard.books.show',[
+        return view('table.books.show',[
             'book' => $book
         ]);
     }
@@ -89,7 +89,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        return view('dashboard.books.edit',[
+        return view('table.books.edit',[
             'book' => $book
         ]);
     }

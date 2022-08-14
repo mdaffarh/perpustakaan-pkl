@@ -1,16 +1,7 @@
 @extends('layout.main')
 @section('title', "Perpustakaan")
 
-@section('right')
-@include('layout.right')
-@endsection
-
-@section('left')
-@include('layout.left')
-@endsection
-
 @section('content')
-
 
 <div class="content-wrapper">
 
@@ -34,7 +25,7 @@
 							</div>
 							<div class="modal-body">
 								<div class="modal-body">
-                                    <form action="/books" method="post" enctype="multipart/form-data">
+                                    <form action="/table/books" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <div class="form-floating mb-3">
                                             <label for="floatingInput3">ISBN</label>
@@ -158,7 +149,7 @@
                             			</div>
                             			<div class="modal-body">
                             				<div class="modal-body">
-                            					<form action="/books/{{ $book->id }}" method="post" enctype="multipart/form-data">
+                            					<form action="/table/books/{{ $book->id }}" method="post" enctype="multipart/form-data">
                             						@method('put')
                             						@csrf
                             						<div class="form-floating mb-3">
@@ -218,7 +209,7 @@
 
                             <a href="">
 
-                                <form action="/books/{{ $book->id }}" method="POST" class="d-inline">
+                                <form action="/table/books/{{ $book->id }}" method="POST" class="d-inline">
                                     @method('delete')
                                     @csrf
                                         <button type="submit" onclick="return confirm('Sure?')" class="btn btn-danger btn-sm">
@@ -301,7 +292,4 @@ function previewImage(){
 }
 
 </script>
-@endsection
-@section('footer')
-@include('layout.footer')
 @endsection

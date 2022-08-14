@@ -38,6 +38,6 @@ Route::get('/dashboard', function(){
 //     });
 // });
 
-Route::resource('/schools', SchoolController::class)->middleware('auth');
-Route::resource('/books', BookController::class)->middleware('auth');
-Route::resource('/members', MemberController::class)->middleware('auth');
+Route::resource('/table/schools', SchoolController::class)->middleware('auth');
+Route::resource('/table/books', BookController::class)->middleware('auth');
+Route::resource('/table/members', MemberController::class)->middleware('auth');

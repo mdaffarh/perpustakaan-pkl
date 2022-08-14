@@ -14,7 +14,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        return view('schools.index', [
+        return view('table.schools.index', [
             'schools' => School::all()
         ]);
     }
@@ -26,7 +26,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        return view('schools.create', [
+        return view('table.schools.create', [
             'schools' => School::all()
         ]);
     }
@@ -67,7 +67,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        return view('schools.show',[
+        return view('table.schools.show',[
             'school' => $school
         ]);
     }
@@ -80,7 +80,7 @@ class SchoolController extends Controller
      */
     public function edit(School $school)
     {
-        return view('schools.edit',[
+        return view('table.schools.edit',[
             'school' => $school
         ]);
     }
