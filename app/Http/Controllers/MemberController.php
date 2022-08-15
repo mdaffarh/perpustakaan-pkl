@@ -38,7 +38,7 @@ class MemberController extends Controller
         
         Member::create($validatedData);
 
-        return redirect('/members')->with('success','Data Member telah ditambahkan!');
+        return redirect('/table/members')->with('success','Data Member telah ditambahkan!');
 
 
     }
@@ -75,11 +75,11 @@ class MemberController extends Controller
 
         Member::where('id',$member->id)->update($validatedData);
 
-        return redirect('/members')->with('success','Data Member telah diedit!');
+        return redirect('/table/members')->with('success','Data Member telah diedit!');
     }
 
     public function destroy(Member $member){
         Member::destroy($member->id);
-        return redirect('/members')->with('deleted','Data Member telah dihapus!');
+        return redirect('/table/members')->with('deleted','Data Member telah dihapus!');
     }
 }

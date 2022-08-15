@@ -63,7 +63,7 @@ class BookController extends Controller
 
         Book::create($validatedData);
 
-        return redirect('/books')->with('success','Data Buku telah ditambahkan!');
+        return redirect('/table/books')->with('success','Data Buku telah ditambahkan!');
 
 
     }
@@ -132,7 +132,7 @@ class BookController extends Controller
         Book::where('id',$book->id)
             ->update($validatedData);
         
-        return redirect('/books')->with('success','Data Buku telah diedit!');
+        return redirect('/table/books')->with('success','Data Buku telah diedit!');
     }
 
     /**
@@ -150,6 +150,6 @@ class BookController extends Controller
             Storage::delete($book->photobook);
         }
 
-        return redirect("/books")->with('success', "book data has been deleted");
+        return redirect("/table/books")->with('success', "book data has been deleted");
     }
 }
