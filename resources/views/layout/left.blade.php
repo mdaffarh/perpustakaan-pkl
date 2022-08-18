@@ -109,13 +109,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
+                <a href="./members" class="nav-link {{ Request::is('./members*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Anggota</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="./staffs" class="nav-link {{ Request::is('./staffs*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Staff</p>
                 </a>

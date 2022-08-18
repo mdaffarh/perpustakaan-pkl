@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('tb_staffs', function (Blueprint $table) {
             $table->id();
-            $table->string('nip')->unique();
+            $table->integer('nip')->unique();
             $table->string('nama');
-            $table->boolean('jenis_kelamin');//
+            $table->string('jenis_kelamin');//
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
