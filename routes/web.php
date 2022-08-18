@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\MemberController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\MemberUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,5 @@ Route::resource('/table/schools', SchoolController::class)->middleware('auth');
 Route::resource('/table/books', BookController::class)->middleware('auth');
 Route::resource('/table/members', MemberController::class)->middleware('auth');
 Route::resource('/table/stocks', StockController::class)->middleware('auth');
+
+Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');

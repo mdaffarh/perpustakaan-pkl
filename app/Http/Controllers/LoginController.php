@@ -41,6 +41,7 @@ class LoginController extends Controller
                 return redirect()->intended('dashboard');
             }
         }
+        toast('Login berhasil','success');
         return redirect()->intended('/dashboard');
     }
 

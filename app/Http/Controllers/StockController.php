@@ -47,7 +47,7 @@ class StockController extends Controller
             'stok_akhir'    => $request->stokAwal
         ]);
 
-        toast('Your Post as been submited!','success');
+        toast('Data stok telah ditambahkan!','success');
         return redirect('/table/stocks');
     }
 

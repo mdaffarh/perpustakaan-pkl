@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="content-wrapper">
-
+	@include('sweetalert::alert')
 	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title">DATA BUKU</h3>

@@ -55,7 +55,8 @@ class SchoolController extends Controller
 
         School::create($validatedData);
 
-        return redirect('/table/schools')->with('success','Data Sekolah telah ditambahkan!');
+        toast('Data Sekolah telah ditambahkan!','success');
+        return redirect('/table/schools');
 
     }
 
@@ -108,7 +109,8 @@ class SchoolController extends Controller
 
         School::where('id',$school->id)->update($validatedData);
 
-        return redirect('/table/schools')->with('success','Data Sekolah telah diedit!');
+        toast('Data Sekolah telah diedit!','success');
+        return redirect('/table/schools');
 
     }
 
@@ -121,7 +123,8 @@ class SchoolController extends Controller
     public function destroy(School $school)
     {
         School::destroy($school->id);
-        return redirect('/table/schools')->with('deleted','Data Sekolah telah dihapus!');
+        toast('Data sekolah telah dihapus!','success');
+        return redirect('/table/schools');
 
     }
 }

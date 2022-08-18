@@ -1,19 +1,10 @@
 @extends('layout.main')
 @section('title', "Perpustakaan")
-
-@section('right')
-@include('layout.right')
-@endsection
-
-@section('left')
-@include('layout.left')
-@endsection
-
 @section('content')
 
 
 <div class="content-wrapper">
-
+@include('sweetalert::alert')
 	<div class="card">
 		<div class="card-header">
 			<h3 class="card-title">DATA SEKOLAH</h3>
@@ -225,7 +216,4 @@
   });
 </script>
 
-@endsection
-@section('footer')
-@include('layout.footer')
 @endsection
