@@ -5,6 +5,8 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\StockController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,3 +43,4 @@ Route::get('/dashboard', function(){
 Route::resource('/table/schools', SchoolController::class)->middleware('auth');
 Route::resource('/table/books', BookController::class)->middleware('auth');
 Route::resource('/table/members', MemberController::class)->middleware('auth');
+Route::resource('/table/stocks', StockController::class)->middleware('auth');

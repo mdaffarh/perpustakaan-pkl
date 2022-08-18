@@ -12,4 +12,9 @@ class Stock extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function books()
+    {
+    	return $this->belongsTo(Book::class, 'book_id');
+    }
 }

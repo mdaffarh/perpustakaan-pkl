@@ -127,7 +127,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/table/stocks" class="nav-link {{ Request::is('table/stock*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Stok</p>
                 </a>
