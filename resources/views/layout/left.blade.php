@@ -109,7 +109,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
+                <a href="table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Anggota</p>
                 </a>
@@ -121,7 +121,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./table/books" class="nav-link {{ Request::is('table/books*') ? 'active' : '' }}">
+                <a href="./books" class="nav-link {{ Request::is('./books*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buku</p>
                 </a>
