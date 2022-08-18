@@ -16,6 +16,7 @@ class LoginController extends Controller
             }
         }
 
+        toast('Login berhasil!','success');
         return view('login.index');
     }
 
@@ -41,7 +42,6 @@ class LoginController extends Controller
                 return redirect()->intended('dashboard');
             }
         }
-        toast('Login berhasil','success');
         return redirect()->intended('/dashboard');
     }
 

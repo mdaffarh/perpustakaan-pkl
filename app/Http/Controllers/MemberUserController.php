@@ -43,7 +43,7 @@ class MemberUserController extends Controller
         $validatedData = $request->validate([
             'member_id' => 'required|unique:tb_member_users',
             'username' => ['required','min:3','max:255','unique:tb_member_users'],
-            'password' => 'required|min:5|max:255'
+            'password' => 'required'
         ]);
 
         // $validatedData['password'] = bcrypt($validatedData['password']);
@@ -63,9 +63,10 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function show(MemberUser $memberUser)
-    {
-        //
+    public function show(MemberUser $memberUser){
+        return view('table.members.show',[
+            'memberUser' => $memberUser
+        ]);
     }
 
     /**
@@ -74,9 +75,10 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(MemberUser $memberUser)
-    {
-
+    public function edit(Member $memberUser){
+        return view('table.member-users.edit',[
+            'memberUser' => $memberUser
+        ]);
     }
 
     /**
@@ -88,14 +90,6 @@ class MemberUserController extends Controller
      */
     public function update(Request $request, MemberUser $memberUser)
     {
-        // $validatedData = $request->validate([
-        //     'member_id' => 'required|unique:tb_member_users',
-        //     'username' => ['required','min:3','max:255','unique:tb_member_users'],
-        //     'password' => 'required|min:5|max:255'
-        // ]);
-
-        // $validatedData['password'] = Hash::make($validatedData['password']);
-
         $rules = [
             'member_id' => 'required',
             'username' => 'required',
@@ -107,6 +101,9 @@ class MemberUserController extends Controller
         }
 
         $validatedData = $request->validate($rules);
+        if($validatedData['password'] != $memberUser->password){
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
 
         MemberUser::where('id',$memberUser->id)->update($validatedData);
 

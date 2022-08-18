@@ -109,19 +109,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
+                <a href="/table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Anggota</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/table/staffs" class="nav-link {{ Request::is('table/staffs*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Staff</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./books" class="nav-link {{ Request::is('./books*') ? 'active' : '' }}">
+                <a href="/table/books" class="nav-link {{ Request::is('table/books*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Buku</p>
                 </a>
@@ -145,7 +145,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/table/member-users" class="nav-link {{ Request::is('table/member-users*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>User Anggota</p>
                 </a>
@@ -153,7 +153,7 @@
               <li class="nav-item">
                 <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>User Staffs</p>
+                  <p>User Staff</p>
                 </a>
               </li>
             </ul>
