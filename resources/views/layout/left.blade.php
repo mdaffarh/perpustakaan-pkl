@@ -151,7 +151,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/table/staff-users" class="nav-link {{ Request::is('table/staff-users*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>User Staff</p>
                 </a>

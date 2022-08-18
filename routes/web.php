@@ -8,6 +8,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StaffUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,4 +49,6 @@ Route::resource('/table/members', MemberController::class)->middleware('auth');
 Route::resource('/table/stocks', StockController::class)->middleware('auth');
 
 Route::resource('/table/staffs', StaffController::class)->middleware('auth');
+
 Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
+Route::resource('/table/staff-users', StaffUserController::class)->middleware('auth');

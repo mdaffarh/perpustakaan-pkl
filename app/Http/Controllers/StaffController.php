@@ -28,7 +28,9 @@ class StaffController extends Controller
             'alamat' => 'required'
         ]);
         Staff::create($validatedData);
-        return redirect('/table/staffs')->with('success','Data Staff telah ditambahkan !');
+
+        toast('Data staff telah ditambahkan!','success');
+        return redirect('/table/staffs');
     }
 
     public function show(Staff $staff){
@@ -61,11 +63,14 @@ class StaffController extends Controller
 
         Staff::where('id',$staff->id)->update($validatedData);
 
-        return redirect('/table/staffs')->with('success','Data Staff telah diedit!');
+        toast('Data staff telah diedit!','success');
+        return redirect('/table/staffs');
     }
 
     public function destroy(Staff $staff){
         Staff::destroy($staff->id);
-        return redirect('/table/staffs')->with('deleted','Data Staff telah dihapus!');
+
+        toast('Data staff telah dihapus!','success');
+        return redirect('/table/staffs');
     }
 }
