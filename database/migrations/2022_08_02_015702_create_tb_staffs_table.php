@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tb_staffs', function (Blueprint $table) {
+            // nip nama jenis_kelamin tanggal_lahir nomor_telepon alamat 
             $table->id();
-            $table->integer('nip')->unique();
+            $table->integer('nip');//harusnya unique ini test doang
             $table->string('nama');
-            $table->string('jenis_kelamin');//
+            $table->string('jenis_kelamin');
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
-            $table->text('deskripsi')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

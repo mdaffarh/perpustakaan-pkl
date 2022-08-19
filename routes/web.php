@@ -50,5 +50,6 @@ Route::resource('/table/books', BookController::class)->middleware('auth');
 Route::resource('/table/stocks', StockController::class)->middleware('auth');
 Route::resource('/table/schools', SchoolController::class)->middleware('auth');
 Route::resource('/table/shifts', ShiftController::class)->middleware('auth');
+
 Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('auth');

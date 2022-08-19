@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shift;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 
 class ShiftController extends Controller
 {
     public function index(){
         return view ('table.shifts.index',[
-            'shifts' => Shift::all()
+            'shifts' => Shift::all(),
+            'staffs' => Staff::all()
         ]);
     }
 

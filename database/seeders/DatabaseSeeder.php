@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Book;
+use App\Models\Member;
 use App\Models\User;
 use App\Models\Staff;
 use App\Models\School;
@@ -20,25 +21,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Book::factory(20)->create();
+        Member::factory(20)->create();
+        Staff::factory(20)->create();
         // \App\Models\User::factory(10)->create();
-
-        // StaffUser::create([
-        //     'staff_id' => '1',
-        //     'username' => 'admin',
-        //     'password' => bcrypt('1234'),
-        //     'role' => 'admin'
-        // ]);
-
-        // Staff::create([
-        //     'nip' => '12946193469',
-        //     'name' => 'Admin',
-        //     'gender' => 'Laki-laki',
-        //     'birth_date' => '2000-01-01',
-        //     'phone_number' => '08123312312',
-        //     'address' => 'Bogor'
-        // ]);
-
-        // Book::factory(1)->create();
 
         $user = [
             [

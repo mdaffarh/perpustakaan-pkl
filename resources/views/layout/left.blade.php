@@ -32,7 +32,7 @@
 
       <!-- Sidebar Menu -->
             {{-- Transaksi --}}
-      <nav class="mt-2">
+      <nav class="mt-2 pb-3">
 
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
@@ -139,7 +139,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/table/shifts" class="nav-link{{ Request::is('table/shifts*') ? 'active' : '' }}">
+                <a href="/table/shifts" class="nav-link {{ Request::is('table/shifts*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Shift Jaga</p>
                 </a>
