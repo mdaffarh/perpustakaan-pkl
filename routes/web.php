@@ -7,6 +7,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\MemberUserController;
+use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffUserController;
 
@@ -43,12 +44,11 @@ Route::get('/dashboard', function(){
 //     });
 // });
 
-Route::resource('/table/schools', SchoolController::class)->middleware('auth');
-Route::resource('/table/books', BookController::class)->middleware('auth');
 Route::resource('/table/members', MemberController::class)->middleware('auth');
-Route::resource('/table/stocks', StockController::class)->middleware('auth');
-
 Route::resource('/table/staffs', StaffController::class)->middleware('auth');
-
+Route::resource('/table/books', BookController::class)->middleware('auth');
+Route::resource('/table/stocks', StockController::class)->middleware('auth');
+Route::resource('/table/schools', SchoolController::class)->middleware('auth');
+Route::resource('/table/shifts', ShiftController::class)->middleware('auth');
 Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('auth');

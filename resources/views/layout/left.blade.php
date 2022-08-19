@@ -139,7 +139,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/table/shifts" class="nav-link{{ Request::is('table/shifts*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Shift Jaga</p>
                 </a>
