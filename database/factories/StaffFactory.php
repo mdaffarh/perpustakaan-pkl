@@ -20,7 +20,8 @@ class StaffFactory extends Factory
           $jk = rand(0, 1) ? 'Laki-laki' : 'Perempuan';
 
           return [
-              'nip' => fake()->numerify('##########'),
+              'nip' => fake()->nik(),
+            //   'nip' => fake()->numerify('##########'),
               'nama' => fake()->name(),
               'jenis_kelamin' => $jk,
               'tanggal_lahir' => fake()->date(),

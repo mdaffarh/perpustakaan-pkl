@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tb_staffs', function (Blueprint $table) {
             // nip nama jenis_kelamin tanggal_lahir nomor_telepon alamat 
             $table->id();
-            $table->integer('nip');//harusnya unique ini test doang
+            $table->bigInteger('nip');//harusnya unique ini test doang
             $table->string('nama');
             $table->string('jenis_kelamin');
             $table->date('tanggal_lahir');

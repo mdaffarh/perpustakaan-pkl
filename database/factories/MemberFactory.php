@@ -20,7 +20,8 @@ class MemberFactory extends Factory
         $jk = rand(0, 1) ? 'Laki-laki' : 'Perempuan';
 
         return [
-            'nis' => fake()->numerify('##########'),
+            'nis' => fake()->nik(),
+            // 'nis' => fake()->numerify('##########'),
             'nama' => fake()->name(),
             'jenis_kelamin' => $jk,
             'kelas' => mt_rand(10,13),
