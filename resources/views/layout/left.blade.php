@@ -54,7 +54,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="/transaction/member-registrations" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pendaftaran Anggota</p>
                 </a>

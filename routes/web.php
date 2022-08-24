@@ -10,7 +10,7 @@ use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffUserController;
-
+use App\Http\Controllers\MemberRegistrationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,3 +53,5 @@ Route::resource('/table/shifts', ShiftController::class)->middleware('auth');
 
 Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('auth');
+
+Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('auth');

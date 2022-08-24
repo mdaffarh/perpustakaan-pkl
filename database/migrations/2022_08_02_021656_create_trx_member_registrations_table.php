@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
-            $table->text('deskripsi');
+            $table->text('deskripsi')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
