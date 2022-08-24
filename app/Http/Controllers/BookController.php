@@ -20,7 +20,6 @@ class BookController extends Controller
         return view('table.books.index',[
             'books' => Book::all()
         ]);
-        test
     }
 
     /**
