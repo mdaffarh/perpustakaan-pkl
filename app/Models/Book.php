@@ -11,4 +11,9 @@ class Book extends Model
 
     protected $table = 'tb_books';
     protected $guarded = ['id'];
+
+    public function stock()
+    {
+        return $this->hasOne(Stock::class);
+    }
 }

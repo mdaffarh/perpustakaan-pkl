@@ -19,6 +19,11 @@ class Staff extends Model
         return $this->hasOne(StaffUser::class);  
     }
 
+    public function picket()
+    {
+        return $this->hasOne(Picket::class);
+    }
+
     public function borrows()
     {
         return $this->hasMany(Borrow::class);

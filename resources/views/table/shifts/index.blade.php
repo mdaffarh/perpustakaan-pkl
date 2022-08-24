@@ -13,7 +13,7 @@
         <div>
           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Tambah Data</button>
           <div class="modal fade" id="modal-default">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <h4 class="modal-title">Tambah Data</h4>
@@ -84,7 +84,7 @@
                 </a>
                               
                               <div class="modal fade" id="modalEditData{{ $shift->id }}">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-lg">
                                   <div class="modal-content">
                                     <div class="modal-header">
                                       <h4 class="modal-title">Edit Data</h4>
@@ -198,28 +198,8 @@
     </div>
   
   </div>
-  
-    
-<script src="{{asset('plugins/jquery/jquery.min.js')}}}}"></script>
-
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}}}"></script>
-
-<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 
 <script src="{{asset('dist/js/adminlte.min.js?v=3.2.0')}}"></script>
-
-<script src="{{asset('dist/js/demo.js')}}"></script>
 
 <script>
   $(function () {
@@ -227,15 +207,15 @@
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    // $('#example2').DataTable({
+    //   "paging": true,
+    //   "lengthChange": false,
+    //   "searching": false,
+    //   "ordering": true,
+    //   "info": true,
+    //   "autoWidth": false,
+    //   "responsive": true,
+    // });
   });
 </script>
 

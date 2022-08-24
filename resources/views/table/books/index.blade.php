@@ -13,9 +13,10 @@
 		<div class="card-body">
 			<div>
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Tambah Data</button>
-				
+
+				{{-- Tambah Data --}}
 				<div class="modal fade" id="modal-default">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title">Tambah Data</h4>
@@ -114,6 +115,8 @@
 									
 				</div>
 			</div>
+
+			{{-- Tabel --}}
 			<table id="example1" class="table table-bordered table-striped">
 				<thead>
 					<tr>
@@ -134,12 +137,14 @@
 						<td>{{ $book->penulis }}</td>
 						<td>{{ $book->tglMasuk }}</td>
 						<td>
+
+							{{-- Edit --}}
 							<a href="#modalEditData{{ $book->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
 								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
 							</a>
                             
                             <div class="modal fade" id="modalEditData{{ $book->id }}">
-                            	<div class="modal-dialog">
+                            	<div class="modal-dialog modal-lg">
                             		<div class="modal-content">
                             			<div class="modal-header">
                             				<h4 class="modal-title">Edit Data</h4>
@@ -180,15 +185,14 @@
                                                         <label for="floatingInput3">Tanggal Masuk</label>
                                                         <input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $book->tglMasuk }}">
                                                     </div>
-                            						<div class="form-floating mb-3">
+                            						<div class="mb-3">
                             							<label for="image" class="form-label">Cover</label>
 														<input type="hidden" name="oldImage" value="{{ $book->image }}">
 														@if ($book->image)
-															<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview-edit mb-3 col-sm-5 d-block">
+															<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview mb-3 col-sm-5 d-block">
 														@else
 															<img class="img-fluid img-preview mb-3 col-sm-5">
 														@endif
-										
 														
 														<input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
                     								</div>
@@ -293,45 +297,26 @@
 
 </div>
 
-<script src="{{asset('plugins/jquery/jquery.min.js')}}}}"></script>
-
-<script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}}}"></script>
-
-<script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
-<script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
-<script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-
 <script src="{{asset('dist/js/adminlte.min.js?v=3.2.0')}}"></script>
 
-<script src="{{asset('dist/js/demo.js')}}"></script>
-
 <script>
-  $(function () {
+$(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    // $('#example1').DataTable({
+    //   "paging": true,
+    //   "lengthChange": false,
+    //   "searching": false,
+    //   "ordering": true,
+    //   "info": true,
+    //   "autoWidth": false,
+    //   "responsive": true,
+    // });
   });
 
-  
+//   Buat modal tambah
   function previewImageAdd(){
 	  const image = document.querySelector('#imageAdd');
 	  const imgPreview = document.querySelector('.img-preview-add');
@@ -342,18 +327,17 @@
 		  imgPreview.src = oFREvent.target.result;
 		}
     }
-function previewImage(){
-		const image = document.querySelector('#image');
-		const imgPreview = document.querySelector('.img-preview');
-		const imgPreviewEdit = document.querySelector('.img-preview-edit');
-		imgPreview.style.display = 'block';
-		imgPreviewEdit.style.display = 'none';
-		const oFReader = new FileReader();
-		oFReader.readAsDataURL(image.files[0]);
-		oFReader.onload = function(oFREvent){
-			imgPreview.src = oFREvent.target.result;
-		}
-}
-
+	
+// Buat modal edit
+	function previewImage(){
+		  const image = document.querySelector('#image');
+		  const imgPreview = document.querySelector('.img-preview');
+		  imgPreview.style.display = 'block';
+		  const oFReader = new FileReader();
+		  oFReader.readAsDataURL(image.files[0]);
+		  oFReader.onload = function(oFREvent){
+			  imgPreview.src = oFREvent.target.result;
+			}
+	}
 </script>
 @endsection

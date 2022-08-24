@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tb_stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('book_id')->unique();
+            $table->foreignId('book_id');//
             $table->integer('stok_awal');
             $table->integer('stok_akhir');
             $table->timestamps();
