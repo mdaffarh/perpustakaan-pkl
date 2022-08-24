@@ -69,8 +69,8 @@
 					@foreach($stocks as $stock)
 					<tr>
 						<td>{{ $loop->iteration }}</td>
-						<td>{{ $stock->books->judul }}</td>
-						<td>{{ $stock->books->penulis }}</td>
+						<td>{{ $stock->book->judul }}</td>
+						<td>{{ $stock->book->penulis }}</td>
 						<td>{{ $stock->stok_awal }}</td>
                         <td>{{ $stock->stok_akhir }}</td>
 						<td>

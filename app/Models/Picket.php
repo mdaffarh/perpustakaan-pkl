@@ -14,6 +14,8 @@ class Picket extends Model
         'id'
     ];
 
+    protected $with = ['staff'];
+
     public function staff()
     {
         return $this->belongsTo(Staff::class, 'staff_id' );
