@@ -23,27 +23,20 @@ class DatabaseSeeder extends Seeder
     {
         Book::factory(20)->create();
         Member::factory(20)->create();
-        Staff::factory(20)->create();
+        Staff::factory(10)->create();
         // \App\Models\User::factory(10)->create();
 
         $user = [
             [
-                'name' => 'Staff',
-                'username' => 'Staff',
+                'staff_id' => 1,
+                'username' => 'staff',
                 'password' =>bcrypt('123'),
-                'role'=> 'Staff',
-                'email'=> 'staff@gmail.com',
+                'role'=> 'admin'
             ],
-            [
-                'name' => 'Member 1',
-                'username' => 'Member 1',
-                'password' =>bcrypt('12345678'),
-                'role'=> 'Member',
-                'email'=> 'Member1@gmail.com',
-            ]
             ];
 
             foreach($user as $key => $value) {
+                Staff::where('id',$value['staff_id'])->update(['signed' => true]);
                 User::create($value);
             }
         

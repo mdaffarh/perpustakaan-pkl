@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Halaman Login</title>
@@ -22,9 +22,15 @@
       <h1><strong>Login</strong> Perpustakaan</h1>
     </div>
     <div class="card-body">
-      <p class="login-box-msg">Sign in to start your session</p>
-
-      <form action="{{ url('login/proses') }}" method="post">
+      @if (session()->has('loginError'))
+        <p class="login-box-msg text-danger">
+          {{ session('loginError') }}
+        </p>
+      @else
+        <p class="login-box-msg">Sign in to start your session</p>
+      @endif   
+      
+      <form action="/login" method="post">
         @csrf
         <div class="input-group mb-3">
           <input autofocus type="text" class="form-control
@@ -54,11 +60,6 @@
               <span class="fas fa-lock"></span>
             </div>
           </div>
-            @error('password')
-              <div class="invalid-feedback">
-                  {{ $message }}
-              </div>
-            @enderror
         </div>
         <div class="row">
           <div class="col-12">
@@ -71,7 +72,6 @@
             </div>
           </div> --}}
           <!-- /.col -->
-
           <div class="col-12">
             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
           </div>

@@ -13,15 +13,24 @@ class Member extends Model
     protected $guarded = [
         'id'
     ];
-
-    public function memberUser()
+    
+    public function user()
     {
-        return $this->hasOne(MemberUser::class);  
+        return $this->hasOne(User::class);
     }
 
     public function borrows()
     {
         return $this->hasMany(Borrow::class);
+    }
+
+    public function created_by()
+    {
+        return $this->belongsTo(Staff::class, 'created_by');
+    }
+    public function updated_by()
+    {
+        return $this->belongsTo(Staff::class, 'updated_by');
     }
 
 }

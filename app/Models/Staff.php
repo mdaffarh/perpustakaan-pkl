@@ -14,14 +14,20 @@ class Staff extends Model
         'id'
     ];
 
-    public function staffUser()
-    {
-        return $this->hasOne(StaffUser::class);  
-    }
-
     public function picket()
     {
         return $this->hasOne(Picket::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
+
+    public function member()
+    {
+        return $this->hasOne(Member::class);
     }
 
     public function borrows()

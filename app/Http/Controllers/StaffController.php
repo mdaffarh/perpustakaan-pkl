@@ -25,7 +25,8 @@ class StaffController extends Controller
             'jenis_kelamin' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon' => 'required',
-            'alamat' => 'required'
+            'alamat' => 'required',
+            'email' => 'required|unique:tb_staffs'
         ]);
         Staff::create($validatedData);
 
@@ -52,12 +53,18 @@ class StaffController extends Controller
             'jenis_kelamin' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon' => 'required',
-            'alamat' => 'required'
+            'alamat' => 'required',
+            'email' => 'required'
         ];
     
         if($request->nip != $staff->nip){
             $rules['nip'] = 'required|unique:tb_staffs';
         }
+        if($request->email != $staff->email){
+            $rules['email'] = 'required|unique:tb_staffs';
+        }
+
+
 
         $validatedData = $request->validate($rules);
 

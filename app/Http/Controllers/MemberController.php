@@ -23,7 +23,6 @@ class MemberController extends Controller
     
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'nis' => 'required|unique:tb_members',
             'nama' => 'required',
@@ -32,8 +31,9 @@ class MemberController extends Controller
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
+            'alamat'=> 'required',
         ]);
+
 
         
         Member::create($validatedData);
@@ -65,7 +65,7 @@ class MemberController extends Controller
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
+            'alamat'=> 'required',
         ];
     
         if($request->nis != $member->nis){

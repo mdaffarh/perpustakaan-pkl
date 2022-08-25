@@ -27,6 +27,7 @@
 										<div class="modal-body">
 											<form action="/table/staffs" method="post" enctype="multipart/form-data">
 												@csrf
+												<input type="hidden" name="created_by" value="{{ auth()->user()->staff_id }}">
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">NIP</label>
 													<input required name="nip" type="number"  required class="form-control" id="floatingInput3">
@@ -55,6 +56,10 @@
 													<label for="floatingInput3">Alamat</label>
 													<input required name="alamat" type="text" required class="form-control" id="floatingInput3">
 												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Email</label>
+													<input required name="email" type="text" required class="form-control" id="floatingInput3">
+												</div>
 												<div class="input-group">
 													<button class="btn btn-success rounded me-1" type="submit">Submit</button>
 												</div>
@@ -72,11 +77,9 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>NIP</th>
 								<th>Nama</th>
-								<th>Jenis Kelamin</th>
 								<th>Nomor Telepon</th>
-								<th>Alamat</th>
+								<th>Email</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -84,11 +87,9 @@
 							@foreach($staffs as $staff)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $staff->nip }}</td>
 								<td>{{ $staff->nama }}</td>
-								<td>{{ $staff->jenis_kelamin }}</td>
 								<td>{{ $staff->nomor_telepon }}</td>
-								<td>{{ $staff->alamat }}</td>
+								<td>{{ $staff->email }}</td>
 								<td>
 									<a href="#modalEditData{{ $staff->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
@@ -108,6 +109,7 @@
 														<form action="/table/staffs/{{ $staff->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
+															<input type="hidden" name="updated_by" value="{{ auth()->user()->staff_id }}">
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIP</label>
 																<input required name="nip" type="number"  required class="form-control" id="floatingInput3" value="{{ $staff->nip }}">
@@ -136,6 +138,14 @@
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $staff->alamat }}">
 															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Email</label>
+																<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $staff->email }}">
+															</div>
+															{{-- <div class="form-floating mb-3">
+																<label for="floatingInput3">Didaftarkan oleh</label>
+																<input required name="created_by" type="text" required class="form-control" id="floatingInput3" value="{{ $staff->alamat }}">
+															</div> --}}
 															<div class="input-group">
 																<button class="btn btn-success rounded me-1" type="submit">Submit</button>
 															</div>
@@ -194,6 +204,10 @@
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $staff->alamat }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Email</label>
+																<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $staff->email }}" disabled>
 															</div>
 														</form>
 													</div>

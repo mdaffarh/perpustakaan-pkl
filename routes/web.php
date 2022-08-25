@@ -26,12 +26,10 @@ Route::get('/', function () {
     return view('login.index');
 });
 
-// Route::get('login', [LoginController::class, 'index'])->name('login')->middleware('guest');
-Route::controller(LoginController::class)->group(function(){
-    Route::get('login','index')->name('login')->middleware('guest');
-    Route::post('login/proses', 'proses');
-    Route::post('logout', 'logout');
-});
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');//name buat ngubah nama route ke login
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
 
 Route::get('/dashboard', function(){
     return view('dashboard.index');
@@ -44,14 +42,17 @@ Route::get('/dashboard', function(){
 //     });
 // });
 
-Route::resource('/table/members', MemberController::class)->middleware('auth');
-Route::resource('/table/staffs', StaffController::class)->middleware('auth');
+Route::resource('/table/members', MemberController::class)->middleware('auth'); 
 Route::resource('/table/books', BookController::class)->middleware('auth');
 Route::resource('/table/stocks', StockController::class)->middleware('auth');
 Route::resource('/table/schools', SchoolController::class)->middleware('auth');
 Route::resource('/table/shifts', ShiftController::class)->middleware('auth');
 
 Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
-Route::resource('/table/staff-users', StaffUserController::class)->middleware('auth');
+
+//Admin
+Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
+Route::resource('/table/staffs', StaffController::class)->middleware('admin');
+//
 
 Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('auth');

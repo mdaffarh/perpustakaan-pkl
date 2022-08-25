@@ -14,7 +14,12 @@
           <img src="{{ asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ auth()->user()->name }}</a>
+          @if (auth()->user()->staff_id)
+            <a href="#">{{ auth()->user()->staff->nama }}</a>
+          @else
+            <a href="#">{{ auth()->user()->member->nama }}</a>
+          @endif
+
         </div>
       </div>
 
@@ -113,12 +118,14 @@
                   <p>Anggota</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/table/staffs" class="nav-link {{ Request::is('table/staffs*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Staff</p>
-                </a>
-              </li>
+              @can('admin')
+                <li class="nav-item">
+                  <a href="/table/staffs" class="nav-link {{ Request::is('table/staffs*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Staff</p>
+                  </a>
+                </li>
+              @endcan
               <li class="nav-item">
                 <a href="/table/books" class="nav-link {{ Request::is('table/books*') ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
@@ -149,12 +156,14 @@
                   <p>User Anggota</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/table/staff-users" class="nav-link {{ Request::is('table/staff-users*') ? 'active' : '' }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>User Staff</p>
-                </a>
-              </li>
+              @can('admin')
+                <li class="nav-item">
+                  <a href="/table/staff-users" class="nav-link {{ Request::is('table/staff-users*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>User Staff</p>
+                  </a>
+                </li>  
+              @endcan
             </ul>
           </li>
          

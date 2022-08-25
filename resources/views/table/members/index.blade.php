@@ -79,11 +79,9 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>NIS</th>
 								<th>Nama</th>
 								<th>Kelas</th>
 								<th>Jurusan</th>
-								<th>Nomor Telepon</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -91,11 +89,9 @@
 							@foreach($members as $member)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
-								<td>{{ $member->nis }}</td>
 								<td>{{ $member->nama }}</td>
 								<td>{{ $member->kelas }}</td>
 								<td>{{ $member->jurusan }}</td>
-								<td>{{ $member->nomor_telepon }}</td>
 								<td>
 									{{-- Edit --}}
 									<a href="#modalEditData{{ $member->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
@@ -116,6 +112,7 @@
 														<form action="/table/members/{{ $member->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
+															{{-- <input type="hidden" name="created_by" value="{{ auth()->user()->staff_id }}"> --}}
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIS</label>
 																<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->nis }}">
@@ -188,6 +185,7 @@
 														<form action="/table/members/{{ $member->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
+															<input type="hidden" name="updated_by" value="{{ auth()->user()->staff_id }}">
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIS</label>
 																<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->nis }}" disabled>
@@ -220,6 +218,19 @@
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
 															</div>
+															@if ($member->created_by)
+																<div class="form-floating mb-3">
+																	<label for="floatingInput3">Didaftarkan oleh</label>
+																	<input required name="created_by" type="text" required class="form-control" id="floatingInput3" value="{{ $member->created_by->nama }}" disabled>
+																</div>
+															@endif
+															@if ($member->created_by)
+																<div class="form-floating mb-3">
+																	<label for="floatingInput3">Diedit oleh</label>
+																	<input required name="updated_by" type="text" required class="form-control" id="floatingInput3" value="{{ $member->updated_by->nama }}" disabled>
+																</div>
+															@endif
+															
 														</form>
 													</div>
 												</div>

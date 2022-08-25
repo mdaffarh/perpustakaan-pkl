@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Member;
-use App\Models\MemberUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,8 +17,8 @@ class MemberUserController extends Controller
     public function index()
     {
         return view('table.member-users.index',[
-            'memberUsers' => MemberUser::all(),
-            'members' => Member::all()
+            'memberUsers' => User::whereNotNull('member_id')->get(),
+            'members' => Member::whereNull('signed')->get()
         ]);
     }
 
@@ -41,18 +41,21 @@ class MemberUserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'member_id' => 'required|unique:tb_member_users',
-            'username' => ['required','min:3','max:255','unique:tb_member_users'],
+            'member_id' => 'required|unique:users',
+            'username' => ['required','min:3','max:255','unique:users'],
             'password' => 'required'
         ]);
 
         // $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        MemberUser::create($validatedData);
+        Member::where('id',$validatedData['member_id'])->update(['signed' => true]);
+
+        User::create($validatedData);
 
         // $request->session()->flash('success', 'Registration successfull! Please login');
         
+
         toast('User anggota telah dibuat!','success');
         return redirect('/table/member-users');
     }
@@ -63,7 +66,7 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function show(MemberUser $memberUser){
+    public function show(User $memberUser){
         return view('table.members.show',[
             'memberUser' => $memberUser
         ]);
@@ -75,7 +78,7 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $memberUser){
+    public function edit(User $memberUser){
         return view('table.member-users.edit',[
             'memberUser' => $memberUser
         ]);
@@ -88,7 +91,7 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MemberUser $memberUser)
+    public function update(Request $request, User $memberUser)
     {
         $rules = [
             'member_id' => 'required',
@@ -97,7 +100,7 @@ class MemberUserController extends Controller
         ];
     
         if($request->username != $memberUser->username){
-            $rules['username'] = 'required|unique:tb_member_users';
+            $rules['username'] = 'required|unique:users';
         }
 
         $validatedData = $request->validate($rules);
@@ -105,7 +108,7 @@ class MemberUserController extends Controller
             $validatedData['password'] = Hash::make($validatedData['password']);
         }
 
-        MemberUser::where('id',$memberUser->id)->update($validatedData);
+        User::where('id',$memberUser->id)->update($validatedData);
 
         toast('User anggota telah diedit!','success');
         return redirect('/table/member-users');
@@ -117,9 +120,10 @@ class MemberUserController extends Controller
      * @param  \App\Models\MemberUser  $memberUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MemberUser $memberUser)
+    public function destroy(User $memberUser)
     {
-        MemberUser::destroy($memberUser->id);
+        Member::where('id',$memberUser->member_id)->update(['signed' => null]);
+        User::destroy($memberUser->id);
         toast('User anggota telah dihapus!','success');
         return redirect('/table/member-users');
     }

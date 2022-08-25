@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
+            $table->boolean('signed')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
