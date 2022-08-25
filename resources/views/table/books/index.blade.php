@@ -125,7 +125,7 @@
 								<th>Judul Buku</th>
 								<th>Penulis</th>
 								<th>Tanggal Masuk</th>
-								<th>Action</th>
+								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
