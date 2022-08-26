@@ -27,7 +27,7 @@
 										<div class="modal-body">
 											<form action="/table/staffs" method="post" enctype="multipart/form-data">
 												@csrf
-												<input type="hidden" name="created_by" value="{{ auth()->user()->staff_id }}">
+							
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">NIP</label>
 													<input required name="nip" type="number"  required class="form-control" id="floatingInput3">
@@ -109,7 +109,7 @@
 														<form action="/table/staffs/{{ $staff->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
-															<input type="hidden" name="updated_by" value="{{ auth()->user()->staff_id }}">
+															
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIP</label>
 																<input required name="nip" type="number"  required class="form-control" id="floatingInput3" value="{{ $staff->nip }}">
@@ -142,10 +142,7 @@
 																<label for="floatingInput3">Email</label>
 																<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $staff->email }}">
 															</div>
-															{{-- <div class="form-floating mb-3">
-																<label for="floatingInput3">Didaftarkan oleh</label>
-																<input required name="created_by" type="text" required class="form-control" id="floatingInput3" value="{{ $staff->alamat }}">
-															</div> --}}
+															
 															<div class="input-group">
 																<button class="btn btn-success rounded me-1" type="submit">Submit</button>
 															</div>
@@ -209,6 +206,16 @@
 																<label for="floatingInput3">Email</label>
 																<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $staff->email }}" disabled>
 															</div>
+															@if ($staff->created_by)
+																<div class="form-floating mb-3">
+																	<label for="floatingInput3">Didaftarkan pada {{ $staff->created_at }} oleh {{ $staff->creator->nama }}</label>
+																</div>
+															@endif
+															@if ($staff->updated_by)
+																<div class="form-floating mb-3">
+																	<label for="floatingInput3">Dieditkan pada {{ $staff->updated_at }} oleh {{ $staff->editor->nama }}</label>
+																</div>
+															@endif
 														</form>
 													</div>
 												</div>

@@ -28,6 +28,9 @@ class StaffController extends Controller
             'alamat' => 'required',
             'email' => 'required|unique:tb_staffs'
         ]);
+
+        $validatedData['created_by'] = auth()->user()->staff_id;
+        
         Staff::create($validatedData);
 
         toast('Data staff telah ditambahkan!','success');
@@ -67,6 +70,8 @@ class StaffController extends Controller
 
 
         $validatedData = $request->validate($rules);
+
+        $validatedData['updated_by'] = auth()->user()->staff_id;
 
         Staff::where('id',$staff->id)->update($validatedData);
 

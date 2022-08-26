@@ -42,17 +42,21 @@ Route::get('/dashboard', function(){
 //     });
 // });
 
-Route::resource('/table/members', MemberController::class)->middleware('auth'); 
-Route::resource('/table/books', BookController::class)->middleware('auth');
-Route::resource('/table/stocks', StockController::class)->middleware('auth');
-Route::resource('/table/schools', SchoolController::class)->middleware('auth');
-Route::resource('/table/shifts', ShiftController::class)->middleware('auth');
+// Staff = penjaga,admin,dll
 
-Route::resource('/table/member-users', MemberUserController::class)->middleware('auth');
+// Khusus staff dan admin
+Route::resource('/table/members', MemberController::class)->middleware('staff'); 
+Route::resource('/table/books', BookController::class)->middleware('staff');
+Route::resource('/table/stocks', StockController::class)->middleware('staff');
+Route::resource('/table/schools', SchoolController::class)->middleware('staff');
+Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
 
-//Admin
+Route::resource('/table/member-users', MemberUserController::class)->middleware('staff');
+
+Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('staff');
+// 
+
+//Khusus Admin
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 //
-
-Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('auth');

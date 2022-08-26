@@ -34,7 +34,7 @@ class MemberController extends Controller
             'alamat'=> 'required',
         ]);
 
-
+        $validatedData['created_by'] = auth()->user()->staff_id;
         
         Member::create($validatedData);
 
@@ -73,6 +73,8 @@ class MemberController extends Controller
         }
 
         $validatedData = $request->validate($rules);
+
+        $validatedData['updated_by'] = auth()->user()->staff_id;
 
         Member::where('id',$member->id)->update($validatedData);
 

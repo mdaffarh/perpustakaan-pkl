@@ -34,4 +34,15 @@ class Staff extends Model
     {
         return $this->hasMany(Borrow::class);
     }
+
+    protected $with = ['creator','editor'];
+
+    public function creator()
+    {
+        return $this->belongsTo(Staff::class, 'created_by');
+    }
+    public function editor()
+    {
+        return $this->belongsTo(Staff::class, 'updated_by');
+    }
 }

@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('email');
             $table->boolean('signed')->nullable();
             $table->timestamps();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
         });
     }
 

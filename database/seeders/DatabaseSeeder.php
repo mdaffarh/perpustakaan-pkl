@@ -29,9 +29,20 @@ class DatabaseSeeder extends Seeder
         $user = [
             [
                 'staff_id' => 1,
-                'username' => 'staff',
+                'username' => 'admin',
                 'password' =>bcrypt('123'),
                 'role'=> 'admin'
+            ],
+            [
+                'staff_id' => 2,
+                'username' => 'penjaga',
+                'password' =>bcrypt('123'),
+                'role'=> 'penjaga'
+            ],
+            [
+                'member_id' => 1,
+                'username' => 'anggota',
+                'password' =>bcrypt('123')
             ],
             ];
 

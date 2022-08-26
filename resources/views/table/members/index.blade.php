@@ -112,7 +112,7 @@
 														<form action="/table/members/{{ $member->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
-															{{-- <input type="hidden" name="created_by" value="{{ auth()->user()->staff_id }}"> --}}
+															
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIS</label>
 																<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->nis }}">
@@ -185,7 +185,7 @@
 														<form action="/table/members/{{ $member->id }}" method="post" enctype="multipart/form-data">
 															@method('put')
 															@csrf
-															<input type="hidden" name="updated_by" value="{{ auth()->user()->staff_id }}">
+															
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">NIS</label>
 																<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->nis }}" disabled>
@@ -220,14 +220,12 @@
 															</div>
 															@if ($member->created_by)
 																<div class="form-floating mb-3">
-																	<label for="floatingInput3">Didaftarkan oleh</label>
-																	<input required name="created_by" type="text" required class="form-control" id="floatingInput3" value="{{ $member->created_by->nama }}" disabled>
+																	<label for="floatingInput3">Didaftarkan pada {{ $member->created_at }} oleh {{ $member->creator->nama }}</label>
 																</div>
 															@endif
-															@if ($member->created_by)
+															@if ($member->updated_by)
 																<div class="form-floating mb-3">
-																	<label for="floatingInput3">Diedit oleh</label>
-																	<input required name="updated_by" type="text" required class="form-control" id="floatingInput3" value="{{ $member->updated_by->nama }}" disabled>
+																	<label for="floatingInput3">Dieditkan pada {{ $member->updated_at }} oleh {{ $member->editor->nama }}</label>
 																</div>
 															@endif
 															
