@@ -63,6 +63,7 @@
 								<th>No</th>
 								<th>Nama Anggota</th>
 								<th>Username</th>
+								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>

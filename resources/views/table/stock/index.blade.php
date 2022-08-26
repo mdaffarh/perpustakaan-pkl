@@ -61,6 +61,7 @@
 								<th>Penulis</th>
 								<th>Stok Awal</th>
 								<th>Stok Akhir</th>
+								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
