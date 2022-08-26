@@ -12,7 +12,8 @@ class StaffUserController extends Controller
     public function index(){
         return view('table.staff-users.index', [
             'staffUsers' => User::whereNotNull('staff_id')->get(),
-            'staffs' => Staff::whereNull('signed')->get()
+            'staffUnsigned' => Staff::whereNull('signed')->get(),
+            'staffs' => Staff::all()
         ]);
     }
 

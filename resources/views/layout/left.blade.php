@@ -155,12 +155,6 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/table/schools" class="nav-link {{ Request::is('table/schools*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sekolah</p>
-                  </a>
-                </li>
-                <li class="nav-item">
                   <a href="/table/shifts" class="nav-link {{ Request::is('table/shifts*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Shift Jaga</p>
@@ -179,6 +173,12 @@
                   <a href="/table/staff-users" class="nav-link {{ Request::is('table/staff-users*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>User Staff</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/table/schools" class="nav-link {{ Request::is('table/schools*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sekolah</p>
                   </a>
                 </li>  
               @endcan

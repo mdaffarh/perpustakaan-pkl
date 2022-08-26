@@ -1,8 +1,8 @@
 @extends('layout.main')
-@section('title', "Perpustakaan")
+@section('title', "User Staff")
 
 @section('content')
-	@include('sweetalert::alert')
+@include('sweetalert::alert')
 	<div class="row">
 		<div class="col">
 			<div class="card">
@@ -30,8 +30,8 @@
 													<label for="floatingInput3">Staff</label>
 													<select class="form-select form-control" aria-label="Default select example" name="staff_id" required>
 														<option value="" selected disabled><-- Pilih Staff --></option>
-														@foreach($staffs as $staff)
-														<option value="{{ $staff->id }}">{{ $staff->nama }}</option>
+														@foreach($staffUnsigned as $staff)
+															<option value="{{ $staff->id }}">{{ $staff->nama }}</option>
 														@endforeach
 													</select>
 												</div>

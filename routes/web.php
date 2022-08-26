@@ -23,12 +23,15 @@ use App\Http\Controllers\MemberRegistrationController;
 */
 
 Route::get('/', function () {
-    return view('login.index');
-});
+    return redirect('/dashboard');
+})->middleware('auth');
 
-Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');//name buat ngubah nama route ke login
-Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/logout', [LoginController::class, 'logout']);
+
+Route::controller(LoginController::class)->group(function(){
+    Route::get('/login','index')->name('login')->middleware('guest');
+    Route::post('/login','authenticate');
+    Route::post('/logout','logout');
+});
 
 
 Route::get('/dashboard', function(){
@@ -36,19 +39,12 @@ Route::get('/dashboard', function(){
 })->middleware('auth');
 
 
-// Route::group(['middleware' => ['auth']],function (){
-//     Route::group(['middleware' => ['CheckUserLogin:staff']], function(){
-//         Route::resource('dashboard', dashboard::class);
-//     });
-// });
-
 // Staff = penjaga,admin,dll
 
 // Khusus staff dan admin
 Route::resource('/table/members', MemberController::class)->middleware('staff'); 
 Route::resource('/table/books', BookController::class)->middleware('staff');
 Route::resource('/table/stocks', StockController::class)->middleware('staff');
-Route::resource('/table/schools', SchoolController::class)->middleware('staff');
 Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
 
 Route::resource('/table/member-users', MemberUserController::class)->middleware('staff');
@@ -59,4 +55,5 @@ Route::resource('/transaction/member-registrations', MemberRegistrationControlle
 //Khusus Admin
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
+Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 //

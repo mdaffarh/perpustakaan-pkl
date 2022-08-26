@@ -17,8 +17,9 @@ class MemberUserController extends Controller
     public function index()
     {
         return view('table.member-users.index',[
-            'memberUsers' => User::whereNotNull('member_id')->get(),
-            'members' => Member::whereNull('signed')->get()
+            'memberUsers' => User::whereNotNull('member_id')->get(), //milih user yang ada member idnya
+            'memberUnsigned' => Member::whereNull('signed')->get(), //milih anggota yang belum terdaftar
+            'members' => Member::all() //milih semua anggota
         ]);
     }
 

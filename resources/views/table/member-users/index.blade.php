@@ -31,8 +31,8 @@
 													<label for="floatingInput3">Anggota</label>
 													<select class="form-select form-control" aria-label="Default select example" name="member_id" required>
 														<option value="" selected disabled><-- Pilih Anggota --></option>
-														@foreach($members as $member)
-														<option value="{{ $member->id }}">{{ $member->nama }}</option>
+														@foreach($memberUnsigned as $member)
+															<option value="{{ $member->id }}">{{ $member->nama }}</option>
 														@endforeach
 													</select>
 												</div>
