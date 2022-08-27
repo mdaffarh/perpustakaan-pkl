@@ -42,14 +42,13 @@ Route::get('/dashboard', function(){
 // Staff = penjaga,admin,dll
 
 // Khusus staff dan admin
+Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('staff');
+
 Route::resource('/table/members', MemberController::class)->middleware('staff'); 
 Route::resource('/table/books', BookController::class)->middleware('staff');
 Route::resource('/table/stocks', StockController::class)->middleware('staff');
 Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
-
 Route::resource('/table/member-users', MemberUserController::class)->middleware('staff');
-
-Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('staff');
 // 
 
 //Khusus Admin
