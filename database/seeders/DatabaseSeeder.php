@@ -47,7 +47,9 @@ class DatabaseSeeder extends Seeder
             ];
 
             foreach($user as $key => $value) {
-                Staff::where('id',$value['staff_id'])->update(['signed' => true]);
+                Staff::where('id',1)->update(['signed' => true]);
+                Staff::where('id',2)->update(['signed' => true]);
+                Member::where('id',1)->update(['signed' => true]);
                 User::create($value);
             }
         
