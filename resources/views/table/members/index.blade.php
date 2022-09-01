@@ -218,16 +218,14 @@
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
 															</div>
-															@if ($member->created_by)
-																<div class="form-floating mb-3">
+															<div class="form-floating mb-3">
+																@if ($member->created_by)
 																	<label for="floatingInput3">Didaftarkan pada {{ $member->created_at }} oleh {{ $member->creator->nama }}</label>
-																</div>
-															@endif
-															@if ($member->updated_by)
-																<div class="form-floating mb-3">
+																@endif
+																@if ($member->updated_by)
 																	<label for="floatingInput3">Dieditkan pada {{ $member->updated_at }} oleh {{ $member->editor->nama }}</label>
-																</div>
-															@endif
+																@endif
+															</div>
 															
 														</form>
 													</div>

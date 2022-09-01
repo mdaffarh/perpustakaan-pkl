@@ -2,7 +2,7 @@
 @section('title', "User Anggota")
 
 @section('content')
-@include('sweetalert::alert')
+	@include('sweetalert::alert')
 
 	<div class="row">
 		<div class="col">

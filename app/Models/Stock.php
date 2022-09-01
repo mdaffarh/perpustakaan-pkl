@@ -17,6 +17,6 @@ class Stock extends Model
 
     public function book()
     {
-    	return $this->belongsTo(Book::class, 'book_id');
+    	return $this->belongsTo(Book::class);
     }
 }

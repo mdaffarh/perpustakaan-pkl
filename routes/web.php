@@ -3,13 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\MemberUserController;
-use App\Http\Controllers\ShiftController;
-use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffUserController;
+use App\Http\Controllers\MemberUserController;
+use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
 /*
 |--------------------------------------------------------------------------
@@ -55,4 +56,6 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
+
+Route::resource('/transaction/staff-registrations', StaffRegistrationController::class)->middleware('admin');
 //

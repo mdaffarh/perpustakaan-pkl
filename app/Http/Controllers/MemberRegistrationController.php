@@ -2,35 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Member;
-use App\Models\MemberRegistration;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class MemberRegistrationController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return view('transaction.member-registrations.index',[
-            'memberRegistrations' => MemberRegistration::all()
-            // 'members' => Member::all()
-        ]);
-    }
-    public function indexs()
-    {
-        return view('table.members.index',[
+        return view ('transaction.member-registrations.index',[
             'members' => Member::all()
         ]);
     }
 
-    public function create(){
-        return view('table.members.create',[
-            'members' => Member::all() 
-        ]);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
-    
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'nis' => 'required|unique:tb_members',
             'nama' => 'required',
@@ -39,57 +45,61 @@ class MemberRegistrationController extends Controller
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
+            'alamat'=> 'required',
         ]);
 
+        $validatedData['created_by'] = auth()->user()->staff_id;
         
         Member::create($validatedData);
 
         toast('Data anggota telah ditambahkan!','success');
-        return redirect('/table/members');
+        return redirect('/transaction/member-registrations');
 
 
     }
 
-    public function show(Member $member){
-        return view('table.members.show',[
-            'member' => $member
-        ]);
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Member  $member
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Member $member)
+    {
+        //
     }
 
-    public function edit(Member $member){
-        return view('table.members.edit',[
-            'member' => $member
-        ]);
-    }
-    
-    public function update(Request $request, Member $member){
-        $rules = [
-            'nis' => 'required', //Jangan unique klo update
-            'nama' => 'required',
-            'jenis_kelamin' => 'required',//
-            'kelas' => 'required',//
-            'jurusan' => 'required',
-            'tanggal_lahir' => 'required',
-            'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
-        ];
-    
-        if($request->nis != $member->nis){
-            $rules['nis'] = 'required|unique:tb_members';
-        }
-
-        $validatedData = $request->validate($rules);
-
-        Member::where('id',$member->id)->update($validatedData);
-
-        toast('Data anggota telah diedit!','success');
-        return redirect('/table/members');
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Member  $member
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Member $member)
+    {
+        //
     }
 
-    public function destroy(Member $member){
-        Member::destroy($member->id);
-        toast('Data anggota telah dihapus!','success');
-        return redirect('/table/members');
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Member  $member
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Member $member)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Member  $member
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Member $member)
+    {
+        //
     }
 }

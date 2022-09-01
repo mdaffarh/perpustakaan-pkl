@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Pendaftaran Anggota")
+@section('title', "Pendaftaran Staff")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -8,33 +8,33 @@
 		<div class="col">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">Pendaftaran Anggota</h3>
+					<h3 class="card-title">Pendaftaran Staff</h3>
 				</div>
 		
 				<div class="card-body">
-                    <form action="/transaction/member-registrations" method="post" enctype="multipart/form-data">
-						@csrf
-						<div class="form-floating mb-3">
-							<label for="nis">NIS</label>
-							<input name="nis" type="tel" maxlength="11" class="form-control @error('nis') is-invalid @enderror" id="nis" value="{{ old('nis') }}"  required>
-							@error('nis')
+                    <form action="/transaction/staff-registrations" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <label for="nip">NIP</label>
+                            <input required name="nip" type="number"  required class="form-control @error('nip') is-invalid @enderror" id="nip" value="{{ old('nip') }}">
+                            @error('nip')
 								<div class="invalid-feedback">
 									{{ $message }}
 							    </div>
-							@enderror	
-						</div>
-						<div class="form-floating mb-3">
+							@enderror							
+                        </div>
+                        <div class="form-floating mb-3">
                             <label for="nama">Nama</label>
-                            <input name="nama" type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" value="{{ old('nama') }}"  required>
+                            <input required name="nama" type="text" required class="form-control @error('nama') is-invalid @enderror" id="nama" value="{{ old('nama') }}">
                             @error('nama')
 								<div class="invalid-feedback">
 									{{ $message }}
 							    </div>
 							@enderror
                         </div>
-						<div class="form-floating mb-3">
+                        <div class="form-floating mb-3">
                             <label for="jenis_kelamin">Jenis Kelamin</label>
-                            <select class="form-select form-control @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" aria-label="Default select example" name="jenis_kelamin"  required>
+                            <select class="form-select form-control @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" aria-label="Default select example" name="jenis_kelamin" required>
                                 @if (old('jenis_kelamin') == "Laki-laki")
                                     <option value="" disabled></option>
                                     <option value="Laki-laki" selected>Laki-laki</option>
@@ -55,55 +55,47 @@
 							    </div>
 							@enderror
                         </div>
-						<div class="form-floating mb-3">
-							<label for="kelas">Kelas</label>
-							<input name="kelas" type="text" class="form-control @error('kelas') is-invalid @enderror" id="kelas" value="{{ old('kelas') }}"  required>
-							@error('kelas')
-								<div class="invalid-feedback">
-									{{ $message }}
-							    </div>
-							@enderror	
-						</div>
-						<div class="form-floating mb-3">
-							<label for="jurusan">Jurusan</label>
-							<input name="jurusan" type="text" class="form-control @error('') is-invalid @enderror" id="jurusan" value="{{ old('') }}"  required>
-							@error('')
-								<div class="invalid-feedback">
-									{{ $message }}
-							    </div>
-							@enderror	
-						</div>
-						<div class="form-floating mb-3">
+                        <div class="form-floating mb-3">
                             <label for="tanggal_lahir">Tanggal Lahir</label>
-                            <input name="tanggal_lahir" type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}"  required>
+                            <input required name="tanggal_lahir" type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" value="{{ old('tanggal_lahir') }}">
                             @error('tanggal_lahir')
 								<div class="invalid-feedback">
 									{{ $message }}
 							    </div>
 							@enderror
                         </div>
-						<div class="form-floating mb-3">
+                        <div class="form-floating mb-3">
                             <label for="nomor_telepon">Nomor Telepon</label>
-                            <input name="nomor_telepon" type="tel" maxlength="13" class="form-control @error('nomor_telepon') is-invalid @enderror" id="nomor_telepon" value="{{ old('nomor_telepon') }}"  required>
+                            <input required name="nomor_telepon" type="tel" maxlength="13" class="form-control @error('nomor_telepon') is-invalid @enderror" id="nomor_telepon" value="{{ old('nomor_telepon') }}">
                             @error('nomor_telepon')
 								<div class="invalid-feedback">
 									{{ $message }}
 							    </div>
 							@enderror
                         </div>
-						<div class="form-floating mb-3">
+                        <div class="form-floating mb-3">
                             <label for="alamat">Alamat</label>
-                            <input name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" value="{{ old('alamat') }}"  required>
+                            <input required name="alamat" type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" value="{{ old('alamat') }}">
                             @error('alamat')
 								<div class="invalid-feedback">
 									{{ $message }}
 							    </div>
 							@enderror
                         </div>
-						<div class="input-group">
-							<button class="btn btn-success rounded me-1" type="submit">Submit</button>
-						</div>
-					</form>
+                        <div class="form-floating mb-3">
+                            <label for="email">Email</label>
+                            <input required name="email" type="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{ old('') }}">
+                            @error('email')
+								<div class="invalid-feedback">
+									{{ $message }}
+							    </div>
+							@enderror
+                        </div>
+                        <div class="input-group">
+                            <button class="btn btn-success rounded me-1" type="submit">Submit</button>
+                        </div>
+                    </form>
+                
 				</div>
 			</div>
 		</div>

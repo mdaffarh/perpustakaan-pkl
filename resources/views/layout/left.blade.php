@@ -51,7 +51,7 @@
           </li>
           {{-- Transaksi --}} 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Transaksi
@@ -70,7 +70,7 @@
 
               @can('admin')
                 <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="/transaction/staff-registrations" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pendaftaran Staff</p>
                   </a>
