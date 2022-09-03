@@ -11,6 +11,7 @@ use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\BookDonationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,3 +57,5 @@ Route::resource('/table/staff-users', StaffUserController::class)->middleware('a
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 //
+
+Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
