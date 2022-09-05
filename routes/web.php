@@ -12,6 +12,7 @@ use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\BookDonationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,7 @@ Route::get('/', function () {
 
 Route::controller(LoginController::class)->group(function(){
     Route::get('/login','index')->name('login')->middleware('guest');
+    Route::get('/register','register')->name('register')->middleware('guest');
     Route::post('/login','authenticate');
     Route::post('/logout','logout');
 });
@@ -58,4 +60,5 @@ Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 
 Route::resource('/transaction/staff-registrations', StaffRegistrationController::class)->middleware('admin');
-//
+Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
+

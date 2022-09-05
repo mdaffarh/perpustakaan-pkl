@@ -92,7 +92,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="/transaction/book-donations" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Sumbangan Buku</p>
                   </a>
