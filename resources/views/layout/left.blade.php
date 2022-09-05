@@ -61,7 +61,7 @@
             <ul class="nav nav-treeview">
               @can('staff')
                 <li class="nav-item">
-                  <a href="/transaction/member-registrations" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
+                  <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('/transaction/member-registrations/index*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pendaftaran Anggota</p>
                   </a>
@@ -70,7 +70,7 @@
 
               @can('admin')
                 <li class="nav-item">
-                  <a href="" class="nav-link">
+                  <a href="/transaction/staff-registrations/index" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pendaftaran Staff</p>
                   </a>

@@ -11,28 +11,19 @@ class MemberRegistrationController extends Controller
     public function index()
     {
         return view('transaction.member-registrations.index',[
-            'memberRegistrations' => MemberRegistration::all()
-            // 'members' => Member::all()
-        ]);
-    }
-    public function indexs()
-    {
-        return view('table.members.index',[
-            'members' => Member::all()
+            'memberRegistration' => MemberRegistration::all()->where('status', '0')
         ]);
     }
 
     public function create(){
-        return view('table.members.create',[
-            'members' => Member::all() 
-        ]);
+        
     }
     
     public function store(Request $request)
     {
 
         $validatedData = $request->validate([
-            'nis' => 'required|unique:tb_members',
+            'nis' => 'required',
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
             'kelas' => 'required',//
@@ -43,28 +34,19 @@ class MemberRegistrationController extends Controller
         ]);
 
         
-        Member::create($validatedData);
+        MemberRegistration::create($validatedData);
+        alert()->success('success','waiting for approved by admin');
 
-        toast('Data anggota telah ditambahkan!','success');
-        return redirect('/table/members');
+        return redirect('/register');
 
-
-    }
-
-    public function show(Member $member){
-        return view('table.members.show',[
-            'member' => $member
-        ]);
-    }
-
-    public function edit(Member $member){
-        return view('table.members.edit',[
-            'member' => $member
-        ]);
     }
     
-    public function update(Request $request, Member $member){
+    public function approved(Request $request, MemberRegistration $memberRegistration){
         $rules = [
+            'status'        => 'required'
+        ];
+
+        $member = [
             'nis' => 'required', //Jangan unique klo update
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
@@ -74,17 +56,26 @@ class MemberRegistrationController extends Controller
             'nomor_telepon'=> 'required',
             'alamat'=> 'required'
         ];
-    
-        if($request->nis != $member->nis){
-            $rules['nis'] = 'required|unique:tb_members';
-        }
 
         $validatedData = $request->validate($rules);
+        $validatedDataMember = $request->validate($member);
 
-        Member::where('id',$member->id)->update($validatedData);
+        MemberRegistration::where('id', $request->id)->update($validatedData);
+        Member::create($validatedDataMember);
 
-        toast('Data anggota telah diedit!','success');
+        toast('Data anggota Ditambahkan!','success');
         return redirect('/table/members');
+    }
+
+    public function tolak(Request $request, MemberRegistration $memberRegistration){
+        $registrasi = [
+            'status' => $request->status
+        ];
+
+        MemberRegistration::where('id', $request->id)->update($registrasi);
+
+        toast('Data Ditolak!','success');
+        return redirect('/transaction/member-registrations/index');
     }
 
     public function destroy(Member $member){
