@@ -29,6 +29,7 @@ Route::get('/', function () {
 
 Route::controller(LoginController::class)->group(function(){
     Route::get('/login','index')->name('login')->middleware('guest');
+    Route::get('/register','register')->name('register')->middleware('guest');
     Route::post('/login','authenticate');
     Route::post('/logout','logout');
 });
