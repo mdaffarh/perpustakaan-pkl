@@ -17,11 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('nip')->unique();
             $table->string('nama');
-            $table->boolean('jenis_kelas');//
+            $table->boolean('jenis_kelamin');//
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
-            $table->text('deskripsi');
+            $table->integer('status');
+            $table->integer('user_verifikasi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
