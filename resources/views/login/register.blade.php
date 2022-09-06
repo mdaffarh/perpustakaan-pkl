@@ -2,20 +2,15 @@
 <html>
     <head>
     	<!-- Font Awesome -->
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          rel="stylesheet"
-        />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
         <!-- Google Fonts -->
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+
         <!-- MDB -->
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
-          rel="stylesheet"
-        />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
+
+        <!-- costum css -->
         <link rel="stylesheet" type="text/css" href="{{ asset('/') }}assets/css/register.css">
     	<title></title>
     </head>
@@ -173,7 +168,13 @@
                                 <label class="form-label" for="nama-staff">Nama</label>
                             </div>
 
-                             <!-- Gender input -->
+                            <!-- email input -->
+                            <div class="input-group mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            </div>
+
+                            <!-- Gender input -->
                             <div class="mb-4">
                                 <select id="gender" name="jenis_kelamin" class="form-select">
                                     <option disabled>Jenis Kelamin</option>

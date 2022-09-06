@@ -77,10 +77,4 @@ class MemberRegistrationController extends Controller
         toast('Data Ditolak!','success');
         return redirect('/transaction/member-registrations/index');
     }
-
-    public function destroy(Member $member){
-        Member::destroy($member->id);
-        toast('Data anggota telah dihapus!','success');
-        return redirect('/table/members');
-    }
 }

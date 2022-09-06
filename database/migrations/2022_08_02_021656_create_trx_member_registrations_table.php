@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nis')->unique();
             $table->string('nama');
-            $table->boolean('jenis_kelamin');//
+            $table->string('jenis_kelamin');//
             $table->string('kelas');//
             $table->string('jurusan');//
             $table->date('tanggal_lahir');

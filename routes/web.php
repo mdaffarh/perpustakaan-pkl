@@ -45,6 +45,8 @@ Route::controller(MemberRegistrationController::class)->group(function(){
 
 Route::controller(StaffRegistrationController::class)->group(function(){
 	Route::get('/transaction/staff-registrations/index','index')->middleware('staff');
+    Route::post('/transaction/staff-registrations/tolak/{id}','tolak')->middleware('staff');
+    Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('staff');
     Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
 });
 

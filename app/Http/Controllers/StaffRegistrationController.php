@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\StaffRegistration;
+use App\Models\Staff;
 use Illuminate\Http\Request;
+use Auth;
 
 class StaffRegistrationController extends Controller
 {
     public function index(){
 
     	return view('transaction.staff-registrations.index',[
-            'staffRegistration' => StaffRegistration::all()
+            'staffRegistration' => StaffRegistration::all()->where('status', '0')
         ]);
     }
 
@@ -21,12 +23,13 @@ class StaffRegistrationController extends Controller
     public function store(Request $request){
         
         $validatedData = $request->validate([
-            'nip' 	=> 'required',
-            'nama' 	=> 'required',
+            'nip'           => 'required',
+            'nama'          => 'required',
+            'email'         => 'required',
             'jenis_kelamin' => 'required',
             'tanggal_lahir' => 'required',
-            'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
+            'nomor_telepon' => 'required',
+            'alamat'        => 'required'
         ]);
 
         
@@ -36,19 +39,40 @@ class StaffRegistrationController extends Controller
         return redirect('/register');
     }
 
-    public function show(User $staffUser){
-        
+    public function approved(Request $request, StaffRegistration $staffRegistration){
+        $rules = [
+            'status'            => $request->status,
+            'user_verifikasi'   => Auth::user()->id
+        ];
+
+        $staff = [
+            'nip'           => 'required', //Jangan unique klo update
+            'nama'          => 'required',
+            'email'         => 'required',
+            'jenis_kelamin' => 'required',//
+            'tanggal_lahir' => 'required',
+            'nomor_telepon' => 'required',
+            'alamat'        => 'required'
+        ];
+
+        $validatedDataStaff     = $request->validate($staff);
+
+        StaffRegistration::where('id', $request->id)->update($rules);
+        Staff::create($validatedDataStaff);
+
+        toast('Data anggota Ditambahkan!','success');
+        return redirect('/table/staffs');
     }
 
-    public function edit(User $staffUser){
-        
-    }
-    
-    public function update(Request $request, User $staffUser){
-        
-    }
+    public function tolak(Request $request, StaffRegistration $staffRegistration){
+        $registrasi = [
+            'status'            => $request->status,
+            'user_verifikasi'   => Auth::user()->id
+        ];
 
-    public function destroy(User $staffUser){
-        
+        StaffRegistration::where('id', $request->id)->update($registrasi);
+
+        toast('Data sudah Ditolak!','success');
+        return redirect('/transaction/staff-registrations/index');
     }
 }
