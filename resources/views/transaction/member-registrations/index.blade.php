@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Tabel Pendaftaran Anggota")
+@section('title', "Pendaftaran Anggota")
 
 @section('content')
 	@include('sweetalert::alert')

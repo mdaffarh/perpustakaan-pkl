@@ -28,10 +28,10 @@
                         <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">Login</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="tab-register-member" data-mdb-toggle="pill" href="#pills-register-member" role="tab" aria-controls="pills-register-member" aria-selected="false">Register Anggota</a>
+                        <a class="nav-link" id="tab-register-member" data-mdb-toggle="pill" href="#pills-register-member" role="tab" aria-controls="pills-register-member" aria-selected="false">Pendaftaran Anggota</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="tab-register-staff" data-mdb-toggle="pill" href="#pills-register-staff" role="tab" aria-controls="pills-register-staff" aria-selected="false">Register Staff</a>
+                        <a class="nav-link" id="tab-register-staff" data-mdb-toggle="pill" href="#pills-register-staff" role="tab" aria-controls="pills-register-staff" aria-selected="false">Pendaftaran Staff</a>
                     </li>
                 </ul>
                 <!-- Pills navs -->
@@ -76,32 +76,37 @@
                         <form action="/transaction/member-registrations/store" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center mb-3">
-                                <p>Register Anggota</p>
+                                <p>Pendaftaran Anggota</p>
                                 <hr>
                             </div>
 
                             <!-- Nis input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="nis" name="nis" class="form-control" />
+                                <input type="number" id="nis" name="nis" class="form-control @error('nis') is-invalid @enderror" value="{{ old('nis') }}" />
                                 <label class="form-label" for="nis">NIS</label>
+                                @error('nis')
+                                     <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="row g-3 mb-4">
                                 <div class="col-sm-6">
                                     <div class="form-outline">
-                                        <input type="text" name="nama" id="nama-anggota" class="form-control" />
+                                        <input type="text" name="nama" id="nama-anggota" class="form-control"  value="{{ old('nama') }}"/>
                                         <label class="form-label" for="nama-anggota">Nama</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-outline">
-                                        <input type="number" name="kelas" id="kelas" class="form-control" />
+                                        <input type="number" name="kelas" id="kelas" class="form-control"  value="{{ old('kelas') }}"/>
                                         <label class="form-label" for="kelas">Kelas</label>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-outline">
-                                        <input type="text" name="jurusan" id="jurusan" class="form-control" />
+                                        <input type="text" name="jurusan" id="jurusan" class="form-control"  value="{{ old('jurusan') }}"/>
                                         <label class="form-label" for="jurusan">Jurusan</label>
                                     </div>
                                 </div>
@@ -110,7 +115,7 @@
                             <!-- Gender input -->
                             <div class="mb-4">
                                 <select id="gender" name="jenis_kelamin" class="form-select">
-                                    <option disabled>Jenis Kelamin</option>
+                                    <option disabled selected>Jenis Kelamin</option>
                                     <option value="Laki-Laki">Laki-Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
@@ -118,32 +123,23 @@
 
                             <!-- ttl input -->
                             <div class="form-outline mb-4">
-                                <input type="date" id="ttl-anggota" class="form-control" name="tanggal_lahir" />
-                                <label class="form-label" for="ttl-anggota">tanggal Lahir</label>
+                                <input type="date" id="ttl-anggota" class="form-control" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}"/>
+                                <label class="form-label" for="ttl-anggota">Tanggal Lahir</label>
                             </div>
 
                             <!-- NO Telp input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="no" class="form-control" name="nomor_telepon" />
-                                <label class="form-label" for="no">No Telp</label>
+                                <input type="number" id="no" class="form-control" name="nomor_telepon"  value="{{ old('nomor_telepon') }}"/>
+                                <label class="form-label" for="no">Nomor Telepon</label>
                             </div>
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea placeholder="alamat" name="alamat" class="form-control"></textarea>
-                            </div>
-
-
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText"/>
-                                <label class="form-check-label" for="registerCheck">
-                                I have read and agree to the terms
-                                </label>
-                            </div>
+                                <textarea placeholder="Alamat" name="alamat" class="form-control" value="{{ old('alamat') }}"></textarea>
+                            </div> 
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-3">Daftar</button>
                         </form>
                     </div>
 
@@ -152,7 +148,7 @@
                         <form action="/transaction/staff-registrations/store" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="text-center mb-3">
-                                <p>Register Staff</p>
+                                <p>Pendaftaran Staff</p>
                                 <hr>
                             </div>
 
@@ -177,7 +173,7 @@
                             <!-- Gender input -->
                             <div class="mb-4">
                                 <select id="gender" name="jenis_kelamin" class="form-select">
-                                    <option disabled>Jenis Kelamin</option>
+                                    <option disabled selected>Jenis Kelamin</option>
                                     <option>Laki-Laki</option>
                                     <option>Perempuan</option>
                                 </select>
@@ -186,31 +182,22 @@
                             <!-- ttl input -->
                             <div class="form-outline mb-4">
                                 <input type="date" name="tanggal_lahir" id="ttl-staff" class="form-control" />
-                                <label class="form-label" for="ttl-staff">tanggal Lahir</label>
+                                <label class="form-label" for="ttl-staff">Tanggal Lahir</label>
                             </div>
 
                             <!-- no telp input -->
                             <div class="form-outline mb-4">
                                 <input type="number" name="nomor_telepon" id="no-staff" class="form-control" />
-                                <label class="form-label" for="no-staff">No.Telp</label>
+                                <label class="form-label" for="no-staff">Nomor Telepon</label>
                             </div>
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea name="alamat" placeholder="alamat" class="form-control"></textarea>
-                            </div>
-
-
-                            <!-- Checkbox -->
-                            <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" required="" />
-                                <label class="form-check-label" for="registerCheck">
-                                I have read and agree to the terms
-                                </label>
+                                <textarea name="alamat" placeholder="Alamat" class="form-control"></textarea>
                             </div>
 
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-3">Daftar</button>
                         </form>
                     </div>
                 </div>

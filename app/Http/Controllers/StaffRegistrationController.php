@@ -23,7 +23,7 @@ class StaffRegistrationController extends Controller
     public function store(Request $request){
         
         $validatedData = $request->validate([
-            'nip'           => 'required',
+            'nip'           => 'required|unique:tb_staffs',
             'nama'          => 'required',
             'email'         => 'required',
             'jenis_kelamin' => 'required',
@@ -34,7 +34,7 @@ class StaffRegistrationController extends Controller
 
         
         StaffRegistration::create($validatedData);
-        alert()->success('success','waiting for approved by admin');
+        alert()->success('success','Data akan didaftarkan setelah disetujui admin');
 
         return redirect('/register');
     }

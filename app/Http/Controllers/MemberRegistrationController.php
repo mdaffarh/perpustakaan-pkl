@@ -23,7 +23,7 @@ class MemberRegistrationController extends Controller
     {
 
         $validatedData = $request->validate([
-            'nis' => 'required',
+            'nis' => 'required|unique:tb_members',
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
             'kelas' => 'required',//
@@ -35,7 +35,7 @@ class MemberRegistrationController extends Controller
 
         
         MemberRegistration::create($validatedData);
-        alert()->success('success','waiting for approved by admin');
+        alert()->success('success','Data akan didaftarkan setelah disetujui staff');
 
         return redirect('/register');
 
