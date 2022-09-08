@@ -13,6 +13,7 @@ use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberRegistrationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\BookDonationController;
+use App\Http\Controllers\FormController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,6 +53,10 @@ Route::controller(StaffRegistrationController::class)->group(function(){
     Route::post('/transaction/staff-registrations/directStore','directStore')->middleware('admin');
 
     Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
+});
+
+Route::controller(FormController::class)->group(function(){
+    Route::get('/form/book','book')->middleware('staff');
 });
 
 Route::get('/dashboard', function(){

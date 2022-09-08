@@ -13,8 +13,6 @@ class Stock extends Model
         'id'
     ];
 
-    protected $with = ['book'];
-
     public function book()
     {
     	return $this->belongsTo(Book::class);
