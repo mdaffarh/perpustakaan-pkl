@@ -39,6 +39,27 @@ class StaffRegistrationController extends Controller
         return redirect('/register');
     }
 
+    public function directStore(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'nip'           => 'required',
+            'nama'          => 'required',
+            'email'         => 'required',
+            'jenis_kelamin' => 'required',
+            'tanggal_lahir' => 'required',
+            'nomor_telepon' => 'required',
+            'alamat'        => 'required'
+        ]);
+
+        
+        Staff::create($validatedData);
+        toast('Data staff telah ditambahkan!','success');
+
+        return redirect('/transaction/staff-registrations/index');
+
+    }
+
     public function approved(Request $request, StaffRegistration $staffRegistration){
         $rules = [
             'status'            => $request->status,

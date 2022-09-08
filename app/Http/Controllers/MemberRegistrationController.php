@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Member;
+use App\Models\Member;
 use App\Models\MemberRegistration;
 use Illuminate\Http\Request;
 
@@ -38,6 +38,28 @@ class MemberRegistrationController extends Controller
         alert()->success('success','waiting for approved by admin');
 
         return redirect('/register');
+
+    }
+
+    public function directStore(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'nis' => 'required',
+            'nama' => 'required',
+            'jenis_kelamin' => 'required',//
+            'kelas' => 'required',//
+            'jurusan' => 'required',
+            'tanggal_lahir' => 'required',
+            'nomor_telepon'=> 'required',
+            'alamat'=> 'required'
+        ]);
+
+        
+        Member::create($validatedData);
+        toast('Data anggota telah ditambahkan!','success');
+
+        return redirect('/transaction/member-registrations/index');
 
     }
     

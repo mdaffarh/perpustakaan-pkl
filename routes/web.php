@@ -40,13 +40,17 @@ Route::controller(MemberRegistrationController::class)->group(function(){
     Route::get('/transaction/member-registrations/index','index')->middleware('staff');
     Route::post('/transaction/member-registrations/tolak/{id}','tolak')->middleware('staff');
     Route::post('/transaction/member-registrations/approved/{id}','approved')->middleware('staff');
+    Route::post('/transaction/member-registrations/directStore','directStore')->middleware('staff');
+    
     Route::post('/transaction/member-registrations/store','store')->middleware('guest');
 });
 
 Route::controller(StaffRegistrationController::class)->group(function(){
-	Route::get('/transaction/staff-registrations/index','index')->middleware('staff');
-    Route::post('/transaction/staff-registrations/tolak/{id}','tolak')->middleware('staff');
-    Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('staff');
+	Route::get('/transaction/staff-registrations/index','index')->middleware('admin');
+    Route::post('/transaction/staff-registrations/tolak/{id}','tolak')->middleware('admin');
+    Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('admin');
+    Route::post('/transaction/staff-registrations/directStore','directStore')->middleware('admin');
+
     Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
 });
 

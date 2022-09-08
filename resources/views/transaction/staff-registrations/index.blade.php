@@ -24,15 +24,19 @@
 									</div>
 									<div class="modal-body">
 										<div class="modal-body">
-											<form action="/transaction/sr-registrations/store" method="post" enctype="multipart/form-data">
+											<form action="/transaction/staff-registrations/directStore" method="post" enctype="multipart/form-data">
 												@csrf
 												<div class="form-floating mb-3">
-													<label for="floatingInput3">NIS</label>
-													<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3">
+													<label for="floatingInput3">NIP</label>
+													<input required name="nip" type="number" maxlength="11" required class="form-control" id="floatingInput3">
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Nama</label>
-													<input required name="nama" type="text" required class="form-control" id="floatingInput3">
+													<input required name="nama" type="text" required class="form-control" id="floatingInput3" >
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Email</label>
+													<input required name="email" type="email" required class="form-control" id="floatingInput3">
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Jenis Kelamin</label>
@@ -43,20 +47,12 @@
 													</select>
 												</div>
 												<div class="form-floating mb-3">
-													<label for="floatingInput3">Kelas</label>
-													<input required name="kelas" type="text" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Jurusan</label>
-													<input required name="jurusan" type="text" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
 													<label for="floatingInput3">Tanggal Lahir</label>
 													<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3">
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Nomor Telepon</label>
-													<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3">
+													<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" >
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Alamat</label>
@@ -171,7 +167,7 @@
 															<input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->id }}">
 															<input required name="status" value="2">
 														</div>
-														<button class="btn btn-success rounded me-1" type="submit">Tolak Pengajuan</button>
+														<button class="btn btn-danger rounded me-1" type="submit">Tolak Pengajuan</button>
 													</form>
 												</div>
 											</div>

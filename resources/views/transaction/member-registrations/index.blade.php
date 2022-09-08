@@ -24,7 +24,7 @@
 									</div>
 									<div class="modal-body">
 										<div class="modal-body">
-											<form action="/transaction/member-registrations/store" method="post" enctype="multipart/form-data">
+											<form action="/transaction/member-registrations/directStore" method="post" enctype="multipart/form-data">
 												@csrf
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">NIS</label>
@@ -191,7 +191,7 @@
 															<input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->id }}">
 															<input required name="status" value="2">
 														</div>
-														<button class="btn btn-success rounded me-1" type="submit">Tolak Pengajuan</button>
+														<button class="btn btn-danger rounded me-1" type="submit">Tolak Pengajuan</button>
 													</form>
 												</div>
 											</div>
