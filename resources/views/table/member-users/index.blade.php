@@ -2,7 +2,7 @@
 @section('title', "User Anggota")
 
 @section('content')
-@include('sweetalert::alert')
+	@include('sweetalert::alert')
 
 	<div class="row">
 		<div class="col">
@@ -107,7 +107,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Password</label>
-																<input required name="password" type="text" required class="form-control" id="floatingInput3" value="{{ $memberUser->password }}">
+																<input required name="password" type="password" required class="form-control" id="floatingInput3" value="{{ $memberUser->password }}">
 															</div>
 															<div class="input-group">
 																<button class="btn btn-success rounded me-1" type="submit">Update</button>

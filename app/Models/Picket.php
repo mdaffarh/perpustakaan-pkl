@@ -18,7 +18,7 @@ class Picket extends Model
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'staff_id' );
+        return $this->belongsTo(Staff::class);
     }
 
 }

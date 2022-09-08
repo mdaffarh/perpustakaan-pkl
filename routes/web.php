@@ -74,6 +74,5 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
-//
-
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
+//

@@ -26,10 +26,12 @@ class Member extends Model
 
     protected $with = ['creator','editor'];
 
+
     public function creator()
     {
         return $this->belongsTo(Staff::class, 'created_by');
     }
+
     public function editor()
     {
         return $this->belongsTo(Staff::class, 'updated_by');

@@ -44,11 +44,11 @@ class User extends Authenticatable
 
     public function member()
     {
-        return $this->belongsTo(Member::class, 'member_id' );
+        return $this->belongsTo(Member::class);
     }
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'staff_id' );
+        return $this->belongsTo(Staff::class);
     }
 }

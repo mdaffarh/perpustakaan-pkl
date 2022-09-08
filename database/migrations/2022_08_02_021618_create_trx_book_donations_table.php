@@ -15,14 +15,15 @@ return new class extends Migration
     {
         Schema::create('trx_book_donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->unique();
+            $table->string('isbn');
             $table->string('judul');
             $table->string('penulis');//
             $table->string('penerbit');//
+            $table->string('image')->nullable();
             $table->string('kategori');//
+            $table->date('tglTerbit');//
+            $table->date('tglMasuk');//
             $table->timestamps();
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
         });
     }
 

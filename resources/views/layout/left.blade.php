@@ -37,47 +37,45 @@
             </div>
         </div>
 
-        <!-- Sidebar Menu -->
-        {{-- Transaksi --}}
-        <nav class="mt-2 pb-3">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
+      <!-- Sidebar Menu -->
+      {{-- Transaksi --}}
+      <nav class="mt-2 pb-3">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
+          <li class="nav-item">
+            <a href="/dashboard" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+            Dashboard
+            </p>
+            </a>
+          </li>
+          {{-- Transaksi --}} 
+          <li class="nav-item">
+            <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Transaksi
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              @can('staff')
                 <li class="nav-item">
-                    <a href="/dashboard" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Dashboard</p>
-                    </a>
+                  <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('/transaction/member-registrations/index*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pendaftaran Anggota</p>
+                  </a>
                 </li>
+              @endcan
 
-                <!-- Transaksi  -->
+              @can('admin')
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Transaksi
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-            
-                    <ul class="nav nav-treeview">
-                        <!-- Transaksi Pendaftaran Anggota -->
-                        @can('staff')
-                        <li class="nav-item">
-                            <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('/transaction/member-registrations/index*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pendaftaran Anggota</p>
-                            </a>
-                        </li>
-                        @endcan
-
-                        <!-- Transaksi Pendaftaran Staff -->
-                        @can('admin')
-                        <li class="nav-item">
-                            <a href="/transaction/staff-registrations/index" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pendaftaran Staff</p>
-                            </a>
-                        </li>
-                        @endcan
+                  <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('/transaction/staff-registrations/index*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pendaftaran Staff</p>
+                  </a>
+                </li>
+              @endcan
 
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
@@ -97,7 +95,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="/transaction/book-donations" class="nav-link">
+                            <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sumbangan Buku</p>
                             </a>

@@ -89,10 +89,10 @@
 															<div class="mb-3">
 																<label for="image" class="form-label">Cover</label>
 																<input type="hidden" name="oldImage" value="{{ $book->image }}">
-																@if ($book->image)
-																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview mb-3 col-sm-5 d-block">
-																@else
+																@if (!$book->image)
 																	<img class="img-fluid img-preview mb-3 col-sm-5">
+																@else
+																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview mb-3 col-sm-5 d-block">
 																@endif
 																
 																<input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
@@ -164,9 +164,9 @@
 															<div class="form-floating mb-3">
 																<label for="image" class="form-label">Cover</label>
 																@if ($book->image)
-																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview-edit mb-3 col-sm-5 d-block">
+																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																@else
-																	<p>( Tidak ada )</p>
+																	<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
 																@endif
 															</div>
 														</form>
