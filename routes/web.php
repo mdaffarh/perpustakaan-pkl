@@ -46,6 +46,7 @@ Route::get('/dashboard', function(){
 
 // Khusus staff dan admin
 Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('staff');
+Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('staff');
 
 Route::resource('/table/members', MemberController::class)->middleware('staff'); 
 Route::resource('/table/books', BookController::class)->middleware('staff');
@@ -60,5 +61,3 @@ Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 
 Route::resource('/transaction/staff-registrations', StaffRegistrationController::class)->middleware('admin');
-Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
-

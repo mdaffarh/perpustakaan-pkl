@@ -92,7 +92,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/transaction/book-donations" class="nav-link">
+                  <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Sumbangan Buku</p>
                   </a>
