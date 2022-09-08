@@ -18,6 +18,9 @@ return new class extends Migration
             $table->foreignId('book_id');//
             $table->integer('stok_awal');
             $table->integer('stok_akhir');
+            $table->integer('stok_semua');
+            $table->integer('stok_tambahan')->nullable();
+            $table->integer('stok_keluar')->nullable();
             $table->timestamps();
         });
     }

@@ -5,9 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Book;
-use App\Models\Member;
 use App\Models\User;
 use App\Models\Staff;
+use App\Models\Stock;
+use App\Models\Member;
 use App\Models\School;
 use App\Models\StaffUser;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,9 @@ class DatabaseSeeder extends Seeder
         Book::factory(20)->create();
         Member::factory(20)->create();
         Staff::factory(10)->create();
+        foreach (range(1, 20) as $iteration) {
+            Stock::factory(1)->create(['book_id' => $iteration]);
+        }
         // \App\Models\User::factory(10)->create();
 
         $user = [
