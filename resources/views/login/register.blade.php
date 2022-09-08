@@ -115,9 +115,19 @@
                             <!-- Gender input -->
                             <div class="mb-4">
                                 <select id="gender" name="jenis_kelamin" class="form-select">
-                                    <option disabled selected>Jenis Kelamin</option>
-                                    <option value="Laki-Laki">Laki-Laki</option>
-                                    <option value="Perempuan">Perempuan</option>
+                                    @if (old('jenis_kelamin') == "Laki-laki")
+                                        <option value="" disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki" selected>Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    @elseif (old('jenis_kelamin') == "Perempuan")
+                                        <option value="" disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan" selected>Perempuan</option>
+                                    @else
+                                        <option value="" selected disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    @endif
                                 </select>
                             </div>
 
@@ -135,7 +145,7 @@
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea placeholder="Alamat" name="alamat" class="form-control" value="{{ old('alamat') }}"></textarea>
+                                <textarea placeholder="Alamat" name="alamat" class="form-control">{{ old('alamat') }}</textarea>
                             </div> 
 
                             <!-- Submit button -->
@@ -154,46 +164,61 @@
 
                             <!-- nip input -->
                             <div class="form-outline mb-4">
-                                <input type="number" name="nip" id="nip" class="form-control" />
+                                <input type="number" name="nip" id="nip" class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" />
                                 <label class="form-label" for="nip">NIP</label>
+                                @error('nip')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <!-- nip input -->
                             <div class="form-outline mb-4">
-                                <input type="text" name="nama" id="nama-staff" class="form-control" />
+                                <input type="text" name="nama" id="nama-staff" class="form-control" value="{{ old('nama') }}" />
                                 <label class="form-label" for="nama-staff">Nama</label>
                             </div>
 
                             <!-- email input -->
                             <div class="input-group mb-3">
-                                <input type="email" name="email" class="form-control" placeholder="Email">
+                                <input type="email" name="email" class="form-control" placeholder="Email" value="{{ old('email') }}">
                                 <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                             </div>
 
                             <!-- Gender input -->
                             <div class="mb-4">
                                 <select id="gender" name="jenis_kelamin" class="form-select">
-                                    <option disabled selected>Jenis Kelamin</option>
-                                    <option>Laki-Laki</option>
-                                    <option>Perempuan</option>
+                                    @if (old('jenis_kelamin') == "Laki-laki")
+                                        <option value="" disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki" selected>Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    @elseif (old('jenis_kelamin') == "Perempuan")
+                                        <option value="" disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan" selected>Perempuan</option>
+                                    @else
+                                        <option value="" selected disabled>Jenis Kelamin</option>
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    @endif
                                 </select>
                             </div>
 
                             <!-- ttl input -->
                             <div class="form-outline mb-4">
-                                <input type="date" name="tanggal_lahir" id="ttl-staff" class="form-control" />
+                                <input type="date" name="tanggal_lahir" id="ttl-staff" class="form-control" value="{{ old('tanggal_lahir') }}" />
                                 <label class="form-label" for="ttl-staff">Tanggal Lahir</label>
                             </div>
 
                             <!-- no telp input -->
                             <div class="form-outline mb-4">
-                                <input type="number" name="nomor_telepon" id="no-staff" class="form-control" />
+                                <input type="number" name="nomor_telepon" id="no-staff" class="form-control" value="{{ old('nomor_telepon') }}" />
                                 <label class="form-label" for="no-staff">Nomor Telepon</label>
                             </div>
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea name="alamat" placeholder="Alamat" class="form-control"></textarea>
+                                <textarea name="alamat" placeholder="Alamat" class="form-control"> {{ old('alamat') }}</textarea>
                             </div>
 
                             <!-- Submit button -->
