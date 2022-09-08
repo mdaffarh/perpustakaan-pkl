@@ -2,104 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
+use App\models\Member;
+use App\Models\MemberRegistration;
 use Illuminate\Http\Request;
 
 class MemberRegistrationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view ('transaction.member-registrations.index',[
-            'members' => Member::all()
+        return view('transaction.member-registrations.index',[
+            'memberRegistration' => MemberRegistration::all()->where('status', '0')
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create(){
+        
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
+
         $validatedData = $request->validate([
-            'nis' => 'required|unique:tb_members',
+            'nis' => 'required',
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
             'kelas' => 'required',//
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required',
+            'alamat'=> 'required'
         ]);
 
-        $validatedData['created_by'] = auth()->user()->staff_id;
         
-        Member::create($validatedData);
+        MemberRegistration::create($validatedData);
+        alert()->success('success','waiting for approved by admin');
 
-        toast('Data anggota telah ditambahkan!','success');
-        return redirect('/transaction/member-registrations');
-
+        return redirect('/register');
 
     }
+    
+    public function approved(Request $request, MemberRegistration $memberRegistration){
+        $rules = [
+            'status'        => 'required'
+        ];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Member $member)
-    {
-        //
+        $member = [
+            'nis' => 'required', //Jangan unique klo update
+            'nama' => 'required',
+            'jenis_kelamin' => 'required',//
+            'kelas' => 'required',//
+            'jurusan' => 'required',
+            'tanggal_lahir' => 'required',
+            'nomor_telepon'=> 'required',
+            'alamat'=> 'required'
+        ];
+
+        $validatedData = $request->validate($rules);
+        $validatedDataMember = $request->validate($member);
+
+        MemberRegistration::where('id', $request->id)->update($validatedData);
+        Member::create($validatedDataMember);
+
+        toast('Data anggota Ditambahkan!','success');
+        return redirect('/table/members');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Member $member)
-    {
-        //
-    }
+    public function tolak(Request $request, MemberRegistration $memberRegistration){
+        $registrasi = [
+            'status' => $request->status
+        ];
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Member $member)
-    {
-        //
-    }
+        MemberRegistration::where('id', $request->id)->update($registrasi);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Member  $member
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Member $member)
-    {
-        //
+        toast('Data Ditolak!','success');
+        return redirect('/transaction/member-registrations/index');
     }
 }

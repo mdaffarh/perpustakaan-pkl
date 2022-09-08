@@ -2,24 +2,20 @@
 <html>
     <head>
     	<!-- Font Awesome -->
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          rel="stylesheet"
-        />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+
         <!-- Google Fonts -->
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+
         <!-- MDB -->
-        <link
-          href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
-          rel="stylesheet"
-        />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css" rel="stylesheet"/>
+
+        <!-- costum css -->
         <link rel="stylesheet" type="text/css" href="{{ asset('/') }}assets/css/register.css">
     	<title></title>
     </head>
-    <body>	
+    <body>
+        @include('sweetalert::alert')
     	<a href="{{ url()->previous() }}" style="font-size: 32px;padding-left: 15px;color: white;">
     		<i class="fa-solid fa-arrow-left"></i>
     	</a>
@@ -77,7 +73,8 @@
                     
                     <!-- TAB REGISTER MEMBER -->
                     <div class="tab-pane fade" id="pills-register-member" role="tabpanel" aria-labelledby="tab-register-member">
-                        <form>
+                        <form action="/transaction/member-registrations/store" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="text-center mb-3">
                                 <p>Register Anggota</p>
                                 <hr>
@@ -85,61 +82,55 @@
 
                             <!-- Nis input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="nis" class="form-control" />
+                                <input type="number" id="nis" name="nis" class="form-control" />
                                 <label class="form-label" for="nis">NIS</label>
                             </div>
 
                             <div class="row g-3 mb-4">
                                 <div class="col-sm-6">
                                     <div class="form-outline">
-                                        <input type="text" id="nama-anggota" class="form-control" />
+                                        <input type="text" name="nama" id="nama-anggota" class="form-control" />
                                         <label class="form-label" for="nama-anggota">Nama</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-2">
                                     <div class="form-outline">
-                                        <input type="number" id="kelas" class="form-control" />
+                                        <input type="number" name="kelas" id="kelas" class="form-control" />
                                         <label class="form-label" for="kelas">Kelas</label>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="form-outline">
-                                        <input type="text" id="jurusan" class="form-control" />
+                                        <input type="text" name="jurusan" id="jurusan" class="form-control" />
                                         <label class="form-label" for="jurusan">Jurusan</label>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Nama input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" id="Nama" class="form-control" />
-                                <label class="form-label" for="Nama">Nama</label>
-                            </div>
-
                             <!-- Gender input -->
                             <div class="mb-4">
-                                <select id="gender" class="form-select">
+                                <select id="gender" name="jenis_kelamin" class="form-select">
                                     <option disabled>Jenis Kelamin</option>
-                                    <option>Laki-Laki</option>
-                                    <option>Perempuan</option>
+                                    <option value="Laki-Laki">Laki-Laki</option>
+                                    <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
 
                             <!-- ttl input -->
                             <div class="form-outline mb-4">
-                                <input type="date" id="ttl-anggota" class="form-control" />
+                                <input type="date" id="ttl-anggota" class="form-control" name="tanggal_lahir" />
                                 <label class="form-label" for="ttl-anggota">tanggal Lahir</label>
                             </div>
 
                             <!-- NO Telp input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="no" class="form-control" />
+                                <input type="number" id="no" class="form-control" name="nomor_telepon" />
                                 <label class="form-label" for="no">No Telp</label>
                             </div>
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea placeholder="alamat" class="form-control"></textarea>
+                                <textarea placeholder="alamat" name="alamat" class="form-control"></textarea>
                             </div>
 
 
@@ -158,7 +149,8 @@
 
                     <!-- TAB REGISTER STAFF -->
                     <div class="tab-pane fade" id="pills-register-staff" role="tabpanel" aria-labelledby="tab-register-staff">
-                        <form>
+                        <form action="/transaction/staff-registrations/store" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="text-center mb-3">
                                 <p>Register Staff</p>
                                 <hr>
@@ -166,46 +158,52 @@
 
                             <!-- nip input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="nip" class="form-control" />
+                                <input type="number" name="nip" id="nip" class="form-control" />
                                 <label class="form-label" for="nip">NIP</label>
                             </div>
 
                             <!-- nip input -->
                             <div class="form-outline mb-4">
-                                <input type="text" id="nama-staff" class="form-control" />
+                                <input type="text" name="nama" id="nama-staff" class="form-control" />
                                 <label class="form-label" for="nama-staff">Nama</label>
                             </div>
 
-                            <!-- ttl input -->
-                            <div class="form-outline mb-4">
-                                <input type="date" id="ttl-staff" class="form-control" />
-                                <label class="form-label" for="ttl-staff">tanggal Lahir</label>
+                            <!-- email input -->
+                            <div class="input-group mb-3">
+                                <input type="email" name="email" class="form-control" placeholder="Email">
+                                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                             </div>
 
                             <!-- Gender input -->
                             <div class="mb-4">
-                                <select id="gender" class="form-select">
+                                <select id="gender" name="jenis_kelamin" class="form-select">
                                     <option disabled>Jenis Kelamin</option>
                                     <option>Laki-Laki</option>
                                     <option>Perempuan</option>
                                 </select>
                             </div>
 
+                            <!-- ttl input -->
+                            <div class="form-outline mb-4">
+                                <input type="date" name="tanggal_lahir" id="ttl-staff" class="form-control" />
+                                <label class="form-label" for="ttl-staff">tanggal Lahir</label>
+                            </div>
+
                             <!-- no telp input -->
                             <div class="form-outline mb-4">
-                                <input type="number" id="no-staff" class="form-control" />
+                                <input type="number" name="nomor_telepon" id="no-staff" class="form-control" />
                                 <label class="form-label" for="no-staff">No.Telp</label>
                             </div>
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea placeholder="alamat" class="form-control"></textarea>
+                                <textarea name="alamat" placeholder="alamat" class="form-control"></textarea>
                             </div>
 
 
                             <!-- Checkbox -->
                             <div class="form-check d-flex justify-content-center mb-4">
-                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText"/>
+                                <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked aria-describedby="registerCheckHelpText" required="" />
                                 <label class="form-check-label" for="registerCheck">
                                 I have read and agree to the terms
                                 </label>

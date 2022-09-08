@@ -12,6 +12,7 @@ use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\BookDonationController;
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,19 @@ Route::controller(LoginController::class)->group(function(){
     Route::post('/logout','logout');
 });
 
+Route::controller(MemberRegistrationController::class)->group(function(){
+    Route::get('/transaction/member-registrations/index','index')->middleware('staff');
+    Route::post('/transaction/member-registrations/tolak/{id}','tolak')->middleware('staff');
+    Route::post('/transaction/member-registrations/approved/{id}','approved')->middleware('staff');
+    Route::post('/transaction/member-registrations/store','store')->middleware('guest');
+});
+
+Route::controller(StaffRegistrationController::class)->group(function(){
+	Route::get('/transaction/staff-registrations/index','index')->middleware('staff');
+    Route::post('/transaction/staff-registrations/tolak/{id}','tolak')->middleware('staff');
+    Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('staff');
+    Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
+});
 
 Route::get('/dashboard', function(){
     return view('dashboard.index');
@@ -45,9 +59,6 @@ Route::get('/dashboard', function(){
 // Staff = penjaga,admin,dll
 
 // Khusus staff dan admin
-Route::resource('/transaction/member-registrations', MemberRegistrationController::class)->middleware('staff');
-Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('staff');
-
 Route::resource('/table/members', MemberController::class)->middleware('staff'); 
 Route::resource('/table/books', BookController::class)->middleware('staff');
 Route::resource('/table/stocks', StockController::class)->middleware('staff');

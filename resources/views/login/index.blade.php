@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic">
         <link rel="stylesheet" href="{{ asset('/') }}assets/fonts/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ asset('/') }}assets/fonts/ionicons.min.css">
         <link rel="stylesheet" href="{{ asset('/') }}assets/css/styles.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.css">
@@ -25,8 +26,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item"><a class="nav-link" href="#about" style="color: rgba(0,0,0,0.7);">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio" style="color: rgba(0,0,0,0.7);">Galeri</a></li>
-                        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" href="#login" style="color: rgba(0,0,0,0.7);font-weight: bold;">Login</a></li>
-
+                        <li class="nav-item"><a class="nav-link" href="/register" style="color: rgba(0,0,0,0.7);font-weight: bold;">Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -223,66 +223,6 @@
         <script src="{{ asset('/') }}assets/js/login.js"></script>
 
 
-        <!-- MODAL LOGIN -->
-        <div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header" style="border-bottom: none;">
-                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body row">
-                        <div class="col-6">
-                            <img src="{{ asset('/') }}assets/img/login.png" width="100%">
-                        </div>
-                        <div class="col-6">
-                           <form action="/login" method="post">
-                                @csrf
-                                <div class="input-group mb-3">
-                                    <input autofocus type="text" class="form-control
-                                    @error('username')
-                                    is-invalid
-                                    @enderror
-                                    " placeholder="username" name="username" value="{{ old('username') }}">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <i class="fa-light fa-user"></i>
-                                        </div>
-                                    </div>
-                                    @error('username')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="input-group mb-3">
-                                    <input type="password" class="form-control
-                                    @error('password')
-                                    is-invalid
-                                    @enderror
-                                    " placeholder="Password" name="password">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="text-align: right;">
-                                    <button type="submit" class="btn btn-primary">LOGIN</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer"  style="border: none;font-size: 12px;">
-                            <div>
-                                <p>No Have Account? <a href="/register">Register</a>  for member</p>
-                                <p>want to register as a staff? <a href="">Register</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-            <!-- END MODAL LOGIN -->
     </body>
 </html>
 
