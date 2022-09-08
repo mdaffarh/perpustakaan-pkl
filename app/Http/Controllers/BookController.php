@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -53,7 +54,7 @@ class BookController extends Controller
             'kategori'      => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
-            'image'         => 'image|file|required',
+            'image'         => 'image|file|required'
         ]);
 
         if($request->file('image')){
@@ -61,7 +62,16 @@ class BookController extends Controller
         }
 
 
-        Book::create($validatedData);
+        $buku = Book::create($validatedData);
+
+        $stok = [
+            'book_id'       => $buku->id,
+            'stok_awal'     => $request->stok_awal,
+            'stok_semua'    => $request->stok_awal,
+            'stok_akhir'    => $request->stok_awal
+        ];
+
+        Stock::create($stok);
 
         toast('Data buku telah ditambahkan!','success');
         return redirect('/table/books');
@@ -107,14 +117,14 @@ class BookController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn' => 'required',
-            'judul' => 'required',
-            'penulis' => 'required',//
-            'penerbit' => 'required',//
-            'image' => 'image|file',
-            'kategori' => 'required',
+            'isbn'      => 'required',
+            'judul'     => 'required',
+            'penulis'   => 'required',
+            'penerbit'  => 'required',
+            'kategori'  => 'required',
             'tglTerbit' => 'required',
-            'tglMasuk' => 'required'
+            'tglMasuk'  => 'required',
+            'image'     => 'image|file'
         ];
 
         if($request->isbn != $book->isbn){
@@ -151,6 +161,8 @@ class BookController extends Controller
         if ($book->photobook) {
             Storage::delete($book->photobook);
         }
+
+        Stock::where('book_id', $book->id)->delete();
 
         toast('Data buku telah dihapus!','success');
         return redirect("/table/books");

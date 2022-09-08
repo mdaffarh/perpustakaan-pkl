@@ -24,8 +24,7 @@ class BookDonationController extends Controller
 
     public function store(Request $request)
     {
-        //isbn,judul,penulis,penerbit,image,kategori,subject
-        //slug ??
+
 
         $validatedData = $request->validate([
             'isbn'          => 'required|unique:tb_books',

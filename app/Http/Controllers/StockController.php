@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-Use Alert;
-use App\Models\Book;
 use App\Models\Stock;
+use App\Models\Book;
 
 class StockController extends Controller
 {
@@ -18,8 +16,8 @@ class StockController extends Controller
     public function index()
     {
         return view('table.stock.index', [
-            'stocks' => Stock::all(),
-            'books' => Book::all()
+            'stocks'    => Stock::all(),
+            'books'     => Book::all()
         ]);
     }
 
@@ -30,7 +28,7 @@ class StockController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -41,14 +39,7 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        Stock::create([
-            'book_id'       => $request->book_id,
-            'stok_awal'     => $request->stokAwal,
-            'stok_akhir'    => $request->stokAwal
-        ]);
-
-        toast('Data stok telah ditambahkan!','success');
-        return redirect('/table/stocks');
+        
     }
 
     /**
@@ -80,22 +71,22 @@ class StockController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Stock $stock)
     {
-        $rules = [
-            'book_id'       => $request->book_id
+
+        $stokAkhir      = $stock->stok_akhir + $request->stok_tambahan;
+        $stokTambahan   = $stock->stok_tambahan  + $request->stok_tambahan;
+        $stokSemua      = $stock->stok_awal + $stokTambahan;
+        
+        $stok = [
+            'stok_akhir'     => $stokAkhir,
+            'stok_tambahan'  => $stokTambahan,
+            'stok_semua'     => $stokSemua
         ];
 
-        if ($request->stock_tambahan) {
-            $stokAkhir = $id->stok_akhir;
-            $jumlah = $request->stock + $stokAkhir;
-            $stokAkhir = intval($jumlah);
-            $stokAkhir->save();
-        }
+        $stock->update($stok);
 
-        Stock::where('id', $id)->update($rules);
-
-        toast('Your Post as been submited!','success');
+        toast('Stok Buku telah ditambahkan!','success');
         return redirect('/table/stocks');
     }
 
