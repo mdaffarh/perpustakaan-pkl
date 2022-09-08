@@ -70,7 +70,7 @@
 
               @can('admin')
                 <li class="nav-item">
-                  <a href="/transaction/staff-registrations/index" class="nav-link">
+                  <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('/transaction/staff-registrations/index*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Pendaftaran Staff</p>
                   </a>
