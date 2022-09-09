@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('trx_borrows', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id')->unique();
-            $table->foreignId('book_id')->unique();
-            $table->foreignId('staff_id')->unique();
+            $table->foreignId('member_id');
+            $table->foreignId('book_id');
+            $table->foreignId('staff_id');
             $table->date('tanggal_pinjam');
             $table->date('tanggal_tempo');
-            $table->foreignId('school_id')->unique();
+            $table->foreignId('school_id');
             $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
