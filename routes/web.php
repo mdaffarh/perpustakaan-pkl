@@ -90,9 +90,9 @@ Route::controller(BorrowController::class)->group(function(){
     Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
 });
 
-Route::resource('notification', NotificationController::class);
+Route::resource('notification', NotificationController::class)->middleware('auth');
 Route::controller(NotificationController::class)->group(function(){
-    Route::post('/notification/viewed','viewed')->name('viewed');
-    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll');
-    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff');
+    Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
+    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
+    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
 });
