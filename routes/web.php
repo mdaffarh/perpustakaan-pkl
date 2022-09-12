@@ -15,6 +15,8 @@ use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\NotificationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -86,4 +88,11 @@ Route::resource('/transaction/borrows', BorrowController::class)->middleware('au
 Route::controller(BorrowController::class)->group(function(){
     Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
     Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+});
+
+Route::resource('notification', NotificationController::class);
+Route::controller(NotificationController::class)->group(function(){
+    Route::post('/notification/viewed','viewed')->name('viewed');
+    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll');
+    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff');
 });

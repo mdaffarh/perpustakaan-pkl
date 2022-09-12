@@ -27,7 +27,7 @@
                             <a class="nav-link active" id="tabs-stok-tab" data-toggle="pill" href="#tabs-stok" role="tab" aria-controls="tabs-stok" aria-selected="trues">Stok Buku</a>
                             </li>
                             <li class="nav-item">
-                            <a class="nav-link" id="tabs-peminjaman-tab" data-toggle="pill" href="#tabs-peminjaman" role="tab" aria-controls="tabs-stok" aria-selected="false">Status Peminjaman</a>
+                            <a class="nav-link" id="tabs-peminjaman-tab" data-toggle="pill" href="#tabs-peminjaman" role="tab" aria-controls="tabs-peminjaman" aria-selected="false">Status Peminjaman</a>
                             </li>
                         </ul>
                     @endcan
@@ -39,8 +39,9 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th></th>
                                     <th>Nama Peminjam</th>
+                                    <th>No. Buku</th>
                                     <th>Judul Buku</th>
                                     <th>Penulis</th>
                                     <th>Tanggal Pinjam</th>
@@ -53,6 +54,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $borrow->member->nama }}</td>
+                                    <td>{{ $borrow->book->id }}</td>
                                     <td>{{ $borrow->book->judul }}</td>
                                     <td>{{ $borrow->book->penulis }}</td>
                                     <td>{{ $borrow->tanggal_pinjam }}</td>
@@ -77,7 +79,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="modal-body">
+                                                      
                                                             <form action="" method="post" enctype="multipart/form-data">
                                                                 @csrf
                                                                 @method('put')
@@ -100,7 +102,7 @@
                                                                 </div>
 
                                                             </form>
-                                                        </div>
+                         
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -109,19 +111,43 @@
                                                                 @csrf
                                                                 <div style="display: none;">
                                                                     <input name="id" value="{{ $borrow->id }}">
+                                                                    <input name="user_id" value="{{ $borrow->member->user->id }}">
                                                                 </div>
                                                                 <button class="btn btn-success rounded me-1" type="submit">Terima Peminjaman</button>
                                                             </form>
 
-                                                            <form action="/transaction/borrows/reject/{id}" method="post" enctype="multipart/form-data">
-                                                                @csrf
-                                                                <div style="display: none;">
-                                                                    <input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $borrow->id }}">
-                                                                    <input type="hidden" name="book_id" value="{{ $borrow->book_id }}">
-                                                                    <input type="hidden" name="stok_akhir" value="{{ $borrow->book->stock->stok_akhir }}">
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-sm">Tolak Peminjaman</button>
+                                                            <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-sm">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <p class="modal-title">Tolak Peminjaman</p>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form action="/transaction/borrows/reject/{id}" method="post" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div class="form-floating mb-3">
+                                                                                <label for="">Alasan <small>Opsional</small> </label>
+                                                                                <input type="text" name="reason" id="" class="form-control">
+                                                                            </div>
+                                                                            <div style="display: none;">
+                                                                                <input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $borrow->id }}">
+                                                                                <input type="hidden" name="book_id" value="{{ $borrow->book_id }}">
+                                                                                <input type="hidden" name="stok_akhir" value="{{ $borrow->book->stock->stok_akhir }}">
+                                                                                <input name="user_id" value="{{ $borrow->member->user->id }}">
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                    <div class="modal-footer">
+                                                                            <button class="btn btn-danger rounded me-1" type="submit">Tolak Peminjaman</button>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
-                                                                <button class="btn btn-danger rounded me-1" type="submit">Tolak Peminjaman</button>
-                                                            </form>
+                                                            </div>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -218,7 +244,8 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
+                                            <th></th>
+                                            <th>Nomor Peminjaman</th>
                                             <th>Judul Buku</th>
                                             <th>Penulis</th>
                                             <th>Tanggal Pinjam</th>
@@ -230,6 +257,7 @@
                                         @foreach ($borrowed as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $item->id }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>{{ $item->book->penulis }}</td>
                                                 <td>{{ $item->tanggal_pinjam }}</td>

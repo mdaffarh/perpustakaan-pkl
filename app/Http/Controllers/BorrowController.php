@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Stock;
 use App\Models\Borrow;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,7 +20,9 @@ class BorrowController extends Controller
     {
         return view('transaction.borrows.index',[
             'borrows' => Borrow::latest()->get(),
-            'borrowed' => Borrow::where('member_id', auth()->user()->member_id)->latest()->get(),
+            'borrowed' => Borrow::where('member_id', auth()->user()->member_id)
+            ->latest()
+            ->get(),
             'stocks' => Stock::where('stok_akhir' ,'>', 0 )->get()
         ]);
     }
@@ -55,7 +58,15 @@ class BorrowController extends Controller
         $stok_akhir = $validatedData['stok_akhir'] -= 1;
 
         Stock::where('book_id',$validatedData['book_id'])->update(['stok_akhir' => $stok_akhir]); //
-        Borrow::create($validatedData);
+        $borrow =  Borrow::create($validatedData);
+
+        // Notification
+        $message = [
+            'message'   => "Peminjaman Buku No. ".$request->book_id." diajukan ",
+            'borrow_id' => $borrow->id
+        ];
+
+        Notification::create($message);       
 
         toast('Peminjaman telah diajukan!','success');
         return redirect('/transaction/borrows');
@@ -71,6 +82,15 @@ class BorrowController extends Controller
         $validatedData['staff_id'] = auth()->user()->staff_id;
 
         Borrow::where('id', $request->id)->update($validatedData);
+
+        // Notification
+        Notification::where('borrow_id',$request->id)->update(['viewed' => true]);
+        $message = [
+            'user_id' => $request->user_id,
+            'message'   => "Peminjaman No. ".$request->id." telah disetujui",
+        ];
+
+        Notification::create($message);
 
         toast('Peminjaman telah disetujui!','success');
         return redirect('/transaction/borrows');
@@ -91,6 +111,20 @@ class BorrowController extends Controller
         Borrow::where('id', $request->id)->update($validatedData);
         Stock::where('book_id',$validatedData['book_id'])->update(['stok_akhir' => $stok_akhir]); //
 
+        
+        // Notification
+        Notification::where('borrow_id',$request->id)->update(['viewed' => true]);
+        if($request->reason){
+            $msg = "Peminjaman No. ".$request->id." telah ditolak karena ".$request->reason;
+        }else{
+            $msg = "Peminjaman No. ".$request->id." telah ditolak";
+        }
+        $message = [
+            'user_id' => $request->user_id,
+            'message'   => $msg
+        ];
+
+        Notification::create($message);       
 
         toast('Peminjaman telah ditolak!','success');
         return redirect('/transaction/borrows');
@@ -138,6 +172,6 @@ class BorrowController extends Controller
      */
     public function destroy(Borrow $borrow)
     {
-        //
+        
     }
 }
