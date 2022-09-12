@@ -16,4 +16,6 @@ class Book extends Model
     {
         return $this->hasOne(Stock::class);
     }
+
+
 }

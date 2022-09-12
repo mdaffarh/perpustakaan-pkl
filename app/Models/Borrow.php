@@ -9,12 +9,12 @@ class Borrow extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_borrows';
+    protected $table = 'trx_borrows';
     protected $guarded = [
         'id'
     ];
 
-    protected $with = ['member','staff'];
+    protected $with = ['member','staff','book'];
 
     public function member()
     {
@@ -24,6 +24,11 @@ class Borrow extends Model
     public function staff()
     {
         return $this->belongsTo(Staff::class);
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
     }
 
 

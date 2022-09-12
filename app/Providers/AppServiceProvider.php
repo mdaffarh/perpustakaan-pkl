@@ -31,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('staff', function(User $user){
             return $user->staff_id;
         });
+        Gate::define('member', function(User $user){
+            return $user->member_id;
+        });
     }
 }

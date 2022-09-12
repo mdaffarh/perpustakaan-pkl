@@ -79,7 +79,7 @@
 
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Peminjaman Buku</p>
                             </a>

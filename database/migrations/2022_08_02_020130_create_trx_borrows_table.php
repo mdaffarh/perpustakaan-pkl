@@ -17,14 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('member_id');
             $table->foreignId('book_id');
-            $table->foreignId('staff_id');
+            $table->foreignId('staff_id')->nullable();
             $table->date('tanggal_pinjam');
             $table->date('tanggal_tempo');
-            $table->foreignId('school_id');
-            $table->text('deskripsi');
+            $table->string('status');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
+
+            
         });
     }
 
