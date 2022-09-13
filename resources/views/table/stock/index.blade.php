@@ -32,6 +32,7 @@
 								<th>Penulis</th>
 								<th>Stok Semua</th>
 								<th>Stok Akhir</th>
+								<th>Stok Keluar</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -43,6 +44,13 @@
 								<td>{{ $stock->book->penulis }}</td>
 								<td>{{ $stock->stok_semua }}</td>
 								<td>{{ $stock->stok_akhir }}</td>
+								<td>
+									@if ($stock->stok_keluar)
+										{{ $stock->stok_keluar }}
+									@else
+										0
+									@endif
+								</td>
 								<td>
 									<a href="#modalEditData{{ $stock->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>

@@ -41,9 +41,11 @@ class AppServiceProvider extends ServiceProvider
             view()->share([
                 'notifications' => Notification::where('user_id',auth()->user()->id)->latest()->get(),
                 'notiCount'=> Notification::whereNull('viewed')->where('user_id',auth()->user()->id)->count(),
+                'notiCounts'=> Notification::where('user_id',auth()->user()->id)->count(),
                 
                 'notiStaff' => Notification::whereNull('user_id')->latest()->get(),
-                'notiStaffCount' => Notification::whereNull('viewed')->whereNull('user_id')->count()
+                'notiStaffCount' => Notification::whereNull('viewed')->whereNull('user_id')->count(),
+                'notiStaffCounts' => Notification::whereNull('user_id')->count()
             ]);
         });
     }

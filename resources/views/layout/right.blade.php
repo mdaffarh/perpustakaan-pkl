@@ -39,30 +39,48 @@
 
       <!-- Notification Menu -->
       @can('member')
+        @if ($notiCount != 0)
+          <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiCount }} Notifikasi Baru!</strong></button>
+        @endif
         <li class="nav-item dropdown">
-          {{-- Viewed not done--}}
           <a class="nav-link" data-toggle="dropdown" href="#">
               <i class="far fa-bell"></i>
               @if ($notiCount != 0)
                 <span class="badge badge-danger navbar-badge">{{ $notiCount }}</span>
               @endif
           </a>
-          {{-- Viewed End--}}
           
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             {{-- Viewed all --}}
+            <div class="d-flex align-items-center">
               @if ($notiCount != 0)
-                <form action="/notification/viewedAll" method="post">
-                  @csrf
-                  <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                  <button class="w-100" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tandai sudah dilihat semua">
-                    <span class="dropdown-item dropdown-header">{{ $notiCount }} New Notifications</span>
+                <form action="" method="post">
+                  <button class="text-sm float-left" style="background-color:rgba(255,2,255,0);color:rgba(255,2,255,0) ; border: none;pointer-events: none;">
+                    <i class="fa fa-times ml-1 mt-2"></i>
                   </button>
                 </form>  
+                <form action="/notification/viewedAll" method="post" class="flex-grow-1 text-center">
+                  @csrf
+                  <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                  <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tandai sudah dilihat semua">
+                    <span class="dropdown-item dropdown-header">{{ $notiCount }} Notifikasi Baru</span>
+                  </button>
+                </form>
               @else
-                <span class="dropdown-item dropdown-header">{{ $notiCount }} New Notifications</span>
+                <span class="dropdown-item dropdown-header w-100">{{ $notiCount }} Notifikasi Baru</span>
               @endif
+              @if ($notiCounts != 0)
+                <form action="/notification/deleteAll/{id}" method="post" >
+                    @csrf
+                    <input type="hidden" name="id" value="{{ auth()->user()->id }}">
+                    <button type="submit" class="text-dark text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus semua notifikasi">
+                      <i class="fa fa-times mb-1 mr-3"></i>
+                    </button>
+                </form>  
+              @endif
+            </div>
             {{-- Viewed all end --}}
+
             @foreach ($notifications as $item)
               <div class="dropdown-item">
                 <!-- Message Start -->
@@ -105,6 +123,9 @@
       @endcan
 
       @can('staff')
+        @if ($notiStaffCount != 0)
+          <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiStaffCount }} Notifikasi Baru!</strong></button>
+        @endif
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
@@ -113,19 +134,34 @@
             @endif
           </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            {{-- Viewed all --}}
-            @if ($notiStaffCount != 0)
-              <form action="/notification/viewedAllStaff" method="post">
-                @csrf
-                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                <button class="w-100" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tandai sudah dilihat semua">
-                  <span class="dropdown-item dropdown-header">{{ $notiStaffCount }} New Notifications</span>
-                </button>
-              </form>  
-            @else
-              <span class="dropdown-item dropdown-header">{{ $notiStaffCount }} New Notifications</span>
-            @endif
-            {{-- Viewed end --}}
+            <div class="d-flex align-items-center">
+              @if ($notiStaffCount != 0)
+                <form action="" method="post">
+                  <button class="text-sm float-left" style="background-color:rgba(255,2,255,0);color:rgba(255,2,255,0) ; border: none;pointer-events: none;">
+                    <i class="fa fa-times ml-1 mt-2"></i>
+                  </button>
+                </form>  
+                <form action="/notification/viewedAllStaff" method="post" class="flex-grow-1 text-center">
+                  @csrf
+                  <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                  <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tandai sudah dilihat semua">
+                    <span class="dropdown-item dropdown-header">{{ $notiStaffCount }} Notifikasi Baru</span>
+                  </button>
+                </form>
+              @else
+                <span class="dropdown-item dropdown-header w-100">{{ $notiStaffCount }} Notifikasi Baru</span>
+              @endif
+              @if ($notiStaffCounts != 0)
+                <form action="/notification/deleteAllStaff/{id}" method="post" >
+                    @csrf
+                    <input type="hidden" name="id" value="{{ auth()->user()->id }}">
+                    <button type="submit" class="text-dark text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus semua notifikasi">
+                      <i class="fa fa-times mb-1 mr-3"></i>
+                    </button>
+                </form>  
+              @endif
+            </div>
+            
             @foreach ($notiStaff as $item)
               <div class="dropdown-item">
                 <!-- Message Start -->
