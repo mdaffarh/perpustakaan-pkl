@@ -19,7 +19,9 @@ class BorrowController extends Controller
     public function index()
     {
         return view('transaction.borrows.index',[
-            'borrows' => Borrow::latest()->get(),
+            'borrowsWaiting' => Borrow::where('status',"Menunggu persetujuan")->latest()->get(),
+            'borrowsApproved' => Borrow::where('status',"Disetujui")->latest()->get(),
+            'borrowsRejected' => Borrow::where('status',"Ditolak")->latest()->get(),
             'borrowed' => Borrow::where('member_id', auth()->user()->member_id)
             ->latest()
             ->get(),
@@ -47,17 +49,21 @@ class BorrowController extends Controller
     {
         // member_id,book_id,staff_id,tanggal_pinjam,tanggal_tempo,school_id,deskrisi
         $validatedData = $request->validate([
-            'book_id' => 'required',
-            'stok_akhir' => 'required'
+            'book_id' => 'required'
         ]);
 
         $validatedData['tanggal_pinjam'] = Carbon::now();
         $validatedData['tanggal_tempo'] = Carbon::now()->addDay(3);
         $validatedData['member_id'] = auth()->user()->member_id;
         $validatedData['status'] = "Menunggu persetujuan"; //
-        $stok_akhir = $validatedData['stok_akhir'] -= 1;
+        $stok_akhir = $request->stok_akhir -= 1;
+        $stok_keluar = $request->stok_keluar += 1;
 
-        Stock::where('book_id',$validatedData['book_id'])->update(['stok_akhir' => $stok_akhir]); //
+        Stock::where('book_id',$validatedData['book_id'])
+        ->update([
+            'stok_akhir' => $stok_akhir,
+            'stok_keluar' => $stok_keluar
+        ]); //
         $borrow =  Borrow::create($validatedData);
 
         // Notification
@@ -107,9 +113,14 @@ class BorrowController extends Controller
         $validatedData['staff_id'] = auth()->user()->staff_id;
 
         $stok_akhir = $request->stok_akhir += 1;
+        $stok_keluar = $request->stok_keluar -= 1;
 
         Borrow::where('id', $request->id)->update($validatedData);
-        Stock::where('book_id',$validatedData['book_id'])->update(['stok_akhir' => $stok_akhir]); //
+        Stock::where('book_id',$validatedData['book_id'])
+        ->update([
+            'stok_akhir' => $stok_akhir,
+            'stok_keluar' => $stok_keluar
+        ]); //
 
         
         // Notification

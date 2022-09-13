@@ -100,4 +100,14 @@ class NotificationController extends Controller
         Notification::whereNull('user_id')->whereNull('viewed')->update(['viewed' => true]);
         return back();
     }
+
+    public function deleteAll(Request $request){
+        Notification::where('user_id', $request->id)->delete();
+        return back();
+    }
+
+    public function deleteAllStaff(Request $request){
+        Notification::whereNull('user_id')->delete();
+        return back();
+    }
 }
