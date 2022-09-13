@@ -16,6 +16,7 @@ use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReturnController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +87,13 @@ Route::resource('/transaction/book-donations', BookDonationController::class)->m
 
 Route::resource('/transaction/borrows', BorrowController::class)->middleware('auth');
 Route::controller(BorrowController::class)->group(function(){
+    Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
+    Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+});
+
+Route::resource('/transaction/return', ReturnController::class)->middleware('auth');
+Route::controller(ReturnController::class)->group(function(){
+    Route::post('/transaction/return/back/{id}','store')->middleware('auth');
     Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
     Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
 });

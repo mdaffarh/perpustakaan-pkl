@@ -5,5 +5,3 @@
 @include('sweetalert::alert')
 @include('layout.content')
 @endsection
-
-
