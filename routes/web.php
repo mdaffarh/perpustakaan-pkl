@@ -86,9 +86,6 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
-<<<<<<< HEAD
-//
-=======
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
 //
 
@@ -113,4 +110,3 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
 });
->>>>>>> 7f599a4ced53e8e597b607ba0ba393e7fb9ed96f
