@@ -2,18 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\FormController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\StockController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\SchoolController;
-use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\BorrowController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StaffUserController;
-use App\Http\Controllers\MemberRegistrationController;
-use App\Http\Controllers\StaffRegistrationController;
+use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\BookDonationController;
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\StaffRegistrationController;
+use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReturnController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,4 +86,31 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
+<<<<<<< HEAD
 //
+=======
+Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
+//
+
+Route::resource('/transaction/borrows', BorrowController::class)->middleware('auth');
+Route::controller(BorrowController::class)->group(function(){
+    Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
+    Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+});
+
+Route::resource('/transaction/return', ReturnController::class)->middleware('auth');
+Route::controller(ReturnController::class)->group(function(){
+    Route::post('/transaction/return/back/{id}','store')->middleware('auth');
+    Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
+    Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+});
+
+Route::resource('notification', NotificationController::class)->middleware('auth');
+Route::controller(NotificationController::class)->group(function(){
+    Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
+    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
+    Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
+    Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
+    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
+});
+>>>>>>> 7f599a4ced53e8e597b607ba0ba393e7fb9ed96f

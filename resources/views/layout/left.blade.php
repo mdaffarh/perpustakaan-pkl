@@ -79,7 +79,7 @@
                 
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Peminjaman Buku</p>
                             </a>
@@ -88,7 +88,7 @@
                         <!-- Transaksi Pengembalian Dan Sumbangan Buku -->
                         @can('staff')
                         <li class="nav-item">
-                            <a href="" class="nav-link">
+                            <a href="/transaction/return" class="nav-link {{ Request::is('transaction/return*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pengembalian Buku</p>
                             </a>

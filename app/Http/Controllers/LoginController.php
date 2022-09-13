@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Book;
 
 class LoginController extends Controller
 {
@@ -27,8 +28,10 @@ class LoginController extends Controller
         if(Auth::attempt($credentials)){
             request()->session()->regenerate();
 
+            $data = Book::inRandomOrder()->get();
+
             toast('Login berhasil!','success');
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/dashboard')->with([$data]);
         }
 
         return back()->with('loginError','Login failed!');

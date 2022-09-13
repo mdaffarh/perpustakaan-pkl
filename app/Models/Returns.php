@@ -9,7 +9,7 @@ class Returns extends Model
 {
     use HasFactory;
 
-    protected $table = 'trz_returns';
+    protected $table = 'trx_returns';
     protected $guarded = [
         'id'
     ];

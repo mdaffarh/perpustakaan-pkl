@@ -8,7 +8,19 @@
 		<div class="col">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">Stok Buku</h3>
+					<div class="container-fluid">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h3 class="mt-2">@yield('title')</h3>
+                          </div><!-- /.col -->
+                          <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
+                              <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                              <li class="breadcrumb-item active">@yield('title')</li>
+                            </ol>
+                          </div><!-- /.col -->
+                        </div><!-- /.row -->
+                    </div><!-- /.container-fluid -->
 				</div>
 		
 				<div class="card-body">
@@ -20,6 +32,7 @@
 								<th>Penulis</th>
 								<th>Stok Semua</th>
 								<th>Stok Akhir</th>
+								<th>Stok Keluar</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -31,6 +44,13 @@
 								<td>{{ $stock->book->penulis }}</td>
 								<td>{{ $stock->stok_semua }}</td>
 								<td>{{ $stock->stok_akhir }}</td>
+								<td>
+									@if ($stock->stok_keluar)
+										{{ $stock->stok_keluar }}
+									@else
+										0
+									@endif
+								</td>
 								<td>
 									<a href="#modalEditData{{ $stock->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
