@@ -33,6 +33,7 @@ Route::get('/', function () {
 Route::controller(LoginController::class)->group(function(){
     Route::get('/login','index')->name('login')->middleware('guest');
     Route::get('/register','register')->name('register')->middleware('guest');
+    Route::get('/donation','donation')->name('donation')->middleware('guest');
     Route::post('/login','authenticate');
     Route::post('/logout','logout');
 });
@@ -51,8 +52,11 @@ Route::controller(StaffRegistrationController::class)->group(function(){
     Route::post('/transaction/staff-registrations/tolak/{id}','tolak')->middleware('admin');
     Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('admin');
     Route::post('/transaction/staff-registrations/directStore','directStore')->middleware('admin');
-
     Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
+});
+
+Route::controller(BookDonationController::class)->group(function(){
+    Route::post('/transaction/book-donations/create','create')->middleware('anggota');
 });
 
 Route::controller(FormController::class)->group(function(){
@@ -78,5 +82,4 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
-Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
 //

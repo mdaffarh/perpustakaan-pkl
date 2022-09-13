@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('trx_fines', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('borrow_id')->unique();
             $table->foreignId('member_id')->unique();
+            $table->integer('waktu_tenggat');
             $table->double('total');
-            $table->text('deskripsi');
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

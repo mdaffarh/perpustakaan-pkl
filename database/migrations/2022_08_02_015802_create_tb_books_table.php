@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('kategori');//
             $table->date('tglTerbit');//
             $table->date('tglMasuk');//
+            $table->string('stock_awal');
             $table->timestamps();
         });
     }

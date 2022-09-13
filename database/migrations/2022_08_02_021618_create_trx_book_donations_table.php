@@ -19,10 +19,12 @@ return new class extends Migration
             $table->string('judul');
             $table->string('penulis');//
             $table->string('penerbit');//
-            $table->string('image')->nullable();
             $table->string('kategori');//
+            $table->string('stock_awal');
+            $table->text('keterangan');
             $table->date('tglTerbit');//
             $table->date('tglMasuk');//
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

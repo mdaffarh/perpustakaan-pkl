@@ -12,7 +12,7 @@ class LoginController extends Controller
         return view('login.index');
     }
 
-     public function register()
+    public function register()
     {
         return view('login.register');
     }
@@ -45,4 +45,5 @@ class LoginController extends Controller
     
         return redirect('/login');
     }
+
 }

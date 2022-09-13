@@ -31,6 +31,8 @@ class BookDonationController extends Controller
             'penulis'       => 'required',
             'penerbit'      => 'required',
             'kategori'      => 'required',
+            'stock_awal'    => 'required',
+            'keterangan'    => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
             'image'         => 'image|file',
@@ -74,14 +76,16 @@ class BookDonationController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn' => 'required',
-            'judul' => 'required',
-            'penulis' => 'required',//
-            'penerbit' => 'required',//
-            'image' => 'image|file',
-            'kategori' => 'required',
-            'tglTerbit' => 'required',
-            'tglMasuk' => 'required'
+            'isbn'          => 'required',
+            'judul'         => 'required',
+            'penulis'       => 'required',//
+            'penerbit'      => 'required',//
+            'image'         => 'image|file',
+            'kategori'      => 'required',
+            'stock_awal'    => 'required',
+            'keterangan'    => 'required',
+            'tglTerbit'     => 'required',
+            'tglMasuk'      => 'required'
         ];
 
         if($request->isbn != $bookDonation->isbn){
