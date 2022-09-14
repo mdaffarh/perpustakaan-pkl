@@ -37,6 +37,17 @@ class LoginController extends Controller
         return back()->with('loginError','Login failed!');
     }
 
+    public function dashboard()
+    {
+        $random1 = Book::inRandomOrder()->get();
+        $random2 = Book::inRandomOrder()->limit(5)->get();
+        $random2 = Book::inRandomOrder()->limit(5)->get();
+        return view('/dashboard/index',[
+            'books1' => $random1,
+            'books2' => $random2
+        ]);
+    }
+
 
     public function logout(Request $request)
     {

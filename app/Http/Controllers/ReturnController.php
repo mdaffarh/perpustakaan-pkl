@@ -14,12 +14,17 @@ class ReturnController extends Controller
     {
         return view('transaction.return.index',[
             'returns' => Returns::all(),
-            'borrows' => Borrow::all()->where('status', 'Disetujui')
+            'borrows' => Borrow::all()->where('dikembalikan', 'Belum')
         ]);
     }
     
     public function store(Request $request)
     {
+        $dt = [
+            'dikembalikan'  => "Sudah"
+        ];
+        Borrow::where('id', $request->borrow_id)->update($dt);
+        
         $data = Borrow::where('id', $request->borrow_id)->value('updated_at');
 
         $validatedData = [

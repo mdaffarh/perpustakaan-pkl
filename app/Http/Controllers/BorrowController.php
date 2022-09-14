@@ -85,6 +85,7 @@ class BorrowController extends Controller
 
         $validatedData = $request->validate($rules);
         $validatedData['status'] = "Disetujui";
+        $validatedData['dikembalikan'] = "Belum";
         $validatedData['staff_id'] = auth()->user()->staff_id;
 
         Borrow::where('id', $request->id)->update($validatedData);

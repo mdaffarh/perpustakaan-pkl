@@ -39,6 +39,7 @@ Route::controller(LoginController::class)->group(function(){
     Route::get('/register','register')->name('register')->middleware('guest');
     Route::get('/donation','donation')->name('donation')->middleware('guest');
     Route::post('/login','authenticate');
+    Route::get('/dashboard', 'dashboard')->middleware('auth');
     Route::post('/logout','logout');
 });
 
@@ -67,9 +68,6 @@ Route::controller(FormController::class)->group(function(){
     Route::get('/form/book','book')->middleware('staff');
 });
 
-Route::get('/dashboard', function(){
-    return view('dashboard.index');
-})->middleware('auth');
 
 
 // Staff = penjaga,admin,dll
@@ -86,9 +84,7 @@ Route::resource('/table/member-users', MemberUserController::class)->middleware(
 Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
 Route::resource('/table/staffs', StaffController::class)->middleware('admin');
 Route::resource('/table/schools', SchoolController::class)->middleware('admin');
-<<<<<<< HEAD
-//
-=======
+
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('admin');
 //
 
@@ -101,8 +97,6 @@ Route::controller(BorrowController::class)->group(function(){
 Route::resource('/transaction/return', ReturnController::class)->middleware('auth');
 Route::controller(ReturnController::class)->group(function(){
     Route::post('/transaction/return/back/{id}','store')->middleware('auth');
-    Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
-    Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
 });
 
 Route::resource('notification', NotificationController::class)->middleware('auth');
@@ -113,4 +107,3 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
 });
->>>>>>> 7f599a4ced53e8e597b607ba0ba393e7fb9ed96f

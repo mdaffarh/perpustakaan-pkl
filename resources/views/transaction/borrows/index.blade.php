@@ -152,6 +152,7 @@
                                                                                             <input type="hidden" name="stok_akhir" value="{{ $borrow->book->stock->stok_akhir }}">
                                                                                             <input type="hidden" name="stok_keluar" value="{{ $borrow->book->stock->stok_keluar }}">
                                                                                             <input name="user_id" value="{{ $borrow->member->user->id }}">
+                                                                                            
                                                                                         </div>
                                                                                         
                                                                                     </div>
