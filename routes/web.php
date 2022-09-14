@@ -106,4 +106,4 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
-    
+});
