@@ -142,11 +142,12 @@
     </div>
   </div>
 
-  <script type="text/javascript">
-    $('.carousel').carousel({
-  interval: false,
-});
-    </script> 
+    <script type="text/javascript">
+      $('.carousel').carousel({
+    interval: false,
+  });
+      </script> 
 @endcan
+
 @endsection
 
