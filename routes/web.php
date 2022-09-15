@@ -41,7 +41,6 @@ Route::controller(LoginController::class)->group(function(){
     Route::get('/register','register')->name('register')->middleware('guest');
     Route::get('/donation','donation')->name('donation')->middleware('guest');
     Route::post('/login','authenticate');
-    Route::get('/dashboard', 'dashboard')->middleware('auth');
     Route::post('/logout','logout');
 });
 

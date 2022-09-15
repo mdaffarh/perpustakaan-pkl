@@ -81,7 +81,7 @@
             </div>
             {{-- Viewed all end --}}
 
-            <div class="overflow-auto notiscroll" style="height: 400px">
+            <div class="overflow-auto notiscroll" style="max-height: 400px">
               @foreach ($notifications as $item)
                 <div class="dropdown-item px-2">
                   <!-- Message Start -->
@@ -164,7 +164,7 @@
               @endif
             </div>
             
-            <div class="overflow-auto notiscroll" style="height: 400px">
+            <div class="overflow-auto notiscroll" style="max-height: 400px">
               @foreach ($notiStaff as $item)
                 <div class="dropdown-item px-2">
                   <!-- Message Start -->

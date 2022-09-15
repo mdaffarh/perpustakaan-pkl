@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Stock;
+use App\Models\Borrow;
+use App\Models\MemberRegistration;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +17,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $random1 = Book::inRandomOrder()->get();
+        $random2 = Book::inRandomOrder()->limit(5)->get();
+        $random2 = Book::inRandomOrder()->limit(5)->get();
+        return view('dashboard.index',[
+            'books1' => $random1,
+            'books2' => $random2,
+            'stock' => Stock::where('stok_akhir' ,'>', 0 )->count(),
+            'borrowed' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
+            'borrowRequest' => Borrow::where('status','Menunggu persetujuan')->count(),
+            'memberRegist' => MemberRegistration::all()->count()
+        ]);
     }
 
     /**
