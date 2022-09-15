@@ -41,6 +41,19 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.min.js?v=3.2.0')}}"></script>
+
+    <style>
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .notiscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .notiscroll {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+    </style>
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
