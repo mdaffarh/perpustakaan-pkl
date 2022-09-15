@@ -37,45 +37,61 @@
             </div>
         </div>
 
-      <!-- Sidebar Menu -->
-      {{-- Transaksi --}}
-      <nav class="mt-2 pb-3">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
-          <li class="nav-item">
-            <a href="/dashboard" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-            Dashboard
-            </p>
-            </a>
-          </li>
-          {{-- Transaksi --}} 
-          <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Transaksi
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              @can('staff')
+        <!-- Sidebar Menu -->
+        {{-- Transaksi --}}
+        <nav class="mt-2 pb-3">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
                 <li class="nav-item">
-                  <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Pendaftaran Anggota</p>
-                  </a>
+                    <a href="/dashboard" class="nav-link {{ Request::is('dashboard*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
                 </li>
-              @endcan
+                @can('member')
+                <li class="nav-item">
+                    <a href="/transaction/wishlist" class="nav-link {{ Request::is('transaction/wishlist*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-bookmark"></i>
+                        <p>Wishlist Buku</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>Peminjaman Buku</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/transaction/book-donation" class="nav-link {{ Request::is('transaction/book-donation*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-book-medical"></i>
+                        <p>Sumbangan Buku</p>
+                    </a>
+                </li>
+                @endcan
 
-              @can('admin')
+                @can('staff')
+                {{-- Transaksi --}} 
                 <li class="nav-item">
-                  <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Pendaftaran Staff</p>
-                  </a>
-                </li>
-              @endcan
+                    <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>Transaksi<i class="fas fa-angle-left right"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                    @can('staff')
+                        <li class="nav-item">
+                            <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendaftaran Anggota</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('admin')
+                        <li class="nav-item">
+                            <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendaftaran Staff</p>
+                            </a>
+                        </li>
+                    @endcan
                 
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
@@ -128,6 +144,7 @@
                     </ul>
 
                 </li>
+                @endcan
 
                 <!-- Table -->
                 @can('staff')

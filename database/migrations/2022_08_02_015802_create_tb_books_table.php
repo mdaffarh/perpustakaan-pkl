@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('tglTerbit');//
             $table->date('tglMasuk');//
             $table->string('stock_awal');
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

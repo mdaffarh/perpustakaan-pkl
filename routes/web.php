@@ -18,6 +18,7 @@ use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,7 @@ Route::controller(LoginController::class)->group(function(){
     Route::get('/register','register')->name('register')->middleware('guest');
     Route::get('/donation','donation')->name('donation')->middleware('guest');
     Route::post('/login','authenticate');
+    Route::get('/dashboard', 'dashboard')->middleware('auth');
     Route::post('/logout','logout');
 });
 
@@ -123,5 +125,9 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
 });
-    //
-//
+Route::get('/transaction/wishlist/destroy/{{ $id }}', [WishlistController::class, 'delete'])->name('delete')->middleware('auth');
+
+Route::resource('/transaction/wishlist', WishlistController::class)->middleware('auth');
+Route::controller(WishlistController::class)->group(function(){
+    Route::post('/checkout', 'checkout')->name('checkout')->middleware('auth');
+});
