@@ -49,7 +49,7 @@ class ReturnController extends Controller
         }
 
 
-        toast('Data anggota telah ditambahkan!','success');
+        toast('Buku telah dikembalikan!','success');
         return redirect('/transaction/return');
 
 

@@ -124,21 +124,21 @@
 
         <!-- Cart wishlist Menu -->
         @can('member')
-        <a class="nav-link" href="/transaction/wishlist">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l4.744 11.385A1 1 0 0 0 10 17h8c.417 0 .79-.259.937-.648l3-8a1 1 0 0 0-.115-.921z"></path><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg>
+        <a class="nav-link" href="/transaction/wishlist" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Wishlist">
+            <i class="fas fa-shopping-cart"></i>
         </a>
         @endcan
 
         <!-- Staff Nontifikasi -->
         @can('staff')
             @if ($notiStaffCount != 0)
-            <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiStaffCount }} Notifikasi Baru!</strong></button>
+                <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiStaffCount }} Notifikasi Baru!</strong></button>
             @endif
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell"></i>
                     @if ($notiStaffCount != 0)
-                    <span class="badge badge-danger navbar-badge">{{ $notiStaffCount }}</span>
+                        <span class="badge badge-danger navbar-badge">{{ $notiStaffCount }}</span>
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -214,7 +214,7 @@
         <!-- Notifications Dropdown Menu End -->
 
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Layar Penuh">
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>

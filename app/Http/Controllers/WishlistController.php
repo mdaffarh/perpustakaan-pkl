@@ -52,7 +52,7 @@ class WishlistController extends Controller
         ];
 
         Wishlist::create($wishlist);
-        toast('Data Sekolah telah ditambahkan!','success');
+        toast('Buku telah ditambahkan kedalam wishlist!','success');
         return redirect()->intended('/dashboard');
     }
 

@@ -61,7 +61,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="/transaction/book-donation" class="nav-link {{ Request::is('transaction/book-donation*') ? 'active' : '' }}">
+                    <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-book-medical"></i>
                         <p>Sumbangan Buku</p>
                     </a>

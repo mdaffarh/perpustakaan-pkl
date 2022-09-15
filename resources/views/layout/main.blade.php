@@ -54,6 +54,7 @@
         scrollbar-width: none;  /* Firefox */
       }
     </style>
+    @yield('style')
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">

@@ -42,7 +42,6 @@ Route::controller(LoginController::class)->group(function(){
     Route::get('/register','register')->name('register')->middleware('guest');
     Route::get('/donation','donation')->name('donation')->middleware('guest');
     Route::post('/login','authenticate');
-    Route::get('/dashboard', 'dashboard')->middleware('auth');
     Route::post('/logout','logout');
 });
 
@@ -52,7 +51,6 @@ Route::controller(MemberRegistrationController::class)->group(function(){
     Route::post('/transaction/member-registrations/tolak/{id}','tolak')->middleware('staff');
     Route::post('/transaction/member-registrations/approved/{id}','approved')->middleware('staff');
     Route::post('/transaction/member-registrations/directStore','directStore')->middleware('staff');
-    
     Route::post('/transaction/member-registrations/store','store')->middleware('guest');
 });
 
@@ -65,14 +63,9 @@ Route::controller(StaffRegistrationController::class)->group(function(){
 });
 //
 
-Route::controller(BookDonationController::class)->group(function(){
-    Route::post('/transaction/book-donations/create','create')->middleware('anggota');
-});
-
 Route::controller(FormController::class)->group(function(){
     Route::get('/form/book','book')->middleware('staff');
 });
-
 
 
 // Staff = penjaga,admin,dll
@@ -92,12 +85,12 @@ Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 //
 
 // Semua user ('auth')
-    //Sumbangan Buku
+//Sumbangan Buku
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
 Route::controller(BookDonationController::class)->group(function(){
     Route::post('/transaction/book-donations/create','create')->middleware('auth');
 });
-    //
+    
 
     //Peminjaman
 Route::resource('/transaction/borrows', BorrowController::class)->middleware('auth');

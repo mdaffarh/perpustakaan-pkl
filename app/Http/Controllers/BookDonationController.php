@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\BookDonation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,8 +22,6 @@ class BookDonationController extends Controller
 
     public function store(Request $request)
     {
-
-
         $validatedData = $request->validate([
             'isbn'          => 'required|unique:trx_book_donations',
             'judul'         => 'required',
@@ -41,8 +38,7 @@ class BookDonationController extends Controller
         if($request->file('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
-
-
+        $validatedData['member_id'] = auth()->user()->member_id;
         BookDonation::create($validatedData);
 
         toast('Data sumbangan buku telah ditambahkan!','success');
