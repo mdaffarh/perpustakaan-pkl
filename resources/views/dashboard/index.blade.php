@@ -32,7 +32,7 @@
                 <p>Buku Telah Kamu Sumbangkan</p>
               </div>
               <div class="icon">
-                <i class="fa fa-book"></i>
+                <i class="fas fa-hands-helping"></i>
               </div>
               <a href="/transaction/book-donations" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -48,7 +48,7 @@
                 <p>Peminjaman Diajukan</p>
               </div>
               <div class="icon">
-                <i class="fas fa-book-reader"></i>
+                <i class="fas fa-book-open"></i>
               </div>
               <a href="/transaction/borrows" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>

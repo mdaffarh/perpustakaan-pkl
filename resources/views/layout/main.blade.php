@@ -117,10 +117,6 @@
       // Modal
       const myModal = document.getElementById('myModal')
       const myInput = document.getElementById('myInput')
-
-      myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus()
-      })
     </script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     {{-- DataTables  & Plugins --}}
