@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tanggal_pinjam');
             $table->date('tanggal_tempo');
             $table->string('status');
+            $table->string('dikembalikan')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

@@ -17,6 +17,7 @@ use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\WishlistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,4 +107,10 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
-    
+});
+Route::get('/transaction/wishlist/destroy/{{ $id }}', [WishlistController::class, 'delete'])->name('delete')->middleware('auth');
+
+Route::resource('/transaction/wishlist', WishlistController::class)->middleware('auth');
+Route::controller(WishlistController::class)->group(function(){
+    Route::post('/checkout', 'checkout')->name('checkout')->middleware('auth');
+});
