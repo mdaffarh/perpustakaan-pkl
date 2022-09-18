@@ -17,5 +17,10 @@ class Book extends Model
         return $this->hasOne(Stock::class);
     }
 
+    public function wishlist()
+    {
+        return $this->belongsTo(Wishlist::class);
+    }
+
 
 }

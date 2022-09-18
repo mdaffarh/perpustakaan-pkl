@@ -98,18 +98,24 @@ class WishlistController extends Controller
      */
     public function delete($id)
     {
-        Wishlist::destroy($id);
+        Wishlist::find($id)->delete();
 
-        toast('Data draff telah dihapus!','success');
-        return redirect('/transaction/wishlist');
+        $wishlist_count = Wishlist::where('member_id', auth()->user()->member_id)->count();
+        return response()->json($wishlist_count);
+
     }
 
     public function checkout(Request $request)
     {
-        foreach ($request->id as $key => $dt) {
-            $data['id'] = Wishlist::where("id", $dt)->get();
+        foreach ($request->id as $key => $id) {
+            $wishlist[] = Wishlist::where('id', $id)->first();
         }
 
-        return redirect('/transaction/wishlist/checkout')->with($data['id']);
+        $nama = auth()->user()->member->nama;
+
+		return view('transaction.wishlist.checkout', [
+            'wishlists' => $wishlist,
+            'nama'      => $nama
+        ]);
     }
 }

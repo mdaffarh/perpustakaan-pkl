@@ -25,6 +25,7 @@ return new class extends Migration
             $table->date('tglTerbit');//
             $table->date('tglMasuk');//
             $table->string('image')->nullable();
+            $table->string('deskripsi')->nullable();
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@ class Borrow extends Model
         'id'
     ];
 
-    protected $with = ['member','staff','book'];
+    protected $with = ['member','staff','borrowItem'];
 
     public function member()
     {
@@ -26,10 +26,11 @@ class Borrow extends Model
         return $this->belongsTo(Staff::class);
     }
 
-    public function book()
+    public function BorrowItem()
     {
-        return $this->belongsTo(Book::class);
+        return $this->hasMany(BorrowItem::class);
     }
 
+    
 
 }

@@ -93,11 +93,9 @@ Route::resource('/transaction/borrows', BorrowController::class)->middleware('au
 Route::controller(BorrowController::class)->group(function(){
     Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
     Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
-});
-
-Route::resource('/transaction/return', ReturnController::class)->middleware('auth');
-Route::controller(ReturnController::class)->group(function(){
-    Route::post('/transaction/return/back/{id}','store')->middleware('auth');
+    Route::post('/transaction/pengambilan_buku/{id}','getBook')->middleware('auth');
+    Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
+    Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
 });
 
 Route::resource('notification', NotificationController::class)->middleware('auth');
@@ -108,9 +106,11 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
 });
-Route::get('/transaction/wishlist/destroy/{{ $id }}', [WishlistController::class, 'delete'])->name('delete')->middleware('auth');
+
 
 Route::resource('/transaction/wishlist', WishlistController::class)->middleware('auth');
 Route::controller(WishlistController::class)->group(function(){
-    Route::post('/checkout', 'checkout')->name('checkout')->middleware('auth');
+    Route::post('/transaction/wishlist/checkout', 'checkout')->middleware('auth');
+    Route::delete('/wishlist/delete/{id}', 'delete')->middleware('auth');
+    Route::post('/transaction/wishlist/add', 'store')->middleware('auth');
 });
