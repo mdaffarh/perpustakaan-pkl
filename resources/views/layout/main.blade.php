@@ -41,6 +41,20 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>
     <script src="{{asset('dist/js/adminlte.min.js?v=3.2.0')}}"></script>
+
+    <style>
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .notiscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Hide scrollbar for IE, Edge and Firefox */
+      .notiscroll {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+    </style>
+    @yield('style')
   </head>
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
@@ -103,10 +117,6 @@
       // Modal
       const myModal = document.getElementById('myModal')
       const myInput = document.getElementById('myInput')
-
-      myModal.addEventListener('shown.bs.modal', () => {
-        myInput.focus()
-      })
     </script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     {{-- DataTables  & Plugins --}}
@@ -159,5 +169,9 @@
 
 
     <!-- ./wrapper -->
+
+    {{-- Icon --}}
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

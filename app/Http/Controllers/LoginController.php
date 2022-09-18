@@ -43,6 +43,7 @@ class LoginController extends Controller
         return back()->with('loginError','Login failed!');
     }
 
+<<<<<<< HEAD
     public function dashboard()
     {
         $random1        = Book::inRandomOrder()->limit(20)->get();
@@ -72,6 +73,8 @@ class LoginController extends Controller
     }
 
 
+=======
+>>>>>>> 2b88e42effebf0e2613c52f4147b757fc9eb6375
     public function logout(Request $request)
     {
         Auth::logout();

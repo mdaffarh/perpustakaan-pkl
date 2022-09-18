@@ -69,17 +69,33 @@
                         <table id="example1" class="table">
                             <tbody>
                                 @foreach($wishlists as $key => $wishlist)
-                                <tr>
-                                    <td style="border :none;">{{ $loop->iteration }}</td>
-                                    <td style="border: none;">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                @if ($wishlist->book->image)
-                                                    <img src="{{ asset('storage/' . $wishlist->book->image) }}" class="" width="50%">
-                                                @else
-                                                    <img src="{{ asset("storage/images/book_cover_default.png") }}" class="" width="50%">
-                                                @endif
+                                    <tr>
+                                        <td style="border :none;">{{ $loop->iteration }}</td>
+                                        <td style="border: none;">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    @if ($wishlist->book->image)
+                                                        <img src="{{ asset('storage/' . $wishlist->book->image) }}" class="" width="50%">
+                                                    @else
+                                                        <img src="{{ asset("storage/images/book_cover_default.png") }}" class="" width="50%">
+                                                    @endif
+                                                </div>
+                                                <div class="col-6">
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="border: none;">ISBN</td>
+                                                                <td style="border: none;">: {{ $wishlist->book->isbn }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style="border: none;">Judul</td>
+                                                                <td style="border: none;">: {{ $wishlist->book->judul }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
+<<<<<<< HEAD
                                             <div class="col-6">
                                                 <table>
                                                     <tbody>
@@ -103,6 +119,16 @@
                                         <a href="javascript:void(0)" data-url="/wishlist/delete/{{$wishlist->id}}" class="btn btn-xs btn-danger delete-user">Hapus dari draff</a>
                                     </td>
                                 </tr>
+=======
+                                        </td>
+                                        <td class="text-center" style="border: none; font-size:20px;">
+                                            <input style="font-size:20px;" name='id[]' type="checkbox" id="checkItem" value="<?php echo $wishlists[$key]->id; ?>">
+                                        </td>
+                                        <td  style="border: none;">
+                                            <a href="/transaction/wishlist/destroy/{{ $wishlist->id }}" style="font-size :12px;" class="btn btn-danger" onclick="return confirm('sure?')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Hapus dari draff"><i class="fas fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+>>>>>>> 2b88e42effebf0e2613c52f4147b757fc9eb6375
                                 @endforeach
                             </tbody>
                         </table>

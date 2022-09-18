@@ -79,68 +79,66 @@
                     </div>
                     {{-- Viewed all end --}}
 
-                    @foreach ($notifications as $item)
-                    <div class="dropdown-item">
-
-                        <!-- Message Start -->
-                        <div class="media">
-                            <i class="fas fa-book mr-2 mt-2"></i>
-                            <div class="media-body">
-
-                                {{-- Delete --}}
-                                <form action="/notification/{{ $item->id }}" method="post">
-                                @method('delete')
-                                @csrf
-                                    <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
-                                        <i class="fa fa-times ml-1 mt-2"></i>
-                                    </button>
-                                </form>
-                                {{-- Delete end --}}
-
-                                @if ($item->viewed == true)
-                                    <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
-                                @else
-
-                                {{-- Viewed --}}
-                                <form action="/notification/viewed" method="post">
-                                @csrf
-                                    <input type="hidden" name="id" value="{{ $item->id }}">
-                                    <button class="d-inline" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Halaman peminjaman">
-                                        <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1">{{ $item->message }}</p></a>
-                                    </button>
-                                </form>
-                                {{-- Viewed end --}}
-
-                                @endif
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $item->created_at->diffForHumans() }}</p>
-                            </div>
-                        </div>
-                        <!-- Message End -->
+            <div class="overflow-auto notiscroll" style="max-height: 400px">
+              @foreach ($notifications as $item)
+                <div class="dropdown-item px-2">
+                  <!-- Message Start -->
+                  <div class="media">
+                    <i class="fas fa-book mr-2 mt-2"></i>
+                    <div class="media-body">
+                      {{-- Delete --}}
+                      <form action="/notification/{{ $item->id }}" method="post">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
+                          <i class="fa fa-times mt-2"></i>
+                        </button>
+                      </form>
+                      {{-- Delete end --}}
+  
+                      @if ($item->viewed == true)
+                        <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
+                      @else
+                      {{-- Viewed --}}
+                        <form action="/notification/viewed" method="post">
+                          @csrf
+                          <input type="hidden" name="id" value="{{ $item->id }}">
+                          <button class="d-inline" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Halaman peminjaman">
+                            <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1">{{ $item->message }}</p></a>
+                          </button>
+                        </form>
+                      {{-- Viewed end --}}
+                      @endif
+                      <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $item->created_at->diffForHumans() }}</p>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    @endforeach
-                
+                  </div>
+                  <!-- Message End -->
                 </div>
-            </li>
-        @endcan
+                <div class="dropdown-divider"></div>
+              @endforeach
+            </div>
+            
+          </div>
+        </li>
+      @endcan
 
         <!-- Cart wishlist Menu -->
         @can('member')
-        <a class="nav-link" href="/transaction/wishlist">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M21.822 7.431A1 1 0 0 0 21 7H7.333L6.179 4.23A1.994 1.994 0 0 0 4.333 3H2v2h2.333l4.744 11.385A1 1 0 0 0 10 17h8c.417 0 .79-.259.937-.648l3-8a1 1 0 0 0-.115-.921z"></path><circle cx="10.5" cy="19.5" r="1.5"></circle><circle cx="17.5" cy="19.5" r="1.5"></circle></svg>
+        <a class="nav-link" href="/transaction/wishlist" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Wishlist">
+            <i class="fas fa-shopping-cart"></i>
         </a>
         @endcan
 
         <!-- Staff Nontifikasi -->
         @can('staff')
             @if ($notiStaffCount != 0)
-            <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiStaffCount }} Notifikasi Baru!</strong></button>
+                <button type="button" class="btn btn-outline-primary btn-sm" style=" pointer-events: none;"><strong>{{ $notiStaffCount }} Notifikasi Baru!</strong></button>
             @endif
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-bell"></i>
                     @if ($notiStaffCount != 0)
-                    <span class="badge badge-danger navbar-badge">{{ $notiStaffCount }}</span>
+                        <span class="badge badge-danger navbar-badge">{{ $notiStaffCount }}</span>
                     @endif
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -172,50 +170,51 @@
                     @endif
                     </div>
                     
-                    @foreach ($notiStaff as $item)
-                    <div class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                        <i class="fas fa-book mr-2 mt-2"></i>
-                        <div class="media-body">
-                            {{-- Delete --}}
-                            <form action="/notification/{{ $item->id }}" method="post">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
-                                <i class="fa fa-times ml-1 mt-2"></i>
-                            </button>
-                            </form>
-                            {{-- Delete end --}}
-                            
-                            @if ($item->viewed == true)
-                            <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
-                            @else
-                            {{-- Viewed --}}
-                                <form action="/notification/viewed" method="post">
-                                @csrf
-                                <input type="hidden" name="id" value="{{ $item->id }}">
-                                <button class="d-inline" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
-                                    <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1">{{ $item->message }}</p></a>
-                                </button>
-                                </form>
-                            {{-- Viewed end --}}
-                            @endif
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $item->created_at->diffForHumans() }}</p>
-                        </div>
-                        </div>
-                        <!-- Message End -->
+                    <div class="overflow-auto notiscroll" style="max-height: 400px">
+              @foreach ($notiStaff as $item)
+                      <div class="dropdown-item px-2">
+                          <!-- Message Start -->
+                          <div class="media">
+                          <i class="fas fa-book mr-2 mt-2"></i>
+                          <div class="media-body">
+                              {{-- Delete --}}
+                              <form action="/notification/{{ $item->id }}" method="post">
+                              @method('delete')
+                              @csrf
+                              <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
+                                  <i class="fa fa-times mt-2"></i>
+                              </button>
+                              </form>
+                              {{-- Delete end --}}
+                              
+                              @if ($item->viewed == true)
+                              <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
+                              @else
+                              {{-- Viewed --}}
+                                  <form action="/notification/viewed" method="post">
+                                  @csrf
+                                  <input type="hidden" name="id" value="{{ $item->id }}">
+                                  <button class="d-inline" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
+                                      <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1">{{ $item->message }}</p></a>
+                                  </button>
+                                  </form>
+                              {{-- Viewed end --}}
+                              @endif
+                              <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ $item->created_at->diffForHumans() }}</p>
+                          </div>
+                          </div>
+                          <!-- Message End -->
+                      </div>
+                      <div class="dropdown-divider"></div>
+                      @endforeach
                     </div>
-                    <div class="dropdown-divider"></div>
-                    @endforeach
-                    
                 </div>
             </li>
         @endcan
         <!-- Notifications Dropdown Menu End -->
 
         <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Layar Penuh">
                 <i class="fas fa-expand-arrows-alt"></i>
             </a>
         </li>

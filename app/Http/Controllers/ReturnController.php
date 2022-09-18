@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Returns;
-use App\Models\Borrow;
 use App\Models\Fine;
+use App\Models\Borrow;
+use App\Models\Member;
+use App\Models\Returns;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class ReturnController extends Controller
@@ -48,7 +49,7 @@ class ReturnController extends Controller
         }
 
 
-        toast('Data anggota telah ditambahkan!','success');
+        toast('Buku telah dikembalikan!','success');
         return redirect('/transaction/return');
 
 

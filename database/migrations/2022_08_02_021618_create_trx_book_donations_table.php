@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('trx_book_donations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('member_id');
             $table->string('isbn');
             $table->string('judul');
             $table->string('penulis');//
