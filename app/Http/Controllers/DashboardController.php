@@ -11,6 +11,7 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Models\StaffRegistration;
 use App\Models\MemberRegistration;
+use App\Models\BorrowItem;
 
 class DashboardController extends Controller
 {
@@ -22,21 +23,26 @@ class DashboardController extends Controller
     public function index()
     {
         $random1        = Book::inRandomOrder()->get();
+        $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
         return view('dashboard.index',[
             // Tampilan Anggota
             'books1'    => $random1,
-            'stock' => Stock::where('stok_akhir' ,'>', 0 )->count(),
-            'borrowed' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
+            'stock'     => Stock::where('stok_akhir' ,'>', 0 )->count(),
+            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
             'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
             'donation'  => BookDonation::where('member_id',auth()->user()->member_id)->count(),
+            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->count(),
+            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan', "Belum")->get(),
+            'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             // Tampilan Staff
-            'books' => Book::all()->count(),
-            'members' => Member::all()->count(),
-            'borrowRequest' => Borrow::where('status','Menunggu persetujuan')->count(),
-            'memberRegist' => MemberRegistration::all()->count()
+            'books'     => Book::all()->count(),
+            'members'   => Member::all()->count(),
+            'borrowRequest'     => Borrow::where('status','Menunggu persetujuan')->count(),
+            'memberRegist'      => MemberRegistration::all()->count()
         ]);
+        
     }
 
     /**

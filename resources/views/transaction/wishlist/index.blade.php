@@ -4,7 +4,7 @@
 @section('content')
 @include('sweetalert::alert')
 
-    <form action="/checkout" method="post">
+    <form action="/transaction/wishlist/checkout" method="post" class="{{ Request::is('/transaction/wishlist/checkout*') ? 'active' : '' }}">
         @csrf
         <div class="row">
             <div class="col">
@@ -14,7 +14,41 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <h3 class="mt-2">@yield('title')</h3>
-                                    <p>Total Wishlist : {{ $wishlist_count }}</p>
+                                    <div id="total_wishlist">
+                                        <p>Total Wishlist : {{ $wishlist_count }}</p>
+                                    </div>
+
+                                    <!-- Tambah Data -->
+                                    <a href="#add" data-toggle="modal" class="btn btn-outline-success btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                                        
+                                    <div class="modal fade" id="add" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="formModalLabel">Tambahkan Wishlist Book</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="myForm" name="myForm" class="form-horizontal" novalidate="">
+                                                        <div class="form-group">
+                                                            <label>Nama</label>
+                                                            <select name="" class="form-control" id="">
+                                                                @foreach($books as $b)
+                                                                <option value="{{ $b->id }}">{{ $b->judul }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div><!-- /.col -->
                                 <div class="col-sm-6">
                                     <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
@@ -66,7 +100,9 @@
                                             <input style="font-size:20px;" name='id[]' type="checkbox" id="checkItem" value="<?php echo $wishlists[$key]->id; ?>">
                                         </td>
                                         <td  style="border: none;">
-                                            <a href="/transaction/wishlist/destroy/{{ $wishlist->id }}" style="font-size :12px;" class="btn btn-danger" onclick="return confirm('sure?')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Hapus dari draff"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0)" data-url="/wishlist/delete/{{ $wishlist->id }}" class="btn btn-danger delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -77,17 +113,98 @@
             </div>
         </div>
     </form>
+
 	<script>
 
-    $('input[type=checkbox]').on('change', function(evt) {
-        if($('input[id=checkItem]:checked').length >= 4) {
-            this.checked = false;
-            alert('Hanya boleh memilih maksimal 3 kategori !');
-        }
-        var n = $('input[id=checkItem]:checked').length;
-        $("#anjing").html("<button type='submit' class='btn btn-outline-success'>Pinjam " + n + " Buku</button>");
-    });
+        $('input[type=checkbox]').on('change', function(evt) {
+            if($('input[id=checkItem]:checked').length >= 4) {
+                this.checked = false;
+                alert('Hanya boleh memilih maksimal 3 kategori !');
+            }
+            var n = $('input[id=checkItem]:checked').length;
+            $("#anjing").html("<button type='submit' class='btn btn-outline-success'>Pinjam " + n + " Buku</button>");
+        });
 
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            When click user on Show Button
+            --------------------------------------------
+            --------------------------------------------*/
+            $(document).on('click', '.delete', function() {
+
+                var userURL = $(this).data('url');
+                var trObj = $(this);
+
+                if (confirm("Are you sure you want to delete this?") == true) {
+                    $.ajax({
+                        url: userURL,
+                        type: 'DELETE',
+                        dataType: 'json',
+                        data: { _token: '{{csrf_token()}}' },
+                        success: function(data) {
+                            //alert(data.success);
+                            trObj.parents("tr").remove();
+                            $("#total_wishlist").append('<p id="total_wishlist">Total Wishlist :' + value.wishlist_count + '</p>');
+                        }
+                    });
+                }
+
+            });
+
+        });
+
+        // jQuery(document).ready(function($){
+        //     //----- Open model CREATE -----//
+        //     jQuery('#btn-add').click(function () {
+        //         jQuery('#btn-save').val("add");
+        //         jQuery('#myForm').trigger("reset");
+        //         jQuery('#add').modal('show');
+        //     });
+        //     // CREATE
+        //     $("#btn-save").click(function (e) {
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+        //             }
+        //         });
+        //         e.preventDefault();
+        //         var formData = {
+        //             title: jQuery('#title').val(),
+        //             description: jQuery('#description').val(),
+        //         };
+        //         var state = jQuery('#btn-save').val();
+        //         var type = "POST";
+        //         var todo_id = jQuery('#todo_id').val();
+        //         var ajaxurl = 'todo';
+        //         $.ajax({
+        //             type: type,
+        //             url: ajaxurl,
+        //             data: formData,
+        //             dataType: 'json',
+        //             success: function (data) {
+        //                 var todo = '<tr id="todo' + data.id + '"><td>' + data.id + '</td><td>' + data.title + '</td><td>' + data.description + '</td>';
+        //                 if (state == "add") {
+        //                     jQuery('#todo-list').append(todo);
+        //                 } else {
+        //                     jQuery("#todo" + todo_id).replaceWith(todo);
+        //                 }
+        //                 jQuery('#myForm').trigger("reset");
+        //                 jQuery('#formModal').modal('hide')
+        //             },
+        //             error: function (data) {
+        //                 console.log(data);
+        //             }
+        //         });
+        //     });
+        // });
 
 	</script>
 @endsection

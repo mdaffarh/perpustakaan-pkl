@@ -9,6 +9,8 @@ use App\Models\Member;
 use App\Models\MemberRegistration;
 use App\Models\Staff;
 use App\Models\StaffRegistration;
+use App\Models\Borrow;
+use App\Models\BorrowItem;
 
 class LoginController extends Controller
 {

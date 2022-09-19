@@ -95,6 +95,9 @@ use App\Http\Controllers\WishlistController;
     Route::controller(BorrowController::class)->group(function(){
         Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
         Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+        Route::post('/transaction/pengambilan_buku/{id}','getBook')->middleware('auth');
+        Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
+        Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
     });
     //
 
@@ -107,20 +110,20 @@ use App\Http\Controllers\WishlistController;
     });
     //
 
-    //Notifikasi
-    Route::resource('notification', NotificationController::class)->middleware('auth');
-    Route::controller(NotificationController::class)->group(function(){
-        Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
-        Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
-        Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
-        Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
-        Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
-    });
-
     // Wishlist
-    Route::get('/transaction/wishlist/destroy/{{ $id }}', [WishlistController::class, 'delete'])->name('delete')->middleware('auth');
-
     Route::resource('/transaction/wishlist', WishlistController::class)->middleware('auth');
     Route::controller(WishlistController::class)->group(function(){
-        Route::post('/checkout', 'checkout')->name('checkout')->middleware('auth');
+        Route::post('/transaction/wishlist/checkout', 'checkout')->middleware('auth');
+        Route::delete('/wishlist/delete/{id}', 'delete')->middleware('auth');
+        Route::post('/transaction/wishlist/add', 'store')->middleware('auth');
     });
+
+    //Notifikasi
+Route::resource('notification', NotificationController::class)->middleware('auth');
+Route::controller(NotificationController::class)->group(function(){
+    Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
+    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
+    Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
+    Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
+    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
+});
