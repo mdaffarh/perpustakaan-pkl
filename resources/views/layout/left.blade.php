@@ -103,19 +103,19 @@
                         
                         <!-- Transaksi Pengembalian Dan Sumbangan Buku -->
                         @can('staff')
-                        <li class="nav-item">
-                            <a href="/transaction/return" class="nav-link {{ Request::is('transaction/return*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pengembalian Buku</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="/transaction/return" class="nav-link {{ Request::is('transaction/return*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pengembalian Buku</p>
+                                </a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a href="/transaction/book-donations/index_anggota" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sumbangan Buku</p>
-                            </a>
-                        </li>           
+                            <li class="nav-item">
+                                <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sumbangan Buku</p>
+                                </a>
+                            </li>           
                         @endcan
 
                         <!-- Transaksi Denda -->
@@ -126,20 +126,13 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="/transaction/book-donations/create" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sumbangan Buku</p>
-                            </a>
-                        </li> 
-
                         @can('staff')
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Jadwal Piket Staff</p>
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Jadwal Piket Staff</p>
+                                </a>
+                            </li>
                         @endcan
                     </ul>
 

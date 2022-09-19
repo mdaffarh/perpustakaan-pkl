@@ -12,4 +12,10 @@ class BookDonation extends Model
     protected $guarded = [
         'id'
     ];
+
+    protected $with = ['member'];
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('penulis');//
             $table->string('penerbit');//
             $table->string('kategori');//
-            $table->string('stock_awal');
-            $table->text('keterangan');
+            $table->string('jumlah');
+            $table->text('keterangan')->nullable();
             $table->date('tglTerbit');//
             $table->date('tglMasuk');//
             $table->string('image')->nullable();

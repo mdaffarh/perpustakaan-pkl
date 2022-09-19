@@ -18,7 +18,6 @@ class BookFactory extends Factory
     {
         return [
             //isbn,judul,penulis,penerbit,cover,kategori
-            'isbn' => fake()->numerify('#############'),
             'judul' => fake()->sentence(mt_rand(1,5)),
             'penulis' => fake()->name(),
             'penerbit' => fake()->company(),

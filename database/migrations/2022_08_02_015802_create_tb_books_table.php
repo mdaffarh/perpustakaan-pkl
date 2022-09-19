@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tb_books', function (Blueprint $table) {
             $table->id();
-            $table->string('isbn');
+            $table->string('isbn')->unique();
             $table->string('judul');
             $table->string('penulis');//
             $table->string('penerbit');//

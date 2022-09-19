@@ -22,9 +22,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Book::factory(20)->create();
         Member::factory(20)->create();
         Staff::factory(10)->create();
+        foreach (range(1, 20) as $iteration) {
+            Book::factory(1)->create(['isbn' => $iteration]);
+        }
         foreach (range(1, 20) as $iteration) {
             Stock::factory(1)->create(['book_id' => $iteration]);
         }

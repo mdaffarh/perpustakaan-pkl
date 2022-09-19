@@ -24,6 +24,11 @@ class Member extends Model
         return $this->hasMany(Borrow::class);
     }
 
+    public function bookDonations()
+    {
+        return $this->hasMany(BookDonation::class);
+    }
+
     protected $with = ['creator','editor'];
 
 
