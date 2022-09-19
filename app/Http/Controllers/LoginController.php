@@ -43,38 +43,6 @@ class LoginController extends Controller
         return back()->with('loginError','Login failed!');
     }
 
-<<<<<<< HEAD
-    public function dashboard()
-    {
-        $random1        = Book::inRandomOrder()->limit(20)->get();
-        $borrow         = Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan', "Belum")->get();
-        $borrowed       = Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->count();
-        $count_book     = Book::all()->count();
-        $count_member   = Member::all()->count();
-        $count_staff    = Staff::all()->count();
-
-        // Count register
-        $count_member_registration  = MemberRegistration::all()->count();
-        $count_staff_registration   = StaffRegistration::all()->count();
-        $count_registration         = $count_member_registration + $count_staff_registration;
-
-        $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
-
-        return view('/dashboard/index',[
-            'books1'    => $random1,
-            'books'     => $count_book,
-            'members'   => $count_member,
-            'staffs'    => $count_staff,
-            'registrations' => $count_registration,
-            'borrow'    => $borrow,
-            'borrowed'  => $borrowed,
-            'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count()
-        ]);
-    }
-
-
-=======
->>>>>>> 2b88e42effebf0e2613c52f4147b757fc9eb6375
     public function logout(Request $request)
     {
         Auth::logout();

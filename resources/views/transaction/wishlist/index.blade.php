@@ -95,40 +95,16 @@
                                                     </table>
                                                 </div>
                                             </div>
-<<<<<<< HEAD
-                                            <div class="col-6">
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td style="border: none;">ISBN</td>
-                                                            <td style="border: none;">: {{ $wishlist->book->isbn }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="border: none;">Judul</td>
-                                                            <td style="border: none;">: {{ $wishlist->book->judul }}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center" style="border: none; font-size:20px;">
-                                        <input style="font-size:20px;" name='id[]' type="checkbox" id="checkItem" value="{{ $wishlist->id }}">
-                                    </td>
-                                    <td  style="border: none;">
-                                        <a href="javascript:void(0)" data-url="/wishlist/delete/{{$wishlist->id}}" class="btn btn-xs btn-danger delete-user">Hapus dari draff</a>
-                                    </td>
-                                </tr>
-=======
                                         </td>
                                         <td class="text-center" style="border: none; font-size:20px;">
                                             <input style="font-size:20px;" name='id[]' type="checkbox" id="checkItem" value="<?php echo $wishlists[$key]->id; ?>">
                                         </td>
                                         <td  style="border: none;">
-                                            <a href="/transaction/wishlist/destroy/{{ $wishlist->id }}" style="font-size :12px;" class="btn btn-danger" onclick="return confirm('sure?')" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Hapus dari draff"><i class="fas fa-trash-alt"></i></a>
+                                            <a href="javascript:void(0)" data-url="/wishlist/delete/{{ $wishlist->id }}" class="btn btn-danger delete">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </a>
                                         </td>
                                     </tr>
->>>>>>> 2b88e42effebf0e2613c52f4147b757fc9eb6375
                                 @endforeach
                             </tbody>
                         </table>
@@ -162,7 +138,7 @@
             When click user on Show Button
             --------------------------------------------
             --------------------------------------------*/
-            $(document).on('click', '.delete-user', function() {
+            $(document).on('click', '.delete', function() {
 
                 var userURL = $(this).data('url');
                 var trObj = $(this);

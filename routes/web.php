@@ -97,11 +97,9 @@ Route::resource('/transaction/borrows', BorrowController::class)->middleware('au
 Route::controller(BorrowController::class)->group(function(){
     Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
     Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
-<<<<<<< HEAD
     Route::post('/transaction/pengambilan_buku/{id}','getBook')->middleware('auth');
     Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
     Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
-=======
 });
     //
 
@@ -111,7 +109,6 @@ Route::controller(ReturnController::class)->group(function(){
     Route::post('/transaction/return/back/{id}','store')->middleware('auth');
     // Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
     // Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
->>>>>>> 2b88e42effebf0e2613c52f4147b757fc9eb6375
 });
     //
 

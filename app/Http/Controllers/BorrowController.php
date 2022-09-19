@@ -90,7 +90,7 @@ class BorrowController extends Controller
         }
 
         toast('Peminjaman telah diajukan!','success');
-        return redirect('/transaction/borrows');
+        return redirect('/dashboard');
     }
 
     public function approve(Request $request, Borrow $borrow){
