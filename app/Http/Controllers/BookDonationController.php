@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\BookDonation;
+use App\Models\Book;
+use App\Models\Stock;
 use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,10 +13,10 @@ use Illuminate\Support\Facades\Storage;
 class BookDonationController extends Controller
 {
     public function index(){
-        $books = BookDonation::all();
         return view('transaction.book-donations.index',[
-            'bookDonations' => BookDonation::all(),
-            'diambil'       => BookDonation::find('id')
+            'bookDonations'         => BookDonation::where('member_id', auth()->user()->member_id)->get(),
+            'bookDonationsWaiting'  => BookDonation::where('status', "menunggu persetujuan")->get(),
+            'bookDonationsGet'      => BookDonation::where('diambil', "belum")->get()
         ]);
     }
 
@@ -30,22 +33,25 @@ class BookDonationController extends Controller
             'judul'         => 'required',
             'penulis'       => 'required',
             'penerbit'      => 'required',
-            // 'kategori'      => 'required',
             'stock_awal'    => 'required',
-            // 'keterangan'    => 'required',
-            // 'tglTerbit'     => 'required',
-            // 'tglMasuk'      => 'required',
             'image'         => 'image|file'
         ]);
 
         if($request->file('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
+
         $validatedData['member_id'] = auth()->user()->member_id;
         $validatedData['status'] = "menunggu persetujuan";
-        $validatedData['diambil'] = "belum";
    
-        BookDonation::create($validatedData);
+        $bookDonations = BookDonation::create($validatedData);
+
+        $message = [
+            'message'           => auth()->user()->member->nama." Mengajukan Penyumbangan buku ",
+            'bookDonation_id'   => $bookDonations->id
+        ];
+
+        Notification::create($message);    
 
         toast('Data sumbangan buku telah ditambahkan!','success');
         return redirect('/transaction/book-donations');
@@ -54,12 +60,22 @@ class BookDonationController extends Controller
     }
     public function approved(Request $request){
         $bukusumbangan = [
-            'staff_id' => auth()->user()->staff_id,
+            'staff_approved' => auth()->user()->staff_id,
             'status' => "disetujui",
             'diambil' => "belum"
             
         ];
         BookDonation::where('id', $request->id)->update($bukusumbangan);
+
+        // Notification
+        Notification::where('bookDonation_id', $request->id)->update(['viewed' => true]);
+            $message = [
+                'staff_approved'   => auth()->user()->staff_id,
+                'message'   => "Sumbangan Buku telah disetujui, Terimakasih atas Donasi anda" ,
+            ];
+
+        Notification::create($message);
+
         return redirect('/transaction/book-donations');
     }
 

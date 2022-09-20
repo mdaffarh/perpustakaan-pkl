@@ -164,7 +164,7 @@
                                                                                             <label for="">Alasan <small>Opsional</small> </label>
                                                                                             <input type="text" name="reason" id="" class="form-control">
                                                                                         </div>
-                                                                                        <div style="display: ;">
+                                                                                        <div style="display: none;">
                                                                                             <input required name="kode_peminjaman" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $borrow->kode_peminjaman }}">
                                                                                             <input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $borrow->id }}">
                                                                                             <input name="user_id" value="{{ $borrow->member->user->id }}">

@@ -21,11 +21,222 @@
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
 				</div>
-		
+
+				@can('staff')
+					<ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" id="tabs-waiting-tab" data-toggle="pill" href="#tabs-waiting" role="tab" aria-controls="tabs-waiting" aria-selected="trues">Menunggu Persetujuan</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="tabs-pengambilan-buku-tab" data-toggle="pill" href="#tabs-pengambilan-buku" role="tab" aria-controls="tabs-pengambilan-buku" aria-selected="false">Pengambilan Buku</a>
+						</li>
+					</ul>
+
+					<div class="tab-content" id="custom-tabs-two-tabContent">
+                       	<div class="tab-pane fade show active" id="tabs-waiting" role="tabpanel" aria-labelledby="tabs-waiting-tab">
+							{{-- Tabel --}}
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>ISBN</th>
+										<th>Judul Buku</th>
+										<th>Penulis</th>
+										<th>Kuantitas</th>
+										<th>Status</th>
+										<th>Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($bookDonationsWaiting as $bookDonation)
+									<tr>
+										<td>{{ $loop->iteration }}</td>
+										<td>{{ $bookDonation->isbn }}</td>
+										<td>{{ $bookDonation->judul }}</td>
+										<td>{{ $bookDonation->penulis }}</td>
+										<td>{{ $bookDonation->stock_awal }}</td>
+										<td>
+											@if($bookDonation->status=="menunggu persetujuan")
+											<span class="badge badge-warning">Menunggu Persetujuan</span>
+											@elseif($bookDonation->status=="disetujui")
+											<span class="badge badge-success">Disetujui</span>
+											@endif
+										</td>
+										<td>
+
+											{{-- Show --}}
+											<a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
+													<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+													<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+												</svg>
+											</a>
+											
+											<div class="modal fade" id="show{{ $bookDonation->id }}">
+												<div class="modal-dialog modal-lg">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h4 class="modal-title">Tampil Data</h4>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="modal-body">
+																<form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
+																	@method('put')
+																	@csrf
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">ISBN</label>
+																		<input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Judul Buku</label>
+																		<input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Penulis</label>
+																		<input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Penerbit</label>
+																		<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="image" class="form-label">Cover</label>
+																		@if ($bookDonation->image)
+																			<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
+																		@else
+																			<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
+																		@endif
+																	</div>
+																</form>
+															</div>
+														</div>
+														<div class="modal-footer justify-content-between">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+															
+															<form action="/transaction/book-donations/approved" method="post">
+																@csrf
+																<input hidden type="text" value="{{ $bookDonation->id }}" name="id">
+																<button type="submit">Approved</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+				
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade" id="tabs-pengambilan-buku" role="tabpanel" aria-labelledby="tabs-pengambilan-buku-tab">
+							{{-- Tabel --}}
+							<table id="example1" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>ISBN</th>
+										<th>Judul Buku</th>
+										<th>Penulis</th>
+										<th>Kuantitas</th>
+										<th>Status</th>
+										<th>Aksi</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($bookDonationsGet as $bookDonation)
+									<tr>
+										<td>{{ $loop->iteration }}</td>
+										<td>{{ $bookDonation->isbn }}</td>
+										<td>{{ $bookDonation->judul }}</td>
+										<td>{{ $bookDonation->penulis }}</td>
+										<td>{{ $bookDonation->stock_awal }}</td>
+										<td>
+											@if($bookDonation->status=="menunggu persetujuan")
+											<span class="badge badge-warning">Menunggu Persetujuan</span>
+											@elseif($bookDonation->status=="disetujui")
+											<span class="badge badge-success">Disetujui</span>
+											@endif
+										</td>
+										<td>
+				
+											{{-- Show --}}
+											<a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
+													<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+													<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+												</svg>
+											</a>
+											
+											<div class="modal fade" id="show{{ $bookDonation->id }}">
+												<div class="modal-dialog modal-lg">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h4 class="modal-title">Tampil Data</h4>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<div class="modal-body">
+																<form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
+																	@method('put')
+																	@csrf
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">ISBN</label>
+																		<input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Judul Buku</label>
+																		<input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Penulis</label>
+																		<input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="floatingInput3">Penerbit</label>
+																		<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+																	</div>
+																	<div class="form-floating mb-3">
+																		<label for="image" class="form-label">Cover</label>
+																		@if ($bookDonation->image)
+																			<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
+																		@else
+																			<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
+																		@endif
+																	</div>
+																</form>
+															</div>
+														</div>
+														<div class="modal-footer justify-content-between">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+															
+															<form action="/transaction/book-donations/taken" method="POST">
+																@csrf
+																<input type="text" value="{{ $bookDonation->id }}" name="id" >
+																<button type="submit">Book has been taken</button>
+															</form>
+														</div>
+													</div>
+												</div>
+											</div>
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				@endcan
+				
+				@can('member')
 				<div class="card-body">
 					<div>
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Tambah Data</button>
-		
 						{{-- Tambah Data --}}
 						<div class="modal fade" id="modal-default">
 							<div class="modal-dialog modal-lg">
@@ -207,8 +418,8 @@
 										</div>
 									</div>
 									
-									  {{-- Show --}}
-									  <a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
+									{{-- Show --}}
+									<a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
 											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
 											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
@@ -258,20 +469,6 @@
 												</div>
 												<div class="modal-footer justify-content-between">
 													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-													@can('staff')
-													@if($bookDonation->status=="menunggu persetujuan")
-													<form action="/transaction/book-donations/approved" method="post">
-														@csrf
-														<input hidden type="text" value="{{ $bookDonation->id }}" name="id">
-														<button type="submit">Approved</button>
-													</form>
-													@endif
-													@if($bookDonation->diambil!="belum")
-													<form action="">
-														<input type="text" value="{{ $bookDonation->id }}" name="id" >
-														<button type="submit">Book has been taken</button>
-													</form>
-													@endcan
 												</div>
 											</div>
 										</div>
@@ -292,6 +489,7 @@
 						</tbody>
 					</table>
 				</div>
+				@endcan
 			</div>
 		</div>
 	</div>

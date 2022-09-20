@@ -89,6 +89,7 @@ Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
 Route::controller(BookDonationController::class)->group(function(){
     Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
+    Route::post('/transaction/book-donations/taken','status')->middleware('auth');
 });
     
 

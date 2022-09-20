@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+
+    <!-- Chart.js -->
+    
     
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -146,8 +149,6 @@
     <!-- JQVMap -->
     <script src="{{ asset('plugins/jqvmap/jquery.vmap.min.js')}}"></script>
     <script src="{{ asset('plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-    <!-- jQuery Knob Chart -->
-    <script src="{{ asset('plugins/jquery-knob/jquery.knob.min.js')}}"></script>
     <!-- daterangepicker -->
     <script src="{{ asset('plugins/moment/moment.min.js')}}"></script>
     <script src="{{ asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
