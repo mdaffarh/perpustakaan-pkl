@@ -90,7 +90,7 @@
                             <form action="/notification/{{ $item->id }}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
+                                <button type="submit" class="text-danger text-sm float-right" style="position: absolute; z-index:2; left:90%; background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
                                 <i class="fa fa-times mt-2"></i>
                                 </button>
                             </form>
@@ -181,21 +181,20 @@
                                 <form action="/notification/{{ $item->id }}" method="post">
                                 @method('delete')
                                 @csrf
-                                <button type="submit" class="text-danger text-sm float-right" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
+                                <button type="submit" class="text-danger text-sm ps-1"  style="position: absolute; z-index:2; left:90%; background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Hapus notifikasi">
                                     <i class="fa fa-times mt-2"></i>
                                 </button>
                                 </form>
                                 {{-- Delete end --}}
-                                
                                 @if ($item->viewed == true)
                                     <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
                                 @else
                                 {{-- Viewed --}}
-                                    <form action="/notification/viewed" method="post">
+                                    <form action="/notification/viewed" method="post" style="">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $item->id }}">
-                                    <button class="d-inline" type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
-                                        <a href="/transaction/borrows?selected=tabs-waiting"><p class="text-sm text-wrap mt-1">{{ $item->message }}</p></a>
+                                    <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
+                                        <a href="/transaction/borrows?selected=tabs-waiting"><p class="text-sm text-wrap mt-1" style="text-align: left !important;">{{ $item->message }}</p></a>
                                     </button>
                                     </form>
                                 {{-- Viewed end --}}
