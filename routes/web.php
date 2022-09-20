@@ -87,8 +87,13 @@ use App\Http\Controllers\WishlistController;
     //
 
 // Semua user ('auth')
-    //Sumbangan Buku
-    Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
+//Sumbangan Buku
+Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
+Route::controller(BookDonationController::class)->group(function(){
+    Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
+    Route::post('/transaction/book-donations/taken','status')->middleware('auth');
+});
+    
 
     //Peminjaman
     Route::resource('/transaction/borrows', BorrowController::class)->middleware('auth');

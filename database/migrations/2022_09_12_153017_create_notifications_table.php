@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->foreignId('borrow_id')->nullable();
+            $table->foreignId('bookDonation_id')->nullable();
+            $table->foreignId('staff_approved')->nullable();
             $table->string('message');
             $table->boolean('viewed')->nullable();
             $table->timestamps();

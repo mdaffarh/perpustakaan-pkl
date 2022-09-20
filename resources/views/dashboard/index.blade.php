@@ -523,11 +523,11 @@
                                     </div>
                                 @endforeach
 
+                            </div>
                         </div>
-                    </div>
-                </main>
-            @endcan
-    </div>
-    {{-- Buku end --}}
+                    </main>
+                @endcan
+            </div>
+        {{-- Buku end --}}
 
 @endsection
