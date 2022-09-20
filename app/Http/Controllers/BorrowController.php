@@ -111,7 +111,7 @@ class BorrowController extends Controller
         Notification::where('borrow_id', $request->id)->update(['viewed' => true]);
             $message = [
                 'user_id'   => $request->user_id,
-                'message'   => "Peminjaman No. ".$request->kode_peminjaman." telah disetujui, Cetaklah kartu dan ambillah Buku di perpustakaan" ,
+                'message'   => "Peminjaman No. ".$request->kode_peminjaman." telah disetujui, Silakan cetak Kartu dan ambil Buku di perpustakaan." ,
             ];
 
         Notification::create($message);

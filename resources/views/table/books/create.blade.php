@@ -91,7 +91,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <label for="image" class="form-label">Foto</label>
-                            <img class="img-preview-add img-fluid mb-3 col-sm-5">
+                            <img class="img-preview-add mb-3 col-sm-3 img-fluid">
                             <input id="imageAdd" name="image" class="form-control @error('image') is-invalid @enderror" type="file" onchange="previewImageAdd()" value="{{ old('image') }}"/>
                                 @error('image')
                                      <div class="invalid-feedback">
@@ -108,6 +108,17 @@
 
 
 	<script>
+    	function previewImageAdd(){
+		const image = document.querySelector('#imageAdd');
+		const imgPreview = document.querySelector('.img-preview-add');
+		imgPreview.style.display = 'block';
+		const oFReader = new FileReader();
+		oFReader.readAsDataURL(image.files[0]);
+		oFReader.onload = function(oFREvent){
+			imgPreview.src = oFREvent.target.result;
+			}
+		}
+
 	$(function () {
 		$("#example1").DataTable({
 		"responsive": true, "lengthChange": false, "autoWidth": false,

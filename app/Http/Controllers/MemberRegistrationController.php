@@ -11,7 +11,9 @@ class MemberRegistrationController extends Controller
     public function index()
     {
         return view('transaction.member-registrations.index',[
-            'memberRegistration' => MemberRegistration::all()->where('status', '0')
+            'memberRegistration' => MemberRegistration::all()->where('status', '0'),
+            'memberAccepted'     => MemberRegistration::where('status','1')->get(),
+            'memberRejected'     => MemberRegistration::where('status','2')->get()
         ]);
     }
 
@@ -33,9 +35,8 @@ class MemberRegistrationController extends Controller
             'alamat'=> 'required'
         ]);
 
-        
         MemberRegistration::create($validatedData);
-        alert()->success('success','Data akan didaftarkan setelah disetujui staff');
+        alert()->success('Success','Data akan didaftarkan setelah disetujui staff');
 
         return redirect('/register');
 
@@ -55,7 +56,10 @@ class MemberRegistrationController extends Controller
             'alamat'=> 'required'
         ]);
 
-        
+        $validatedData['status'] = 1;
+        $validatedData['created_by'] = auth()->user()->staff_id;
+        MemberRegistration::create($validatedData);
+
         Member::create($validatedData);
         toast('Data anggota telah ditambahkan!','success');
 
@@ -82,6 +86,8 @@ class MemberRegistrationController extends Controller
         $validatedData = $request->validate($rules);
         $validatedDataMember = $request->validate($member);
 
+        $validatedData['created_by'] = auth()->user()->staff_id;
+
         MemberRegistration::where('id', $request->id)->update($validatedData);
         Member::create($validatedDataMember);
 
@@ -91,8 +97,10 @@ class MemberRegistrationController extends Controller
 
     public function tolak(Request $request, MemberRegistration $memberRegistration){
         $registrasi = [
-            'status' => $request->status
+            'status' => $request->status,
+            'created_by' =>  auth()->user()->staff_id
         ];
+
 
         MemberRegistration::where('id', $request->id)->update($registrasi);
 

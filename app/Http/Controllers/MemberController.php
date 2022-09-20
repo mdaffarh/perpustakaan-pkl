@@ -34,6 +34,7 @@ class MemberController extends Controller
             'alamat'=> 'required',
         ]);
 
+        $validatedData['status'] = 1;
         $validatedData['created_by'] = auth()->user()->staff_id;
         
         Member::create($validatedData);
@@ -66,6 +67,7 @@ class MemberController extends Controller
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
             'alamat'=> 'required',
+            'status'=> 'required'
         ];
     
         if($request->nis != $member->nis){

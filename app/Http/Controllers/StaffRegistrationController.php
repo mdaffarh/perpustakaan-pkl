@@ -12,7 +12,9 @@ class StaffRegistrationController extends Controller
     public function index(){
 
     	return view('transaction.staff-registrations.index',[
-            'staffRegistration' => StaffRegistration::all()->where('status', '0')
+            'staffRegistration' => StaffRegistration::all()->where('status', '0'),
+            'staffAccepted' => StaffRegistration::where('status','1')->get(),
+            'staffRejected' => StaffRegistration::where('status','2')->get()
         ]);
     }
 
@@ -52,6 +54,9 @@ class StaffRegistrationController extends Controller
             'alamat'        => 'required'
         ]);
 
+        $validatedData['status'] = 1;
+        $validatedData['created_by'] = auth()->user()->staff_id;
+        StaffRegistration::create($validatedData);
         
         Staff::create($validatedData);
         toast('Data staff telah ditambahkan!','success');
@@ -63,7 +68,7 @@ class StaffRegistrationController extends Controller
     public function approved(Request $request, StaffRegistration $staffRegistration){
         $rules = [
             'status'            => $request->status,
-            'user_verifikasi'   => Auth::user()->id
+            'user_verifikasi'   => auth()->user()->id
         ];
 
         $staff = [
@@ -78,6 +83,8 @@ class StaffRegistrationController extends Controller
 
         $validatedDataStaff     = $request->validate($staff);
 
+        $validatedData['created_by'] = auth()->user()->staff_id;
+
         StaffRegistration::where('id', $request->id)->update($rules);
         Staff::create($validatedDataStaff);
 
@@ -88,7 +95,8 @@ class StaffRegistrationController extends Controller
     public function tolak(Request $request, StaffRegistration $staffRegistration){
         $registrasi = [
             'status'            => $request->status,
-            'user_verifikasi'   => Auth::user()->id
+            'user_verifikasi'   => auth()->user()->id,
+            'created_by'        => auth()->user()->staff_id
         ];
 
         StaffRegistration::where('id', $request->id)->update($registrasi);

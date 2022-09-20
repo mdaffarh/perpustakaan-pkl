@@ -98,16 +98,16 @@
 																<label for="floatingInput3">Tanggal Masuk</label>
 																<input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $book->tglMasuk }}">
 															</div>
-															<div class="mb-3">
-																<label for="image" class="form-label">Cover</label>
-																<input type="hidden" name="oldImage" value="{{ $book->image }}">
+															<div class="form-floating mb-3">
+																<label for="">Cover</label>
 																@if (!$book->image)
-																	<img class="img-fluid img-preview mb-3 col-sm-5">
+																	<img id="img-preview" class="img-fluid img-preview mb-3 col-sm-5">
 																@else
-																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+																	<img src="{{ asset('storage/' . $book->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
 																@endif
-																
 																<input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
+																<input type="hidden" name="oldImage" value="{{ $book->image }}">
+																
 															</div>
 															<div class="input-group">
 																<button class="btn btn-success rounded me-1" type="submit">Submit</button>
@@ -174,7 +174,7 @@
 																<input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $book->tglMasuk }}" disabled>
 															</div>
 															<div class="form-floating mb-3">
-																<label for="image" class="form-label">Cover</label>
+																<label >Cover</label>
 																@if ($book->image)
 																	<img src="{{ asset('storage/' . $book->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																@else
@@ -209,47 +209,37 @@
 			</div>
 		</div>
 	</div>
-
+	
 	<script>
-	$(function () {
-		$("#example1").DataTable({
-		"responsive": true, "lengthChange": false, "autoWidth": false,
-		"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-		
-		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-		// $('#example1').DataTable({
-		//   "paging": true,
-		//   "lengthChange": false,
-		//   "searching": false,
-		//   "ordering": true,
-		//   "info": true,
-		//   "autoWidth": false,
-		//   "responsive": true,
-		// });
-	});
-
-	//   Buat modal tambah
-	function previewImageAdd(){
-		const image = document.querySelector('#imageAdd');
-		const imgPreview = document.querySelector('.img-preview-add');
-		imgPreview.style.display = 'block';
-		const oFReader = new FileReader();
-		oFReader.readAsDataURL(image.files[0]);
-		oFReader.onload = function(oFREvent){
-			imgPreview.src = oFREvent.target.result;
-			}
-		}
-		
-	// Buat modal edit
+		// Buat modal edit
 		function previewImage(){
-			const image = document.querySelector('#image');
-			const imgPreview = document.querySelector('.img-preview');
-			imgPreview.style.display = 'block';
-			const oFReader = new FileReader();
-			oFReader.readAsDataURL(image.files[0]);
-			oFReader.onload = function(oFREvent){
-				imgPreview.src = oFREvent.target.result;
-				}
-		}
+				const image = document.querySelector('#image');
+				const imgPreview = document.querySelector('#img-preview');
+				imgPreview.style.display = 'block';
+				const oFReader = new FileReader();
+				oFReader.readAsDataURL(image.files[0]);
+				oFReader.onload = function(oFREvent){
+					imgPreview.src = oFREvent.target.result;
+					}
+			}
+
+		$(function () {
+			$("#example1").DataTable({
+			"responsive": true, "lengthChange": false, "autoWidth": false,
+			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+			
+			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+			// $('#example1').DataTable({
+			//   "paging": true,
+			//   "lengthChange": false,
+			//   "searching": false,
+			//   "ordering": true,
+			//   "info": true,
+			//   "autoWidth": false,
+			//   "responsive": true,
+			// });
+		});
+
+		
 	</script>
 @endsection

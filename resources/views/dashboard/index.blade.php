@@ -8,7 +8,7 @@
                 <!-- ./col -->
                 @can('member')
                     {{-- Stok Buku --}}
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-gradient-danger">
                             <div class="inner">
@@ -37,7 +37,7 @@
                     </div>
 
                     {{-- Peminjaman Anggota --}}
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
@@ -51,7 +51,7 @@
                             <a href="/transaction/borrows" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
@@ -69,7 +69,7 @@
 
                 @can('staff')
                     {{-- Total semua buku --}}
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
@@ -84,7 +84,7 @@
                     </div>
 
                     <!-- ./col -->
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-gradient-red">
                             <div class="inner">
@@ -98,7 +98,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
@@ -114,7 +114,7 @@
                     </div>
                     
                     <!-- ./col -->
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
@@ -169,7 +169,7 @@
                             overflow: hidden;
                             width: 100%;
                         }
-                
+
                         .card-title:hover{
                         }
                 
@@ -194,7 +194,7 @@
                 
                 <main>
                     <div>
-                        <div style="text-align: center;"><h2 class="font-weight-bold" style="font-size: 25px;">Rak Book</h2></div>
+                        <div style="text-align: center;"><h2 class="font-weight-bold" style="font-size: 25px;">Rak Buku</h2></div>
                     </div>
                     <div class="offset-8">
                         <div class="input-group input-group-sm mb-3">
@@ -211,8 +211,8 @@
                     <div class="">
                         <div class="card-deck row">  
                                 @if($borrowes != 0)
-                                    <div style="padding-top: 20px;" class="col-8">
-                                        <div style="height: 300px;max-height:300px; overflow-y: scroll;" class="card">
+                                    <div style="padding-top: 20px;" class="col-lg-6">
+                                        <div style="max-height:300px; overflow-y: scroll;" class="card">
                                             <div class="card-header"><strong>Status Peminjaman</strong></div>
                                                 <div class="card-body">
                                                     <table class="table">
@@ -421,19 +421,19 @@
                                 @endif
                                 
                                 @foreach($books1 as $book)
-                                    <div class="col-lg-2 col-md-6" style="padding-top: 20px;">
-                                        <div class="card card-secondary" style="height: 300px;">
-                                            @if ($book->image)
-                                            <img src="{{ asset('storage/' . $book->image) }}" class="card-img-top">
-                                            @else
-                                            <img src="{{ asset("storage/images/book_cover_default.png") }}" class="card-img-top">
-                                            @endif
-                                            <div class="card-body">
+                                    <div class="col-6 col-md-3" style="padding-top: 20px;">
+                                        <div class="card card-secondary">
+                                            <div class="card-body px-2 pt-3 pb-0">
+                                                @if ($book->image)
+                                                    <img src="{{ asset('storage/' . $book->image) }}" class="card-img-top img-fluid">
+                                                @else
+                                                <img src="{{ asset("storage/images/book_cover_default.png") }}" class="card-img-top img-fluid">
+                                                @endif
                                                 <div class="card-title">
                                                     <div class="judul">{{ $book->judul }}</div>
                                                 </div>
                                             </div>
-                                            <div class="card-footer text-right">
+                                            <div class="card-footer text-right px-0 py-1 ">
                                                 <a href="#show{{ $book->id }}" class="btn btn-sm btn-link btn-icon-right" data-toggle="modal">
                                                     <span>LEARN MORE</span>
                                                 </a>
@@ -491,7 +491,7 @@
                                                                                     <td>{{ $book->kategori }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>deskripsi</td>
+                                                                                    <td>Deskripsi</td>
                                                                                     <td>{{ $book->deskripsi }}</td>
                                                                                 </tr>
                                                                                 <tr>
@@ -518,7 +518,7 @@
                                                 </div>
                                                 <!-- End Modal -->
 
-                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach

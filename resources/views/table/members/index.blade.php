@@ -94,6 +94,7 @@
 								<th>Nama</th>
 								<th>Kelas</th>
 								<th>Jurusan</th>
+								<th>Status</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -104,6 +105,13 @@
 								<td>{{ $member->nama }}</td>
 								<td>{{ $member->kelas }}</td>
 								<td>{{ $member->jurusan }}</td>
+								<td class="text-center">
+									@if ($member->status == 1)
+										<span class="badge bg-success">Aktif</span> 
+									@else
+										<span class="badge bg-danger">Nonaktif</span>
+									@endif
+								</td>
 								<td>
 									{{-- Edit --}}
 									<a href="#modalEditData{{ $member->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
@@ -160,6 +168,14 @@
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}">
+															</div>
+															<div class="form-floating mb-3">
+																<label for="">Status</label>
+																<select class="form-select form-control" aria-label="Default select example" name="status" required>
+																	<option value="" selected disabled></option>
+																	<option value="1" {{ $member->status == "1" ? 'selected' : ''  }}>Aktif</option>
+																	<option value="0" {{ $member->status == "0" ? 'selected' : ''  }}>Nonaktif</option>
+																</select>
 															</div>
 															<div class="input-group">
 																<button class="btn btn-success rounded me-1" type="submit">Submit</button>
@@ -229,6 +245,13 @@
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																@if ($member->status == 1)
+																	<input required name="" type="text" required class="form-control" id="floatingInput3" value="Aktif" disabled>
+																@else
+																<input required name="" type="text" required class="form-control" id="floatingInput3" value="Nonaktif" disabled>
+																@endif
 															</div>
 															<div class="form-floating mb-3">
 																@if ($member->created_by)
