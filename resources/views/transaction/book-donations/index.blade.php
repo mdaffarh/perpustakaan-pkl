@@ -77,54 +77,13 @@
 														@enderror
 												</div>
 												<div class="form-floating mb-3">
-													<label for="floatingInput3">Kategori</label>
-													<select name="kategori" type="text" required class="form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
-														<option></option>
-														<option>Novel</option>
-														<option>Komik</option>
-														<option>Ensiklopedia</option>
-														<option>Biografi</option>
-														<option>Majalah</option>
-														<option>Kamus</option>
-														<option>Buku Ilmiah</option>
-														<option>Tafsir</option>
-													</select>
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Stok Masuk</label>
-													<input required name="stok_awal" type="number" required class="form-control @error('stok_awal') is-invalid @enderror " id="floatingInput3" value="{{ old('stok_awal') }}">
-													@error('stok_awal')
+													<label for="floatingInput3">Kuantitas</label>
+													<input required name="stock_awal" type="number" required class="form-control @error('stock_awal') is-invalid @enderror " id="floatingInput3" value="{{ old('stock_awal') }}">
+													@error('stock_awal')
 														<div class="invalid-feedback">
 															{{ $message }}
 														</div>
 													@enderror
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Keterangan</label>
-													<textarea required name="keterangan" type="text" required placeholder="Contoh : Buku ini adalah buku bekas" required class="form-control @error('tglMasuk') is-invalid @enderror " id="floatingInput3" value="{{ old('tglMasuk') }}" cols="30" rows="10"></textarea>
-													@error('tglMasuk')
-														<div class="invalid-feedback">
-															{{ $message }}
-														</div>
-													   @enderror
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Tanggal Terbit</label>
-													<input required name="tglTerbit" type="date" required  class="form-control @error('tglTerbit') is-invalid @enderror " id="floatingInput3" value="{{ old('tglTerbit') }}">
-													@error('tglTerbit')
-														<div class="invalid-feedback">
-															   {{ $message }}
-														   </div>
-													   @enderror
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Tanggal Masuk</label>
-													<input required name="tglMasuk" type="date" required class="form-control @error('tglMasuk') is-invalid @enderror " id="floatingInput3" value="{{ old('tglMasuk') }}">
-													@error('tglMasuk')
-														<div class="invalid-feedback">
-															{{ $message }}
-														</div>
-													   @enderror
 												</div>
 												<div class="form-floating mb-3">
 													<label for="image" class="form-label">Foto</label>
@@ -160,9 +119,8 @@
 								<th>ISBN</th>
 								<th>Judul Buku</th>
 								<th>Penulis</th>
-								<th>stock awal</th>
-								<th>Keterangan</th>
-								<th>Tanggal Masuk</th>
+								<th>Kuantitas</th>
+								<th>Status</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -174,15 +132,21 @@
 								<td>{{ $bookDonation->judul }}</td>
 								<td>{{ $bookDonation->penulis }}</td>
 								<td>{{ $bookDonation->stock_awal }}</td>
-								<td>{{ $bookDonation->keterangan }}</td>
-								<td>{{ $bookDonation->tglMasuk }}</td>
-								
+								<td>
+									@if($bookDonation->status=="menunggu persetujuan")
+									<span class="badge badge-warning">Menunggu Persetujuan</span>
+									@elseif($bookDonation->status=="disetujui")
+									<span class="badge badge-success">Disetujui</span>
+									@endif
+								</td>
 								<td>
 		
 									{{-- Edit --}}
+									@if($bookDonation->status=="menunggu persetujuan")
 									<a href="#modalEditData{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
 									</a>
+									@endif
 									
 									<div class="modal fade" id="modalEditData{{ $bookDonation->id }}">
 										<div class="modal-dialog modal-lg">
@@ -215,16 +179,8 @@
 																<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}">
 															</div>
 															<div class="form-floating mb-3">
-																<label for="floatingInput3">Kategori</label>
-																<input required name="kategori" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->kategori }}">
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Tanggal Terbit</label>
-																<input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglTerbit }}">
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Tanggal Masuk</label>
-																<input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglMasuk }}">
+																<label for="floatingInput3">Kuantitas</label>
+																<input required name="stock_awal" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_awal }}">
 															</div>
 															<div class="mb-3">
 																<label for="image" class="form-label">Cover</label>
@@ -250,7 +206,7 @@
 											</div>
 										</div>
 									</div>
-		
+									
 									  {{-- Show --}}
 									  <a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
 										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
@@ -290,28 +246,6 @@
 																<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
 															</div>
 															<div class="form-floating mb-3">
-																<label for="floatingInput3">Kategori</label>
-																<select name="kategori" type="text" required class="form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
-																	<option></option>
-																	<option>Novel</option>
-																	<option>Komik</option>
-																	<option>Ensiklopedia</option>
-																	<option>Biografi</option>
-																	<option>Majalah</option>
-																	<option>Kamus</option>
-																	<option>Buku Ilmiah</option>
-																	<option>Tafsir</option>
-																</select>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Tanggal Terbit</label>
-																<input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglTerbit }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Tanggal Masuk</label>
-																<input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglMasuk }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
 																<label for="image" class="form-label">Cover</label>
 																@if ($bookDonation->image)
 																	<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
@@ -324,6 +258,20 @@
 												</div>
 												<div class="modal-footer justify-content-between">
 													<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+													@can('staff')
+													@if($bookDonation->status=="menunggu persetujuan")
+													<form action="/transaction/book-donations/approved" method="post">
+														@csrf
+														<input hidden type="text" value="{{ $bookDonation->id }}" name="id">
+														<button type="submit">Approved</button>
+													</form>
+													@endif
+													@if($bookDonation->diambil!="belum")
+													<form action="">
+														<input type="text" value="{{ $bookDonation->id }}" name="id" >
+														<button type="submit">Book has been taken</button>
+													</form>
+													@endcan
 												</div>
 											</div>
 										</div>

@@ -27,7 +27,7 @@
                         <li class="nav-item"><a class="nav-link" href="#about" style="color: rgba(0,0,0,0.7);">About</a></li>
                         <li class="nav-item"><a class="nav-link" href="#portfolio" style="color: rgba(0,0,0,0.7);">Galeri</a></li>
                         <li class="nav-item"><a class="nav-link" href="/register" style="color: rgba(0,0,0,0.7);font-weight: bold;">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/donation" style="color: rgba(0,0,0,0.7);font-weight: bold;">DONASI COK</a></li>
+                        {{-- <li class="nav-item"><a class="nav-link" href="/donation" style="color: rgba(0,0,0,0.7);font-weight: bold;">DONASI COK</a></li> --}}
                     </ul>
                 </div>
             </div>

@@ -105,7 +105,7 @@
                         @can('staff')
 
                         <li class="nav-item">
-                            <a href="/transaction/book-donations/index_anggota" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
+                            <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sumbangan Buku</p>
                             </a>
@@ -120,12 +120,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="/transaction/book-donations/create" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sumbangan Buku</p>
-                            </a>
-                        </li> 
+                       
 
                         @can('staff')
                         <li class="nav-item">

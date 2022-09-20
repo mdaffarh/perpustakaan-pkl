@@ -15,19 +15,18 @@ return new class extends Migration
     {
         Schema::create('trx_book_donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('member_id');
+            $table->integer('member_id');
+            $table->integer('staff_id')->nullable();
             $table->string('isbn');
             $table->string('judul');
             $table->string('penulis');//
-            $table->string('penerbit');//
-            $table->string('kategori');//
+            $table->string('penerbit');
             $table->string('stock_awal');
-            $table->text('keterangan');
-            $table->date('tglTerbit');//
-            $table->date('tglMasuk');//
             $table->string('image')->nullable();
-            $table->string('deskripsi')->nullable();
-            $table->timestamps();
+            $table->string('status')->nullable();
+            $table->string('diambil')->nullable();
+            $table->integer('staffygngambil')->nullable();
+            $table->timestamps('');
         });
     }
 

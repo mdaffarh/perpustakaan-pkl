@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookDonation;
+use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BookDonationController extends Controller
 {
     public function index(){
+        $books = BookDonation::all();
         return view('transaction.book-donations.index',[
-            'bookDonations' => BookDonation::all()
+            'bookDonations' => BookDonation::all(),
+            'diambil'       => BookDonation::find('id')
         ]);
     }
 
@@ -23,22 +26,25 @@ class BookDonationController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'isbn'          => 'required|unique:trx_book_donations',
+            'isbn'          => 'required',
             'judul'         => 'required',
             'penulis'       => 'required',
             'penerbit'      => 'required',
-            'kategori'      => 'required',
+            // 'kategori'      => 'required',
             'stock_awal'    => 'required',
-            'keterangan'    => 'required',
-            'tglTerbit'     => 'required',
-            'tglMasuk'      => 'required',
-            'image'         => 'image|file',
+            // 'keterangan'    => 'required',
+            // 'tglTerbit'     => 'required',
+            // 'tglMasuk'      => 'required',
+            'image'         => 'image|file'
         ]);
 
         if($request->file('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
         $validatedData['member_id'] = auth()->user()->member_id;
+        $validatedData['status'] = "menunggu persetujuan";
+        $validatedData['diambil'] = "belum";
+   
         BookDonation::create($validatedData);
 
         toast('Data sumbangan buku telah ditambahkan!','success');
@@ -46,6 +52,26 @@ class BookDonationController extends Controller
 
 
     }
+    public function approved(Request $request){
+        $bukusumbangan = [
+            'staff_id' => auth()->user()->staff_id,
+            'status' => "disetujui",
+            'diambil' => "belum"
+            
+        ];
+        BookDonation::where('id', $request->id)->update($bukusumbangan);
+        return redirect('/transaction/book-donations');
+    }
+
+    public function status(Request $request){
+        $bukusumbangan = [
+            'diambil' => "sudah",
+            'staffygngambil' => auth()->user()->staff_id
+        ];
+        BookDonation::where('id', $request->id)->update($bukusumbangan);
+        return redirect('/transaction/book-donations');
+    }
+
     public function show(BookDonation $bookDonation)
     {
         return view('transaction.book-donations.show',[

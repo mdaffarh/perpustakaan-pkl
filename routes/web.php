@@ -88,7 +88,7 @@ Route::resource('/table/schools', SchoolController::class)->middleware('admin');
 //Sumbangan Buku
 Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
 Route::controller(BookDonationController::class)->group(function(){
-    Route::post('/transaction/book-donations/create','create')->middleware('auth');
+    Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
 });
     
 

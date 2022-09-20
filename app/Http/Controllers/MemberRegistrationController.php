@@ -69,7 +69,7 @@ class MemberRegistrationController extends Controller
         ];
 
         $member = [
-            'nis' => 'required', //Jangan unique klo update
+            'nis' => 'required',
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
             'kelas' => 'required',//
