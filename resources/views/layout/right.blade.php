@@ -97,14 +97,14 @@
                             {{-- Delete end --}}
         
                             @if ($item->viewed == true)
-                                <p class="text-sm text-wrap mt-1 pl-1 lh-1">{{ $item->message }}</p>
+                                <p class="text-sm text-wrap mt-1 lh-1 pl-1 pr-2">{{ $item->message }}</p>
                             @else
                             {{-- Viewed --}}
                                 <form action="/notification/viewed" method="post">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                     <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Halaman peminjaman">
-                                        <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1 lh-1" style="text-align: left !important; padding-right: 10px !important;">{{ $item->message }}</p></a>
+                                        <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1 lh-1 pe-1" style="text-align: left !important; padding-right: 10px !important;">{{ $item->message }}</p></a>
                                     </button>
                                 </form>
                             {{-- Viewed end --}}
@@ -190,7 +190,7 @@
                                     <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
                                 @else
                                 {{-- Viewed --}}
-                                    <form action="/notification/viewed" method="post" style="">
+                                    <form action="/notification/viewed" method="post">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $item->id }}">
                                     <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
