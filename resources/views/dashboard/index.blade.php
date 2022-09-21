@@ -343,7 +343,7 @@
                                                                                                             @if ($borrowItem->book->image)
                                                                                                                 <img src="{{ asset('storage/' . $borrowItem->book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                             @else
-                                                                                                                <img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                                <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                             @endif
                                                                                                         </div>
                                                                                                         <div class="media-body my-auto text-right">
@@ -427,7 +427,7 @@
                                                 @if ($book->image)
                                                     <img src="{{ asset('storage/' . $book->image) }}" class="card-img-top img-fluid">
                                                 @else
-                                                <img src="{{ asset("storage/images/book_cover_default.png") }}" class="card-img-top img-fluid">
+                                                <img src="{{ asset("assets/img/book_cover_default.png") }}" class="card-img-top img-fluid">
                                                 @endif
                                                 <div class="card-title">
                                                     <div class="judul">{{ $book->judul }}</div>
@@ -455,7 +455,7 @@
                                                                             @if ($book->image)
                                                                         <img src="{{ asset('storage/' . $book->image) }}" width="100%">
                                                                             @else
-                                                                        <img src="{{ asset("storage/images/book_cover_default.png") }}" width="100%">
+                                                                        <img src="{{ asset("assets/img/book_cover_default.png") }}" width="100%">
                                                                             @endif
                                                                     </span>
                                                                 </div>

@@ -384,7 +384,7 @@
                                                                                                 @if ($borrowItem->book->image)
                                                                                                     <img src="{{ asset('storage/' . $borrowItem->book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @else
-                                                                                                    <img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @endif
                                                                                             </div>
                                                                                             <div class="media-body my-auto text-right">
@@ -511,7 +511,7 @@
                                                                                                 @if ($borrowItem->book->image)
                                                                                                     <img src="{{ asset('storage/' . $borrowItem->book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @else
-                                                                                                    <img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @endif
                                                                                             </div>
                                                                                             <div class="media-body my-auto text-right">
@@ -638,7 +638,7 @@
                                                                                                 @if ($borrowItem->book->image)
                                                                                                     <img src="{{ asset('storage/' . $borrowItem->book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @else
-                                                                                                    <img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
                                                                                                 @endif
                                                                                             </div>
                                                                                             <div class="media-body my-auto text-right">

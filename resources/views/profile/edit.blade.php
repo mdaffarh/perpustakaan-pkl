@@ -41,12 +41,14 @@
                                             <img src="{{ asset('dist/img/avatar2.png')}}"
                                             id="img-preview" class="img-thumbnail rounded-circle border img-fluid" alt="{{ $member->nama }}">
                                         @endif
-                                            <input type="file" name="profile" id="profile" class="@error('profile') is-invalid @enderror form-control" onchange="previewImage()">
-                                            @error('profile')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                        <div class="input-group">
+                                            <input type="file" class="form-control @error('profile') is-invalid @enderror" id="profile" onchange="previewImage()" name="profile">
+                                        </div>
+                                        @error('profile')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                         <div>
                                             <button type="submit" class="btn btn-success mt-3 w-100">Simpan</button>
                                         </div>

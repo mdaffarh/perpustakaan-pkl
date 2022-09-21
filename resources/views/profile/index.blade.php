@@ -2,7 +2,16 @@
 
     @extends('layout.main')
     @section('title', "Profil")
-        
+    
+    @section('style')
+        <style>
+            .profile-delete{
+                position: absolute;
+                bottom: 50px;
+                left: 80%;
+            }
+        </style>
+    @endsection
     @section('content')
         @include('sweetalert::alert')
 
@@ -30,14 +39,20 @@
                                 <div class="col-lg-3">
                                     @if($member->profile)
                                         <img src="{{ asset('storage/'. $member->profile) }}"
-                                            class="img-thumbnail rounded-circle border img-fluid" alt="{{ $member->nama }}">
+                                            class="img-thumbnail rounded-circle border img-fluid w-100" alt="{{ $member->nama }}">
+                                        <form action="/profile/delete" method="post" enctype="multipart/form-data" class="profile-delete">
+                                            @csrf
+                                            <input type="hidden" name="profile" value="{{ $member->profile }}">
+                                            <button class="btn btn-sm btn-outline-danger rounded-circle" type="submit" data-bs-toggle="tooltip" data-bs-title="Hapus foto profil" data-bs-placement="top"> <i class="fa fa-trash"></i> </button>
+                                        </form>
                                     @elseif($member->jenis_kelamin == "Laki-laki")
                                         <img src="{{ asset('dist/img/avatar5.png')}}"
-                                            class="img-thumbnail rounded-circle border img-fluid" alt="{{ $member->nama }}">
+                                            class="img-thumbnail rounded-circle border img-fluid w-100" alt="{{ $member->nama }}">
                                     @else
                                         <img src="{{ asset('dist/img/avatar2.png')}}"
-                                        class="img-thumbnail rounded-circle border img-fluid" alt="{{ $member->nama }}">
+                                        class="img-thumbnail rounded-circle border img-fluid w-100" alt="{{ $member->nama }}">
                                     @endif
+                                   
                                     <div>
                                         <a href="/profile/edit" class="btn btn-outline-success mt-3 w-100">Edit Profil</a>
                                     </div>

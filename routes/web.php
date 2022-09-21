@@ -44,6 +44,7 @@ use App\Http\Controllers\WishlistController;
         Route::get('/profile','index')->middleware('auth');
         Route::get('/profile/edit','edit')->middleware('auth');
         Route::post('/profile/update','update')->middleware('auth');
+        Route::post('/profile/delete','delete')->middleware('auth');
     });
 
 // Login

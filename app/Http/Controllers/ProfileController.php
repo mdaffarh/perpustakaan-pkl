@@ -47,4 +47,12 @@ class ProfileController extends Controller
         toast('Profil telah diedit!','success');
         return redirect('/profile');
     }
+
+    public function delete()
+    {
+        Storage::delete(request()->profile);
+        Member::where('id', auth()->user()->member_id)->update(['profile' => null]);
+        toast('Foto profil telah dihapus!','success');
+        return redirect('/profile');
+    }
 }

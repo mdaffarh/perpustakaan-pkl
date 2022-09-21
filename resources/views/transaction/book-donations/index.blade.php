@@ -107,7 +107,7 @@
 																		@if ($bookDonation->image)
 																			<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																		@else
-																			<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
+																			<img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
 																		@endif
 																	</div>
 																</form>
@@ -206,7 +206,7 @@
 																		@if ($bookDonation->image)
 																			<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																		@else
-																			<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
+																			<img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
 																		@endif
 																	</div>
 																</form>
@@ -461,7 +461,7 @@
 																@if ($bookDonation->image)
 																	<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																@else
-																	<img src="{{ asset("storage/images/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
+																	<img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
 																@endif
 															</div>
 														</form>

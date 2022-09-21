@@ -14,7 +14,7 @@ class Borrow extends Model
         'id'
     ];
 
-    protected $with = ['member','staff','borrowItem'];
+    protected $with = ['member','staff'];
 
     public function member()
     {

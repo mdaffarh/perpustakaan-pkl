@@ -77,7 +77,7 @@
                                                     @if ($wishlist->book->image)
                                                         <img src="{{ asset('storage/' . $wishlist->book->image) }}" class="" width="50%">
                                                     @else
-                                                        <img src="{{ asset("storage/images/book_cover_default.png") }}" class="" width="50%">
+                                                        <img src="{{ asset("assets/img/book_cover_default.png") }}" class="" width="50%">
                                                     @endif
                                                 </div>
                                                 <div class="col-6">
