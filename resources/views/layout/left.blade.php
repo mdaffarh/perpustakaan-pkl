@@ -11,15 +11,29 @@
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-1 mb-3 d-flex">
-            <div class="image">
-                <img src="{{ asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <div class="image mt-1">
+                @can('staff')
+                    <img src="{{ asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">    
+                @endcan
+                @can('member')
+                    @if(auth()->user()->member->profile)
+                        <img src="{{ asset('storage/'. auth()->user()->member->profile) }}"
+                            class="img-circle elevation-2" alt="User Image">
+                    @elseif(auth()->user()->member->jenis_kelamin == "Laki-laki")
+                        <img src="{{ asset('dist/img/avatar5.png')}}"
+                            class="img-circle elevation-2" alt="User Image">
+                    @else
+                        <img src="{{ asset('dist/img/avatar2.png')}}"
+                        class="img-circle elevation-2" alt="User Image">
+                    @endif
+                @endcan
             </div>
             <div class="info">
             @if (auth()->user()->staff_id)
                 <a href="#">{{ auth()->user()->staff->nama }}</a>
                 <p class="text-muted text-capitalize">{{ auth()->user()->role }} Perpustakaan</p>
             @else
-                <a href="#">{{ auth()->user()->member->nama }}</a>
+                <a href="/profile" class="{{ Request::is('profile*') ? 'text-white' : '' }}">{{ auth()->user()->member->nama }}</a>
                 <p class="text-muted">Anggota Perpustakaan</p>
             @endif
             </div>

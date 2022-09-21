@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->boolean('signed')->nullable();
             $table->boolean('status');
+            $table->string('profile')->nullable(); 
             $table->timestamps();
             $table->foreignId('created_by')->nullable();
             $table->foreignId('updated_by')->nullable();

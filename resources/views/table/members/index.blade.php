@@ -170,7 +170,7 @@
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}">
 															</div>
 															<div class="form-floating mb-3">
-																<label for="">Status</label>
+																<label for="floatingInput3">Status</label>
 																<select class="form-select form-control" aria-label="Default select example" name="status" required>
 																	<option value="" selected disabled></option>
 																	<option value="1" {{ $member->status == "1" ? 'selected' : ''  }}>Aktif</option>
@@ -247,6 +247,7 @@
 																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
 															</div>
 															<div class="form-floating mb-3">
+																<label for="">Status</label>
 																@if ($member->status == 1)
 																	<input required name="" type="text" required class="form-control" id="floatingInput3" value="Aktif" disabled>
 																@else

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -59,12 +60,20 @@
 
                                     <!-- Password input -->
                                     <div class="form-outline mb-4">
-                                        <input type="password" name="password" id="password" class="form-control" />
+                                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" />
+                                        @error('password')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                        @enderror
                                         <label class="form-label" for="password">Password</label>
                                     </div>
 
                                     <!-- Submit button -->
-                                    <button type="submit" class="btn btn-primary btn-block mb-4">Login</button>
+                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                    @if (session()->has('loginError'))
+                                        <small class="text-danger">{{ session('loginError') }}</small>
+                                    @endif
 
                                 </div>
                             </div>

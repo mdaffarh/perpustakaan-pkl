@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
-use App\Http\Controllers\FormController;
+// use App\Http\Controllers\FormController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
@@ -18,6 +18,7 @@ use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 
 /*
@@ -37,6 +38,13 @@ use App\Http\Controllers\WishlistController;
 
 // Dashboard
     Route::resource('/dashboard', DashboardController::class)->middleware('auth'); 
+
+// Profile
+    Route::controller(ProfileController::class)->group(function(){
+        Route::get('/profile','index')->middleware('auth');
+        Route::get('/profile/edit','edit')->middleware('auth');
+        Route::post('/profile/update','update')->middleware('auth');
+    });
 
 // Login
     Route::controller(LoginController::class)->group(function(){
@@ -65,9 +73,9 @@ use App\Http\Controllers\WishlistController;
     });
     //
 
-    Route::controller(FormController::class)->group(function(){
-        Route::get('/form/book','book')->middleware('staff');
-    });
+    // Route::controller(FormController::class)->group(function(){
+    //     Route::get('/form/book','book')->middleware('staff');
+    // });
 
 
 // Staff = penjaga,admin,dll
