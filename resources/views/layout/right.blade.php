@@ -190,7 +190,7 @@
                                 </form>
                                 {{-- Delete end --}}
                                 @if ($item->viewed == true)
-                                    <p class="text-sm text-wrap mt-1 pl-1">{{ $item->message }}</p>
+                                    <p class="text-sm text-wrap mt-1 pl-1 lh-1 pe-1" style="text-align: left !important; padding-right: 15px !important;">{{ $item->message }}</p>
                                 @else
                                 {{-- Viewed --}}
                                     <form action="/notification/viewed" method="post">
