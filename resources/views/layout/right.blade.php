@@ -126,6 +126,9 @@
         @can('member')
         <a class="nav-link" href="/transaction/wishlist" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Wishlist">
             <i class="fas fa-shopping-cart"></i>
+            @if ($wishlistCount != 0)
+                <span class="badge badge-danger navbar-badge">{{ $wishlistCount }}</span>
+            @endif
         </a>
         @endcan
 
@@ -193,8 +196,8 @@
                                     <form action="/notification/viewed" method="post">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $item->id }}">
-                                    <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Halaman peminjaman">
-                                        <a href="/transaction/borrows?selected=tabs-waiting"><p class="text-sm text-wrap mt-1" style="text-align: left !important;">{{ $item->message }}</p></a>
+                                    <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Halaman peminjaman">
+                                        <a href="/transaction/borrows"><p class="text-sm text-wrap mt-1 lh-1 pe-1" style="text-align: left !important; padding-right: 10px !important;">{{ $item->message }}</p></a>
                                     </button>
                                     </form>
                                 {{-- Viewed end --}}

@@ -12,4 +12,17 @@ class Fine extends Model
     protected $guarded = [
         'id'
     ];
+
+    protected $with = [
+        'borrow','member'
+    ];
+
+    public function borrow()
+    {
+        return $this->belongsTo(borrow::class);
+    }
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
 }

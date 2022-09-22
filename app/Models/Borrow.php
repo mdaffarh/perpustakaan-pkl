@@ -26,9 +26,14 @@ class Borrow extends Model
         return $this->belongsTo(Staff::class);
     }
 
-    public function BorrowItem()
+    public function borrowItem()
     {
         return $this->hasMany(BorrowItem::class);
+    }
+
+    public function fines()
+    {
+        return $this->hasOne(Fine::class);
     }
 
     

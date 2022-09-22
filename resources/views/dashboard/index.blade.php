@@ -18,7 +18,7 @@
                             <div class="icon">
                                 <i class="fa fa-book"></i>
                             </div>
-                            <a href="/transaction/borrows" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="/transaction/wishlist" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -73,7 +73,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ $books }}</h3>
+                                <h3>{{ $stocks }}</h3>
                                 <p>Judul Buku</p>
                             </div>
                             <div class="icon">
@@ -420,30 +420,30 @@
                                     </div>
                                 @endif
                                 
-                                @foreach($books1 as $book)
+                                @foreach($stockBooks as $stock)
                                     <div class="col-6 col-md-3" style="padding-top: 20px;">
                                         <div class="card card-secondary">
                                             <div class="card-body px-2 pt-3 pb-0">
-                                                @if ($book->image)
-                                                    <img src="{{ asset('storage/' . $book->image) }}" class="card-img-top img-fluid">
+                                                @if ($stock->book->image)
+                                                    <img src="{{ asset('storage/' . $stock->book->image) }}" class="card-img-top img-fluid">
                                                 @else
                                                 <img src="{{ asset("assets/img/book_cover_default.png") }}" class="card-img-top img-fluid">
                                                 @endif
                                                 <div class="card-title">
-                                                    <div class="judul">{{ $book->judul }}</div>
+                                                    <div class="judul">{{ $stock->book->judul }}</div>
                                                 </div>
                                             </div>
                                             <div class="card-footer text-right px-0 py-1 ">
-                                                <a href="#show{{ $book->id }}" class="btn btn-sm btn-link btn-icon-right" data-toggle="modal">
+                                                <a href="#show{{ $stock->book->id }}" class="btn btn-sm btn-link btn-icon-right" data-toggle="modal">
                                                     <span>LEARN MORE</span>
                                                 </a>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="show{{ $book->id }}">
+                                                <div class="modal fade" id="show{{ $stock->book->id }}">
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Buku <strong>{{ $book->judul }}</strong></h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Detail Buku <strong>{{ $stock->book->judul }}</strong></h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -452,8 +452,8 @@
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <span>
-                                                                            @if ($book->image)
-                                                                        <img src="{{ asset('storage/' . $book->image) }}" width="100%">
+                                                                            @if ($stock->book->image)
+                                                                        <img src="{{ asset('storage/' . $stock->image) }}" width="100%">
                                                                             @else
                                                                         <img src="{{ asset("assets/img/book_cover_default.png") }}" width="100%">
                                                                             @endif
@@ -468,31 +468,31 @@
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td>ISBN</td>
-                                                                                    <td>{{ $book->isbn }}</td>
+                                                                                    <td>{{ $stock->book->isbn }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Judul Buku</td>
-                                                                                    <td>{{ $book->judul }}</td>
+                                                                                    <td>{{ $stock->book->judul }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Penulis</td>
-                                                                                    <td>{{ $book->penulis }}</td>
+                                                                                    <td>{{ $stock->book->penulis }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Penerbit</td>
-                                                                                    <td>{{ $book->penerbit }}</td>
+                                                                                    <td>{{ $stock->book->penerbit }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Tanggal Terbit</td>
-                                                                                    <td>{{ $book->tglTerbit }}</td>
+                                                                                    <td>{{ $stock->book->tglTerbit }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Kategori</td>
-                                                                                    <td>{{ $book->kategori }}</td>
+                                                                                    <td>{{ $stock->book->kategori }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>Deskripsi</td>
-                                                                                    <td>{{ $book->deskripsi }}</td>
+                                                                                    <td>{{ $stock->book->deskripsi }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td></td>
@@ -503,13 +503,13 @@
                                                                     </div>
                                                                 </div>
                                                             </div>  
-                                                            <div class="" style="font-weight: bolder;font-size: 14px;">Tanggal Masuk : {{ $book->tglMasuk }}</div>
+                                                            <div class="" style="font-weight: bolder;font-size: 14px;">Tanggal Masuk : {{ $stock->book->tglMasuk }}</div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                             <form action="/transaction/wishlist" method="POST">
                                                             @csrf
-                                                                <input type="text" name="book_id" value="{{ $book->id }}" style="display: none;">
+                                                                <input type="text" name="book_id" value="{{ $stock->book->id }}" style="display: none;">
                                                                 <button type="submit" class="btn btn-primary">Wishlist</button>
                                                             </form>
                                                         </div>

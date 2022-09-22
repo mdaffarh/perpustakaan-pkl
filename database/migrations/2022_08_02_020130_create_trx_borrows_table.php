@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('trx_borrows', function (Blueprint $table) {
             $table->id();
-            $table->integer('kode_peminjaman');
+            $table->bigInteger('kode_peminjaman');
             $table->foreignId('member_id');
             $table->foreignId('staff_id')->nullable();
             $table->date('tanggal_pinjam');

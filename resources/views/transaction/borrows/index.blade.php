@@ -3,7 +3,6 @@
 
 @section('content')
 	@include('sweetalert::alert')
-
 	<div class="row">
 		<div class="col">
 			<div class="card card-outline-tabs">
@@ -24,13 +23,16 @@
                     @can('member')
                         <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="tabs-dipinjam-tab" data-toggle="pill" href="#tabs-dipinjam" role="tab" aria-controls="tabs-dipinjam" aria-selected="trues">Sedang Dipinjam</a>
+                                <a class="nav-link active" id="tabs-dipinjam-tab" data-toggle="pill" href="#tabs-dipinjam" role="tab" aria-controls="tabs-dipinjam" aria-selected="trues">Menunggu Persetujuan</a>
                             </li>
                             <li class="nav-item">
                             <a class="nav-link" id="tabs-disetujui-tab" data-toggle="pill" href="#tabs-disetujui" role="tab" aria-controls="tabs-disetujui" aria-selected="false">Disetujui</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="tabs-ditolak-tab" data-toggle="pill" href="#tabs-ditolak" role="tab" aria-controls="tabs-ditolak" aria-selected="false">Ditolak</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-selesai-tab" data-toggle="pill" href="#tabs-selesai" role="tab" aria-controls="tabs-selesai" aria-selected="false">Selesai</a>
                             </li>
                         </ul>
                     @endcan
@@ -122,30 +124,40 @@
                                                                     <hr>
                                                                     <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
                                                                     <ol>
+                                                                        <p style="display: none">{{ $outOfStock = 0}}</p>
                                                                         @foreach($borrow->borrowItem as $bi)
-                                                                        <li>
-                                                                            <div class="row mx-md-n3">
-                                                                                <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
-                                                                                <div class="col px-md-5"><div class="p-2">1</div></div>
-                                                                            </div>
-                                                                        </li>
+                                                                            @if ($bi->book->stock->stok_akhir + $bi->book->stock->stok_keluar == 0)
+                                                                                <p style="display: none">{{ $outOfStock = true }}</p> 
+                                                                            @endif
+                                                                            <li>
+                                                                                <div class="row mx-md-n3">
+                                                                                    <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
+                                                                                    <div class="col px-md-5"><div class="p-2">1</div></div>
+                                                                                </div>
+                                                                            </li>
                                                                         @endforeach
+
                                                                     </ol>
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    @if ($outOfStock == true)
+                                                                        <p class="text-danger flex-fill fw-bold">Stok salah satu buku habis!</p>
+                                                                    @endif
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                    <form action="/transaction/borrows/approve/{borrow->id}" method="post" enctype="multipart/form-data">
-                                                                        @csrf
-                                                                        <div style="display: none;">
-                                                                            <input name="id" value="{{ $borrow->id }}">
-                                                                            <input name="kode_peminjaman" value="{{ $borrow->kode_peminjaman }}">
-                                                                            <input name="user_id" value="{{ $borrow->member->user->id }}">
-                                                                            @foreach($borrow->borrowItem as $borrowItem)
-                                                                                <input type="text" name="book_id[]" id="" value="{{ $borrowItem->book_id }}">
-                                                                            @endforeach
-                                                                        </div>
-                                                                        <button class="btn btn-success rounded me-1" type="submit">Terima Peminjaman</button>
-                                                                    </form>
+                                                                    @if ($outOfStock != true)     
+                                                                        <form action="/transaction/borrows/approve/{borrow->id}" method="post" enctype="multipart/form-data">
+                                                                            @csrf
+                                                                            <div style="display: none;">
+                                                                                <input name="id" value="{{ $borrow->id }}">
+                                                                                <input name="kode_peminjaman" value="{{ $borrow->kode_peminjaman }}">
+                                                                                <input name="user_id" value="{{ $borrow->member->user->id }}">
+                                                                                @foreach($borrow->borrowItem as $borrowItem)
+                                                                                    <input type="text" name="book_id[]" id="" value="{{ $borrowItem->book_id }}">
+                                                                                @endforeach
+                                                                            </div>
+                                                                            <button class="btn btn-success rounded me-1" type="submit">Terima Peminjaman</button>
+                                                                        </form>
+                                                                    @endif
         
                                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject{{ $borrow->id }}">Tolak Peminjaman</button>
                                                                     <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="reject{{ $borrow->id }}" data-backdrop="false">
@@ -285,7 +297,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>kode Pinjam</th>
+                                            <th>Kode Pinjam</th>
                                             <th>Nama Peminjam</th>
                                             <th>Tanggal Pinjam</th>
                                             <th>Tanggal Kembali</th>
@@ -374,7 +386,9 @@
                                                                             <div class="col-auto"> <h6 class="color-1 mb-0 change-color"></h6> </div>
                                                                             <div class="col-auto font-weight-bolder">No Peminjaman : {{ $borrow->kode_peminjaman }}</div>
                                                                         </div>
+                                                                        <p style="display: none">{{ $countForeach = 0 }}</p> 
                                                                         @foreach($borrow->borrowItem as $borrowItem)
+                                                                           <p style="display: none">{{ $countForeach+=1 }}</p> 
                                                                         <div class="row">
                                                                             <div class="col">
                                                                                 <div class="card card-2">
@@ -403,8 +417,8 @@
                                                                         <div class="row mt-4">
                                                                             <div class="col">
                                                                                 <div class="row justify-content-between">
-                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Borrowed Details</b></h6></div>
-                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $borrow_count }} Buku akan di pinjam</b></h6> </div>
+                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Detail Peminjaman</b></h6></div>
+                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku akan di pinjam</b></h6> </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -463,6 +477,8 @@
                                             <th>Kode Peminjaman</th>
                                             <th>Nama Peminjam</th>
                                             <th>Tanggal Pinjam</th>
+                                            <th>Tanggal Tempo</th>
+                                            <th>Status</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -473,6 +489,14 @@
                                                 <td>{{ $borrow->kode_peminjaman }}</td>
                                                 <td>{{ $borrow->member->nama }}</td>
                                                 <td>{{ $borrow->tanggal_pinjam }}</td>
+                                                <td>{{ $borrow->tanggal_tempo }}</td>
+                                                <td>
+                                                    @if ($borrow->pengambilan_buku == "Sudah")
+                                                        <span class="badge bg-primary">Dalam Peminjaman</span>
+                                                    @else
+                                                        <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Peminjaman telah disetujui silakan ambil buku di perpustakaan.">Disetujui</span>
+                                                    @endif    
+                                                </td>
                                                 <td>							
                             
                                                     {{-- Show --}}
@@ -501,7 +525,9 @@
                                                                             <div class="col-auto"> <h6 class="color-1 mb-0 change-color"></h6> </div>
                                                                             <div class="col-auto font-weight-bolder">No Peminjaman : {{ $borrow->kode_peminjaman }}</div>
                                                                         </div>
+                                                                        <p style="display: none">{{ $countForeach = 0 }}</p> 
                                                                         @foreach($borrow->borrowItem as $borrowItem)
+                                                                        <p style="display: none">{{ $countForeach += 1 }}</p> 
                                                                         <div class="row">
                                                                             <div class="col">
                                                                                 <div class="card card-2">
@@ -530,8 +556,8 @@
                                                                         <div class="row mt-4">
                                                                             <div class="col">
                                                                                 <div class="row justify-content-between">
-                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Borrowed Details</b></h6></div>
-                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $borrow_count }} Buku akan di pinjam</b></h6> </div>
+                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Detail Peminjaman</b></h6></div>
+                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku akan di pinjam</b></h6> </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -628,7 +654,10 @@
                                                                             <div class="col-auto"> <h6 class="color-1 mb-0 change-color"></h6> </div>
                                                                             <div class="col-auto font-weight-bolder">No Peminjaman : {{ $borrow->kode_peminjaman }}</div>
                                                                         </div>
+                                                                        <p style="display: none">{{  $countForeach = 0 }}</p>
+                                                                        
                                                                         @foreach($borrow->borrowItem as $borrowItem)
+                                                                        <p style="display: none">{{ $countForeach += 1 }}</p>
                                                                         <div class="row">
                                                                             <div class="col">
                                                                                 <div class="card card-2">
@@ -657,8 +686,8 @@
                                                                         <div class="row mt-4">
                                                                             <div class="col">
                                                                                 <div class="row justify-content-between">
-                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Borrowed Details</b></h6></div>
-                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $borrow_count }} Buku akan di pinjam</b></h6> </div>
+                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Detail Peminjaman</b></h6></div>
+                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku akan di pinjam</b></h6> </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -697,6 +726,146 @@
                                                                         <br>
                                                                         <span><small>*Pastikan anda mengambil buku dan mengembalikannya di waktu yang tepat</small></span>
                                                                     </div>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-selesai" role="tabpanel" aria-labelledby="tabs-selesai-tab">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Kode Peminjaman</th>
+                                            <th>Nama Peminjam</th>
+                                            <th>Tanggal Pinjam</th>
+                                            <th>Selesai</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($borrowedSelesai as $borrow)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $borrow->kode_peminjaman }}</td>
+                                                <td>{{ $borrow->member->nama }}</td>
+                                                <td>{{ $borrow->tanggal_pinjam }}</td>
+                                                <td>{{ $borrow->tanggal_kembali }}</td>
+                                                <td>							
+                            
+                                                    {{-- Show --}}
+                                                    <a href="#show{{ $borrow->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </a>
+                                                    
+                                                    <div class="modal fade" id="show{{ $borrow->id }}">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header" style="border: none;">
+                                                                    <div class="media flex-sm-row flex-column-reverse justify-content-between  ">
+                                                                        <div class="col my-auto">
+                                                                            <h4 class="mb-0">Kartu Pinjaman Buku,
+                                                                                <span class="change-color" style="color: blue;">{{ auth()->user()->member->nama }}</span> !
+                                                                            </h4> 
+                                                                        </div>
+                                                                    </div>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="modal-body">
+                                                                        <div class="row justify-content-between mb-3">
+                                                                            <div class="col-auto"> <h6 class="color-1 mb-0 change-color"></h6> </div>
+                                                                            <div class="col-auto font-weight-bolder">No Peminjaman : {{ $borrow->kode_peminjaman }}</div>
+                                                                        </div>
+                                                                        <p style="display: none">{{ $countForeach = 0 }}</p>
+                                                                        @foreach($borrow->borrowItem as $borrowItem)
+                                                                        <p style="display: none">{{ $countForeach += 1 }}</p>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="card card-2">
+                                                                                    <div class="card-body">
+                                                                                        <div class="media">
+                                                                                            <div class="sq align-self-center ">
+                                                                                                @if ($borrowItem->book->image)
+                                                                                                    <img src="{{ asset('storage/' . $borrowItem->book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                @else
+                                                                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="135" height="135">
+                                                                                                @endif
+                                                                                            </div>
+                                                                                            <div class="media-body my-auto text-right">
+                                                                                                <div class="row  my-auto flex-column flex-md-row">
+                                                                                                    <div class="col my-auto" style="text-align: left;"> <h6 class="mb-0">{{ $borrowItem->book->judul }}</h6>  </div>
+                                                                                                    <div class="col-auto my-auto"> <small>Penulis : {{ $borrowItem->book->penulis }}</small></div>
+                                                                                                    <div class="col my-auto"> <small>Qty : 1</small></div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        @endforeach
+                                                                        <div class="row mt-4">
+                                                                            <div class="col">
+                                                                                <div class="row justify-content-between">
+                                                                                    <div class="col-auto"><h6 class="mb-1 text-dark"><b>Detail Peminjaman</b></h6></div>
+                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku telah kamu pinjam</b></h6> </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <hr>
+                                                                        <div class="">
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">NIS</div>
+                                                                                <div class="p-2">{{ $borrow->member->nis }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Nama</div>
+                                                                                <div class=" p-2">{{ $borrow->member->nama }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Kelas</div>
+                                                                                <div class=" p-2">{{ $borrow->member->kelas }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Jurusan</small></div>
+                                                                                <div class=" p-2">{{ $borrow->member->jurusan }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Tanggal Pinjam</div>
+                                                                                <div class=" p-2">{{ $borrow->tanggal_pinjam }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Tanggal Tempo</div>
+                                                                                <div class=" p-2">{{ $borrow->tanggal_tempo }}</div>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Tanggal Kembali</div>
+                                                                                <div class=" p-2">{{ $borrow->tanggal_kembali }}</div>
+                                                                            </div>
+                                                                            @if ($borrow->fines)
+                                                                                <div class="d-flex justify-content-end">
+                                                                                    <div class="mr-auto  p-2">Denda</div>
+                                                                                    <div class=" p-2">{{ $borrow->fines->total }}</div>
+                                                                                </div>
+                                                                            @endif
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Staff Perpustakaan</div>
+                                                                                <div class=" p-2">{{ $borrow->staff->nama }}</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                 </div>
                                                             </div>

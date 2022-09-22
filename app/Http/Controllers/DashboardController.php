@@ -22,14 +22,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $random1        = Book::inRandomOrder()->get();
+        $random1        = Stock::inRandomOrder()->where('stok_akhir','>','0')->get();
         $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
         return view('dashboard.index',[
             // Tampilan Anggota
-            'books1'    => $random1,
+            'stockBooks'    => $random1,
+
             'stock'     => Stock::where('stok_akhir' ,'>', 0 )->count(),
-            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
+            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->where('dikembalikan','!=','Sudah')->count(),
             'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
             'donation'  => BookDonation::where('member_id',auth()->user()->member_id)->count(),
             'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->count(),

@@ -51,7 +51,15 @@
                             </div>
                             <div class="row mx-md-n3">
                                 <div class="col px-md-5"><div class="p-2">Telat Pengembalian</div></div>
-                                <div class="col px-md-5"><div class="p-2">: {{ $selisih }} Hari</div></div>
+                                <div class="col px-md-5">
+                                    <div class="p-2">
+                                        @if ($selisih > 0)
+                                            : {{ $selisih }} Hari
+                                        @else 
+                                            : 0 Hari
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                             <div class="row mx-md-n3">
                                 <div class="col px-md-5"><div class="p-2">Denda</div></div>

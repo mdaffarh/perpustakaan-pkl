@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\User;
+use App\Models\Wishlist;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -45,7 +46,9 @@ class AppServiceProvider extends ServiceProvider
                 
                 'notiStaff' => Notification::whereNull('user_id')->latest()->get(),
                 'notiStaffCount' => Notification::whereNull('viewed')->whereNull('user_id')->count(),
-                'notiStaffCounts' => Notification::whereNull('user_id')->count()
+                'notiStaffCounts' => Notification::whereNull('user_id')->count(),
+
+                'wishlistCount' => Wishlist::where('member_id', auth()->user()->member_id)->count()
             ]);
         });
     }

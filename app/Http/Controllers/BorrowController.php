@@ -30,9 +30,11 @@ class BorrowController extends Controller
             'borrowsWaiting'    => Borrow::where('status',"Menunggu persetujuan")->latest()->get(), // disetujui Staff
             'borrowsApproved'   => Borrow::where('status',"Disetujui")->where('pengambilan_buku', "Belum")->latest()->get(),  //Pengambilan Buku Staff
             'borrows'           => Borrow::where('pengambilan_buku',"Sudah")->where('dikembalikan',"Belum")->latest()->get(), //Return Buku Staff
-            'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menungggu persetujuan")->latest()->get(),
-            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->where('pengambilan_buku', "Belum")->latest()->get(),
+            
+            'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menunggu persetujuan")->latest()->get(),
+            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->where('dikembalikan','Belum')->latest()->get(),
             'borrowedDitolak'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Ditolak")->latest()->get(),
+            'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan',"Sudah")->latest()->get(),
             'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count()
         ]);
     }
@@ -56,6 +58,7 @@ class BorrowController extends Controller
     public function store(Request $request)
     {
         $tanggal_tempo = date('Y-m-d', strtotime('+3 days', strtotime( $request->tanggal_pinjam )));
+
         $borrow =  Borrow::create([
             'kode_peminjaman'   => date('dmyis'),
             'member_id'         => auth()->user()->member_id,
@@ -75,15 +78,27 @@ class BorrowController extends Controller
         }
 
         foreach ($request->book_id as $key => $book) {
-            
-            // Notification
-            $message = [
-                'message'   => "Peminjaman Buku No. ".$book." diajukan ",
-                'borrow_id' => $borrow->id
-            ];
 
-            Notification::create($message);     
+            // Stok
+            $stock = Stock::where('book_id', $book)->first();
+
+            $stok = 1;
+            $stok_keluar    = $stock->stok_keluar + $stok;
+            $stok_akhir     = $stock->stok_akhir - $stok;
+
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
         }
+
+        // Notification ke penjaga
+        $message = [
+            'message'   => "Peminjaman No. ".$borrow->kode_peminjaman." diajukan ",
+            'borrow_id' => $borrow->id
+        ];
+        Notification::create($message);     
+        // 
 
         foreach ($request->wishlist_id as $key => $wishlist) {
             Wishlist::where('id', $wishlist)->delete();
@@ -106,30 +121,17 @@ class BorrowController extends Controller
 
         Borrow::where('id', $request->id)->update($validatedData);
 
-
-        // Notification
         Notification::where('borrow_id', $request->id)->update(['viewed' => true]);
+
+        // Notification ke anggota
             $message = [
                 'user_id'   => $request->user_id,
+                'borrow_id' => $request->id,
                 'message'   => "Peminjaman No. ".$request->kode_peminjaman." telah disetujui, Silakan cetak Kartu dan ambil Buku di perpustakaan." ,
             ];
 
         Notification::create($message);
-
-        // Stok Buku
-        foreach ($request->book_id as $key => $book) {
-            $stock = Stock::where('book_id', $book)->first();
-
-            $stok = 1;
-            $stok_keluar    = $stock->stok_keluar + $stok;
-            $stok_akhir     = $stock->stok_akhir - $stok;
-
-            $stock->update([
-                'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
-            ]);
-        }
-        
+        // 
 
         toast('Peminjaman telah disetujui!','success');
         return redirect('/transaction/borrows');
@@ -146,9 +148,9 @@ class BorrowController extends Controller
 
         Borrow::where('id', $request->id)->update($validatedData);
 
-        // Notification
         Notification::where('borrow_id',$request->id)->update(['viewed' => true]);
-
+        
+        // Notification ke anggota
             if ($request->reason){
                 $msg = "Peminjaman dengan Kode. ".$request->kode_peminjaman." telah ditolak karena ".$request->reason;
             }
@@ -157,11 +159,29 @@ class BorrowController extends Controller
             }
 
         $message = [
+            'borrow_id' => $request->id,
             'user_id' => $request->user_id,
             'message'   => $msg
         ];
 
-        Notification::create($message);       
+        Notification::create($message);  
+        //  
+
+        // Pengembalian stock
+        $items = BorrowItem::where('borrow_id',$request->id)->get();
+
+        foreach ($items as $item) {
+            $stock = Stock::where('book_id', $item->book_id)->first();
+
+            $stok = 1;
+            $stok_keluar    = $stock->stok_keluar - $stok;
+            $stok_akhir     = $stock->stok_akhir + $stok;
+
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
+        }
 
         toast('Peminjaman telah ditolak!','success');
         return redirect('/transaction/borrows');
@@ -174,8 +194,9 @@ class BorrowController extends Controller
         ];
 
         Borrow::where('id', $request->id)->update($rules);
+        Notification::whereNotNull('user_id')->where('borrow_id',request()->id)->update(['viewed' => true]);
 
-        alert()->success('Buku telah Di ambil!','success');
+        alert()->success('Buku telah Di ambil!','Success');
         return redirect('/transaction/borrows');
     }
 
@@ -189,11 +210,13 @@ class BorrowController extends Controller
         $asu        = Borrow::where('id', $request->borrow_id)->value('tanggal_pinjam');
         $tanggal_pinjam = Carbon::parse($asu)->toFormattedDateString();
 
-        $q = $date->diffInDays($now);
-        if ($q > 3) {
+        $q = $date->diffInDays($now,false);
+        $denda = 0;
+        if ($q > 0) {
             $kali = 500*$q;
             $denda = $kali;
         }
+
 
         return view('transaction.borrows.detail',[
             'borrow'    => $borrow,
@@ -221,10 +244,10 @@ class BorrowController extends Controller
         $date   = Carbon::parse($tanggal_tempo);
         $now    = Carbon::now();
 
-        $q = $date->diffInDays($now);
-        
+        $q = $date->diffInDays($now,false);
+
         // apakah dia punya denda kits?
-        if ($q > 3) {
+        if ($q > 0) {
             $kali = 500*$q;
 
             Fine::create([
@@ -232,11 +255,27 @@ class BorrowController extends Controller
                 'member_id'     => $request->member_id,
                 'waktu_tenggat' => $q,
                 'total'         => $kali
+            ]);  
+        }
+
+        // Pengembalian stock
+        $items = BorrowItem::where('borrow_id',$request->borrow_id)->get();
+        
+        foreach ($items as $item) {
+            $stock = Stock::where('book_id', $item->book_id)->first();
+
+            $stok = 1;
+            $stok_keluar    = $stock->stok_keluar - $stok;
+            $stok_akhir     = $stock->stok_akhir + $stok;
+
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
 
-        alert()->success('Buku Sudah Di Kembalikan!','success');
+        alert()->success('Buku Sudah Di Kembalikan!','Success');
         return redirect('/transaction/borrows');
     }
     /**
