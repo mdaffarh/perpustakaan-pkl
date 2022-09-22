@@ -79,13 +79,28 @@ class BookDonationController extends Controller
         return redirect('/transaction/book-donations');
     }
 
-    public function status(Request $request){
+    public function status(Request $request, BookDonation $bookDonation){
         $bukusumbangan = [
             'diambil' => "sudah",
             'staffygngambil' => auth()->user()->staff_id
         ];
+        $buku = [
+            'isbn'          => 'required',
+            'judul'         => 'required',
+            'penulis'       => 'required',
+            'penerbit'      => 'required',
+            'stock_awal'    => 'required'
+        ];
+        $validatedData = $request->validate($bukusumbangan);
+        $validatedDataBook = $request->validate($buku);
+
+        $validatedData['created_by'] = auth()->user()->staff_id;
+
         BookDonation::where('id', $request->id)->update($bukusumbangan);
-        return redirect('/transaction/book-donations');
+        Book::create($validatedDataBook);
+        
+        toast('Buku sumbangan ditambahkan !','success');
+        return redirect('/table/books/create');
     }
 
     public function show(BookDonation $bookDonation)
