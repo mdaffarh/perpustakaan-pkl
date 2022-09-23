@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
-// use App\Http\Controllers\FormController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\ReportControlller;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,10 +73,6 @@ use App\Http\Controllers\WishlistController;
         Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
     });
     //
-
-    // Route::controller(FormController::class)->group(function(){
-    //     Route::get('/form/book','book')->middleware('staff');
-    // });
 
 
 // Staff = penjaga,admin,dll
@@ -140,4 +136,8 @@ Route::controller(NotificationController::class)->group(function(){
     Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
     Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
     Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
+});
+
+Route::controller(ReportControlller::class)->group(function(){
+    Route::get('/report/fine','fine')->middleware('auth');
 });

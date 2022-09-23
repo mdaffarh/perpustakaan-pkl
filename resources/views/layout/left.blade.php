@@ -52,7 +52,6 @@
         </div>
 
         <!-- Sidebar Menu -->
-        {{-- Transaksi --}}
         <nav class="mt-2 pb-3">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
                 <li class="nav-item">
@@ -131,16 +130,6 @@
                             </a>
                         </li>           
                         @endcan
-
-                        <!-- Transaksi Denda -->
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Denda</p>
-                            </a>
-                        </li>
-
-                       
 
                         @can('staff')
                             <li class="nav-item">
@@ -241,6 +230,29 @@
 
                     @can('staff')
                   
+                    </ul>
+                </li>
+                @endcan
+
+                @can('admin')
+                <li class="nav-item">
+                    <a href="#" class="nav-link {{ Request::is('report*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-pen-square"></i>
+                        <p>
+                            Laporan
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+
+                    <ul class="nav nav-treeview">
+
+                        <!-- Table Anggota -->
+                        <li class="nav-item">
+                            <a href="/report/fine" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Denda</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 @endcan
