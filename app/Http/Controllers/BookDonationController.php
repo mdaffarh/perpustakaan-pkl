@@ -173,4 +173,40 @@ class BookDonationController extends Controller
         toast('Data sumbangan buku telah dihapus!','success');
         return redirect("/transaction/book-donations");
     }
+
+    public function creates(){
+        return view('transaction.book-donations.create',[
+            'bookdonations' => BookDonation::all()
+        ]);
+    }
+
+    public function stores(Request $request){
+        $validatedData = $request->validate([
+            'isbn' => 'required|unique:tb_books',
+            'judul' => 'required',
+            'penerbit' => 'required',
+            'kategori' => 'required',
+            'tglTerbit' => 'required',
+            'tglMasuk' => 'required',
+            'stock_awal' => 'required',
+            'image' => 'image|file'
+            
+        ]);
+        if($request->file('image')){
+            $validatedData['image'] = $request->file('image')->store('images');
+        }
+        $buku = Book::create($validatedData);
+        $stok = [
+            'book_id'       => $buku->id,
+            'stok_awal'     => $request->stok_awal,
+            'stok_semua'    => $request->stok_awal,
+            'stok_akhir'    => $request->stok_awal
+        ];
+
+        Stock::create($stok);
+        // BookDonation::where('id', $request->id)->get($bookDonation);
+
+        toast('Buku sumbangan telah ditambahkan','success');
+        return redirect('/table/books');
+    }
 }

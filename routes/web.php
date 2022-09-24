@@ -97,6 +97,8 @@ Route::resource('/transaction/book-donations', BookDonationController::class)->m
 Route::controller(BookDonationController::class)->group(function(){
     Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
     Route::post('/transaction/book-donations/taken','status')->middleware('auth');
+    Route::post('/transaction/book-donations/create', 'stores')->middleware('auth');
+    Route::post('/transaction/book-donations/create', 'creates')->middleware('auth');    
 });
     
 

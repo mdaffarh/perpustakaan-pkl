@@ -8,12 +8,6 @@
                 <div class="modal-body">
                     <form action="/table/books" method="post" enctype="multipart/form-data">
                         @csrf
-                        @if()
-                        <div class="form-floating mb-3">
-                            <label for="floatingInput3">ISBN</label>
-                            <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}">
-                        </div>
-                        @else()
                         <div class="form-floating mb-3">
                             <label for="floatingInput3">ISBN</label>
                             <input required name="isbn" type="text" required class="form-control @error('isbn') is-invalid @enderror " id="floatingInput3"  value="{{ old('isbn') }}">
@@ -23,7 +17,6 @@
                                     </div>
                                 @enderror
                         </div>
-                        @endif
                         <div class="form-floating mb-3">
                             <label for="floatingInput3">Judul Buku</label>
                             <input required name="judul" type="text" required class="form-control @error('judul') is-invalid @enderror " id="floatingInput3" value="{{ old('judul') }}">

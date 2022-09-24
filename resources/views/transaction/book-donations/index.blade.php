@@ -201,24 +201,24 @@
 																		<label for="floatingInput3">Penerbit</label>
 																		<input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
 																	</div>
-																	<div class="form-floating mb-3">
+																	{{-- <div class="form-floating mb-3">
 																		<label for="image" class="form-label">Cover</label>
 																		@if ($bookDonation->image)
 																			<img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
 																		@else
 																			<img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
 																		@endif
-																	</div>
+																	</div> --}}
 																</form>
 															</div>
 														</div>
 														<div class="modal-footer justify-content-between">
 															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 															
-															<form action="/table/books/create" method="POST">
+															<form action="/transaction/book-donations/create" method="POST">
 																@csrf
-																<input type="text" value="{{ $bookDonation->id }}" name="id" >
-																<button type="submit">Book has been taken</button>
+																<input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
+																<button class="btn btn-success" type="submit"> Kirim ke Tabel Buku !</button>
 															</form>
 														</div>
 													</div>
@@ -295,17 +295,6 @@
 															{{ $message }}
 														</div>
 													@enderror
-												</div>
-												<div class="form-floating mb-3">
-													<label for="image" class="form-label">Foto</label>
-													<img class="img-preview-add img-fluid mb-3 col-sm-5">
-													<input id="imageAdd" name="image" class="form-control @error('image') is-invalid @enderror" type="file" onchange="previewImageAdd()" value="{{ old('image') }}"/>
-														@error('image')
-															 <div class="invalid-feedback">
-																{{ $message }}
-															</div>
-														@enderror
-														
 												</div>
 												<div class="input-group">
 													<button class="btn btn-success rounded me-1" type="submit">Submit</button>
