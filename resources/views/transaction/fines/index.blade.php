@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Laporan Denda")
+@section('title', "Denda")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -41,17 +41,17 @@
 						</thead>
 						<tbody>
 							@foreach($fines as $fine)
-							<tr>
-								<td>{{ $loop->iteration }}</td>
-								<td>{{ $fine->borrow->kode_peminjaman }}</td>
-								<td>{{ $fine->borrow->member->nama }}</td>
-								<td>{{ $fine->borrow->member->kelas }}</td>
-								<td>{{ $fine->borrow->member->jurusan }}</td>
-								<td>{{ $fine->borrow->tanggal_tempo }}</td>
-								<td>{{ $fine->borrow->tanggal_kembali }}</td>
-								<td>{{ $fine->waktu_tenggat }} Hari</td>
-								<td>{{ $fine->total }}</td>
-							</tr>
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $fine->borrow->kode_peminjaman }}</td>
+                                    <td>{{ $fine->borrow->member->nama }}</td>
+                                    <td>{{ $fine->borrow->member->kelas }}</td>
+                                    <td>{{ $fine->borrow->member->jurusan }}</td>
+                                    <td>{{ $fine->borrow->tanggal_tempo }}</td>
+                                    <td>{{ $fine->borrow->tanggal_kembali }}</td>
+                                    <td>{{ $fine->waktu_tenggat }} Hari</td>
+                                    <td>{{ $fine->total }}</td>
+                                </tr>
 							@endforeach
 						</tbody>
 					</table>

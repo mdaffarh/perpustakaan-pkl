@@ -16,7 +16,7 @@ class MemberUserController extends Controller
      */
     public function index()
     {
-        return view('table.member-users.index',[
+        return view('users.member-users.index',[
             'memberUsers' => User::whereNotNull('member_id')->get(), //milih user yang ada member idnya
             'memberUnsigned' => Member::whereNull('signed')->get(), //milih anggota yang belum terdaftar
             'members' => Member::all() //milih semua anggota
@@ -58,7 +58,7 @@ class MemberUserController extends Controller
         
 
         toast('User anggota telah dibuat!','success');
-        return redirect('/table/member-users');
+        return redirect('/users/member-users');
     }
 
     /**
@@ -68,7 +68,7 @@ class MemberUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $memberUser){
-        return view('table.members.show',[
+        return view('users.members.show',[
             'memberUser' => $memberUser
         ]);
     }
@@ -80,7 +80,7 @@ class MemberUserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(User $memberUser){
-        return view('table.member-users.edit',[
+        return view('users.member-users.edit',[
             'memberUser' => $memberUser
         ]);
     }
@@ -112,7 +112,7 @@ class MemberUserController extends Controller
         User::where('id',$memberUser->id)->update($validatedData);
 
         toast('User anggota telah diedit!','success');
-        return redirect('/table/member-users');
+        return redirect('/users/member-users');
     }
 
     /**
@@ -126,6 +126,6 @@ class MemberUserController extends Controller
         Member::where('id',$memberUser->member_id)->update(['signed' => null]);
         User::destroy($memberUser->id);
         toast('User anggota telah dihapus!','success');
-        return redirect('/table/member-users');
+        return redirect('/users/member-users');
     }
 }

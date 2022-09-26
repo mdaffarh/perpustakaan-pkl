@@ -29,10 +29,10 @@
                             <a class="nav-link" id="tabs-disetujui-tab" data-toggle="pill" href="#tabs-disetujui" role="tab" aria-controls="tabs-disetujui" aria-selected="false">Disetujui</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="tabs-ditolak-tab" data-toggle="pill" href="#tabs-ditolak" role="tab" aria-controls="tabs-ditolak" aria-selected="false">Ditolak</a>
+                                <a class="nav-link" id="tabs-selesai-tab" data-toggle="pill" href="#tabs-selesai" role="tab" aria-controls="tabs-selesai" aria-selected="false">Selesai</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="tabs-selesai-tab" data-toggle="pill" href="#tabs-selesai" role="tab" aria-controls="tabs-selesai" aria-selected="false">Selesai</a>
+                                <a class="nav-link" id="tabs-ditolak-tab" data-toggle="pill" href="#tabs-ditolak" role="tab" aria-controls="tabs-ditolak" aria-selected="false">Ditolak</a>
                             </li>
                         </ul>
                     @endcan
@@ -301,7 +301,6 @@
                                             <th>Nama Peminjam</th>
                                             <th>Tanggal Pinjam</th>
                                             <th>Tanggal Kembali</th>
-                                            <th>Lama Pinjam</th>
                                             <th>Status</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -314,8 +313,14 @@
                                             <td>{{ $borrow->member->nama }}</td>
                                             <td>{{ $borrow->tanggal_pinjam }}</td>
                                             <td>{{ $borrow->tanggal_tempo }}</td>
-                                            <td>{{ $borrow->status }}</td>
-                                            <td>{{ $borrow->status }}</td>
+                                            <td> 
+                                                @if(Carbon\Carbon::parse( $borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                    <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="bottom">Telat</span>
+                                                @else
+                                                    <span class="badge bg-primary">Dalam Peminjaman</span>
+                                                @endif  
+                                            </td>
+                                                   
                                             <td>
                                                 <form action="/transaction/return/detail/{{ $borrow->id }}" method="post" class="{{ Request::is('/transaction/return/detail/*') ? 'active' : '' }}">
                                                     @csrf
@@ -491,7 +496,9 @@
                                                 <td>{{ $borrow->tanggal_pinjam }}</td>
                                                 <td>{{ $borrow->tanggal_tempo }}</td>
                                                 <td>
-                                                    @if ($borrow->pengambilan_buku == "Sudah")
+                                                    @if(Carbon\Carbon::parse( $borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                        <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kamu telat mengembalikan buku silakan cek kolom info untuk lihat denda.">Telat</span>
+                                                    @elseif ($borrow->pengambilan_buku == "Sudah")
                                                         <span class="badge bg-primary">Dalam Peminjaman</span>
                                                     @else
                                                         <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Peminjaman telah disetujui silakan ambil buku di perpustakaan.">Disetujui</span>
@@ -557,7 +564,7 @@
                                                                             <div class="col">
                                                                                 <div class="row justify-content-between">
                                                                                     <div class="col-auto"><h6 class="mb-1 text-dark"><b>Detail Peminjaman</b></h6></div>
-                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku akan di pinjam</b></h6> </div>
+                                                                                    <div class="flex-sm-col text-right col"> <h6 class="mb-1"><b>{{ $countForeach }} Buku di pinjam</b></h6> </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -587,6 +594,12 @@
                                                                                 <div class="mr-auto  p-2">Tanggal Kembali</div>
                                                                                 <div class=" p-2">{{ $borrow->tanggal_tempo }}</div>
                                                                             </div>
+                                                                            @if(Carbon\Carbon::parse( $borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                                                <div class="d-flex justify-content-end">
+                                                                                    <div class="mr-auto  p-2">Denda</div>
+                                                                                    <div class=" p-2">{{ Carbon\Carbon::parse( $borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) * 500 }}</div>
+                                                                                </div>
+                                                                            @endif
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -717,14 +730,16 @@
                                                                                 <div class="mr-auto  p-2">Tanggal Kembali</div>
                                                                                 <div class=" p-2">{{ $borrow->tanggal_tempo }}</div>
                                                                             </div>
+                                                                            <div class="d-flex justify-content-end">
+                                                                                <div class="mr-auto  p-2">Status</div>
+                                                                                <div class=" p-2">Ditolak</div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer justify-content-between">
                                                                     <div class="offset-5 py-3">
-                                                                        <span><small>*Cetak Kartu untuk mengambil buku di perpustakaan</small></span>
-                                                                        <br>
-                                                                        <span><small>*Pastikan anda mengambil buku dan mengembalikannya di waktu yang tepat</small></span>
+                                                                        <span><small>*Peminjaman ditolak silakan cek notifikasi untuk info lebih lanjut.</small></span>
                                                                     </div>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                 </div>

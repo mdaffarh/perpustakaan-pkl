@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class StaffUserController extends Controller
 {
     public function index(){
-        return view('table.staff-users.index', [
+        return view('users.staff-users.index', [
             'staffUsers' => User::whereNotNull('staff_id')->get(),
             'staffUnsigned' => Staff::whereNull('signed')->get(),
             'staffs' => Staff::all()
@@ -18,7 +18,7 @@ class StaffUserController extends Controller
     }
 
     public function create(){
-        return view('table.staff-users.index',[
+        return view('users.staff-users.index',[
             'staffusers' => User::all()
         ]);
     }
@@ -38,17 +38,17 @@ class StaffUserController extends Controller
         User::create($validatedData);
 
         toast('User staff telah ditambahkan!','success');
-        return redirect('/table/staff-users');
+        return redirect('/users/staff-users');
     }
 
     public function show(User $staffUser){
-        return view('table.staff-users.show',[
+        return view('users.staff-users.show',[
             'staffusers' => $staffUser
     ]);
     }
 
     public function edit(User $staffUser){
-        return view('table.staff-users.edit',[
+        return view('users.staff-users.edit',[
             'staffusers' => $staffUser
         ]);
     }
@@ -72,7 +72,7 @@ class StaffUserController extends Controller
         User::where('id',$staffUser->id)->update($validatedData);
 
         toast('User staff telah diedit!','success');
-        return redirect('/table/staff-users');
+        return redirect('/users/staff-users');
     }
 
     public function destroy(User $staffUser){
@@ -80,6 +80,6 @@ class StaffUserController extends Controller
         User::destroy($staffUser->id);
 
         toast('User staff telah dihapus!','success');
-        return redirect('/table/staff-users');
+        return redirect('/users/staff-users');
     }
 }

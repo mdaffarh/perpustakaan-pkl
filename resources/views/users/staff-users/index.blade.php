@@ -36,7 +36,7 @@
 									</div>
 									<div class="modal-body">
 										<div class="modal-body">
-											<form action="/table/staff-users" method="post" enctype="multipart/form-data">
+											<form action="/users/staff-users" method="post" enctype="multipart/form-data">
 												@csrf
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Staff</label>
@@ -105,7 +105,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="modal-body">
-															<form action="/table/staff-users/{{ $staffUser->id }}" method="post" enctype="multipart/form-data">
+															<form action="/users/staff-users/{{ $staffUser->id }}" method="post" enctype="multipart/form-data">
 																@method('put')
 																@csrf
 																<div class="form-floating mb-3">
@@ -162,7 +162,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="modal-body">
-															<form action="/table/staff-users/{{ $staffUser->id }}" method="post" enctype="multipart/form-data">
+															<form action="/users/staff-users/{{ $staffUser->id }}" method="post" enctype="multipart/form-data">
 																@method('put')
 																@csrf
 																<div class="form-floating mb-3">
@@ -191,7 +191,7 @@
 											</div>
 										</div>
 			
-											<form action="/table/staff-users/{{ $staffUser->id }}" method="POST" class="d-inline">
+											<form action="/users/staff-users/{{ $staffUser->id }}" method="POST" class="d-inline">
 												@method('delete')
 												@csrf
 												<button type="submit" onclick="return confirm('Sure?')" class="btn btn-outline-danger btn-sm">

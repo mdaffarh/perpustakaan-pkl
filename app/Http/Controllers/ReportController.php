@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Fine;
 
-class ReportControlller extends Controller
+class ReportController extends Controller
 {
     public function fine()
     {

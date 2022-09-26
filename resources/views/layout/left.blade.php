@@ -61,51 +61,49 @@
                     </a>
                 </li>
                 @can('member')
-                <li class="nav-item">
-                    <a href="/transaction/wishlist" class="nav-link {{ Request::is('transaction/wishlist*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-bookmark"></i>
-                        <p>Wishlist Buku</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book"></i>
-                        <p>Peminjaman Buku</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-book-medical"></i>
-                        <p>Sumbangan Buku</p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="/transaction/wishlist" class="nav-link {{ Request::is('transaction/wishlist*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-bookmark"></i>
+                            <p>Wishlist Buku</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-book"></i>
+                            <p>Peminjaman Buku</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-book-medical"></i>
+                            <p>Sumbangan Buku</p>
+                        </a>
+                    </li>
                 @endcan
 
                 @can('staff')
-                {{-- Transaksi --}} 
-                <li class="nav-item">
-                    <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>Transaksi<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                    @can('staff')
+                    {{-- Transaksi --}} 
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('transaction*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Transaksi<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pendaftaran Anggota</p>
                             </a>
                         </li>
-                    @endcan
-                    @can('admin')
-                        <li class="nav-item">
-                            <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pendaftaran Staff</p>
-                            </a>
-                        </li>
-                    @endcan
-                
+                        @can('admin')
+                            <li class="nav-item">
+                                <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pendaftaran Staff</p>
+                                </a>
+                            </li>
+                        @endcan
+                    
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
                             <a href="/transaction/borrows" class="nav-link {{ Request::is('transaction/borrows*') ? 'active' : '' }}">
@@ -113,148 +111,160 @@
                                 <p>Peminjaman Buku</p>
                             </a>
                         </li>
-                        
-                        <!-- Transaksi Pengembalian Dan Sumbangan Buku -->
-                        @can('staff')
-                            <li class="nav-item">
-                                <a href="/transaction/return" class="nav-link {{ Request::is('transaction/return*') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pengembalian Buku</p>
-                                </a>
-                            </li>
+                            
+                        <!-- Transaksi Sumbangan Buku -->
 
+                        <li class="nav-item">
+                            <a href="/transaction/fines" class="nav-link {{ Request::is('transaction/fines*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Denda Peminjaman</p>
+                            </a>
+                        </li>           
                         <li class="nav-item">
                             <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sumbangan Buku</p>
                             </a>
                         </li>           
-                        @endcan
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Jadwal Piket Staff</p>
+                            </a>
+                        </li>
+       
+                        </ul>
 
-                        @can('staff')
+                    </li>
+                @endcan
+
+                @can('staff')
+                    {{-- Tabel --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('table*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Tabel
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <!-- Table Anggota -->
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="/table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Jadwal Piket Staff</p>
+                                    <p>Anggota</p>
                                 </a>
                             </li>
-                        @endcan
-                    </ul>
+                            <!-- Table Staff -->
+                            @can('admin')
+                                <li class="nav-item">
+                                    <a href="/table/staffs" class="nav-link {{ Request::is('table/staffs*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Staff</p>
+                                    </a>
+                                </li>
+                            @endcan
 
-                </li>
-                @endcan
+                            <!-- Table Buku -->
+                            <li class="nav-item">
+                                <a href="/table/books" class="nav-link {{ Request::is('table/books*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Buku</p>
+                                </a>
+                            </li>
 
-                <!-- Table -->
-                @can('staff')
-                <li class="nav-item">
-                    <a href="#" class="nav-link {{ Request::is('table*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Tabel
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
+                            <!-- Table Stok Buku -->
+                            <li class="nav-item">
+                                <a href="/table/stocks" class="nav-link {{ Request::is('table/stock*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Stok</p>
+                                </a>
+                            </li>
 
-                    <ul class="nav nav-treeview">
+                            <!-- Table Shift Jaga -->
+                            <li class="nav-item">
+                                <a href="/table/shifts" class="nav-link {{ Request::is('table/shifts*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Shift Jaga</p>
+                                </a>
+                            </li>    
+                        </ul>
+                    </li>
 
-                        <!-- Table Anggota -->
-                        <li class="nav-item">
-                            <a href="/table/members" class="nav-link {{ Request::is('table/members*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Anggota</p>
-                            </a>
-                        </li>
-                @endcan
+                    {{-- Users --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('users/staff-users*') ? 'active' : '' }} {{ Request::is('users/member-users*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-friends"></i>
+                            <p>
+                                User
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
 
-                        <!-- Table Staff -->
-                        @can('admin')
-                        <li class="nav-item">
-                            <a href="/table/staffs" class="nav-link {{ Request::is('table/staffs*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Staff</p>
-                            </a>
-                        </li>
-                        @endcan
-
-                        <!-- Table Buku -->
-                        @can('staff')
-                        <li class="nav-item">
-                            <a href="/table/books" class="nav-link {{ Request::is('table/books*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Buku</p>
-                            </a>
-                        </li>
-
-                        <!-- Table Stok Buku -->
-                        <li class="nav-item">
-                            <a href="/table/stocks" class="nav-link {{ Request::is('table/stock*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Stok</p>
-                            </a>
-                        </li>
-
-                        <!-- Table Shift Jaga -->
-                        <li class="nav-item">
-                            <a href="/table/shifts" class="nav-link {{ Request::is('table/shifts*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Shift Jaga</p>
-                            </a>
-                        </li>
-
-                        <!-- Table User Anggota -->
-                        <li class="nav-item">
-                            <a href="/table/member-users" class="nav-link {{ Request::is('table/member-users*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User Anggota</p>
-                            </a>
-                        </li>
-                        @endcan
-                
-                        <!-- Table User Staff -->
-                        @can('admin')
-                        <li class="nav-item">
-                            <a href="/table/staff-users" class="nav-link {{ Request::is('table/staff-users*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>User Staff</p>
-                            </a>
-                        </li>
-
-                        <!-- Table Sekolah -->
-                        <li class="nav-item">
-                            <a href="/table/schools" class="nav-link {{ Request::is('table/schools*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Sekolah</p>
-                            </a>
-                        </li>  
-                        @endcan
-
-                    @can('staff')
-                  
-                    </ul>
-                </li>
+                        <ul class="nav nav-treeview">
+                            <!-- Table User Anggota -->
+                            <li class="nav-item">
+                                <a href="/users/member-users" class="nav-link {{ Request::is('users/member-users*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>User Anggota</p>
+                                </a>
+                            </li>
+ 
+                            <!-- Table User Staff -->
+                            @can('admin')
+                                <li class="nav-item">
+                                    <a href="/users/staff-users" class="nav-link {{ Request::is('users/staff-users*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>User Staff</p>
+                                    </a>
+                                </li>
+                            @endcan  
+                        </ul>
+                    </li>
                 @endcan
 
                 @can('admin')
-                <li class="nav-item">
-                    <a href="#" class="nav-link {{ Request::is('report*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-pen-square"></i>
-                        <p>
-                            Laporan
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('report*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-pen-square"></i>
+                            <p>
+                                Laporan
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
 
-                    <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview">
 
-                        <!-- Table Anggota -->
-                        <li class="nav-item">
-                            <a href="/report/fine" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Denda</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                            <!-- Table Anggota -->
+                            <li class="nav-item">
+                                <a href="/report/fine" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Denda</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('data/schools*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-desktop"></i>
+                            <p>
+                                Data Web
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <!-- Table Sekolah -->
+                            <li class="nav-item">
+                                <a href="/data/schools" class="nav-link {{ Request::is('data/schools*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sekolah</p>
+                                </a>
+                            </li>  
+                        </ul>
+                    </li>
                 @endcan
 
             </ul>

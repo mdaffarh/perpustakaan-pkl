@@ -2,14 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\FineController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberUserController;
@@ -17,9 +21,6 @@ use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\WishlistController;
-use App\Http\Controllers\ReportControlller;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,24 +83,26 @@ use App\Http\Controllers\ReportControlller;
     Route::resource('/table/books', BookController::class)->middleware('staff');
     Route::resource('/table/stocks', StockController::class)->middleware('staff');
     Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
-    Route::resource('/table/member-users', MemberUserController::class)->middleware('staff');
+    Route::resource('/users/member-users', MemberUserController::class)->middleware('staff');
+    
+    Route::resource('/transaction/fines', FineController::class)->middleware('staff');
     // 
 
     //Khusus Admin
-    Route::resource('/table/staff-users', StaffUserController::class)->middleware('admin');
+    Route::resource('/users/staff-users', StaffUserController::class)->middleware('admin');
     Route::resource('/table/staffs', StaffController::class)->middleware('admin');
-    Route::resource('/table/schools', SchoolController::class)->middleware('admin');
+    Route::resource('/data/schools', SchoolController::class)->middleware('admin');
     //
 
 // Semua user ('auth')
-//Sumbangan Buku
-Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
-Route::controller(BookDonationController::class)->group(function(){
-    Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
-    Route::post('/transaction/book-donations/taken','status')->middleware('auth');
-    Route::post('/transaction/book-donations/create', 'stores')->middleware('auth');
-    Route::post('/transaction/book-donations/create', 'creates')->middleware('auth');    
-});
+    //Sumbangan Buku
+    Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
+    Route::controller(BookDonationController::class)->group(function(){
+        Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
+        Route::post('/transaction/book-donations/taken','status')->middleware('auth');
+        Route::post('/transaction/book-donations/create', 'stores')->middleware('auth');
+        Route::post('/transaction/book-donations/create', 'creates')->middleware('auth');    
+    });
     
 
     //Peminjaman
@@ -131,15 +134,15 @@ Route::controller(BookDonationController::class)->group(function(){
     });
 
     //Notifikasi
-Route::resource('notification', NotificationController::class)->middleware('auth');
-Route::controller(NotificationController::class)->group(function(){
-    Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
-    Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
-    Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
-    Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
-    Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
-});
+    Route::resource('notification', NotificationController::class)->middleware('auth');
+    Route::controller(NotificationController::class)->group(function(){
+        Route::post('/notification/viewed','viewed')->name('viewed')->middleware('auth');
+        Route::post('/notification/viewedAll','viewedAll')->name('viewedAll')->middleware('auth');
+        Route::post('/notification/deleteAll/{id}','deleteAll')->name('deleteAll')->middleware('auth');
+        Route::post('/notification/deleteAllStaff/{id}','deleteAllStaff')->name('deleteAllStaff')->middleware('staff');
+        Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
+    });
 
-Route::controller(ReportControlller::class)->group(function(){
-    Route::get('/report/fine','fine')->middleware('auth');
+Route::controller(ReportController::class)->group(function(){
+    Route::get('/report/fine','fine')->middleware('admin');
 });

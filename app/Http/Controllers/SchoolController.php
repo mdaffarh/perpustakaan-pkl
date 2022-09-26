@@ -14,7 +14,7 @@ class SchoolController extends Controller
      */
     public function index()
     {
-        return view('table.schools.index', [
+        return view('data.schools.index', [
             'schools' => School::all()
         ]);
     }
@@ -26,7 +26,7 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        return view('table.schools.create', [
+        return view('data.schools.create', [
             'schools' => School::all()
         ]);
     }
@@ -56,7 +56,7 @@ class SchoolController extends Controller
         School::create($validatedData);
 
         toast('Data Sekolah telah ditambahkan!','success');
-        return redirect('/table/schools');
+        return redirect('/data/schools');
 
     }
 
@@ -68,7 +68,7 @@ class SchoolController extends Controller
      */
     public function show(School $school)
     {
-        return view('table.schools.show',[
+        return view('data.schools.show',[
             'school' => $school
         ]);
     }
@@ -81,7 +81,7 @@ class SchoolController extends Controller
      */
     public function edit(School $school)
     {
-        return view('table.schools.edit',[
+        return view('data.schools.edit',[
             'school' => $school
         ]);
     }
@@ -110,7 +110,7 @@ class SchoolController extends Controller
         School::where('id',$school->id)->update($validatedData);
 
         toast('Data Sekolah telah diedit!','success');
-        return redirect('/table/schools');
+        return redirect('/data/schools');
 
     }
 
@@ -124,7 +124,7 @@ class SchoolController extends Controller
     {
         School::destroy($school->id);
         toast('Data sekolah telah dihapus!','success');
-        return redirect('/table/schools');
+        return redirect('/data/schools');
 
     }
 }

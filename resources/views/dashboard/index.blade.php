@@ -234,9 +234,11 @@
                                                                 <td>{{ $b->member->nama }}</td>
                                                                 <td>
                                                                     @if($b->status == "Menunggu persetujuan")
-                                                                    <div class="badge badge-danger">{{ $b->status }}</div>
+                                                                        <div class="badge badge-primary">{{ $b->status }}</div>
                                                                     @elseif($b->status == "Disetujui")
-                                                                        @if($b->pengambilan_buku == "Belum")
+                                                                        @if(Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                                            <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kamu telat mengembalikan buku silakan cek kolom info untuk lihat denda.">Telat</span>
+                                                                        @elseif($b->pengambilan_buku == "Belum")
                                                                             <div class="badge badge-warning">{{ $b->status }}</div>
                                                                         @elseif($b->pengambilan_buku == "Sudah")
                                                                             <div class="badge badge-info">Sedang Dipinjam</div>
@@ -291,7 +293,13 @@
                                                                                         <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
                                                                                         <div class="col px-md-5"><div class="p-2">: {{ $b->tanggal_tempo }}</div></div>
                                                                                     </div>
-                                                                                    <hr>
+                                                                                    @if(Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                                                        <div class="row mx-md-n3">
+                                                                                            <div class="col px-md-5"><div class="p-2">Denda</div></div>
+                                                                                            <div class="col px-md-5"><div class="p-2">: {{ Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) * 500 }}</div></div>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                            <hr>
                                                                                     <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
                                                                                     <ol>
                                                                                         @foreach($b->borrowItem as $bi)
