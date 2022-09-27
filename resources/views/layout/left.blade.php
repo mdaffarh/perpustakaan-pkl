@@ -89,20 +89,6 @@
                             <p>Transaksi<i class="fas fa-angle-left right"></i></p>
                         </a>
                         <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Pendaftaran Anggota</p>
-                            </a>
-                        </li>
-                        @can('admin')
-                            <li class="nav-item">
-                                <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Pendaftaran Staff</p>
-                                </a>
-                            </li>
-                        @endcan
                     
                         <!-- Transaksi Peminjaman Buku -->
                         <li class="nav-item">
@@ -120,6 +106,20 @@
                                 <p>Denda Peminjaman</p>
                             </a>
                         </li>           
+                        <li class="nav-item">
+                            <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pendaftaran Anggota</p>
+                            </a>
+                        </li>
+                        @can('admin')
+                            <li class="nav-item">
+                                <a href="/transaction/staff-registrations/index" class="nav-link {{ Request::is('transaction/staff-registrations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pendaftaran Staff</p>
+                                </a>
+                            </li>
+                        @endcan
                         <li class="nav-item">
                             <a href="/transaction/book-donations" class="nav-link {{ Request::is('transaction/book-donations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>

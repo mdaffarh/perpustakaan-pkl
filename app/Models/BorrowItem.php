@@ -19,4 +19,5 @@ class BorrowItem extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
 }

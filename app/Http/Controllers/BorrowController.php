@@ -35,7 +35,10 @@ class BorrowController extends Controller
             'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->where('dikembalikan','Belum')->latest()->get(),
             'borrowedDitolak'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Ditolak")->latest()->get(),
             'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan',"Sudah")->latest()->get(),
-            'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count()
+            'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count(),
+
+            'members'   => Member::where('status',true)->get(),
+            'stocks' => Stock::where('stok_akhir','>',0)->get()
         ]);
     }
 
@@ -49,6 +52,42 @@ class BorrowController extends Controller
         //
     }
 
+    public function directBorrow(Request $request)
+    {
+        $borrow =  Borrow::create([
+            'kode_peminjaman'   => date('dmyis'),
+            'member_id'         => $request->member_id,
+            'staff_id'          => auth()->user()->staff_id,
+            'tanggal_pinjam'    => Carbon::now(),
+            'tanggal_tempo'     => Carbon::now()->addDay(3),
+            'status'            => "Disetujui",
+            'pengambilan_buku'  => "Sudah",
+            'dikembalikan'      => "Belum"
+        ]);
+
+        foreach ($request->book_id as $key => $book) {
+
+            // Buat di borrow_item
+            BorrowItem::create([
+                'borrow_id' => $borrow->id,
+                'book_id'   => $book
+            ]);
+
+            // Ngurangin stock buku
+            $stock = Stock::where('book_id', $book)->first();
+            $stok_keluar    = $stock->stok_keluar + 1;
+            $stok_akhir     = $stock->stok_akhir - 1;
+    
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
+        }
+
+        toast('Peminjaman telah ditambahkan!','success');
+        return redirect('/transaction/borrows');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -59,6 +98,7 @@ class BorrowController extends Controller
     {
         $tanggal_tempo = date('Y-m-d', strtotime('+3 days', strtotime( $request->tanggal_pinjam )));
 
+        // Buat di trx_borrow
         $borrow =  Borrow::create([
             'kode_peminjaman'   => date('dmyis'),
             'member_id'         => auth()->user()->member_id,
@@ -71,26 +111,23 @@ class BorrowController extends Controller
 
         foreach ($request->book_id as $key => $book) {
 
+            // Buat di borrow_item
             BorrowItem::create([
                 'borrow_id' => $borrow->id,
                 'book_id'   => $book
             ]);
-        }
 
-        foreach ($request->book_id as $key => $book) {
-
-            // Stok
+            // Ngurangin stock buku
             $stock = Stock::where('book_id', $book)->first();
-
-            $stok = 1;
-            $stok_keluar    = $stock->stok_keluar + $stok;
-            $stok_akhir     = $stock->stok_akhir - $stok;
-
+            $stok_keluar    = $stock->stok_keluar + 1;
+            $stok_akhir     = $stock->stok_akhir - 1;
+    
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
                 'stok_keluar'   => $stok_keluar
             ]);
         }
+
 
         // Notification ke penjaga
         $message = [
@@ -100,6 +137,7 @@ class BorrowController extends Controller
         Notification::create($message);     
         // 
 
+        // Hapus wishlist
         foreach ($request->wishlist_id as $key => $wishlist) {
             Wishlist::where('id', $wishlist)->delete();
         }
@@ -167,15 +205,14 @@ class BorrowController extends Controller
         Notification::create($message);  
         //  
 
-        // Pengembalian stock
+        // Pengembalian stock ketika ditolak
         $items = BorrowItem::where('borrow_id',$request->id)->get();
 
         foreach ($items as $item) {
             $stock = Stock::where('book_id', $item->book_id)->first();
 
-            $stok = 1;
-            $stok_keluar    = $stock->stok_keluar - $stok;
-            $stok_akhir     = $stock->stok_akhir + $stok;
+            $stok_keluar    = $stock->stok_keluar - 1;
+            $stok_akhir     = $stock->stok_akhir + 1;
 
             $stock->update([
                 'stok_akhir'    => $stok_akhir,

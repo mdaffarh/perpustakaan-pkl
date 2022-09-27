@@ -33,8 +33,8 @@ class DashboardController extends Controller
             'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->where('dikembalikan','!=','Sudah')->count(),
             'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
             'donation'  => BookDonation::where('member_id',auth()->user()->member_id)->count(),
-            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->count(),
-            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan', "Belum")->get(),
+            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->where('status','!=','Ditolak')->count(),
+            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan', "Belum")->latest()->get(),
             'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             // Tampilan Staff

@@ -48,6 +48,7 @@
                                 <a class="nav-link" id="tabs-rejected-tab" data-toggle="pill" href="#tabs-rejected" role="tab" aria-controls="tabs-rejected" aria-selected="false">Sedang Dipinjam</a>
                             </li>
                         </ul>
+            					
                     @endcan
 				</div>
 			
@@ -56,6 +57,51 @@
                     @can('staff')
                         <div class="tab-content" id="custom-tabs-two-tabContent">
                             <div class="tab-pane fade show active" id="tabs-waiting" role="tabpanel" aria-labelledby="tabs-waiting-tab">
+                                <button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#modal-default">Tambah Peminjaman</button>
+                                <div class="modal fade" id="modal-default">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tambah Peminjaman</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="modal-body">
+                                                    <form action="/transaction/borrows/directBorrow" method="post" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="form-floating mb-3">
+                                                            <label for="floatingInput3">Nama Anggota</label>
+                                                            <select class="form-select form-control" aria-label="Default select example" name="member_id" required>
+                                                                <option value="" selected disabled></option>
+                                                                @foreach ($members as $member)
+                                                                    <option value="{{ $member->id }}">{{ $member->nama }}</option>    
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-floating mb-3 book-container">
+                                                            <label for="floatingInput3">Judul Buku</label>
+                                                            <button class="float-right btn btn-sm btn-success btn-add-book my-1" type="button">Tambah Buku</button>
+                                                            <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
+                                                                <option value="" selected disabled>Judul Buku - Penulis</option>
+                                                                @foreach ($stocks as $stock)
+                                                                    <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <button class="btn btn-success rounded me-1" type="submit">Tambah Peminjaman</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -126,7 +172,7 @@
                                                                     <ol>
                                                                         <p style="display: none">{{ $outOfStock = 0}}</p>
                                                                         @foreach($borrow->borrowItem as $bi)
-                                                                            @if ($bi->book->stock->stok_akhir + $bi->book->stock->stok_keluar == 0)
+                                                                            @if ($bi->book->stock->stok_akhir < 0)
                                                                                 <p style="display: none">{{ $outOfStock = true }}</p> 
                                                                             @endif
                                                                             <li>
@@ -905,12 +951,32 @@
 
     @can('staff')
         <script>
+            $('.btn-add-book').click(function () {
+                $('.book-container').append(book())
+            })
+            $(document).on('click','.btn-delete-book',function(){
+                $(this).closest('.book').remove()
+            })
+            function book(){
+                return `<div class="input-group mt-1 book">
+                            <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
+                                <option value="" selected disabled>Judul Buku - Penulis</option>
+                                @foreach ($stocks as $stock)
+                                    <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                @endforeach
+                            </select>                                    
+                            <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
+                        </div>
+                        `
+            }
+
             $(function () {
                 $("#example1").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             });
+
         </script>
     @endcan
 

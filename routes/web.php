@@ -113,6 +113,8 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/transaction/pengambilan_buku/{id}','getBook')->middleware('auth');
         Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
         Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
+        
+        Route::post('/transaction/borrows/directBorrow','directBorrow')->middleware('staff');
     });
     //
 
