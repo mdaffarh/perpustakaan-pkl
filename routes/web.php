@@ -72,6 +72,7 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('admin');
         Route::post('/transaction/staff-registrations/directStore','directStore')->middleware('admin');
         Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
+        Route::post('/transaction/staff-registrations/stores','stores')->middleware('admin');
     });
     //
 
@@ -116,6 +117,8 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
         
         Route::post('/transaction/borrows/directBorrow','directBorrow')->middleware('staff');
+        Route::post('/transaction/borrows/updateBorrow/{id}','updateBorrow')->middleware('staff');
+        Route::post('/transaction/borrows/deleteBorrow/{id}','deleteBorrow')->middleware('staff');
     });
     //
 

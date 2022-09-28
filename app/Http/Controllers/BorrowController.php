@@ -38,7 +38,8 @@ class BorrowController extends Controller
             'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             'members'   => Member::where('status',true)->get(),
-            'stocks' => Stock::where('stok_akhir','>',0)->get()
+            'stocks' => Stock::where('stok_akhir','>',0)->get(),
+            'stocksAll' => Stock::all()
         ]);
     }
 
@@ -52,6 +53,7 @@ class BorrowController extends Controller
         //
     }
 
+    // < Method dihalaman admin
     public function directBorrow(Request $request)
     {
         $borrow =  Borrow::create([
@@ -61,7 +63,7 @@ class BorrowController extends Controller
             'tanggal_pinjam'    => Carbon::now(),
             'tanggal_tempo'     => Carbon::now()->addDay(3),
             'status'            => "Disetujui",
-            'pengambilan_buku'  => "Sudah",
+            'pengambilan_buku'  => "belum",
             'dikembalikan'      => "Belum"
         ]);
 
@@ -87,6 +89,89 @@ class BorrowController extends Controller
         toast('Peminjaman telah ditambahkan!','success');
         return redirect('/transaction/borrows');
     }
+
+    public function updateBorrow(Request $request)
+    {
+        // Update anggota kalau digatni
+        $borrow = Borrow::where('id',$request->borrow_id )->first();
+        $borrow ->update([
+            'member_id'         => $request->member_id
+        ]);
+
+        // Ambil buku yang dipinjam
+        $borrowItem = BorrowItem::where('borrow_id', $request->borrow_id)->get();
+
+        // Nambahin kembali stock buku yang tidak jadi dipinjam
+        foreach ($borrowItem as $book) {
+            $stock = Stock::where('book_id', $book->book_id)->first();
+            $stok_keluar    = $stock->stok_keluar - 1;
+            $stok_akhir     = $stock->stok_akhir + 1;
+    
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
+        }
+
+        // Delete buku yang lama
+        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
+
+        // Buat buku yang dipinjam dan mengurangi stock
+        foreach ($request->book_id as $key => $book) {
+
+            // Buat di borrow_item
+            BorrowItem::create([
+                'borrow_id' => $borrow->id,
+                'book_id'   => $book
+            ]);
+
+            // Ngurangin stock buku
+            $stock = Stock::where('book_id', $book)->first();
+            $stok_keluar    = $stock->stok_keluar + 1;
+            $stok_akhir     = $stock->stok_akhir - 1;
+    
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
+        }
+
+        toast('Peminjaman telah diedit!','success');
+        return redirect('/transaction/borrows');
+    }
+
+    public function deleteBorrow(Request $request)
+    {
+        // Update status peminjaman
+        $borrow = Borrow::where('id',$request->borrow_id )->first();
+        $borrow ->update([
+            'status'         => "Dibatalkan"
+        ]);
+
+        // Ambil buku yang dipinjam
+        $borrowItem = BorrowItem::where('borrow_id', $request->borrow_id)->get();
+
+        // Nambahin kembali stock buku yang tidak jadi dipinjam
+        foreach ($borrowItem as $book) {
+            $stock = Stock::where('book_id', $book->book_id)->first();
+            $stok_keluar    = $stock->stok_keluar - 1;
+            $stok_akhir     = $stock->stok_akhir + 1;
+    
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
+            ]);
+        }
+
+        // Delete buku yang lama
+        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
+
+        toast('Peminjaman telah dibatalkan!','success');
+        return redirect('/transaction/borrows');
+    }
+
+    
+    // Method dihalaman admin >
 
     /**
      * Store a newly created resource in storage.

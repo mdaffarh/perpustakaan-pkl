@@ -104,4 +104,23 @@ class StaffRegistrationController extends Controller
         toast('Data sudah Ditolak!','success');
         return redirect('/transaction/staff-registrations/index');
     }
+
+    public function stores(Request $request){
+        
+        $validatedData = $request->validate([
+            'nip'           => 'required|unique:tb_staffs',
+            'nama'          => 'required',
+            'email'         => 'required',
+            'jenis_kelamin' => 'required',
+            'tanggal_lahir' => 'required',
+            'nomor_telepon' => 'required',
+            'alamat'        => 'required'
+        ]);
+
+        
+        StaffRegistration::create($validatedData);
+        alert()->success('success','Data akan didaftarkan setelah disetujui admin');
+
+        return redirect('/transaction/staff-registrations/index');
+    }
 }
