@@ -6,6 +6,7 @@ use App\Models\Notification;
 use App\Models\BookDonation;
 use App\Models\Book;
 use App\Models\Stock;
+use App\Models\Member;
 use Illuminate\Database\Console\Migrations\StatusCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,8 @@ class BookDonationController extends Controller
         return view('transaction.book-donations.index',[
             'bookDonations'         => BookDonation::where('member_id', auth()->user()->member_id)->get(),
             'bookDonationsWaiting'  => BookDonation::where('status', "menunggu persetujuan")->get(),
-            'bookDonationsGet'      => BookDonation::where('diambil', "belum")->get()
+            'bookDonationsGet'      => BookDonation::where('diambil', "belum")->get(),
+            'anggota'               => Member::all()
         ]);
     }
 
@@ -33,7 +35,10 @@ class BookDonationController extends Controller
             'judul'         => 'required',
             'penulis'       => 'required',
             'penerbit'      => 'required',
-            'stock_awal'    => 'required',
+            'kategori'      => 'required',
+            'tglTerbit'     => 'required',
+            'tglMasuk'      => 'required',
+            'stock_masuk'    => 'required',
             'image'         => 'image|file'
         ]);
 
@@ -46,12 +51,15 @@ class BookDonationController extends Controller
    
         $bookDonations = BookDonation::create($validatedData);
 
-        $message = [
-            'message'           => auth()->user()->member->nama." Mengajukan Penyumbangan buku ",
-            'bookDonation_id'   => $bookDonations->id
-        ];
+        if (auth()->user()->member) {
+            $message = [
+                'message'           => auth()->user()->member->nama." Mengajukan Penyumbangan buku ",
+                'bookDonation_id'   => $bookDonations->id
+            ];
 
-        Notification::create($message);    
+            Notification::create($message);
+        }
+            
 
         toast('Data sumbangan buku telah ditambahkan!','success');
         return redirect('/transaction/book-donations');
@@ -129,16 +137,15 @@ class BookDonationController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn'          => 'required',
+            'isbn'          => 'required|unique:tb_books',
             'judul'         => 'required',
-            'penulis'       => 'required',//
-            'penerbit'      => 'required',//
-            'image'         => 'image|file',
+            'penulis'       => 'required',
+            'penerbit'      => 'required',
             'kategori'      => 'required',
-            'stock_awal'    => 'required',
-            'keterangan'    => 'required',
             'tglTerbit'     => 'required',
-            'tglMasuk'      => 'required'
+            'tglMasuk'      => 'required',
+            'stock_awal'    => 'required',
+            'image'         => 'image|file'
         ];
 
         if($request->isbn != $bookDonation->isbn){

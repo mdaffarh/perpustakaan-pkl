@@ -46,7 +46,7 @@ class MemberRegistrationController extends Controller
     {
 
         $validatedData = $request->validate([
-            'nis' => 'required',
+            'nis' => 'required|unique:tb_members',
             'nama' => 'required',
             'jenis_kelamin' => 'required',//
             'kelas' => 'required',//
@@ -56,11 +56,8 @@ class MemberRegistrationController extends Controller
             'alamat'=> 'required'
         ]);
 
-        $validatedData['status'] = 1;
-        $validatedData['created_by'] = auth()->user()->staff_id;
         MemberRegistration::create($validatedData);
 
-        Member::create($validatedData);
         toast('Data anggota telah ditambahkan!','success');
 
         return redirect('/transaction/member-registrations/index');
