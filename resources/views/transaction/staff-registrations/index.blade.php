@@ -60,7 +60,7 @@
 															@error('nip')
 																<div class="invalid-feedback">
 																	{{ $message }}
-																</div>
+														</div>
 															@enderror
 														</div>
 							
@@ -71,7 +71,7 @@
 															@error('nama')
 																<div class="invalid-feedback">
 																	{{ $message }}
-																</div>
+														</div>
 															@enderror
 														</div>
 							
@@ -92,7 +92,7 @@
 															<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
 																@if(old('jenis_kelamin') == "Perempuan")
 																	<option value=""  disabled>Jenis Kelamin</option>
-																	<option value="Laki-laki">Laki-laki</option>
+																<option value="Laki-laki">Laki-laki</option>
 																	<option value="Perempuan" selected>Perempuan</option>
 																@elseif(old('jenis_kelamin') == "Laki-laki")
 																	<option value=""  disabled>Jenis Kelamin</option>
@@ -118,7 +118,7 @@
 															@error('nomor_telepon')
 																<div class="invalid-feedback">
 																	{{ $message }}
-																</div>
+														</div>
 															@enderror
 														</div>
 														<!-- Alamat input -->
