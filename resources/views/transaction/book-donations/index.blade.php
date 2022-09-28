@@ -57,7 +57,7 @@
                                                         @csrf
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Nama Anggota</label>
-                                                            <select name="" id="" class="form-control">
+                                                            <select name="member_id" id="" class="form-control">
                                                                 <option value=""></option>
                                                                 @foreach($anggota as $a)
                                                                 <option value="{{ $a->id }}">{{ $a->nama }}</option>
@@ -196,8 +196,8 @@
                                             </td>
                                             <td>
 
-                                                {{-- Show --}}
-                                                <a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
+                                                <!-- Show Data -->
+                                                <a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm" title="Show Data">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
                                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
                                                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
@@ -245,19 +245,105 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer justify-content-between">
+                                                            <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                 
+                                                                <!-- Form Approved -->
                                                                 <form action="/transaction/book-donations/approved" method="post">
                                                                     @csrf
                                                                     <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
-                                                                    <button type="submit">Approved</button>
+                                                                    <button type="submit" class="btn btn-success">Approved</button>
+                                                                </form>
+                                                                
+                                                                <!-- Form Tolak -->
+                                                                <form action="/transaction/book-donations/reject/{{ $bookDonation->id }}" method="post">
+                                                                    @csrf
+                                                                    <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
+                                                                    <button type="submit" class="btn btn-danger">Tolak</button>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                    
+                                                <!-- End Show Data -->
+
+                                                <!-- Edit Data -->
+                                                <a href="#modalEditData{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-warning btn-sm">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m7 17.013 4.413-.015 9.632-9.54c.378-.378.586-.88.586-1.414s-.208-1.036-.586-1.414l-1.586-1.586c-.756-.756-2.075-.752-2.825-.003L7 12.583v4.43zM18.045 4.458l1.589 1.583-1.597 1.582-1.586-1.585 1.594-1.58zM9 13.417l6.03-5.973 1.586 1.586-6.029 5.971L9 15.006v-1.589z"></path><path d="M5 21h14c1.103 0 2-.897 2-2v-8.668l-2 2V19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2z"></path></svg>
+                                                </a>
+                                                
+                                                <div class="modal fade" id="modalEditData{{ $bookDonation->id }}">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Edit Data</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="modal-body">
+                                                                    <form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
+                                                                        @method('put')
+                                                                        @csrf
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">ISBN</label>
+                                                                            <input required name="isbn" type="number" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Judul Buku</label>
+                                                                            <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Penulis</label>
+                                                                            <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Penerbit</label>
+                                                                            <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Kategori</label>
+                                                                            <input required name="kategori" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->kategori }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Tanggal Terbit</label>
+                                                                            <input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglTerbit }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Tanggal Masuk</label>
+                                                                            <input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglMasuk }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Quantity</label>
+                                                                            <input required name="stock_masuk" type="number" required class="form-control" id="floatingInput3" value="{{ $bookDonation->stock_masuk }}">
+                                                                        </div>
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="">Cover</label>
+                                                                            @if (!$bookDonation->image)
+                                                                                <img id="img-preview" class="img-fluid img-preview mb-3 col-sm-5">
+                                                                            @else
+                                                                                <img src="{{ asset('storage/' . $bookDonation->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                                            @endif
+                                                                            <input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
+                                                                            <input type="hidden" name="oldImage" value="{{ $bookDonation->image }}">
+                                                                            
+                                                                        </div>
+                                                                        <div class="input-group">
+                                                                            <button class="btn btn-success rounded me-1" type="submit">Submit</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Edit data -->
+
                                             </td>
                                         </tr>
                                         @endforeach
@@ -344,13 +430,20 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer justify-content-between">
+                                                            <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                 
-                                                                <form action="/transaction/book-donations/create" method="POST">
+                                                                <form action="/transaction/book-donations/addBook" method="POST">
                                                                     @csrf
                                                                     <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
+                                                                    <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn" >
                                                                     <button class="btn btn-success" type="submit"> Kirim ke Tabel Buku !</button>
+                                                                </form>
+
+                                                                <form action="/transaction/book-donations/cancel" method="POST">
+                                                                    @csrf
+                                                                    <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
+                                                                    <button class="btn btn-danger" type="submit"> Cancel</button>
                                                                 </form>
                                                             </div>
                                                         </div>

@@ -100,8 +100,9 @@ use App\Http\Controllers\MemberRegistrationController;
     Route::controller(BookDonationController::class)->group(function(){
         Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
         Route::post('/transaction/book-donations/taken','status')->middleware('auth');
-        Route::post('/transaction/book-donations/create', 'stores')->middleware('auth');
-        Route::post('/transaction/book-donations/create', 'creates')->middleware('auth');    
+        Route::post('/transaction/book-donations/addBook', 'addBook')->middleware('auth');  
+        Route::post('/transaction/book-donations/reject/{id}', 'reject')->middleware('auth');
+        Route::post('/transaction/book-donations/cancel', 'cancel')->middleware('auth'); 
     });
     
 

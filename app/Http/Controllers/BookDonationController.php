@@ -45,8 +45,12 @@ class BookDonationController extends Controller
         if($request->file('image')){
             $validatedData['image'] = $request->file('image')->store('images');
         }
-
-        $validatedData['member_id'] = auth()->user()->member_id;
+        
+        if (auth()->user()->member) {
+            $validatedData['member_id'] = auth()->user()->member_id;
+        } else {
+            $validatedData['member_id'] = $request->member_id;
+        }
         $validatedData['status'] = "menunggu persetujuan";
    
         $bookDonations = BookDonation::create($validatedData);
@@ -87,6 +91,18 @@ class BookDonationController extends Controller
         return redirect('/transaction/book-donations');
     }
 
+    public function reject(Request $request, BookDonation $bookDonation){
+        $bukusumbangan = [
+            'staff_approved' => auth()->user()->staff_id,
+            'status' => "ditolak"
+        ];
+
+        BookDonation::where('id', $request->id)->update($bukusumbangan);
+
+
+        return redirect('/transaction/book-donations');
+    }
+
     public function status(Request $request, BookDonation $bookDonation){
         $bukusumbangan = [
             'diambil' => "sudah",
@@ -111,20 +127,6 @@ class BookDonationController extends Controller
         return redirect('/table/books/create');
     }
 
-    public function show(BookDonation $bookDonation)
-    {
-        return view('transaction.book-donations.show',[
-            'bookDonation' => $bookDonation
-        ]);
-    }
-
-    public function edit(BookDonation $bookDonation)
-    {
-        return view('transaction.book-donations.edit',[
-            'bookdonation' => $bookDonation
-        ]);
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -137,20 +139,17 @@ class BookDonationController extends Controller
         //isbn,judul,penulis,penerbit,image,kategori,subject
         //slug ??
         $rules = [
-            'isbn'          => 'required|unique:tb_books',
+            'isbn'          => 'required',
+            'isbn'          => 'required',
             'judul'         => 'required',
             'penulis'       => 'required',
             'penerbit'      => 'required',
             'kategori'      => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
-            'stock_awal'    => 'required',
+            'stock_masuk'    => 'required',
             'image'         => 'image|file'
         ];
-
-        if($request->isbn != $bookDonation->isbn){
-            $rules['isbn'] = 'required|unique:trx_book-donations';
-        }
 
         $validatedData = $request->validate($rules);
 
@@ -161,8 +160,7 @@ class BookDonationController extends Controller
             $validatedData['image'] = $request->file('image')->store('images');
         }
 
-        BookDonation::where('id',$bookDonation->id)
-            ->update($validatedData);
+        BookDonation::where('id',$bookDonation->id)->update($validatedData);
         
         toast('Data buku telah diedit!','success');
         return redirect('/transaction/book-donations');
@@ -181,39 +179,68 @@ class BookDonationController extends Controller
         return redirect("/transaction/book-donations");
     }
 
-    public function creates(){
-        return view('transaction.book-donations.create',[
-            'bookdonations' => BookDonation::all()
-        ]);
-    }
+    public function addBook(Request $request){
+        $buku_donasion = BookDonation::where('id', $request->id)->first();
+        $books = Book::where('isbn', $request->isbn)->first();
 
-    public function stores(Request $request){
-        $validatedData = $request->validate([
-            'isbn' => 'required|unique:tb_books',
-            'judul' => 'required',
-            'penerbit' => 'required',
-            'kategori' => 'required',
-            'tglTerbit' => 'required',
-            'tglMasuk' => 'required',
-            'stock_awal' => 'required',
-            'image' => 'image|file'
+        if ($books) {
+            $stokz = Stock::where('id', $books->id)->first();
+            // Variabel
+            $angka  = $buku_donasion->stock_masuk;
+            $stok_tambahan = $stokz->stok_tambahan + $angka;
+            $stok_semua = $stokz->stok_semua + $angka;
+            $stok_akhir = $stokz->stok_akhir + $angka;
+            $stok = [
+                'stok_tambahan' => $stok_tambahan,
+                'stok_semua'    => $stok_semua,
+                'stok_akhir'    => $stok_akhir
+            ];
+
+            $stokz->update($stok);
+        } else {
+            $validatedData = [
+                'isbn'          => $buku_donasion->isbn,
+                'judul'         => $buku_donasion->judul,
+                'penerbit'      => $buku_donasion->penerbit,
+                'penulis'       => $buku_donasion->penulis,
+                'kategori'      => $buku_donasion->kategori,
+                'tglTerbit'     => $buku_donasion->tglTerbit,
+                'tglMasuk'      => $buku_donasion->tglMasuk,
+                'image'         => $buku_donasion->image
+            ];
             
-        ]);
-        if($request->file('image')){
-            $validatedData['image'] = $request->file('image')->store('images');
+            $buku = Book::create($validatedData);
+
+            $stok = [
+                'book_id'       => $buku->id,
+                'stok_tambahan' => $buku_donasion->stock_masuk,
+                'stok_semua'    => $buku_donasion->stock_masuk,
+                'stok_akhir'    => $buku_donasion->stock_masuk
+            ];
+
+            Stock::create($stok);
         }
-        $buku = Book::create($validatedData);
-        $stok = [
-            'book_id'       => $buku->id,
-            'stok_awal'     => $request->stok_awal,
-            'stok_semua'    => $request->stok_awal,
-            'stok_akhir'    => $request->stok_awal
+
+        $bukudonasi = [
+            'diambil'   => "Sudah"
         ];
 
-        Stock::create($stok);
-        // BookDonation::where('id', $request->id)->get($bookDonation);
-
+        BookDonation::where('id', $request->id)->update($bukudonasi);
+        
         toast('Buku sumbangan telah ditambahkan','success');
-        return redirect('/table/books');
+        return redirect("/transaction/book-donations");
     }
+
+    public function cancel(Request $request)
+    {
+        $bukudonasi = [
+            'diambil'   => "Dicancel"
+        ];
+
+        BookDonation::where('id', $request->id)->update($bukudonasi);
+        
+        alert()->error('Dicancel','Transaksi telah di cancel');
+        return redirect("/transaction/book-donations");
+    }
+
 }

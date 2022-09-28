@@ -22,5 +22,10 @@ class Book extends Model
         return $this->belongsTo(Wishlist::class);
     }
 
+    public function bookDonations()
+    {
+        return $this->hasMany(BookDonation::class);
+    }
+
 
 }
