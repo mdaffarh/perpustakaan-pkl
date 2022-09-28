@@ -269,14 +269,73 @@
                                             <td>{{ $borrow->tanggal_tempo }}</td>
                                             <td>							
                         
+                                                {{-- Edit data --}}
+                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Peminjaman"> <i class="fas fa-pencil-alt"></i> </button>
+                                                <div class="modal fade" id="modal-default{{ $borrow->id }}">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Edit Peminjaman</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="modal-body">
+                                                                    <form action="/transaction/borrows/updateBorrow/{{ $borrow->id }}" method="post" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <input type="hidden" name="borrow_id" value="{{ $borrow->id }}">
+                                                                        <div class="form-floating mb-3">
+                                                                            <label for="floatingInput3">Nama Anggota</label>
+                                                                            <select class="form-select form-control" aria-label="Default select example" name="member_id" required>
+                                                                                @foreach ($members as $member)
+                                                                                    @if ($member->id == $borrow->member_id)
+                                                                                        <option value="{{ $member->id }}" selected>{{ $member->nama }}</option>                                   
+                                                                                    @else
+                                                                                        <option value="{{ $member->id }}">{{ $member->nama }}</option> 
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                        
+                                                                        <div class="form-floating mb-3 book-container">
+                                                                            <label for="floatingInput3">Judul Buku</label>
+                                                                            <button class="float-right btn btn-sm btn-success btn-add-book my-1" type="button">Tambah Buku</button>
+
+                                                                            @foreach ($borrow->borrowItem as $key => $borrowItem)
+                                                                                <div class="input-group mt-1 book">
+                                                                                    <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
+                                                                                        @foreach ($stocksAll as $stock)
+                                                                                            @if ($stock->book->id == $borrowItem->book_id)
+                                                                                                <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} )</option>
+                                                                                            @elseif ($stock->stok_akhir > 0)
+                                                                                                <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                                                                            @endif
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    @if ($key > 0)
+                                                                                        <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
+                                                                                    @endif
+                                                                                </div>
+                                                                            @endforeach
+                                                                        </div>
+                                                                        <div class="input-group">
+                                                                            <button class="btn btn-success rounded me-1" type="submit">Update Peminjaman</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>               
+
                                                 {{-- Show --}}
-                                                <a href="#show{{ $borrow->id }}" data-toggle="modal" class="btn btn-outline-success btn-sm">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;" class="bi bi-eye" viewBox="0 0 16 16">
-                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                                                    </svg>
-                                                </a>
-                                                
+                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Proses Peminjaman"> 
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
                                                 <div class="modal fade" id="show{{ $borrow->id }}">
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
@@ -331,6 +390,66 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                {{-- Delete --}}
+                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#delete{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Batalkan Peminjaman"> 
+                                                    <i class="fas fa-times-circle"></i>
+                                                </button>
+                                                <div class="modal fade" id="delete{{ $borrow->id }}">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header" style="border: none;">
+                                                                <h5 class="modal-title mt-3 px-4">Kode Peminjaman <p class="font-weight-bolder">{{ $borrow->kode_peminjaman }}</p></h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">NIS</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{ $borrow->member->nis }}</div></div>
+                                                                </div>
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">Nama</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{ $borrow->member->nama }}</div></div>
+                                                                </div>
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{ $borrow->member->kelas }} {{ $borrow->member->jurusan }}</div></div>
+                                                                </div>
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{ $borrow->tanggal_pinjam }}</div></div>
+                                                                </div>
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{ $borrow->tanggal_tempo }}</div></div>
+                                                                </div>
+                                                                <hr>
+                                                                <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
+                                                                <ol>
+                                                                    @foreach($borrow->borrowItem as $bi)
+                                                                    <li>
+                                                                        <div class="row mx-md-n3">
+                                                                            <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
+                                                                            <div class="col px-md-5"><div class="p-2">1</div></div>
+                                                                        </div>
+                                                                    </li>
+                                                                    @endforeach
+                                                                </ol>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <form action="/transaction/borrows/deleteBorrow/{{ $borrow->id }}" method="post">
+                                                                    @csrf
+                                                                    <input type="text" name="borrow_id" hidden value="{{ $borrow->id }}">
+                                                                    <button type="submit" class="btn btn-danger">Batalkan</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
                         
                                             </td>
                                         </tr>
@@ -961,8 +1080,10 @@
                 return `<div class="input-group mt-1 book">
                             <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
                                 <option value="" selected disabled>Judul Buku - Penulis</option>
-                                @foreach ($stocks as $stock)
-                                    <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                @foreach ($stocksAll as $stock)
+                                    @if ($stock->stok_akhir > 0)
+                                        <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                    @endif
                                 @endforeach
                             </select>                                    
                             <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
