@@ -72,6 +72,7 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/transaction/staff-registrations/approved/{id}','approved')->middleware('admin');
         Route::post('/transaction/staff-registrations/directStore','directStore')->middleware('admin');
         Route::post('/transaction/staff-registrations/store','store')->middleware('guest');
+        Route::post('/transaction/staff-registrations/stores','stores')->middleware('admin');
     });
     //
 
