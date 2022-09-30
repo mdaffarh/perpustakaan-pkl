@@ -36,6 +36,20 @@
                             </li>
                         </ul>
                     @endcan
+                    @can('staff')
+                        <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tabs-waiting-tab" data-toggle="pill" href="#tabs-waiting" role="tab" aria-controls="tabs-waiting" aria-selected="trues">Menunggu Persetujuan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-pengambilan-buku-tab" data-toggle="pill" href="#tabs-pengambilan-buku" role="tab" aria-controls="tabs-pengambilan-buku" aria-selected="false">Pengambilan Buku</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-rejected-tab" data-toggle="pill" href="#tabs-rejected" role="tab" aria-controls="tabs-rejected" aria-selected="false">Sedang Dipinjam</a>
+                            </li>
+                        </ul>
+            					
+                    @endcan
 				</div>
 			
 				<div class="card-body">
@@ -1205,6 +1219,7 @@
                 $("#display_detail").show();
                 $("#example1_detail").DataTable();
             }
+            
             $('.btn-add-book').click(function () {
                 $('.book-container').append(book())
 
@@ -1226,11 +1241,14 @@
                                 @endforeach
                             </select>                                    
                             <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
-                        </div>`                    
+                        </div>`    
+            }            
+
             $(function () {
                 $("#example1").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false
-                });
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+                }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             });
 
         </script>
