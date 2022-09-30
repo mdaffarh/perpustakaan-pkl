@@ -41,8 +41,8 @@
 												@csrf
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Anggota</label>
-													<select class="form-select form-control" aria-label="Default select example" name="member_id" required>
-														<option value="" selected disabled><-- Pilih Anggota --></option>
+													<select class="form-control form-select select2" aria-label="Default select example" name="member_id" required>
+														<option value="" selected disabled> Pilih Anggota </option>
 														@foreach($memberUnsigned as $member)
 															<option value="{{ $member->id }}">{{ $member->nama }}</option>
 														@endforeach

@@ -48,8 +48,8 @@
                         </div>
                         <div class="form-floating mb-3">
                             <label for="floatingInput3">Kategori</label>
-                            <select name="kategori" type="text" required class="form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
-                                <option></option>
+                            <select name="kategori" type="text" required class="form-control @error('kategori') is-invalid @enderror select2" id="floatingInput3" value="{{ old('kategori') }}">
+                                <option selected>Pilih Kategori</option>
                                 <option>Novel</option>
                                 <option>Komik</option>
                                 <option>Ensiklopedia</option>

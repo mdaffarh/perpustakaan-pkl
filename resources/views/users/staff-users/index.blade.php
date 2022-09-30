@@ -26,7 +26,7 @@
 					<div>
 						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Tambah User Staff</button>
 						<div class="modal fade" id="modal-default">
-							<div class="modal-dialog">
+							<div class="modal-dialog modal-lg">
 								<div class="modal-content">
 									<div class="modal-header">
 										<h4 class="modal-title">Tambah User</h4>
@@ -40,7 +40,7 @@
 												@csrf
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Staff</label>
-													<select class="form-select form-control" aria-label="Default select example" name="staff_id" required>
+													<select class="form-select form-control select2" aria-label="Default select example" name="staff_id" required>
 														<option value="" selected disabled><-- Pilih Staff --></option>
 														@foreach($staffUnsigned as $staff)
 															<option value="{{ $staff->id }}">{{ $staff->nama }}</option>

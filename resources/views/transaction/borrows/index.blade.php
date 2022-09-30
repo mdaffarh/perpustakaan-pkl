@@ -73,8 +73,8 @@
                                                         @csrf
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Nama Anggota</label>
-                                                            <select class="form-select form-control" aria-label="Default select example" name="member_id" required>
-                                                                <option value="" selected disabled></option>
+                                                            <select class="form-select form-control select2" aria-label="Default select example" name="member_id" required>
+                                                                <option value="" selected disabled> Pilih Nama Anggota </option>
                                                                 @foreach ($members as $member)
                                                                     <option value="{{ $member->id }}">{{ $member->nama }}</option>    
                                                                 @endforeach
@@ -82,9 +82,9 @@
                                                         </div>
                                                         <div class="form-floating mb-3 book-container">
                                                             <label for="floatingInput3">Judul Buku</label>
-                                                            <button class="float-right btn btn-sm btn-success btn-add-book my-1" type="button">Tambah Buku</button>
-                                                            <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
-                                                                <option value="" selected disabled>Judul Buku - Penulis</option>
+                                                            <button class="float-right btn btn-sm btn-success btn-add-book" type="button">Tambah Buku</button>
+                                                            <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
+                                                                <option value="" selected disabled> Pilih Judul Buku - Penulis</option>
                                                                 @foreach ($stocks as $stock)
                                                                     <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
                                                                 @endforeach
@@ -287,7 +287,7 @@
                                                                         <input type="hidden" name="borrow_id" value="{{ $borrow->id }}">
                                                                         <div class="form-floating mb-3">
                                                                             <label for="floatingInput3">Nama Anggota</label>
-                                                                            <select class="form-select form-control" aria-label="Default select example" name="member_id" required>
+                                                                            <select class="form-select form-control select2" aria-label="Default select example" name="member_id" required>
                                                                                 @foreach ($members as $member)
                                                                                     @if ($member->id == $borrow->member_id)
                                                                                         <option value="{{ $member->id }}" selected>{{ $member->nama }}</option>                                   
@@ -300,11 +300,11 @@
                                                                         
                                                                         <div class="form-floating mb-3 book-container">
                                                                             <label for="floatingInput3">Judul Buku</label>
-                                                                            <button class="float-right btn btn-sm btn-success btn-add-book my-1" type="button">Tambah Buku</button>
+                                                                            <button class="float-right btn btn-sm btn-success btn-add-book" type="button">Tambah Buku</button>
 
                                                                             @foreach ($borrow->borrowItem as $key => $borrowItem)
                                                                                 <div class="input-group mt-1 book">
-                                                                                    <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
+                                                                                    <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
                                                                                         @foreach ($stocksAll as $stock)
                                                                                             @if ($stock->book->id == $borrowItem->book_id)
                                                                                                 <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} )</option>
@@ -1078,8 +1078,8 @@
             })
             function book(){
                 return `<div class="input-group mt-1 book">
-                            <select class="form-select form-control" aria-label="Default select example" name="book_id[]" required>
-                                <option value="" selected disabled>Judul Buku - Penulis</option>
+                            <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
+                                <option value="" selected disabled>Pilih Judul Buku - Penulis</option>
                                 @foreach ($stocksAll as $stock)
                                     @if ($stock->stok_akhir > 0)
                                         <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
