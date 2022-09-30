@@ -62,7 +62,7 @@ class BorrowController extends Controller
             'staff_id'          => auth()->user()->staff_id,
             'tanggal_pinjam'    => Carbon::now(),
             'tanggal_tempo'     => Carbon::now()->addDay(3),
-            'status'            => "Disetujui",
+            'status'            => "Menunggu persetujuan",
             'pengambilan_buku'  => "belum",
             'dikembalikan'      => "Belum"
         ]);
@@ -248,7 +248,7 @@ class BorrowController extends Controller
 
         // Notification ke anggota
             $message = [
-                'user_id'   => $request->user_id,
+                'member_id'   => $request->member_id,
                 'borrow_id' => $request->id,
                 'message'   => "Peminjaman No. ".$request->kode_peminjaman." telah disetujui, Silakan cetak Kartu dan ambil Buku di perpustakaan." ,
             ];
@@ -283,7 +283,7 @@ class BorrowController extends Controller
 
         $message = [
             'borrow_id' => $request->id,
-            'user_id' => $request->user_id,
+            'member_id' => $request->member_id,
             'message'   => $msg
         ];
 
@@ -316,7 +316,7 @@ class BorrowController extends Controller
         ];
 
         Borrow::where('id', $request->id)->update($rules);
-        Notification::whereNotNull('user_id')->where('borrow_id',request()->id)->update(['viewed' => true]);
+        Notification::whereNotNull('member_id')->where('borrow_id',request()->id)->update(['viewed' => true]);
 
         alert()->success('Buku telah Di ambil!','Success');
         return redirect('/transaction/borrows');

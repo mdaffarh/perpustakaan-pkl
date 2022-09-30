@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable();
+            $table->foreignId('member_id')->nullable();
             $table->foreignId('borrow_id')->nullable();
             $table->foreignId('bookDonation_id')->nullable();
             $table->foreignId('staff_approved')->nullable();
