@@ -27,10 +27,9 @@ class BorrowController extends Controller
         $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
         return view('transaction.borrows.index',[
-            'borrowsWaiting'    => Borrow::where('status',"Menunggu persetujuan")->latest()->get(), // disetujui Staff
-            'borrowsApproved'   => Borrow::where('status',"Disetujui")->where('pengambilan_buku', "Belum")->latest()->get(),  //Pengambilan Buku Staff
-            'borrows'           => Borrow::where('pengambilan_buku',"Sudah")->where('dikembalikan',"Belum")->latest()->get(), //Return Buku Staff
+            'borrows'   => Borrow::where('status','!=','Dibatalkan')->latest()->get(),
             
+
             'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menunggu persetujuan")->latest()->get(),
             'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->where('dikembalikan','Belum')->latest()->get(),
             'borrowedDitolak'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Ditolak")->latest()->get(),
