@@ -173,7 +173,7 @@
 
                                             
                                             {{-- Show --}}
-                                            <button class="btn btn-success btn-sm btn-detail" type="button" id="detail{{ $borrow->id }}" onclick="showDetail()">
+                                            <button class="btn btn-success btn-sm btn-detail" type="button" id="detail{{ $borrow->id }}" onclick="showDetail{{ $borrow->id }}()">
                                                 <i class="fas fa-info-circle "></i>
                                             </button>
                                             
@@ -916,7 +916,7 @@
                 <div class="card-body">
                     @foreach ($borrows as $borrow)
                         {{-- Tabel Detail --}}
-                        <table id="detailTable{{ $borrow->id }}" class="table table-bordered table-striped" style="display: none">
+                        <table id="detailTable{{ $borrow->id }}" class="table table-bordered table-striped detail-table" style="display: none;">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -924,6 +924,7 @@
                                     <th>Judul</th>
                                     <th>Jumlah</th>
                                     <th>Stok</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -934,14 +935,17 @@
                                         <td>{{ $item->book->judul }}</td>
                                         <td>1</td>
                                         <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>     
                         <script>
-                            function showDetail(){
+                            function showDetail{{ $borrow->id }}(){
+                                const oldTable = document.querySelector('.detail-table');
                                 const table = document.querySelector('#detailTable{{ $borrow->id }}');
-                                table.style.display = 'block';
+                                oldTable.style.display = 'none';
+                                table.style.display = 'table';
                             }
                         </script>
                     @endforeach    
@@ -980,14 +984,18 @@
 			$("#example1").DataTable({
 			"responsive": true, "lengthChange": false, "autoWidth": false,
 			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-			
-			
 			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 		});
+        
         $(function () {
 			$("#detailTable{{ $borrow->id }}").DataTable({
-			"responsive": true, "lengthChange": false, "autoWidth": false
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
 			});
 		});
         </script>
