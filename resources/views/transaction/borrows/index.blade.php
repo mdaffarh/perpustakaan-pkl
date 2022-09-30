@@ -124,6 +124,10 @@
                                                 <td>{{ $borrow->tanggal_pinjam }}</td>
                                                 <td>{{ $borrow->tanggal_tempo }}</td>
                                                 <td>
+                                                    {{--  --}}
+                                                    {{-- <button type="button" onClick="show_detail();"  class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </button> --}}
                                                     {{-- Edit data --}}
                                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Peminjaman"> <i class="fas fa-pencil-alt"></i> </button>
                                                     <div class="modal fade" id="modal-default{{ $borrow->id }}">
@@ -192,6 +196,7 @@
                                                     <a href="#show{{ $borrow->id }}" data-toggle="modal" class="btn btn-success btn-sm">
                                                         <i class="fas fa-info-circle"></i>
                                                     </a>
+                                                    
                                                     
                                                     <div class="modal fade" id="show{{ $borrow->id }}">
                                                         <div class="modal-dialog modal-lg">
@@ -625,6 +630,23 @@
                                         @endforeach
                                     </tbody>
                                 </table>   
+                                <div id="display_detail" style="display:none">
+                                    <table id="example1_detail"  class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Kode Peminjaman</th>
+                                                <th>Nama Peminjam</th>
+                                                <th>Tanggal Pengambilan</th>
+                                                <th>Tanggal Tempo</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     @endcan
@@ -1193,6 +1215,10 @@
 
     @can('staff')
         <script>
+            function show_detail(borrow_id){
+                $("#display_detail").show();
+                $("#example1_detail").DataTable();
+            }
             $('.btn-add-book').click(function () {
                 $('.book-container').append(book())
 
@@ -1214,9 +1240,7 @@
                                 @endforeach
                             </select>                                    
                             <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
-                        </div>`
-                }
-                    
+                        </div>`                    
             $(function () {
                 $("#example1").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,

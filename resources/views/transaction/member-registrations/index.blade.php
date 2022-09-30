@@ -85,9 +85,9 @@
 															<label for="floatingInput3">Nomor Telepon</label>
 															<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3">
 														</div>
-														<div class="form-floating mb-3">
+														<div class="mb-4">
 															<label for="floatingInput3">Alamat</label>
-															<input required name="alamat" type="text" required class="form-control" id="floatingInput3">
+															<textarea name="alamat" placeholder="Alamat" class="form-control"> {{ old('alamat') }}</textarea>
 														</div>
 														<div class="input-group">
 															<button class="btn btn-success rounded me-1" type="submit">Submit</button>
