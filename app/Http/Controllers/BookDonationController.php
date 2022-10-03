@@ -243,4 +243,13 @@ class BookDonationController extends Controller
         return redirect("/transaction/book-donations");
     }
 
+    public function search(Request $request)
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = Member::where('status', "1")->select("id","nis", "nama", "kelas", "jurusan")->where('nama', 'LIKE', "%$search%")->get();
+        }
+        return response()->json($data);
+    }
 }

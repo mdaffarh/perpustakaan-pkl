@@ -21,6 +21,7 @@ use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
+use App\Models\BookDonation;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +106,8 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/transaction/book-donations/reject/{id}', 'reject')->middleware('auth');
         Route::post('/transaction/book-donations/cancel', 'cancel')->middleware('auth'); 
     });
+
+    Route::get('ajax-autocomplete-search', [BookDonationController::class,'search']);
     
 
     //Peminjaman
