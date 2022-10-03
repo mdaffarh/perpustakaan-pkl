@@ -50,6 +50,20 @@
                         </ul>
             					
                     @endcan
+                    @can('staff')
+                        <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tabs-waiting-tab" data-toggle="pill" href="#tabs-waiting" role="tab" aria-controls="tabs-waiting" aria-selected="trues">Menunggu Persetujuan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-pengambilan-buku-tab" data-toggle="pill" href="#tabs-pengambilan-buku" role="tab" aria-controls="tabs-pengambilan-buku" aria-selected="false">Pengambilan Buku</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-rejected-tab" data-toggle="pill" href="#tabs-rejected" role="tab" aria-controls="tabs-rejected" aria-selected="false">Sedang Dipinjam</a>
+                            </li>
+                        </ul>
+            					
+                    @endcan
 				</div>
 			
 				<div class="card-body">

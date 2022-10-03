@@ -57,16 +57,12 @@
                                                         @csrf
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Nama Anggota</label>
-<<<<<<< HEAD
-                                                            <select class="livesearch form-control p-3" name="livesearch"></select>
-=======
                                                             <select name="member_id" id="" class="form-control select2">
                                                                 <option disabled selected>Pilih Anggota</option>
                                                                 @foreach($anggota as $a)
                                                                 <option value="{{ $a->id }}">{{ $a->nama }}</option>
                                                                 @endforeach
                                                             </select>
->>>>>>> 76cb781d78439340d0f8c264ae6986e22dc990c0
                                                         </div>
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">ISBN</label>
