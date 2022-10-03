@@ -27,7 +27,7 @@ class BorrowController extends Controller
         $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
         return view('transaction.borrows.index',[
-            'borrows'   => Borrow::where('status','!=','Dibatalkan')->latest()->get(),
+            'borrows'   => Borrow::where('status','!=','Dibatalkan')->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
             
 
             'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menunggu persetujuan")->latest()->get(),
@@ -61,7 +61,7 @@ class BorrowController extends Controller
             'staff_id'          => auth()->user()->staff_id,
             'tanggal_pinjam'    => Carbon::now(),
             'tanggal_tempo'     => Carbon::now()->addDay(3),
-            'status'            => "Menunggu persetujuan",
+            'status'            => "Disetujui",
             'pengambilan_buku'  => "belum",
             'dikembalikan'      => "Belum"
         ]);
@@ -311,6 +311,7 @@ class BorrowController extends Controller
     public function getBook(Request $request, $id)
     {
         $rules = [
+            'status'            => "Dalam peminjaman",
             'pengambilan_buku'  => "Sudah"
         ];
 
@@ -355,6 +356,7 @@ class BorrowController extends Controller
     public function returnBook(Request $request)
     {
         $dt = [
+            'status'            => "Selesai",
             'dikembalikan'      => "Sudah",
             'staff_kembali'     => auth()->user()->staff_id,
             'tanggal_kembali'   => Carbon::now()->toDateString(),
