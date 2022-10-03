@@ -109,6 +109,7 @@
 										<th>Nama</th>
 										<th>Kelas</th>
 										<th>Jurusan</th>
+										<th>Status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -119,6 +120,15 @@
 										<td>{{ $member->nama }}</td>
 										<td>{{ $member->kelas }}</td>
 										<td>{{ $member->jurusan }}</td>
+										<td>
+											@if($member->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($member->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($member->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}
@@ -225,6 +235,7 @@
 										<th>Nama</th>
 										<th>Kelas</th>
 										<th>Jurusan</th>
+										<th>Status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -235,6 +246,15 @@
 										<td>{{ $member->nama }}</td>
 										<td>{{ $member->kelas }}</td>
 										<td>{{ $member->jurusan }}</td>
+										<td>
+											@if($member->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($member->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($member->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}
@@ -321,6 +341,7 @@
 										<th>Nama</th>
 										<th>Kelas</th>
 										<th>Jurusan</th>
+										<th>Status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -331,6 +352,15 @@
 										<td>{{ $member->nama }}</td>
 										<td>{{ $member->kelas }}</td>
 										<td>{{ $member->jurusan }}</td>
+										<td>
+											@if($member->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($member->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($member->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}

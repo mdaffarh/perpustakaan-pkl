@@ -38,6 +38,7 @@
 								<th>Judul Buku</th>
 								<th>Penulis</th>
 								<th>Tanggal Masuk</th>
+								<th>Status</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -49,6 +50,7 @@
 								<td>{{ $book->judul }}</td>
 								<td>{{ $book->penulis }}</td>
 								<td>{{ $book->tglMasuk }}</td>
+								<td>{{ $book->status }}</td>
 								<td>
 		
 									{{-- Edit --}}

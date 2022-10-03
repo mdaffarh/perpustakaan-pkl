@@ -57,12 +57,16 @@
                                                         @csrf
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Nama Anggota</label>
+<<<<<<< HEAD
+                                                            <select class="livesearch form-control p-3" name="livesearch"></select>
+=======
                                                             <select name="member_id" id="" class="form-control select2">
                                                                 <option disabled selected>Pilih Anggota</option>
                                                                 @foreach($anggota as $a)
                                                                 <option value="{{ $a->id }}">{{ $a->nama }}</option>
                                                                 @endforeach
                                                             </select>
+>>>>>>> 76cb781d78439340d0f8c264ae6986e22dc990c0
                                                         </div>
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">ISBN</label>
@@ -714,8 +718,9 @@
 	</div>
 
     @can('staff')
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script>
-
+            
             $(function () {
                 $("#example1").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -723,6 +728,58 @@
                 }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             });
 
+        </script>
+
+        <script type="text/javascript">
+
+            $('.livesearch').select2({
+                ajax: {
+                    url: '/ajax-autocomplete-search',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    nama: item.nama,
+                                    id: item.id,
+                                    nis: item.nis,
+                                    kelas: item.kelas,
+                                    jurusan: item.jurusan,
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Select Member',
+                minimumInputLength: 2,
+                templateResult: formatRepo,
+            });
+            
+            // container result
+            function formatRepo (repo) {
+                if (repo.loading) {
+                    return repo.text;
+                }
+
+                var $container = $(
+                    "<div class='select2-result-repository clearfix'>" +
+                        "<div class='select2-result-repository__meta'>" +
+                            "<div class='select2-result-repository__statistics'>" +
+                                "<div class='select2-result-repository__forks'>  NIS : " + repo.nis + "</div>" +
+                                "<div class='select2-result-repository__forks'>  Nama : " + repo.nama + "</div>" +
+                                "<div class='select2-result-repository__forks'>  Kelas : " + repo.kelas + "</div>" +
+                                "<div class='select2-result-repository__forks'>  Jurusan : " + repo.jurusan + "</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+                );
+                    
+                return $container;
+            }
+            
+            
         </script>
     @endcan
 

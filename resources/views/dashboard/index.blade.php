@@ -503,6 +503,10 @@
                                                                                     <td>{{ $stock->book->kategori }}</td>
                                                                                 </tr>
                                                                                 <tr>
+                                                                                    <td>Status</td>
+                                                                                    <td>{{ $stock->book->status }}</td>
+                                                                                </tr>
+                                                                                <tr>
                                                                                     <td>Deskripsi</td>
                                                                                     <td>{{ $stock->book->deskripsi }}</td>
                                                                                 </tr>

@@ -23,7 +23,7 @@ class MemberRegistrationController extends Controller
     
     public function store(Request $request)
     {
-
+        $status =
         $validatedData = $request->validate([
             'nis' => 'required|unique:tb_members',
             'nama' => 'required',
