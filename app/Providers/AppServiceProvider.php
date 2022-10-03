@@ -40,13 +40,13 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('layout.right', function ($view) {
             view()->share([
-                'notifications' => Notification::where('user_id',auth()->user()->id)->latest()->get(),
-                'notiCount'=> Notification::whereNull('viewed')->where('user_id',auth()->user()->id)->count(),
-                'notiCounts'=> Notification::where('user_id',auth()->user()->id)->count(),
+                'notifications' => Notification::where('member_id',auth()->user()->member_id)->latest()->get(),
+                'notiCount'=> Notification::whereNull('viewed')->where('member_id',auth()->user()->member_id)->count(),
+                'notiCounts'=> Notification::where('member_id',auth()->user()->member_id)->count(),
                 
-                'notiStaff' => Notification::whereNull('user_id')->latest()->get(),
-                'notiStaffCount' => Notification::whereNull('viewed')->whereNull('user_id')->count(),
-                'notiStaffCounts' => Notification::whereNull('user_id')->count(),
+                'notiStaff' => Notification::whereNull('member_id')->latest()->get(),
+                'notiStaffCount' => Notification::whereNull('viewed')->whereNull('member_id')->count(),
+                'notiStaffCounts' => Notification::whereNull('member_id')->count(),
 
                 'wishlistCount' => Wishlist::where('member_id', auth()->user()->member_id)->count()
             ]);

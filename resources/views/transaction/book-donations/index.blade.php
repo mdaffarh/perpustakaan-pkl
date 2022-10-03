@@ -57,7 +57,16 @@
                                                         @csrf
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Nama Anggota</label>
+<<<<<<< HEAD
                                                             <select class="livesearch form-control p-3" name="livesearch"></select>
+=======
+                                                            <select name="member_id" id="" class="form-control select2">
+                                                                <option disabled selected>Pilih Anggota</option>
+                                                                @foreach($anggota as $a)
+                                                                <option value="{{ $a->id }}">{{ $a->nama }}</option>
+                                                                @endforeach
+                                                            </select>
+>>>>>>> 76cb781d78439340d0f8c264ae6986e22dc990c0
                                                         </div>
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">ISBN</label>
@@ -99,8 +108,8 @@
                                                         </div>
                                                         <div class="form-floating mb-3">
                                                             <label for="floatingInput3">Kategori</label>
-                                                            <select name="kategori" type="text" required class="form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
-                                                                <option></option>
+                                                            <select name="kategori" type="text" required class="select2 form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
+                                                                <option disabled selected>Pilih Kategori</option>
                                                                 <option>Novel</option>
                                                                 <option>Komik</option>
                                                                 <option>Ensiklopedia</option>

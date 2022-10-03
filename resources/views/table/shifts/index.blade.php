@@ -40,7 +40,7 @@
                                               @csrf
                                               <div class="form-floating mb-3">
                                                 <label for="floatingInput3">Staff</label>
-                                                <select class="form-select form-control" aria-label="Default select example" name="staff_id" required>
+                                                <select class="form-select form-control select2" aria-label="Default select example" name="staff_id" required>
                                                   <option value="" selected disabled><-- Pilih Staff --></option>
                                                   @foreach($staffs as $staff)
                                                     <option value="{{ $staff->id }}">{{ $staff->nama }}</option>
