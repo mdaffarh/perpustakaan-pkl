@@ -136,6 +136,7 @@
 										<th>NIP</th>
 										<th>Nama</th>
 										<th>Jenis Kelamin</th>
+										<th>Status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -146,6 +147,15 @@
 										<td>{{ $sr->nip }}</td>
 										<td>{{ $sr->nama }}</td>
 										<td>{{ $sr->jenis_kelamin }}</td>
+										<td>
+											@if($sr->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($sr->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($sr->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}
@@ -246,6 +256,7 @@
 										<th>NIP</th>
 										<th>Nama</th>
 										<th>Jenis Kelamin</th>
+										<th>status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -256,6 +267,15 @@
 										<td>{{ $sr->nip }}</td>
 										<td>{{ $sr->nama }}</td>
 										<td>{{ $sr->jenis_kelamin }}</td>
+										<td>
+											@if($sr->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($sr->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($sr->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}
@@ -334,6 +354,7 @@
 										<th>NIP</th>
 										<th>Nama</th>
 										<th>Jenis Kelamin</th>
+										<th>Status</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
@@ -344,6 +365,15 @@
 										<td>{{ $sr->nip }}</td>
 										<td>{{ $sr->nama }}</td>
 										<td>{{ $sr->jenis_kelamin }}</td>
+										<td>
+											@if($sr->status=="0")
+											<span class="badge badge-warning">menunggu persetujuan</span>
+											@elseif($sr->status=="1")
+											<span class="badge badge-success">Disetujui</span>
+											@elseif($sr->status=="2")
+											<span class="badge badge-danger">Ditolak</span>
+											@endif
+										</td>
 										<td>
 		
 											{{-- Show --}}
