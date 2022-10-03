@@ -1063,109 +1063,112 @@
                     {{-- Akhir tampilan anggota --}}
 				</div>
 
-                {{-- Tabel Detail --}}
-                <div class="card-body">
-                    @foreach ($borrows as $borrow)
-                        <div class="detail-table" id="detailTable{{ $borrow->id }}" style="display: none;">
-                            <div class="mb-2">
-                                <h5 class="d-inline">Detail Buku</h5>
-                                <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#default{{ $borrow->id }}"> Edit Buku </button>
-                                <div class="modal fade" id="default{{ $borrow->id }}">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Edit Peminjaman</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
+                @can('staff')
+                    {{-- Tabel Detail --}}
+                    <div class="card-body">
+                        @foreach ($borrows as $borrow)
+                            <div class="detail-table" id="detailTable{{ $borrow->id }}" style="display: none;">
+                                <div class="mb-2">
+                                    <h5 class="d-inline">Detail Buku</h5>
+                                    <button type="button" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#default{{ $borrow->id }}"> Edit Buku </button>
+                                    <div class="modal fade" id="default{{ $borrow->id }}">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Edit Peminjaman</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                                 <div class="modal-body">
-                                                    <form action="/transaction/borrows/updateBorrow/{{ $borrow->id }}" method="post" enctype="multipart/form-data">
-                                                        @csrf
-                                                        <input type="hidden" name="borrow_id" value="{{ $borrow->id }}">
-                                                        <input type="hidden" name="member_id" value="{{ $borrow->member_id }}">
-                                                        
-                                                        <div class="form-floating mb-3 book-container">
-                                                            <label for="floatingInput3">Judul Buku</label>
-                                                            <button class="float-right btn btn-sm btn-success btn-add-book" type="button">Tambah Buku</button>
+                                                    <div class="modal-body">
+                                                        <form action="/transaction/borrows/updateBorrow/{{ $borrow->id }}" method="post" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <input type="hidden" name="borrow_id" value="{{ $borrow->id }}">
+                                                            <input type="hidden" name="member_id" value="{{ $borrow->member_id }}">
+                                                            
+                                                            <div class="form-floating mb-3 book-container">
+                                                                <label for="floatingInput3">Judul Buku</label>
+                                                                <button class="float-right btn btn-sm btn-success btn-add-book" type="button">Tambah Buku</button>
 
-                                                            @foreach ($borrow->borrowItem as $key => $borrowItem)
-                                                                <div class="input-group mt-1 book">
-                                                                    <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
-                                                                        @foreach ($stocksAll as $stock)
-                                                                            @if ($stock->book->id == $borrowItem->book_id)
-                                                                                <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} )</option>
-                                                                            @elseif ($stock->stok_akhir > 0)
-                                                                                <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
-                                                                            @endif
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @if ($key > 0)
-                                                                        <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
-                                                                    @endif
-                                                                </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <button class="btn btn-success rounded me-1" type="submit">Update Peminjaman</button>
-                                                        </div>
-                                                    </form>
+                                                                @foreach ($borrow->borrowItem as $key => $borrowItem)
+                                                                    <div class="input-group mt-1 book">
+                                                                        <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
+                                                                            @foreach ($stocksAll as $stock)
+                                                                                @if ($stock->book->id == $borrowItem->book_id)
+                                                                                    <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} )</option>
+                                                                                @elseif ($stock->stok_akhir > 0)
+                                                                                    <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </select>
+                                                                        @if ($key > 0)
+                                                                            <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
+                                                                        @endif
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="input-group">
+                                                                <button class="btn btn-success rounded me-1" type="submit">Update Peminjaman</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer justify-content-between">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div> 
+                                    </div> 
 
-                            </div>
-                                          
-                            {{-- Tabel Detail --}}
-                            <table id="detailTable" class="table table-bordered table-striped" >
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Kode Pinjam</th>
-                                        <th>Judul</th>
-                                        <th>Jumlah</th>
-                                        <th>Stok</th>
-                                        <th>Tanggal Tempo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($borrow->borrowItem as $item)
+                                </div>
+                                            
+                                {{-- Tabel Detail --}}
+                                <table id="detailTable" class="table table-bordered table-striped" >
+                                    <thead>
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $borrow->kode_peminjaman }}</td>
-                                            <td>{{ $item->book->judul }}</td>
-                                            <td>1</td>
-                                            <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
-                                            <td>{{ $borrow->tanggal_tempo }}</td>
+                                            <th>No</th>
+                                            <th>Kode Pinjam</th>
+                                            <th>Judul</th>
+                                            <th>Jumlah</th>
+                                            <th>Stok</th>
+                                            <th>Tanggal Tempo</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>   
-                        </div>    
-                          
-                        <script>
-                            function showDetail{{ $borrow->id }}(){
-                                const oldTable = document.querySelectorAll('.detail-table');
-                                oldTable.forEach(element => {
-                                    element.style.display = 'none';
-                                });
-                                
-                                const table = document.querySelector('#detailTable{{ $borrow->id }}');
-                                table.style.display = 'block';
-                                table.scrollIntoView({
-                                    behavior: 'smooth'
-                                });
-                            }
-                        </script>
-                    @endforeach    
-                </div>
-                {{-- Akhir Tabel Detail --}}
+                                    </thead>
+                                    <tbody>
+                                        @foreach($borrow->borrowItem as $item)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $borrow->kode_peminjaman }}</td>
+                                                <td>{{ $item->book->judul }}</td>
+                                                <td>1</td>
+                                                <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
+                                                <td>{{ $borrow->tanggal_tempo }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>   
+                            </div>    
+                            
+                            <script>
+                                function showDetail{{ $borrow->id }}(){
+                                    const oldTable = document.querySelectorAll('.detail-table');
+                                    oldTable.forEach(element => {
+                                        element.style.display = 'none';
+                                    });
+                                    
+                                    const table = document.querySelector('#detailTable{{ $borrow->id }}');
+                                    table.style.display = 'block';
+                                    table.scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }
+                            </script>
+                        @endforeach    
+                    </div>
+                    {{-- Akhir Tabel Detail --}}
+                @endcan
+            
 			</div>
 		</div>
 	</div>
