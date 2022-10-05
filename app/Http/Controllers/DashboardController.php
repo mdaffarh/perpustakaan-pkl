@@ -30,11 +30,11 @@ class DashboardController extends Controller
             'stockBooks'    => $random1,
 
             'stock'     => Stock::where('stok_akhir' ,'>', 0 )->count(),
-            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->where('dikembalikan','!=','Sudah')->count(),
+            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
             'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
             'donation'  => BookDonation::where('member_id',auth()->user()->member_id)->count(),
-            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->groupBy('dikembalikan')->where('dikembalikan', "Belum")->where('status','!=','Ditolak')->count(),
-            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan', "Belum")->latest()->get(),
+            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->count(),
+            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
             'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             // Tampilan Staff

@@ -679,7 +679,7 @@
                                                 <td>
                                                     @if(Carbon\Carbon::parse( $borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
                                                         <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kamu telat mengembalikan buku silakan cek kolom info untuk lihat denda.">Telat</span>
-                                                    @elseif ($borrow->pengambilan_buku == "Sudah")
+                                                    @elseif ($borrow->status == "Dalam peminjaman")
                                                         <span class="badge bg-primary">Dalam Peminjaman</span>
                                                     @else
                                                         <span class="badge bg-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Peminjaman telah disetujui silakan ambil buku di perpustakaan.">Disetujui</span>
@@ -953,7 +953,7 @@
                                                 <td>{{ $borrow->kode_peminjaman }}</td>
                                                 <td>{{ $borrow->member->nama }}</td>
                                                 <td>{{ $borrow->tanggal_pinjam }}</td>
-                                                <td>{{ $borrow->tanggal_kembali }}</td>
+                                                <td>{{ $borrow->return->tanggal_kembali }}</td>
                                                 <td>							
                             
                                                     {{-- Show --}}
@@ -1046,7 +1046,7 @@
                                                                             </div>
                                                                             <div class="d-flex justify-content-end">
                                                                                 <div class="mr-auto  p-2">Tanggal Kembali</div>
-                                                                                <div class=" p-2">{{ $borrow->tanggal_kembali }}</div>
+                                                                                <div class=" p-2">{{ $borrow->return->tanggal_kembali }}</div>
                                                                             </div>
                                                                             @if ($borrow->fines)
                                                                                 <div class="d-flex justify-content-end">
@@ -1056,7 +1056,7 @@
                                                                             @endif
                                                                             <div class="d-flex justify-content-end">
                                                                                 <div class="mr-auto  p-2">Staff Perpustakaan</div>
-                                                                                <div class=" p-2">{{ $borrow->staff->nama }}</div>
+                                                                                <div class=" p-2">{{ $borrow->creator->nama }}</div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

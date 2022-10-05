@@ -31,7 +31,7 @@ class BorrowController extends Controller
             
 
             'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menunggu persetujuan")->latest()->get(),
-            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->latest()->get(),
+            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Dibatalkan')->where('status','!=','Menunggu persetujuan')->where('status','!=','Selesai')->latest()->get(),
             'borrowedDitolak'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Ditolak")->latest()->get(),
             'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Selesai")->latest()->get(),
             'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count(),

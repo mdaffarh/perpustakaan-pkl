@@ -236,30 +236,25 @@
                                                                     @if($b->status == "Menunggu persetujuan")
                                                                         <div class="badge badge-primary">{{ $b->status }}</div>
                                                                     @elseif($b->status == "Disetujui")
+                                                                        <div class="badge badge-warning">{{ $b->status }}</div>
+                                                                      
+                                                                    @elseif($b->status == "Dalam peminjaman")
                                                                         @if(Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
-                                                                            <span class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kamu telat mengembalikan buku silakan cek kolom info untuk lihat denda.">Telat</span>
-                                                                        @elseif($b->pengambilan_buku == "Belum")
-                                                                            <div class="badge badge-warning">{{ $b->status }}</div>
-                                                                        @elseif($b->pengambilan_buku == "Sudah")
-                                                                            <div class="badge badge-info">Sedang Dipinjam</div>
+                                                                            <div class="badge badge-danger">Telat ({{ Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</div>
+                                                                        @else
+                                                                            <div class="badge badge-info">{{ $b->status }}</div>
                                                                         @endif
                                                                     @endif
                                                                 </td>
                                                                 <td>
-                                                                    @if($b->status == "Menunggu persetujuan")
+                                                                    @if($b->status == "Menunggu persetujuan" || "Dalam peminjaman")
                                                                         <button style="background: transparent;border:none;" data-toggle="modal" data-target="#menunggu{{ $b->id }}">
                                                                             <i class="fas fa-info-circle"></i>
                                                                         </button>
                                                                     @elseif($b->status == "Disetujui")
-                                                                        @if($b->pengambilan_buku == "Belum")
-                                                                            <button style="background: transparent;border:none;" data-toggle="modal" data-target="#disetujui{{ $b->id }}">
-                                                                                <i class="fas fa-info-circle"></i>
-                                                                            </button>
-                                                                        @elseif($b->pengambilan_buku == "Sudah")
-                                                                            <button style="background: transparent;border:none;" data-toggle="modal" data-target="#menunggu{{ $b->id }}">
-                                                                                <i class="fas fa-info-circle"></i>
-                                                                            </button>
-                                                                        @endif
+                                                                        <button style="background: transparent;border:none;" data-toggle="modal" data-target="#disetujui{{ $b->id }}">
+                                                                            <i class="fas fa-info-circle"></i>
+                                                                        </button>        
                                                                     @endif
 
                                                                     <!-- Modal -->
@@ -293,10 +288,20 @@
                                                                                         <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
                                                                                         <div class="col px-md-5"><div class="p-2">: {{ $b->tanggal_tempo }}</div></div>
                                                                                     </div>
+                                                                                  
                                                                                     @if(Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                                                        <div class="row mx-md-n3">
+                                                                                            <div class="col px-md-5"><div class="p-2">Status</div></div>
+                                                                                            <div class="col px-md-5"><div class="p-2">: Telat ({{ Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</div></div>
+                                                                                        </div>
                                                                                         <div class="row mx-md-n3">
                                                                                             <div class="col px-md-5"><div class="p-2">Denda</div></div>
                                                                                             <div class="col px-md-5"><div class="p-2">: {{ Carbon\Carbon::parse( $b->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) * 500 }}</div></div>
+                                                                                        </div>
+                                                                                    @else
+                                                                                        <div class="row mx-md-n3">
+                                                                                            <div class="col px-md-5"><div class="p-2">Status</div></div>
+                                                                                            <div class="col px-md-5"><div class="p-2">: {{ $b->status }}</div></div>
                                                                                         </div>
                                                                                     @endif
                                                                                             <hr>
