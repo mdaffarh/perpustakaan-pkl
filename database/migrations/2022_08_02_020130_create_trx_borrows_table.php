@@ -17,14 +17,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('kode_peminjaman');
             $table->foreignId('member_id');
-            $table->foreignId('staff_id')->nullable();
             $table->date('tanggal_pinjam');
             $table->date('tanggal_tempo');
             $table->string('status');
             $table->string('pengambilan_buku');
-            $table->string('dikembalikan');
-            $table->string('staff_kembali')->nullable();
-            $table->string('tanggal_kembali')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

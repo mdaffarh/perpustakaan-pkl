@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Peminjaman Buku")
+@section('title', "Report Peminjaman Buku")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -23,31 +23,72 @@
                     </div><!-- /.container-fluid -->
 				</div>                    
                 <div class="card-body">
-
-					{{-- Tabel --}}
+					<div class="">
+						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Ganti Tanggal</button>
+						<div class="modal fade" id="modal-default">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title">Ganti Tanggal</h4>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<div class="modal-body">
+											<form action="/report/borrows/set" method="post">
+												@csrf
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Awal</label>
+													<input type="date" name="tanggal_awal" id="" class="form-control">
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Akhir</label>
+													<input type="date" name="tanggal_akhir" id="" class="form-control">
+												</div>
+												<div class="input-group">
+													<button class="btn btn-success rounded me-1" type="submit">Submit</button>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="modal-footer justify-content-between">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					<table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>ISBN</th>
-								<th>Judul Buku</th>
-								<th>Penulis</th>
-								<th>Tanggal Masuk</th>
-								<th>Aksi</th>
+								<th>Kode Pinjam</th>
+								<th>NIS</th>
+								<th>Nama Peminjam</th>
+								<th>Tanggal Pinjam</th>
+								<th>Tanggal Tempo</th>
+								<th>Status</th>
+								<th>Nama Penjaga</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($books as $book)
-							<tr>
-								<td>{{ $loop->iteration }}</td>
-								<td>{{ $book->isbn }}</td>
-								<td>{{ $book->judul }}</td>
-								<td>{{ $book->penulis }}</td>
-								<td>{{ $book->tglMasuk }}</td>
-							</tr>
+							@foreach($borrows as $borrow)
+								<tr>
+									<td>{{ $loop->iteration }}</td>
+									<td>
+										{{ $borrow->kode_peminjaman }}
+									</td>
+									<td>{{ $borrow->member->nis }}</td>
+									<td>{{ $borrow->member->nama }}</td>
+									<td>{{ $borrow->tanggal_pinjam }}</td>
+									<td>{{ $borrow->return->tanggal_tempo }}</td>
+									<td>{{ $borrow->status }}</td>
+									<td>{{ $borrow->creator->nama }}</td>
+								</tr>
 							@endforeach
 						</tbody>
-					</table>
+					</table> 
 				</div>
 			</div>
 		</div>
@@ -57,10 +98,14 @@
     <script>
         $(function () {
 			$("#example1").DataTable({
-			"responsive": true, "lengthChange": false, "autoWidth": false,
-			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-			
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+				"paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
+			});
 			// $('#example1').DataTable({
 			//   "paging": true,
 			//   "lengthChange": false,

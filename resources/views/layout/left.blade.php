@@ -97,6 +97,13 @@
                                 <p>Peminjaman Buku</p>
                             </a>
                         </li>
+                        <!-- Transaksi Pengembalian Buku -->
+                        <li class="nav-item">
+                            <a href="/transaction/returns" class="nav-link {{ Request::is('transaction/returns*') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pengembalian Buku</p>
+                            </a>
+                        </li>
                             
                         <!-- Transaksi Sumbangan Buku -->
 
@@ -236,10 +243,14 @@
                         </a>
 
                         <ul class="nav nav-treeview">
-
-                            <!-- Table Anggota -->
                             <li class="nav-item">
-                                <a href="/report/fine" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                <a href="/report/borrows" class="nav-link {{ Request::is('report/borrow*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Peminjaman</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/report/fines" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Denda</p>
                                 </a>

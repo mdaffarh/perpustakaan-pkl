@@ -74,6 +74,11 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <div class="form-floating mb-3">
+                                                    <label for="floatingInput3">
+                                                    Tanggal Pinjam</label>
+                                                    <input type="date" name="tanggal_pinjam" class="form-control">
+                                                </div>
                                                 <div class="input-group">
                                                     <button class="btn btn-success rounded me-1" type="submit">Tambah Peminjaman</button>
                                                 </div>
@@ -111,7 +116,7 @@
                                         <td>{{ $borrow->member->nama }}</td>
                                         <td>{{ $borrow->tanggal_pinjam }}</td>
                                         <td>
-                                            @if ($borrow->status == "Menunggu Persetujuan")
+                                            @if ($borrow->status == "Menunggu persetujuan")
                                                 <span class="badge bg-warning">Menunggu persetujuan</span>
                                             @elseif ($borrow->status == "Disetujui")
                                                 <span class="badge bg-success">Disetujui</span>
@@ -239,7 +244,7 @@
                                                     </div>
                                                 @elseif ($borrow->status != "Menunggu persetujuan" && $borrow->pengambilan_buku != "Sudah")
                                                       {{-- Pengambilan Buku --}}
-                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#show{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengambilan Buku"> 
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $borrow->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengambilan Buku"> 
                                                         <i class="fas fa-check"></i>
                                                     </button>
                                                     <div class="modal fade" id="show{{ $borrow->id }}">
@@ -304,12 +309,12 @@
                                                             <input name="borrow_id" value="{{ $borrow->id }}">
                                                             <input name="member_id" value="{{ $borrow->member->id }}">
                                                         </div>
-                                                        <button class="btn btn-warning btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengembalian Buku"><i class="fas fa-arrow-down"></i></button>
+                                                        <button class="btn btn-success btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengembalian Buku"><i class="fas fa-arrow-down"></i></button>
                                                     </form> 
                                                 @endif
                                                    
                                                 {{-- Show --}}
-                                                <button class="btn btn-success btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
+                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
                                                 <div class="modal fade" id="showw{{ $borrow->id }}">
@@ -403,12 +408,23 @@
                                                                         </select>
                                                                     </div>
                                                                     
+                                                                    
+                                                                    @section('style')
+                                                                        <style>
+                                                                            .select2-container {
+                                                                                width: 92% !important;
+                                                                                padding: 0;
+                                                                            }
+                                                                        </style>
+                                                                    @endsection
                                                                     <div class="form-floating mb-3 book-container">
                                                                         <label for="floatingInput3">Judul Buku</label>
                                                                         <button class="float-right btn btn-sm btn-success btn-add-book" type="button">Tambah Buku</button>
 
                                                                         @foreach ($borrow->borrowItem as $key => $borrowItem)
+
                                                                             <div class="input-group mt-1 book">
+                                                                                
                                                                                 <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
                                                                                     @foreach ($stocksAll as $stock)
                                                                                         @if ($stock->book->id == $borrowItem->book_id)
@@ -1096,7 +1112,7 @@
                                                                         <select class="form-select form-control select2" aria-label="Default select example" name="book_id[]" required>
                                                                             @foreach ($stocksAll as $stock)
                                                                                 @if ($stock->book->id == $borrowItem->book_id)
-                                                                                    <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} )</option>
+                                                                                    <option selected value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir + 1 }} ) </option>
                                                                                 @elseif ($stock->stok_akhir > 0)
                                                                                     <option value="{{ $stock->book->id }}">{{ $stock->book->judul }} - {{ $stock->book->penulis }} ( Stok : {{ $stock->stok_akhir }} )</option>
                                                                                 @endif
@@ -1105,7 +1121,7 @@
                                                                         @if ($key > 0)
                                                                             <button type="button" class="btn btn-sm btn-danger btn-delete-book">Hapus</button>
                                                                         @endif
-                                                                    </div>
+                                                                    </div>                                                                
                                                                 @endforeach
                                                             </div>
                                                             <div class="input-group">
