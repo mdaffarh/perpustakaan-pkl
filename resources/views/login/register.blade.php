@@ -107,19 +107,28 @@
                                         <label class="form-label" for="nama-anggota">Nama</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-6">
                                     <div class="form-outline">
                                         <input type="number" name="kelas" id="kelas" class="form-control"  value="{{ old('kelas') }}"/>
                                         <label class="form-label" for="kelas">Kelas</label>
                                     </div>
                                 </div>
-                                <div class="col-sm">
-                                    <div class="form-outline">
-                                        <input type="text" name="jurusan" id="jurusan" class="form-control"  value="{{ old('jurusan') }}"/>
-                                        <label class="form-label" for="jurusan">Jurusan</label>
-                                    </div>
-                                </div>
                             </div>
+                            <div class="mb-4">
+                                <select id="jurusan" name="jurusan" class="form-select">
+                                        <option value="" selected disabled>Jurusan</option>																<option value="Sistem Informasi Jaringan dan Aplikasi">Sistem Informasi Jaringan dan Aplikasi</option>
+                                        <option value="Multimedia">Multimedia</option>
+                                        <option value="Rekaya Perangkat Lunak">Rekaya Perangkat Lunak</option>
+                                        <option value="Desain Pemodelan dan Informasi Bangunan">Desain Pemodelan dan Informasi Bangunan</option>
+                                        <option value="Teknik Pemesinan">Teknik Pemesinan</option>
+                                        <option value="Teknik Fabrikasi Logam dan Manufaktur">Teknik Fabrikasi Logam dan Manufaktur</option>
+                                        <option value="Teknik Kendaraan Ringan">Teknik Kendaraan Ringan</option>
+                                        <option value="Bisnis Konstruksi dan Properti">Bisnis Konstruksi dan Properti</option>
+                                        <option value="Teknik Otomasi Industri">Teknik Otomasi Industri</option>
+                                        <option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan</option>
+                                </select>
+                            </div>
+                            
 
                             <!-- Gender input -->
                             <div class="mb-4">
@@ -227,9 +236,8 @@
 
                             <!-- Alamat input -->
                             <div class="mb-4">
-                                <textarea name="alamat" placeholder="Alamat" class="form-control"> {{ old('alamat') }}</textarea>
+                                <textarea placeholder="Alamat" name="alamat" class="form-control">{{ old('alamat') }}</textarea>
                             </div>
-
                             <!-- Submit button -->
                             <button type="submit" class="btn btn-primary btn-block mb-3" >Daftar</button>
                         </form>

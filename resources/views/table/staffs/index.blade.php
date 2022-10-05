@@ -40,38 +40,69 @@
 											<form action="/table/staffs" method="post" enctype="multipart/form-data">
 												@csrf
 							
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">NIP</label>
-													<input required name="nip" type="number"  required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Nama</label>
-													<input required name="nama" type="text" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Jenis Kelamin</label>
-													<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
-														<option value="" selected disabled></option>
-														<option value="Laki-laki">Laki-laki</option>
-														<option value="Perempuan">Perempuan</option>
-													</select>
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Tanggal Lahir</label>
-													<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Nomor Telepon</label>
-													<input required name="nomor_telepon" type="number" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Alamat</label>
-													<input required name="alamat" type="text" required class="form-control" id="floatingInput3">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Email</label>
-													<input required name="email" type="text" required class="form-control" id="floatingInput3">
-												</div>
+														{{-- NIP --}}
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">NIP</label>
+															<input required name="nip" type="number" maxlength="11" required class="form-control @error('nip') is-invalid @enderror" value="{{ old('nip') }}" id="floatingInput3">
+															@error('nip')
+																<div class="invalid-feedback">
+																	{{ $message }}
+														</div>
+															@enderror
+														</div>
+							
+														<!-- nama input -->
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">Nama</label>
+															<input required name="nama" type="text"required class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}" id="floatingInput3">
+															@error('nama')
+																<div class="invalid-feedback">
+																	{{ $message }}
+														</div>
+															@enderror
+														</div>
+							
+														<!-- email input -->
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">Email</label>
+															<input required name="email" type="email" required class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" id="floatingInput3">
+															@error('email')
+																<div class="invalid-feedback">
+																	{{ $message }}
+																</div>
+															@enderror
+														</div>
+							
+														<!-- Gender input -->
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">Jenis Kelamin</label>
+															<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
+																<option value="" selected disabled></option>
+																<option value="Laki-laki">Laki-laki</option>
+																<option value="Perempuan">Perempuan</option>
+															</select>
+														</div>
+														<!-- ttl input -->
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">Tanggal Lahir</label>
+															<input required name="tanggal_lahir" type="date" required class="form-control " value="{{ old('tanggal_lahir') }} " id="floatingInput3">
+														</div>
+
+														<!-- no telp input -->
+														<div class="form-floating mb-3">
+															<label for="floatingInput3">Nomor Telepon</label>
+															<input required name="nomor_telepon" type="number"  required class="form-control @error('nomor_telepon') is-invalid @enderror" value="{{ old('nomor_telepon') }}" id="floatingInput3">
+															@error('nomor_telepon')
+																<div class="invalid-feedback">
+																	{{ $message }}
+														</div>
+															@enderror
+														</div>
+														<!-- Alamat input -->
+														<div class="mb-4">
+															<label for="floatingInput3">Alamat</label>
+															<textarea name="alamat" placeholder="Alamat" class="form-control"> {{ old('alamat') }}</textarea>
+														</div>
 												<div class="input-group">
 													<button class="btn btn-success rounded me-1" type="submit">Submit</button>
 												</div>

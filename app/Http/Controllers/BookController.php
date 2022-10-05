@@ -167,4 +167,8 @@ class BookController extends Controller
         toast('Data buku telah dihapus!','success');
         return redirect("/table/books");
     }
+    public function status(){
+        // jika ada stock buku, maka statusnya avaible
+        
+    }
 }

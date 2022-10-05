@@ -71,11 +71,23 @@
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Kelas</label>
-															<input required name="kelas" type="text" required class="form-control" id="floatingInput3">
+															<input required name="kelas" type="number" required class="form-control" id="floatingInput3">
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Jurusan</label>
-															<input required name="jurusan" type="text" required class="form-control" id="floatingInput3">
+															<select class="form-select form-control select2" aria-label="Default select example" name="jurusan" required>
+																<option value="" selected disabled></option>
+																<option value="Sistem Informasi Jaringan dan Aplikasi">Sistem Informasi Jaringan dan Aplikasi</option>
+																<option value="Multimedia">Multimedia</option>
+																<option value="Rekaya Perangkat Lunak">Rekaya Perangkat Lunak</option>
+																<option value="Desain Pemodelan dan Informasi Bangunan">Desain Pemodelan dan Informasi Bangunan</option>
+																<option value="Teknik Pemesinan">Teknik Pemesinan</option>
+																<option value="Teknik Fabrikasi Logam dan Manufaktur">Teknik Fabrikasi Logam dan Manufaktur</option>
+																<option value="Teknik Kendaraan Ringan">Teknik Kendaraan Ringan</option>
+																<option value="Bisnis Konstruksi dan Properti">Bisnis Konstruksi dan Properti</option>
+																<option value="Teknik Otomasi Industri">Teknik Otomasi Industri</option>
+																<option value="Teknik Komputer dan Jaringan">Teknik Komputer dan Jaringan</option>
+															</select>
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Tanggal Lahir</label>
