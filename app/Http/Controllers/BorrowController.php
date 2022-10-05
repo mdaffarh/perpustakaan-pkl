@@ -27,13 +27,13 @@ class BorrowController extends Controller
         $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
         return view('transaction.borrows.index',[
-            'borrows'   => Borrow::where('status','!=','Dibatalkan')->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
+            'borrows'   => Borrow::where('status','!=','Ditolak')->where('status','!=','Dibatalkan')->where('status','!=','Dalam Peminjaman')->where('status','!=','Selesai')->latest()->get(),
             
 
             'borrowedMenungguPersetujuan'   => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Menunggu persetujuan")->latest()->get(),
-            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->where('dikembalikan','Belum')->latest()->get(),
+            'borrowedDisetujui'             => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Disetujui")->latest()->get(),
             'borrowedDitolak'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Ditolak")->latest()->get(),
-            'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('dikembalikan',"Sudah")->latest()->get(),
+            'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Selesai")->latest()->get(),
             'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             'members'   => Member::where('status',true)->get(),
@@ -52,18 +52,29 @@ class BorrowController extends Controller
         //
     }
 
-    // < Method dihalaman admin
+    // Method dihalaman admin
     public function directBorrow(Request $request)
     {
+         // Kalau hari rabu/kamis balikinnya hari senin
+           // Kalau hari sabtu / minggu balikinnya kamis
+           $dayName = Carbon::parse(request()->tanggal_pinjam)->dayName;
+           $tanggal_tempo = 0;
+           if($dayName == "Wednesday" || "Saturday" ){
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(5);
+           }elseif($dayName == "Thursday" || "Sunday"){
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(4);
+           }else{
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
+           }
+
         $borrow =  Borrow::create([
             'kode_peminjaman'   => date('dmyis'),
             'member_id'         => $request->member_id,
-            'staff_id'          => auth()->user()->staff_id,
-            'tanggal_pinjam'    => Carbon::now(),
-            'tanggal_tempo'     => Carbon::now()->addDay(3),
+            'created_by'          => auth()->user()->staff_id,
+            'tanggal_pinjam'    => request()->tanggal_pinjam,
+            'tanggal_tempo'     => $tanggal_tempo,
             'status'            => "Disetujui",
-            'pengambilan_buku'  => "belum",
-            'dikembalikan'      => "Belum"
+            'pengambilan_buku'  => "belum"
         ]);
 
         foreach ($request->book_id as $key => $book) {
@@ -180,7 +191,18 @@ class BorrowController extends Controller
      */
     public function store(Request $request)
     {
-        $tanggal_tempo = date('Y-m-d', strtotime('+3 days', strtotime( $request->tanggal_pinjam )));
+          // Kalau hari rabu/kamis balikinnya hari senin
+           // Kalau hari sabtu / minggu balikinnya kamis
+           $dayName = Carbon::parse(request()->tanggal_pinjam)->dayName;
+           $tanggal_tempo = 0;
+           if($dayName == "Wednesday" || "Saturday" ){
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(5);
+           }elseif($dayName == "Thursday" || "Sunday"){
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(4);
+           }else{
+               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
+           }
+
 
         // Buat di trx_borrow
         $borrow =  Borrow::create([
@@ -189,8 +211,7 @@ class BorrowController extends Controller
             'tanggal_pinjam'    => $request->tanggal_pinjam,
             'tanggal_tempo'     => $tanggal_tempo,
             'status'            => "Menunggu persetujuan",
-            'pengambilan_buku'  => "Belum",
-            'dikembalikan'      => "Belum"
+            'pengambilan_buku'  => "Belum"
         ]);
 
         foreach ($request->book_id as $key => $book) {
@@ -237,9 +258,8 @@ class BorrowController extends Controller
 
         $validatedData = $request->validate($rules);
         $validatedData['status'] = "Disetujui";
-        $validatedData['dikembalikan'] = "Belum";
         $validatedData['pengambilan_buku'] = "Belum";
-        $validatedData['staff_id'] = auth()->user()->staff_id;
+        $validatedData['created_by'] = auth()->user()->staff_id;
 
         Borrow::where('id', $request->id)->update($validatedData);
 
@@ -266,7 +286,7 @@ class BorrowController extends Controller
 
         $validatedData = $request->validate($rules);
         $validatedData['status'] = "Ditolak";
-        $validatedData['staff_id'] = auth()->user()->staff_id;
+        $validatedData['created_by'] = auth()->user()->staff_id;
 
         Borrow::where('id', $request->id)->update($validatedData);
 
@@ -318,89 +338,16 @@ class BorrowController extends Controller
         Borrow::where('id', $request->id)->update($rules);
         Notification::whereNotNull('member_id')->where('borrow_id',request()->id)->update(['viewed' => true]);
 
+        Returns::create([
+            'borrow_id' => request()->id,
+            'dikembalikan' => "Belum",
+            'created_by' => auth()->user()->staff_id
+        ]);
+
         alert()->success('Buku telah Di ambil!','Success');
         return redirect('/transaction/borrows');
     }
 
-    public function DetailPengembalian(Request $request)
-    {
-        $borrowed   = Borrow::where('id', $request->borrow_id)->get();
-        $nama_borrow = Member::where('id', $request->member_id)->value('nama');
-        $borrow     = Borrow::where('id', $request->borrow_id)->value('tanggal_tempo');
-        $date       = Carbon::parse($borrow);
-        $now        = Carbon::now();
-        $asu        = Borrow::where('id', $request->borrow_id)->value('tanggal_pinjam');
-        $tanggal_pinjam = Carbon::parse($asu)->toFormattedDateString();
-
-        $q = $date->diffInDays($now,false);
-        $denda = 0;
-        if ($q > 0) {
-            $kali = 500*$q;
-            $denda = $kali;
-        }
-
-
-        return view('transaction.borrows.detail',[
-            'borrow'    => $borrow,
-            'denda'     => $denda,
-            'borrowed'  => $borrowed,
-            'nama_borrow' => $nama_borrow,
-            'selisih'   => $q,
-            'now'       => $now,
-            'tanggal_tempo'       => $date,
-            'tanggal_pinjam'    => $tanggal_pinjam
-        ]);
-
-    }
-
-    public function returnBook(Request $request)
-    {
-        $dt = [
-            'status'            => "Selesai",
-            'dikembalikan'      => "Sudah",
-            'staff_kembali'     => auth()->user()->staff_id,
-            'tanggal_kembali'   => Carbon::now()->toDateString(),
-        ];
-        Borrow::where('id', $request->borrow_id)->update($dt);
-
-        $tanggal_tempo  = Borrow::where('id', $request->borrow_id)->value('tanggal_tempo');
-        $date   = Carbon::parse($tanggal_tempo);
-        $now    = Carbon::now();
-
-        $q = $date->diffInDays($now,false);
-
-        // apakah dia punya denda kits?
-        if ($q > 0) {
-            $kali = 500*$q;
-
-            Fine::create([
-                'borrow_id'     => $request->borrow_id,
-                'member_id'     => $request->member_id,
-                'waktu_tenggat' => $q,
-                'total'         => $kali
-            ]);  
-        }
-
-        // Pengembalian stock
-        $items = BorrowItem::where('borrow_id',$request->borrow_id)->get();
-        
-        foreach ($items as $item) {
-            $stock = Stock::where('book_id', $item->book_id)->first();
-
-            $stok = 1;
-            $stok_keluar    = $stock->stok_keluar - $stok;
-            $stok_akhir     = $stock->stok_akhir + $stok;
-
-            $stock->update([
-                'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
-            ]);
-        }
-
-
-        alert()->success('Buku Sudah Di Kembalikan!','Success');
-        return redirect('/transaction/borrows');
-    }
     /**
      * Display the specified resource.
      *

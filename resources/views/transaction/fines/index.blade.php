@@ -48,7 +48,7 @@
                                     <td>{{ $fine->borrow->member->kelas }}</td>
                                     <td>{{ $fine->borrow->member->jurusan }}</td>
                                     <td>{{ $fine->borrow->tanggal_tempo }}</td>
-                                    <td>{{ $fine->borrow->tanggal_kembali }}</td>
+                                    <td>{{ $fine->borrow->return->tanggal_kembali }}</td>
                                     <td>{{ $fine->waktu_tenggat }} Hari</td>
                                     <td>{{ $fine->total }}</td>
                                 </tr>

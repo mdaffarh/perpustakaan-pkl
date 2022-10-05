@@ -116,8 +116,6 @@ use App\Models\BookDonation;
         Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
         Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
         Route::post('/transaction/pengambilan_buku/{id}','getBook')->middleware('auth');
-        Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
-        Route::post('/transaction/return/detail/{id}','DetailPengembalian')->middleware('auth');
         
         Route::post('/transaction/borrows/directBorrow','directBorrow')->middleware('staff');
         Route::post('/transaction/borrows/updateBorrow/{id}','updateBorrow')->middleware('staff');
@@ -126,11 +124,10 @@ use App\Models\BookDonation;
     //
 
     // Pengembalian
-    Route::resource('/transaction/return', ReturnController::class)->middleware('auth');
+    Route::resource('/transaction/returns', ReturnController::class)->middleware('auth');
     Route::controller(ReturnController::class)->group(function(){
-        Route::post('/transaction/return/back/{id}','store')->middleware('auth');
-        // Route::post('/transaction/borrows/reject/{id}','reject')->middleware('auth');
-        // Route::post('/transaction/borrows/approve/{id}','approve')->middleware('auth');
+        Route::post('/transaction/returnBook/{id}','returnBook')->middleware('auth');
+        Route::post('/transaction/returns/detail/{id}','DetailPengembalian')->middleware('auth');
     });
     //
 
@@ -153,5 +150,7 @@ use App\Models\BookDonation;
     });
 
 Route::controller(ReportController::class)->group(function(){
-    Route::get('/report/fine','fine')->middleware('admin');
+    Route::get('/report/fines','fine')->middleware('admin');
+    Route::get('/report/borrows','borrow')->middleware('admin');
+    Route::post('/report/borrows/set','borrowSet')->middleware('admin');
 });

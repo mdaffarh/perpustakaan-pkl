@@ -13,4 +13,11 @@ class Returns extends Model
     protected $guarded = [
         'id'
     ];
+
+    protected $with = ['borrow'];
+
+    public function borrow()
+    {
+        return $this->belongsTo(Borrow::class);
+    }
 }

@@ -3,82 +3,108 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fine;
+use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\Member;
 use App\Models\Returns;
+use App\Models\BorrowItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
 class ReturnController extends Controller
 {
-    Public function index()
+    public function index()
     {
-        return view('transaction.return.index',[
-            'returns' => Returns::all(),
-            'borrows' => Borrow::all()->where('dikembalikan', 'Belum')
+        return view('transaction.returns.index',[
+            'returns'   => Returns::where('dikembalikan','Belum')->latest()->get(),
+
+            'members'   => Member::where('status',true)->get(),
+            'stocks' => Stock::where('stok_akhir','>',0)->get(),
+            'stocksAll' => Stock::all()
         ]);
     }
+
     
-    public function store(Request $request)
+    public function DetailPengembalian(Request $request)
+    {
+        $borrowed   = Borrow::where('id', $request->borrow_id)->get();
+        $nama_borrow = Member::where('id', $request->member_id)->value('nama');
+        $borrow     = Borrow::where('id', $request->borrow_id)->value('tanggal_tempo');
+        $date       = Carbon::parse($borrow);
+        $now        = Carbon::now();
+        $asu        = Borrow::where('id', $request->borrow_id)->value('tanggal_pinjam');
+        $tanggal_pinjam = Carbon::parse($asu)->toFormattedDateString();
+
+        $q = $date->diffInDays($now,false);
+        $denda = 0;
+        if ($q > 0) {
+            $kali = 500*$q;
+            $denda = $kali;
+        }
+
+
+        return view('transaction.borrows.detail',[
+            'borrow'    => $borrow,
+            'denda'     => $denda,
+            'borrowed'  => $borrowed,
+            'nama_borrow' => $nama_borrow,
+            'selisih'   => $q,
+            'now'       => $now,
+            'tanggal_tempo'       => $date,
+            'tanggal_pinjam'    => $tanggal_pinjam
+        ]);
+
+    }
+
+    public function returnBook(Request $request)
     {
         $dt = [
-            'dikembalikan'  => "Sudah"
+            'status'            => "Selesai",
         ];
         Borrow::where('id', $request->borrow_id)->update($dt);
-        
-        $data = Borrow::where('id', $request->borrow_id)->value('updated_at');
+        $return = Returns::where('borrow_id', request()->borrow_id)->first();
+        $return->update([
+            'updated_by' => auth()->user()->staff_id,
+            'dikembalikan' => 'Sudah',
+            'updated_by'     => auth()->user()->staff_id,
+            'tanggal_kembali'   => Carbon::now()->toDateString()
+        ]);
 
-        $validatedData = [
-            'borrow_id' => $request->borrow_id,
-            'staff_id'  =>  auth()->user()->staff_id
-        ];
+        $tanggal_tempo  = Borrow::where('id', $request->borrow_id)->value('tanggal_tempo');
+        $date   = Carbon::parse($tanggal_tempo);
+        $now    = Carbon::now();
 
-        Returns::create($validatedData);
+        $q = $date->diffInDays($now,false);
 
-        $q = $data->diffInDays(now(), false); // now() = 2020-10-15 16:40:49
-        
-        if ($q > 3) {
+        // apakah dia punya denda kits?
+        if ($q > 0) {
             $kali = 500*$q;
 
             Fine::create([
-                'borrow_id' => $request->borrow_id,
-                'member_id' => $request->member_id,
-                'tenggat_waktu' => $q,
-                'total'     => $kali
+                'borrow_id'     => $request->borrow_id,
+                'member_id'     => $request->member_id,
+                'waktu_tenggat' => $q,
+                'total'         => $kali
+            ]);  
+        }
+
+        // Pengembalian stock
+        $items = BorrowItem::where('borrow_id',$request->borrow_id)->get();
+        
+        foreach ($items as $item) {
+            $stock = Stock::where('book_id', $item->book_id)->first();
+
+            $stok = 1;
+            $stok_keluar    = $stock->stok_keluar - $stok;
+            $stok_akhir     = $stock->stok_akhir + $stok;
+
+            $stock->update([
+                'stok_akhir'    => $stok_akhir,
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
-
-        toast('Buku telah dikembalikan!','success');
-        return redirect('/transaction/return');
-
-
-    }
-    
-    public function update(Request $request, Member $member){
-        $rules = [
-            
-        ];
-        
-        $q = $i->diffInDays(now(), false); // now() = 2020-10-15 16:40:49
-
-        if($request->nis != $member->nis){
-            $rules['nis'] = 'required|unique:tb_members';
-        }
-
-        $validatedData = $request->validate($rules);
-
-        $validatedData['updated_by'] = auth()->user()->staff_id;
-
-        Member::where('id',$member->id)->update($validatedData);
-
-        toast('Data anggota telah diedit!','success');
-        return redirect('/table/members');
-    }
-
-    public function destroy(Member $member){
-        Member::destroy($member->id);
-        toast('Data anggota telah dihapus!','success');
-        return redirect('/table/members');
+        alert()->success('Buku Sudah Di Kembalikan!','Success');
+        return redirect('/transaction/returns');
     }
 }
