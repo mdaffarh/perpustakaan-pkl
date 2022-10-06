@@ -1,30 +1,30 @@
 @extends('layout.main')
-@section('title', "Pengembalian Buku")
+@section('title', "Informasi Peminjaman Buku")
 
-@section('content')
-	@include('sweetalert::alert')
-	<div class="row">
-		<div class="col">
-			<div class="card">
-				<div class="card-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <h3 class="mt-2">@yield('title')</h3>
-                          </div><!-- /.col -->
-                          <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
-                                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                                <li class="breadcrumb-item active">@yield('title')</li>
-                            </ol>
-                          </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container-fluid -->
-				</div>
-			
-				<div class="card-body">
-                    {{-- Tampilan staff --}}
-                    @can('staff')
+@can('admin')
+    @section('content')
+        @include('sweetalert::alert')
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <h3 class="mt-2">@yield('title')</h3>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
+                                    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">@yield('title')</li>
+                                </ol>
+                            </div><!-- /.col -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                
+                    <div class="card-body">
+                        {{-- Tampilan staff --}}
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -35,48 +35,46 @@
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Tempo</th>
                                     <th>Status</th>
+                                    <th>Nama Penjaga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($returns as  $return)
+                                @foreach($borrows as  $borrow)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <button class="link-primary text-primary" type="button" id="detail{{  $return->borrow->id }}" onclick="showDetail{{  $return->borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
-                                                {{  $return->borrow->kode_peminjaman }}
+                                            <button class="link-primary text-primary" type="button" id="detail{{  $borrow->id }}" onclick="showDetail{{  $borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
+                                                {{  $borrow->kode_peminjaman }}
                                             </button>
                                         </td>
-                                        <td>{{  $return->borrow->member->nis }}</td>
-                                        <td>{{  $return->borrow->member->nama }}</td>
-                                        <td>{{  $return->borrow->tanggal_pinjam }}</td>
-                                        <td>{{  $return->borrow->tanggal_tempo }}</td>
+                                        <td>{{  $borrow->member->nis }}</td>
+                                        <td>{{  $borrow->member->nama }}</td>
+                                        <td>{{  $borrow->tanggal_pinjam }}</td>
                                         <td>
-                                            @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
-                                                <span class="badge bg-danger">Telat ({{ Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</span>
+                                            {{  $borrow->tanggal_tempo }}
+                                        </td>
+                                        <td>
+                                            {{  $borrow->status }}
+                                        </td>
+                                        <td>
+                                            @if ($borrow->updated_by == NULL)
+                                                {{ $borrow->creator->nama }}
                                             @else
-                                                <span class="badge bg-primary">Dalam Peminjaman</span>
+                                                {{  $borrow->editor->nama }}    
                                             @endif
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                                    <form action="/transaction/returns/detail/{{  $return->borrow->id }}" method="post" class="{{ Request::is('/transaction/return/detail/*') ? 'active' : '' }}">
-                                                        @csrf
-                                                        <div style="display: none;">
-                                                            <input name="borrow_id" value="{{  $return->borrow->id }}">
-                                                            <input name="member_id" value="{{  $return->borrow->member->id }}">
-                                                        </div>
-                                                        <button class="btn btn-success btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengembalian Buku"><i class="fas fa-arrow-down"></i></button>
-                                                    </form> 
                                                 {{-- Show --}}
-                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $return->borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
+                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
-                                                <div class="modal fade" id="showw{{  $return->borrow->id }}">
+                                                <div class="modal fade" id="showw{{  $borrow->id }}">
                                                     <div class="modal-dialog modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h4 class="modal-title">Pengembalian</h4>
+                                                                <h4 class="modal-title">Peminjaman</h4>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -84,49 +82,54 @@
                                                             <div class="modal-body">
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Kode Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->borrow->kode_peminjaman }}</strong></div></div>
+                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $borrow->kode_peminjaman }}</strong></div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">NIS</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nis }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nis }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nama }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nama }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->kelas }} {{  $return->borrow->member->jurusan }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->kelas }} {{  $borrow->member->jurusan }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_pinjam }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_pinjam }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_tempo }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_tempo }}</div></div>
                                                                 </div>
-                                                                @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                    
+                                                            
                                                                     <div class="row mx-md-n3">
                                                                         <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: Telat ({{ Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</strong></div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">
+                                                                        <strong>: 
+                                                                            {{  $borrow->status }}
+                                                                        </strong></div></div>
                                                                     </div>
                                                                     <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Denda</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: {{  Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) * 500 }}</strong></div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: 
+                                                                            @if ($borrow->updated_by == NULL)
+                                                                                {{ $borrow->creator->nama }}
+                                                                            @else
+                                                                                {{  $borrow->editor->nama }}    
+                                                                            @endif   
+                                                                        </div></div>
                                                                     </div>
-                                                                @else
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->borrow->status }}</strong></div></div>
-                                                                    </div>
-                                                                @endif
+                                                                    
         
                                                                 <hr>
                                                                 <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
                                                                 <ol>
                                                                     <p style="display: none">{{ $outOfStock = 0}}</p>
-                                                                    @foreach( $return->borrow->borrowItem as $bi)
+                                                                    @foreach( $borrow->borrowItem as $bi)
                                                                         @if ($bi->book->stock->stok_akhir < 0)
                                                                             <p style="display: none">{{ $outOfStock = true }}</p> 
                                                                         @endif
@@ -137,7 +140,7 @@
                                                                             </div>
                                                                         </li>
                                                                     @endforeach
-    
+
                                                                 </ol>
                                                             </div>
                                                             <div class="modal-footer">
@@ -153,16 +156,14 @@
                                 @endforeach
                             </tbody>
                         </table>        
-                    @endcan
-                    {{-- Akhir tampilan staff --}} 
+                        {{-- Akhir tampilan staff --}} 
 
-				</div>
+                    </div>
 
-                @can('staff')
                     {{-- Tabel Detail --}}
                     <div class="card-body">
-                        @foreach ($returns as  $return)
-                            <div class="detail-table" id="detailTable{{  $return->borrow->id }}" style="display: none;">
+                        @foreach ($borrows as  $borrow)
+                            <div class="detail-table" id="detailTable{{  $borrow->id }}" style="display: none;">
                                 <div class="mb-2">
                                     <h5 class="d-inline">Detail Buku</h5>
                                 </div>
@@ -180,14 +181,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach( $return->borrow->borrowItem as $item)
+                                        @foreach( $borrow->borrowItem as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{  $return->borrow->kode_peminjaman }}</td>
+                                                <td>{{  $borrow->kode_peminjaman }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>1</td>
                                                 <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
-                                                <td>{{  $return->borrow->tanggal_tempo }}</td>
+                                                <td>{{  $borrow->tanggal_tempo }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -195,13 +196,13 @@
                             </div>    
                             
                             <script>
-                                function showDetail{{  $return->borrow->id }}(){
+                                function showDetail{{  $borrow->id }}(){
                                     const oldTable = document.querySelectorAll('.detail-table');
                                     oldTable.forEach(element => {
                                         element.style.display = 'none';
                                     });
                                     
-                                    const table = document.querySelector('#detailTable{{  $return->borrow->id }}');
+                                    const table = document.querySelector('#detailTable{{  $borrow->id }}');
                                     table.style.display = 'block';
                                     table.scrollIntoView({
                                         behavior: 'smooth'
@@ -211,39 +212,35 @@
                         @endforeach    
                     </div>
                     {{-- Akhir Tabel Detail --}}
-                @endcan
-            
-			</div>
-		</div>
-	</div>
+                
+                </div>
+            </div>
+        </div>
 
-    @can('staff')
-        <script>
-                    
-        $(function () {
-			$("#example1").DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-			});
-		});
-        
-        $(function () {
-			$("#detailTable").DataTable({
-                "paging": false,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-			});
-		});
-        </script>
-    @endcan
-
-@endsection
+            <script>                    
+                $(function () {
+                    $("#example1").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+                
+                $(function () {
+                    $("#detailTable").DataTable({
+                        "paging": false,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+            </script>
+    @endsection 
+@endcan

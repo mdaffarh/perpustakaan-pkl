@@ -202,7 +202,7 @@
 
                     {{-- Users --}}
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ Request::is('users/staff-users*') ? 'active' : '' }} {{ Request::is('users/member-users*') ? 'active' : '' }}">
+                        <a href="#" class="nav-link {{ Request::is('users*') ? 'active' : '' }} {{ Request::is('users/member-users*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user-friends"></i>
                             <p>
                                 User
@@ -233,6 +233,32 @@
                 @endcan
 
                 @can('admin')
+                  {{-- Informasi --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('information*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-info-circle"></i>
+                            <p>
+                                Informasi
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+
+                        <ul class="nav nav-treeview">
+                            <!-- Table Sekolah -->
+                            <li class="nav-item">
+                                <a href="/information/borrows" class="nav-link {{ Request::is('information/borrows*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Peminjaman Buku</p>
+                                </a>
+                            </li>  
+                            <li class="nav-item">
+                                <a href="/information/returns" class="nav-link {{ Request::is('information/returns*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pengembalian Buku</p>
+                                </a>
+                            </li>  
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link {{ Request::is('report*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-pen-square"></i>
@@ -258,7 +284,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ Request::is('data/schools*') ? 'active' : '' }}">
+                        <a href="#" class="nav-link {{ Request::is('data*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-desktop"></i>
                             <p>
                                 Data Web
@@ -276,6 +302,8 @@
                             </li>  
                         </ul>
                     </li>
+
+                  
                 @endcan
 
             </ul>

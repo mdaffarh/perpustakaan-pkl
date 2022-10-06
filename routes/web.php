@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\BookDonation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FineController;
@@ -17,11 +18,11 @@ use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberUserController;
+use App\Http\Controllers\InformationController;
 use App\Http\Controllers\BookDonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
-use App\Models\BookDonation;
 
 /*
 |--------------------------------------------------------------------------
@@ -153,4 +154,9 @@ Route::controller(ReportController::class)->group(function(){
     Route::get('/report/fines','fine')->middleware('admin');
     Route::get('/report/borrows','borrow')->middleware('admin');
     Route::post('/report/borrows/set','borrowSet')->middleware('admin');
+});
+
+Route::controller(InformationController::class)->group(function(){
+    Route::get('/information/borrows','borrow')->middleware('admin');
+    Route::get('/information/returns','return')->middleware('admin');
 });

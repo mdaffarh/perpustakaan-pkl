@@ -1,30 +1,30 @@
 @extends('layout.main')
-@section('title', "Pengembalian Buku")
+@section('title', "Informasi Pengembalian Buku")
 
-@section('content')
-	@include('sweetalert::alert')
-	<div class="row">
-		<div class="col">
-			<div class="card">
-				<div class="card-header">
-                    <div class="container-fluid">
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <h3 class="mt-2">@yield('title')</h3>
-                          </div><!-- /.col -->
-                          <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
-                                <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-                                <li class="breadcrumb-item active">@yield('title')</li>
-                            </ol>
-                          </div><!-- /.col -->
-                        </div><!-- /.row -->
-                    </div><!-- /.container-fluid -->
-				</div>
-			
-				<div class="card-body">
-                    {{-- Tampilan staff --}}
-                    @can('staff')
+@can('admin')
+    @section('content')
+        @include('sweetalert::alert')
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <h3 class="mt-2">@yield('title')</h3>
+                            </div><!-- /.col -->
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right" style="background-color: rgba(255,0,0,0);">
+                                    <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                                    <li class="breadcrumb-item active">@yield('title')</li>
+                                </ol>
+                            </div><!-- /.col -->
+                            </div><!-- /.row -->
+                        </div><!-- /.container-fluid -->
+                    </div>
+                
+                    <div class="card-body">
+                        {{-- Tampilan staff --}}
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
@@ -32,9 +32,10 @@
                                     <th>Kode Pinjam</th>
                                     <th>NIS</th>
                                     <th>Nama Peminjam</th>
-                                    <th>Tanggal Pinjam</th>
                                     <th>Tanggal Tempo</th>
+                                    <th>Tanggal Kembali</th>
                                     <th>Status</th>
+                                    <th>Nama Penjaga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -49,25 +50,30 @@
                                         </td>
                                         <td>{{  $return->borrow->member->nis }}</td>
                                         <td>{{  $return->borrow->member->nama }}</td>
-                                        <td>{{  $return->borrow->tanggal_pinjam }}</td>
                                         <td>{{  $return->borrow->tanggal_tempo }}</td>
                                         <td>
-                                            @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
-                                                <span class="badge bg-danger">Telat ({{ Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</span>
+                                            @if ($return->tanggal_kembali == "0000-00-00")
+                                                Belum
                                             @else
-                                                <span class="badge bg-primary">Dalam Peminjaman</span>
+                                                {{  $return->tanggal_kembali }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($return->dikembalikan == "Sudah")
+                                                Selesai
+                                            @else
+                                                Belum dikembalikan
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($return->updated_by == NULL)
+                                                {{ $return->creator->nama }}
+                                            @else
+                                                {{  $return->editor->nama }}    
                                             @endif
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                                    <form action="/transaction/returns/detail/{{  $return->borrow->id }}" method="post" class="{{ Request::is('/transaction/return/detail/*') ? 'active' : '' }}">
-                                                        @csrf
-                                                        <div style="display: none;">
-                                                            <input name="borrow_id" value="{{  $return->borrow->id }}">
-                                                            <input name="member_id" value="{{  $return->borrow->member->id }}">
-                                                        </div>
-                                                        <button class="btn btn-success btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengembalian Buku"><i class="fas fa-arrow-down"></i></button>
-                                                    </form> 
                                                 {{-- Show --}}
                                                 <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $return->borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
@@ -103,24 +109,42 @@
                                                                     <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_pinjam }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
                                                                     <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_tempo }}</div></div>
                                                                 </div>
-                                                                @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                                <div class="row mx-md-n3">
+                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">:
+                                                                        @if ($return->tanggal_kembali == "0000-00-00")
+                                                                            Belum
+                                                                        @else
+                                                                            {{  $return->tanggal_kembali }}
+                                                                        @endif
+                                                                    </div></div>
+                                                                </div>
+                                                            
                                                                     <div class="row mx-md-n3">
                                                                         <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: Telat ({{ Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) }} Hari)</strong></div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">
+                                                                        <strong>: 
+                                                                            @if ($return->dikembalikan == "Sudah")
+                                                                                Selesai
+                                                                            @else
+                                                                                Belum dikembalikan
+                                                                            @endif 
+                                                                        </strong></div></div>
                                                                     </div>
                                                                     <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Denda</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: {{  Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) * 500 }}</strong></div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: 
+                                                                            @if ($return->updated_by == NULL)
+                                                                                {{ $return->creator->nama }}
+                                                                            @else
+                                                                                {{  $return->editor->nama }}    
+                                                                            @endif   
+                                                                        </div></div>
                                                                     </div>
-                                                                @else
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->borrow->status }}</strong></div></div>
-                                                                    </div>
-                                                                @endif
+                                                                    
         
                                                                 <hr>
                                                                 <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
@@ -137,7 +161,7 @@
                                                                             </div>
                                                                         </li>
                                                                     @endforeach
-    
+
                                                                 </ol>
                                                             </div>
                                                             <div class="modal-footer">
@@ -153,12 +177,10 @@
                                 @endforeach
                             </tbody>
                         </table>        
-                    @endcan
-                    {{-- Akhir tampilan staff --}} 
+                        {{-- Akhir tampilan staff --}} 
 
-				</div>
+                    </div>
 
-                @can('staff')
                     {{-- Tabel Detail --}}
                     <div class="card-body">
                         @foreach ($returns as  $return)
@@ -211,39 +233,35 @@
                         @endforeach    
                     </div>
                     {{-- Akhir Tabel Detail --}}
-                @endcan
-            
-			</div>
-		</div>
-	</div>
+                
+                </div>
+            </div>
+        </div>
 
-    @can('staff')
-        <script>
-                    
-        $(function () {
-			$("#example1").DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-			});
-		});
-        
-        $(function () {
-			$("#detailTable").DataTable({
-                "paging": false,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": false,
-                "autoWidth": false,
-                "responsive": true,
-			});
-		});
-        </script>
-    @endcan
-
-@endsection
+            <script>                    
+                $(function () {
+                    $("#example1").DataTable({
+                        "paging": true,
+                        "lengthChange": false,
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+                
+                $(function () {
+                    $("#detailTable").DataTable({
+                        "paging": false,
+                        "lengthChange": false,
+                        "searching": false,
+                        "ordering": true,
+                        "info": false,
+                        "autoWidth": false,
+                        "responsive": true,
+                    });
+                });
+            </script>
+    @endsection 
+@endcan
