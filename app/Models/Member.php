@@ -19,6 +19,11 @@ class Member extends Model
         return $this->hasOne(User::class);
     }
 
+    public function major()
+    {
+        return $this->hasOne(Major::class);
+    }
+
     public function borrows()
     {
         return $this->hasMany(Borrow::class);

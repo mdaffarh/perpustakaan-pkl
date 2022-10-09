@@ -93,6 +93,7 @@ class ReturnController extends Controller
         
         foreach ($items as $item) {
             $stock = Stock::where('book_id', $item->book_id)->first();
+            
 
             $stok = 1;
             $stok_keluar    = $stock->stok_keluar - $stok;

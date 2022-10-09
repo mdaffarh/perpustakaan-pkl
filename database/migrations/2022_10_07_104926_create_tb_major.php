@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_stocks', function (Blueprint $table) {
+        Schema::create('tb_majors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('book_id');//
-            $table->integer('stok_awal');
-            $table->integer('stok_akhir');
-            $table->integer('stok_semua');
-            $table->integer('stok_tambahan')->nullable();
-            $table->integer('stok_keluar')->nullable();
-            $table->integer('borrow_count')->nullable();
+            $table->string('short');
+            $table->string('full');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_stocks');
+        Schema::dropIfExists('tb_majors');
     }
 };

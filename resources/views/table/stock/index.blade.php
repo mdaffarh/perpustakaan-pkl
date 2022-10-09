@@ -33,6 +33,7 @@
 								<th>Stok Semua</th>
 								<th>Stok Akhir</th>
 								<th>Stok Keluar</th>
+								<th>Total Peminjaman</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -46,10 +47,18 @@
 								<td>{{ $stock->stok_akhir }}</td>
 								<td>
 									@if ($stock->stok_keluar)
-										{{ $stock->stok_keluar }}
+									{{ $stock->stok_keluar }}
+									@else
+									0
+									@endif
+								</td>
+								<td>
+									@if ( $stock->borrow_count )
+										{{ $stock->borrow_count }}
 									@else
 										0
 									@endif
+									
 								</td>
 								<td>
 									<a href="#modalEditData{{ $stock->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">

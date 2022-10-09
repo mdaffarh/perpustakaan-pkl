@@ -55,7 +55,19 @@
                                             {{  $borrow->tanggal_tempo }}
                                         </td>
                                         <td>
-                                            {{  $borrow->status }}
+                                            @if ($borrow->status == "Menunggu persetujuan")
+                                                <div class="badge badge-warning">{{  $borrow->status }}</div>
+                                            @elseif($borrow->status == "Disetujui")
+                                                <div class="badge badge-info">{{  $borrow->status }}</div>
+                                            @elseif($borrow->status == "Dalam peminjaman")
+                                                <div class="badge badge-primary">{{  $borrow->status }}</div>
+                                            @elseif($borrow->status == "Dibatalkan")
+                                                <div class="badge badge-danger">{{  $borrow->status }}</div>
+                                            @elseif($borrow->status == "Ditolak")
+                                                <div class="badge badge-danger">{{  $borrow->status }}</div>
+                                            @elseif($borrow->status == "Selesai")
+                                                <div class="badge badge-success">{{  $borrow->status }}</div>    
+                                            @endif
                                         </td>
                                         <td>
                                             @if ($borrow->updated_by == NULL)
@@ -176,7 +188,6 @@
                                             <th>Kode Pinjam</th>
                                             <th>Judul</th>
                                             <th>Jumlah</th>
-                                            <th>Stok</th>
                                             <th>Tanggal Tempo</th>
                                         </tr>
                                     </thead>
@@ -187,7 +198,6 @@
                                                 <td>{{  $borrow->kode_peminjaman }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>1</td>
-                                                <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
                                                 <td>{{  $borrow->tanggal_tempo }}</td>
                                             </tr>
                                         @endforeach

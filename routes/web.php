@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FineController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ShiftController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StockController;
@@ -95,6 +96,7 @@ use App\Http\Controllers\MemberRegistrationController;
     Route::resource('/users/staff-users', StaffUserController::class)->middleware('admin');
     Route::resource('/table/staffs', StaffController::class)->middleware('admin');
     Route::resource('/data/schools', SchoolController::class)->middleware('admin');
+    Route::resource('/data/majors', MajorController::class)->middleware('admin');
     //
 
 // Semua user ('auth')
@@ -159,4 +161,5 @@ Route::controller(ReportController::class)->group(function(){
 Route::controller(InformationController::class)->group(function(){
     Route::get('/information/borrows','borrow')->middleware('admin');
     Route::get('/information/returns','return')->middleware('admin');
+    Route::get('/information/book-donations','bookDonation')->middleware('admin');
 });

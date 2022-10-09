@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\User;
+use App\Models\Major;
 use App\Models\Staff;
 use App\Models\Stock;
 use App\Models\Member;
@@ -30,8 +31,6 @@ class DatabaseSeeder extends Seeder
         foreach (range(1, 20) as $iteration) {
             Stock::factory(1)->create(['book_id' => $iteration]);
         }
-        // \App\Models\User::factory(10)->create();
-
         $user = [
             [
                 'staff_id' => 1,
@@ -69,5 +68,53 @@ class DatabaseSeeder extends Seeder
             'fax' => '622518665558',
             'nomor_telepon' => '622518663846'
         ]);
+
+        $majors = 
+        [
+            [
+                'short' => 'RPL',
+                'full' => 'Rekayasa Perangkat Lunak'
+            ],
+            [
+                'short' => 'TKJ',
+                'full' => 'Teknik Komputer dan Jaringan'
+            ],
+            [
+                'short' => 'SIJA',
+                'full' => 'Sistem Informasi Jaringan dan Aplikasi'
+            ],
+            [
+                'short' => "MM",
+                'full' => 'Multimedia'
+            ],
+            [
+                'short' => "DPIB",
+                'full' => 'Desain Pemodelan dan Informasi Bangunan'
+            ],
+            [
+                'short' => "TP",
+                'full' => 'Teknik Pemesinan'
+            ],
+            [
+                'short' => "TFLM",
+                'full' => 'Teknik Fabrikasi Logam dan Manufaktur'
+            ],
+            [
+                'short' => "TKR",
+                'full' => 'Teknik Kendaraan Ringan'
+            ],
+            [
+                'short' => "BKP",
+                'full' => 'Bisnis Konstruksi dan Properti'
+            ],
+            [
+                    'short' => "TOI",
+                    'full' => 'Teknik Otomasi Industri'
+            ],
+       ];
+
+       foreach ($majors as $major) {
+           Major::create($major);
+       }
     }
 }

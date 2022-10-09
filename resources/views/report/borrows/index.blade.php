@@ -82,7 +82,7 @@
 									<td>{{ $borrow->member->nis }}</td>
 									<td>{{ $borrow->member->nama }}</td>
 									<td>{{ $borrow->tanggal_pinjam }}</td>
-									<td>{{ $borrow->return->tanggal_tempo }}</td>
+									<td>{{ $borrow->tanggal_tempo }}</td>
 									<td>{{ $borrow->status }}</td>
 									<td>{{ $borrow->creator->nama }}</td>
 								</tr>

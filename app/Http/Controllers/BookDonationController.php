@@ -187,10 +187,12 @@ class BookDonationController extends Controller
             $stokz = Stock::where('id', $books->id)->first();
             // Variabel
             $angka  = $buku_donasion->stock_masuk;
+            $stok_awal = $stokz->stok_awal + $angka;
             $stok_tambahan = $stokz->stok_tambahan + $angka;
             $stok_semua = $stokz->stok_semua + $angka;
             $stok_akhir = $stokz->stok_akhir + $angka;
             $stok = [
+                'stok_awal' => $stok_awal,
                 'stok_tambahan' => $stok_tambahan,
                 'stok_semua'    => $stok_semua,
                 'stok_akhir'    => $stok_akhir

@@ -89,10 +89,12 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book)->first();
             $stok_keluar    = $stock->stok_keluar + 1;
             $stok_akhir     = $stock->stok_akhir - 1;
+            $borrow_count   = $stock->borrow_count + 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
+                'stok_keluar'   => $stok_keluar,
+                'borrow_count'    => $borrow_count
             ]);
         }
 
@@ -116,10 +118,12 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book->book_id)->first();
             $stok_keluar    = $stock->stok_keluar - 1;
             $stok_akhir     = $stock->stok_akhir + 1;
+            $borrow_count   = $stock->borrow_count - 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
+                'stok_keluar'   => $stok_keluar,
+                'borrow_count'  => $borrow_count
             ]);
         }
 
@@ -139,10 +143,12 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book)->first();
             $stok_keluar    = $stock->stok_keluar + 1;
             $stok_akhir     = $stock->stok_akhir - 1;
+            $borrow_count   = $stock->borrow_count + 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
+                'stok_keluar'   => $stok_keluar,
+                'borrow_count'  => $borrow_count
             ]);
         }
 
@@ -166,10 +172,12 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book->book_id)->first();
             $stok_keluar    = $stock->stok_keluar - 1;
             $stok_akhir     = $stock->stok_akhir + 1;
+            $borrow_count   = $stock->borrow_count - 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar
+                'stok_keluar'   => $stok_keluar,
+                'borrow_count'  => $borrow_count
             ]);
         }
 
@@ -261,6 +269,16 @@ class BorrowController extends Controller
         $validatedData['pengambilan_buku'] = "Belum";
         $validatedData['created_by'] = auth()->user()->staff_id;
 
+        foreach ($request->book_id as $key => $book) {  
+            // Borrow count
+            $stock = Stock::where('book_id', $book)->first();
+            $borrow_count   = $stock->borrow_count+ 1;
+    
+            $stock->update([
+                'borrow_count'    => $borrow_count
+            ]);
+        }
+        
         Borrow::where('id', $request->id)->update($validatedData);
 
         Notification::where('borrow_id', $request->id)->update(['viewed' => true]);
@@ -346,50 +364,5 @@ class BorrowController extends Controller
 
         alert()->success('Buku telah Di ambil!','Success');
         return redirect('/transaction/borrows');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Borrow  $borrow
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Borrow $borrow)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Borrow  $borrow
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Borrow $borrow)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Borrow  $borrow
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Borrow $borrow)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Borrow  $borrow
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Borrow $borrow)
-    {
-        
     }
 }
