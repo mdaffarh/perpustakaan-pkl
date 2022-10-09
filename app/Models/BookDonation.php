@@ -18,4 +18,14 @@ class BookDonation extends Model
     {
         return $this->belongsTo(Member::class);
     }
+
+    public function creator()
+    {
+        return $this->belongsTo(Staff::class, 'staff_approved');
+    }
+
+    public function editor()
+    {
+        return $this->belongsTo(Staff::class, 'staffygngambil');
+    }
 }

@@ -257,6 +257,12 @@
                                     <p>Pengembalian Buku</p>
                                 </a>
                             </li>  
+                            <li class="nav-item">
+                                <a href="/information/book-donations" class="nav-link {{ Request::is('information/book-donations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sumbangan Buku</p>
+                                </a>
+                            </li>  
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -298,6 +304,12 @@
                                 <a href="/data/schools" class="nav-link {{ Request::is('data/schools*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Sekolah</p>
+                                </a>
+                            </li>  
+                            <li class="nav-item">
+                                <a href="/data/majors" class="nav-link {{ Request::is('data/majors*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Jurusan</p>
                                 </a>
                             </li>  
                         </ul>

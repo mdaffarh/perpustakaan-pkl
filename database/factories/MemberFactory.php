@@ -18,6 +18,8 @@ class MemberFactory extends Factory
     {
         // nis nama jenis_kelamin kelas jurusan tanggal_lahir nomor_telepon alamat
         $jk = rand(0, 1) ? 'Laki-laki' : 'Perempuan';
+        $a=array("RPL","TKJ","MM","SIJA","TP","TKR","TFLM","BKP","DPIB");
+        $jurusan=array_rand($a,1);
 
         return [
             'nis' => fake()->nik(),
@@ -25,7 +27,7 @@ class MemberFactory extends Factory
             'nama' => fake()->name(),
             'jenis_kelamin' => $jk,
             'kelas' => mt_rand(10,13),
-            'jurusan' => fake()->words(mt_rand(1,2), true),
+            'jurusan' => $a[$jurusan],
             'tanggal_lahir' => fake()->date(),
             'nomor_telepon' => fake()->phoneNumber(),
             'alamat' => fake()->address(),

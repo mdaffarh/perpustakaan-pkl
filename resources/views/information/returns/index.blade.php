@@ -60,9 +60,9 @@
                                         </td>
                                         <td>
                                             @if ($return->dikembalikan == "Sudah")
-                                                Selesai
+                                                <div class="badge badge-success">Selesai</div>
                                             @else
-                                                Belum dikembalikan
+                                                <div class="badge badge-warning">Belum dikembalikan</div>
                                             @endif
                                         </td>
                                         <td>
@@ -197,7 +197,6 @@
                                             <th>Kode Pinjam</th>
                                             <th>Judul</th>
                                             <th>Jumlah</th>
-                                            <th>Stok</th>
                                             <th>Tanggal Tempo</th>
                                         </tr>
                                     </thead>
@@ -208,7 +207,6 @@
                                                 <td>{{  $return->borrow->kode_peminjaman }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>1</td>
-                                                <td>{{ $item->book->stock->stok_akhir + 1 }}</td>
                                                 <td>{{  $return->borrow->tanggal_tempo }}</td>
                                             </tr>
                                         @endforeach
