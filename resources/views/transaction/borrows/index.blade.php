@@ -109,7 +109,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{ $borrow->id }}" onclick="showDetail{{ $borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
-                                                {{ $borrow->kode_peminjaman }}
+                                                {{ $borrow->created_at->format('md') }}/PB/{{ $borrow->created_at->format('yis') }}
                                             </button>
                                         </td>
                                         <td>{{ $borrow->member->nis }}</td>

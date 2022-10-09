@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use App\Models\StaffRegistration;
 use App\Models\MemberRegistration;
 use App\Models\BorrowItem;
+use Carbon\Carbon;
+use Termwind\Components\Raw;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -23,7 +26,36 @@ class DashboardController extends Controller
     public function index()
     {
         $random1        = Stock::inRandomOrder()->where('stok_akhir','>','0')->get();
-        $borrow_su = Borrow::where('member_id', auth()->user()->member_id)->value('id');
+        $borrow_su      = Borrow::where('member_id', auth()->user()->member_id)->value('id');
+
+
+        //chart peminjaman
+        $data           = Borrow::select('id', 'tanggal_pinjam')->get()->groupBy(function($data)
+        {
+            return Carbon::parse($data->tanggal_pinjam)->format('M');
+        });
+        
+        $months = [];
+        $monthsCount = [];
+
+        foreach ($data as $month => $values) {
+            $months[] = $month;
+            $monthsCount[]   = count($values);
+        }
+        
+        //chart Buku by kategori
+        $kategoris = Book::select(DB::raw('kategori, count(id) as total'))->groupby('kategori')->get();
+    
+        $kategoriName = [];
+        $kategoriCount = [];
+
+        foreach ($kategoris as $kat) {
+            $kategoriName[] = $kat->kategori;
+            $kategoriCount[]   = $kat->total ;
+        }
+
+        //chart peminjaman by kelas
+
 
         return view('dashboard.index',[
             // Tampilan Anggota
@@ -41,7 +73,16 @@ class DashboardController extends Controller
             'books'     => Book::all()->count(),
             'members'   => Member::all()->count(),
             'borrowRequest'     => Borrow::where('status','Menunggu persetujuan')->count(),
-            'memberRegist'      => MemberRegistration::all()->count()
+            'memberRegist'      => MemberRegistration::all()->count(),
+
+            //chart peminjaman
+            'data'      => $data,
+            'months'     => $months,
+            'monthsCount'=> $monthsCount,
+
+            //chart Buku by kategori
+            'kategoriName'  => $kategoriName,
+            'kategoriCount' => $kategoriCount
         ]);
         
     }

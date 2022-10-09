@@ -44,7 +44,11 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{  $return->borrow->id }}" onclick="showDetail{{  $return->borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
-                                                {{  $return->borrow->kode_peminjaman }}
+                                                @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
+                                                    {{ $return->borrow->created_at->format('md') }}/DB/{{ $return->borrow->created_at->format('yis') }}
+                                                @else
+                                                    {{ $return->borrow->created_at->format('md') }}/PB/{{ $return->borrow->created_at->format('yis') }}
+                                                @endif
                                             </button>
                                         </td>
                                         <td>{{  $return->borrow->member->nis }}</td>

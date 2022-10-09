@@ -21,11 +21,11 @@
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
-				</div>                    
+				</div>                 
+				<!-- Card body -->
                 <div class="card-body">
-
 					{{-- Tabel --}}
-					<table id="example1" class="table table-bordered table-striped">
+					<table id="example" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -48,12 +48,25 @@
 								<td>{{ $fine->borrow->member->kelas }}</td>
 								<td>{{ $fine->borrow->member->jurusan }}</td>
 								<td>{{ $fine->borrow->tanggal_tempo }}</td>
-								<td>{{ $fine->borrow->tanggal_kembali }}</td>
+								<td>{{ $fine->borrow->return->tanggal_kembali }}</td>
 								<td>{{ $fine->waktu_tenggat }} Hari</td>
 								<td>{{ $fine->total }}</td>
 							</tr>
 							@endforeach
 						</tbody>
+						<tfoot>
+							<tr>
+								<th>No</th>
+								<th>Kode Peminjaman</th>
+								<th>Nama Peminjam</th>
+								<th>Kelas</th>
+								<th>Jurusan</th>
+								<th>Tanggal Tempo</th>
+								<th>Tanggal Pengembalian</th>
+								<th>Telat</th>
+                                <th>Denda</th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -62,14 +75,31 @@
 
 
     <script>
-        $(function () {
-			$("#example1").DataTable({
-			"responsive": true, "lengthChange": false, "autoWidth": false,
-			"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-			
-			
-			}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $(document).ready(function () {
+			$('#example').DataTable({
+				initComplete: function () {
+					this.api()
+						.columns()
+						.every(function () {
+							var column = this;
+							var select = $('<select><option value=""></option></select>')
+								.appendTo($(column.footer()).empty())
+								.on('change', function () {
+									var val = $.fn.dataTable.util.escapeRegex($(this).val());
+		
+									column.search(val ? '^' + val + '$' : '', true, false).draw();
+								});
+		
+							column
+								.data()
+								.unique()
+								.sort()
+								.each(function (d, j) {
+									select.append('<option value="' + d + '">' + d + '</option>');
+								});
+						});
+				},
+			});
 		});
     </script>
 @endsection

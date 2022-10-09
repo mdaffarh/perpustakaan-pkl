@@ -14,7 +14,7 @@ class Fine extends Model
     ];
 
     protected $with = [
-        'borrow','member'
+        'borrow','member','return'
     ];
 
     public function borrow()
@@ -24,5 +24,9 @@ class Fine extends Model
     public function member()
     {
         return $this->belongsTo(Member::class);
+    }
+    public function return()
+    {
+        return $this->belongsTo(Returns::class);
     }
 }

@@ -15,9 +15,9 @@ class ReturnController extends Controller
 {
     public function index()
     {
+
         return view('transaction.returns.index',[
             'returns'   => Returns::where('dikembalikan','Belum')->latest()->get(),
-
             'members'   => Member::where('status',true)->get(),
             'stocks' => Stock::where('stok_akhir','>',0)->get(),
             'stocksAll' => Stock::all()

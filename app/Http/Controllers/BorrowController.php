@@ -67,8 +67,12 @@ class BorrowController extends Controller
                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
            }
 
+        //variabel
+        $dm = date('dm');
+        $yis = date('yis');
+        
         $borrow =  Borrow::create([
-            'kode_peminjaman'   => date('dmyis'),
+            'kode_peminjaman'   => $dm."/PB/".$yis,
             'member_id'         => $request->member_id,
             'created_by'          => auth()->user()->staff_id,
             'tanggal_pinjam'    => request()->tanggal_pinjam,
@@ -203,10 +207,13 @@ class BorrowController extends Controller
                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
            }
 
-
+        //variabel
+        $dm = date('dm');
+        $yis = date('yis');
+           
         // Buat di trx_borrow
         $borrow =  Borrow::create([
-            'kode_peminjaman'   => date('dmyis'),
+            'kode_peminjaman'   => $dm."/PB/".$yis,
             'member_id'         => auth()->user()->member_id,
             'tanggal_pinjam'    => $request->tanggal_pinjam,
             'tanggal_tempo'     => $tanggal_tempo,
