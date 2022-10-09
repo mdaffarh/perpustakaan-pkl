@@ -42,15 +42,6 @@ class BorrowController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     // Method dihalaman admin
     public function directBorrow(Request $request)
@@ -193,14 +184,7 @@ class BorrowController extends Controller
     }
 
     
-    // Method dihalaman admin >
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Tambah Peminjaman Dari Anggota
     public function store(Request $request)
     {
           // Kalau hari rabu/kamis balikinnya hari senin
@@ -353,6 +337,7 @@ class BorrowController extends Controller
         return redirect('/transaction/borrows');
     }
 
+    // Ambil buku
     public function getBook(Request $request, $id)
     {
         $rules = [
