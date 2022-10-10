@@ -48,7 +48,7 @@
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Jenis Kelamin</label>
-													<select class="form-select form-control" aria-label="Default select example" name="jenis_kelamin" required>
+													<select class="form-select form-control select2" aria-label="Default select example" name="jenis_kelamin" required>
 														<option value="" selected disabled></option>
 														<option value="Laki-laki">Laki-laki</option>
 														<option value="Perempuan">Perempuan</option>
@@ -56,7 +56,13 @@
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Kelas</label>
-													<input required name="kelas" type="number" required class="form-control" id="floatingInput3">
+													<select class="form-select form-control select2" aria-label="Default select example" name="kelas" required>
+														<option value="" selected disabled></option>
+														<option value="10">10</option>
+														<option value="11">11</option>
+														<option value="12">12</option>
+														<option value="13">13</option>
+													</select>
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Jurusan</label>

@@ -42,7 +42,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <button class="link-primary text-primary" type="button" id="detail{{  $member->nis }}" onclick="showDetail{{  $member->nis }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Pendaftaran" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
+                                            <button class="link-primary text-primary" type="button" id="detail{{  $member->id }}" onclick="showDetail{{ $member->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Pendaftaran" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
                                                 {{  $member->nis }}
                                             </button>
                                         </td>
@@ -134,7 +134,7 @@
                     {{-- Tabel Detail --}}
                     <div class="card-body">
                         @foreach ($memberRegistrations as $member)
-                            <div class="detail-table" id="detailTable{{  $member->id }}" style="display: none;">
+                            <div class="detail-table" id="detailTable{{ $member->id }}" style="display: none;">
                                 <div class="mb-2">
                                     <h5 class="d-inline">Detail Pendaftaran Anggota</h5>
                                 </div>
@@ -176,7 +176,7 @@
                                         element.style.display = 'none';
                                     });
                                     
-                                    const table = document.querySelector('#detailTable{{  $member->id }}');
+                                    const table = document.querySelector('#detailTable{{ $member->id }}');
                                     table.style.display = 'block';
                                     table.scrollIntoView({
                                         behavior: 'smooth'
