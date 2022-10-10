@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('borrow_id');
             $table->integer('book_id');
+            $table->boolean('finished')->nullable();
             $table->timestamps();
         });
     }

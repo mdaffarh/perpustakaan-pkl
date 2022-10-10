@@ -36,7 +36,7 @@
 										</div>
 										<div class="modal-body">
 											<div class="modal-body">
-												<form action="/data/majors" method="post" enctype="multipart/form-data">
+												<form action="/table/majors" method="post" enctype="multipart/form-data">
 													@csrf
 													<div class="form-floating mb-3">
 														<label for="floatingInput3">Singkatan</label>
@@ -91,7 +91,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="modal-body">
-															<form action="/data/majors/{{ $major->id }}" method="post" enctype="multipart/form-data">
+															<form action="/table/majors/{{ $major->id }}" method="post" enctype="multipart/form-data">
 																@method('put')
 																@csrf
 																<div class="form-floating mb-3">
@@ -135,7 +135,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="modal-body">
-															<form action="/data/majors/{{ $major->id }}" method="post" enctype="multipart/form-data">
+															<form action="/table/majors/{{ $major->id }}" method="post" enctype="multipart/form-data">
 																@method('put')
 																@csrf
 																<div class="form-floating mb-3">
@@ -157,7 +157,7 @@
 										</div>
 			
 			
-											<form action="/data/majors/{{ $major->id }}" method="POST" class="d-inline">
+											<form action="/table/majors/{{ $major->id }}" method="POST" class="d-inline">
 												@method('delete')
 												@csrf
 												<button type="submit" onclick="return confirm('Sure?')" class="btn btn-outline-danger btn-sm">
