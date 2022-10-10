@@ -55,7 +55,11 @@ class DashboardController extends Controller
         }
 
         //chart peminjaman by kelas
-        
+        // $data       = Borrow::with('member')->select('kelas')->get()->groupBy(function($data)
+        // {
+        //     return Carbon::parse($data->kelas)->format('M');
+        // });
+        // dd($data);
 
         return view('dashboard.index',[
             // Tampilan Anggota
