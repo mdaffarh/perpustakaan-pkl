@@ -263,6 +263,12 @@
                                     <p>Sumbangan Buku</p>
                                 </a>
                             </li>  
+                            <li class="nav-item">
+                                <a href="/information/member-registrations" class="nav-link {{ Request::is('/information/member-registrations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pendaftaran Anggota</p>
+                                </a>
+                            </li> 
                         </ul>
                     </li>
                     <li class="nav-item">
