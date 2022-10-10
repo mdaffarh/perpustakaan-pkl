@@ -16,12 +16,14 @@ class BookFactory extends Factory
      */
     public function definition()
     {
+        $a=array("Novel","Komik","Ensiklopedia","Biografi","Majalah","Kamus","Buku Ilmiah","Tafsir");
+        $category=array_rand($a,1);
         return [
             //isbn,judul,penulis,penerbit,cover,kategori
             'judul' => fake()->sentence(mt_rand(1,5)),
             'penulis' => fake()->name(),
             'penerbit' => fake()->company(),
-            'kategori' => fake()->words(mt_rand(1,2),true),
+            'kategori' => $a[$category],
             'tglTerbit' => fake()->date(),
             'tglMasuk' => fake()->date(),
 
