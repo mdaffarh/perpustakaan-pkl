@@ -55,7 +55,7 @@ class DashboardController extends Controller
         }
 
         //chart peminjaman by kelas
-
+        
 
         return view('dashboard.index',[
             // Tampilan Anggota
