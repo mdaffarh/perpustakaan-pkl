@@ -25,6 +25,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // $mostBorrowed = Stock::where('borrow_count','>','0')->get();
+        // dd($mostBorrowed);
         $random1        = Stock::inRandomOrder()->where('stok_akhir','>','0')->get();
         $borrow_su      = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
@@ -62,6 +64,7 @@ class DashboardController extends Controller
         // dd($data);
 
         return view('dashboard.index',[
+
             // Tampilan Anggota
             'stockBooks'    => $random1,
 
