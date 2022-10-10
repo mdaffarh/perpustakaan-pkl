@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('title', "Informasi Peminjaman Buku")
 
-@can('admin')
+@can('staff')
     @section('content')
         @include('sweetalert::alert')
         <div class="row">

@@ -29,7 +29,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode Pinjam</th>
+                                    <th>Kode Pengembalian</th>
                                     <th>NIS</th>
                                     <th>Nama Peminjam</th>
                                     <th>Tanggal Pinjam</th>
@@ -44,11 +44,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{  $return->borrow->id }}" onclick="showDetail{{  $return->borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
-                                                @if (Carbon\Carbon::parse( $return->borrow->tanggal_tempo)->diffInDays(Carbon\Carbon::now(),false) > 0)
-                                                    {{ $return->borrow->created_at->format('md') }}/DB/{{ $return->borrow->created_at->format('yis') }}
-                                                @else
-                                                    {{ $return->borrow->created_at->format('md') }}/PB/{{ $return->borrow->created_at->format('yis') }}
-                                                @endif
+                                                {{ $return->kode_pengembalian }}
                                             </button>
                                         </td>
                                         <td>{{  $return->borrow->member->nis }}</td>
@@ -87,8 +83,8 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kode Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->borrow->kode_peminjaman }}</strong></div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">Kode Pengembalian</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->kode_pengembalian }}</strong></div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">NIS</div></div>
@@ -176,7 +172,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Pinjam</th>
+                                            <th>Kode Pengembalian</th>
                                             <th>Judul</th>
                                             <th>Jumlah</th>
                                             <th>Stok</th>
@@ -187,7 +183,7 @@
                                         @foreach( $return->borrow->borrowItem as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{  $return->borrow->kode_peminjaman }}</td>
+                                                <td>{{  $return->kode_pengembalian }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>1</td>
                                                 <td>{{ $item->book->stock->stok_akhir + 1 }}</td>

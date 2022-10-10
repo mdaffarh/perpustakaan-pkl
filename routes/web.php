@@ -88,15 +88,14 @@ use App\Http\Controllers\MemberRegistrationController;
     Route::resource('/table/stocks', StockController::class)->middleware('staff');
     Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
     Route::resource('/users/member-users', MemberUserController::class)->middleware('staff');
-    
-    Route::resource('/transaction/fines', FineController::class)->middleware('staff');
+
     // 
 
     //Khusus Admin
     Route::resource('/users/staff-users', StaffUserController::class)->middleware('admin');
     Route::resource('/table/staffs', StaffController::class)->middleware('admin');
-    Route::resource('/data/schools', SchoolController::class)->middleware('admin');
-    Route::resource('/data/majors', MajorController::class)->middleware('admin');
+    Route::resource('/table/schools', SchoolController::class)->middleware('admin');
+    Route::resource('/table/majors', MajorController::class)->middleware('admin');
     //
 
 // Semua user ('auth')
@@ -159,9 +158,10 @@ Route::controller(ReportController::class)->group(function(){
 });
 
 Route::controller(InformationController::class)->group(function(){
-    Route::get('/information/borrows','borrow')->middleware('admin');
-    Route::get('/information/returns','return')->middleware('admin');
-    Route::get('/information/book-donations','bookDonation')->middleware('admin');
+    Route::get('/information/borrows','borrow')->middleware('staff');
+    Route::get('/information/returns','return')->middleware('staff');
+    Route::get('/information/book-donations','bookDonation')->middleware('staff');      
+    Route::get('/information/fines','fine')->middleware('staff');
     Route::get('/information/member-registrations','memberRegistration')->middleware('admin');
     Route::get('/information/staff-registrations','staffRegistration')->middleware('admin');
 });

@@ -8,6 +8,7 @@ use App\Models\MemberRegistration;
 use App\Models\StaffRegistration;
 use App\Models\Returns;
 use Illuminate\Http\Request;
+use App\Models\Fine;
 
 class InformationController extends Controller
 {
@@ -29,6 +30,13 @@ class InformationController extends Controller
     {
         return view('information.book-donations.index',[
             'bookDonations' => BookDonation::latest()->get()
+        ]);
+    }
+
+    public function fine()
+    {
+        return view('information.fines.index',[
+            'fines' => Fine::latest()->get()
         ]);
     }
 

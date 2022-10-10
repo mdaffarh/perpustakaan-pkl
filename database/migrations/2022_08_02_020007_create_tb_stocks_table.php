@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('stok_semua');
             $table->integer('stok_tambahan')->nullable();
             $table->integer('stok_keluar')->nullable();
-            $table->integer('borrow_count')->nullable();
             $table->timestamps();
         });
     }

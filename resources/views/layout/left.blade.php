@@ -106,13 +106,7 @@
                         </li>
                             
                         <!-- Transaksi Sumbangan Buku -->
-
-                        <li class="nav-item">
-                            <a href="/transaction/fines" class="nav-link {{ Request::is('transaction/fines*') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Denda Peminjaman</p>
-                            </a>
-                        </li>           
+          
                         <li class="nav-item">
                             <a href="/transaction/member-registrations/index" class="nav-link {{ Request::is('transaction/member-registrations*') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
@@ -133,13 +127,6 @@
                                 <p>Sumbangan Buku</p>
                             </a>
                         </li>           
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Jadwal Piket Staff</p>
-                            </a>
-                        </li>
-       
                         </ul>
 
                     </li>
@@ -197,6 +184,19 @@
                                     <p>Shift Jaga</p>
                                 </a>
                             </li>    
+
+                            <li class="nav-item">
+                                <a href="/table/schools" class="nav-link {{ Request::is('table/schools*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sekolah</p>
+                                </a>
+                            </li>  
+                            <li class="nav-item">
+                                <a href="/table/majors" class="nav-link {{ Request::is('table/majors*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Jurusan</p>
+                                </a>
+                            </li>  
                         </ul>
                     </li>
 
@@ -230,10 +230,7 @@
                             @endcan  
                         </ul>
                     </li>
-                @endcan
 
-                @can('admin')
-                  {{-- Informasi --}}
                     <li class="nav-item">
                         <a href="#" class="nav-link {{ Request::is('information*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-info-circle"></i>
@@ -264,6 +261,12 @@
                                 </a>
                             </li>  
                             <li class="nav-item">
+                                <a href="/information/fines" class="nav-link {{ Request::is('information/fines*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Denda Peminjaman</p>
+                                </a>
+                            </li> 
+                            <li class="nav-item">
                                 <a href="/information/member-registrations" class="nav-link {{ Request::is('/information/member-registrations*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pendaftaran Anggota</p>
@@ -271,6 +274,9 @@
                             </li> 
                         </ul>
                     </li>
+                @endcan
+
+                @can('admin')
                     <li class="nav-item">
                         <a href="#" class="nav-link {{ Request::is('report*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-pen-square"></i>
@@ -295,32 +301,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link {{ Request::is('data*') ? 'active' : '' }}">
-                            <i class="nav-icon fas fa-desktop"></i>
-                            <p>
-                                Data Web
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-
-                        <ul class="nav nav-treeview">
-                            <!-- Table Sekolah -->
-                            <li class="nav-item">
-                                <a href="/data/schools" class="nav-link {{ Request::is('data/schools*') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Sekolah</p>
-                                </a>
-                            </li>  
-                            <li class="nav-item">
-                                <a href="/data/majors" class="nav-link {{ Request::is('data/majors*') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Jurusan</p>
-                                </a>
-                            </li>  
-                        </ul>
-                    </li>
-
                   
                 @endcan
 

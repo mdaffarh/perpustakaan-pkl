@@ -50,13 +50,14 @@ class BorrowController extends Controller
            // Kalau hari sabtu / minggu balikinnya kamis
            $dayName = Carbon::parse(request()->tanggal_pinjam)->dayName;
            $tanggal_tempo = 0;
-           if($dayName == "Wednesday" || "Saturday" ){
+           if($dayName == "Wednesday" ||  $dayName == "Saturday" ){
                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(5);
-           }elseif($dayName == "Thursday" || "Sunday"){
+           }elseif($dayName == "Thursday" ||  $dayName == "Sunday"){
                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(4);
            }else{
                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
            }
+
 
         //variabel
         $dm = date('dm');
@@ -84,12 +85,10 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book)->first();
             $stok_keluar    = $stock->stok_keluar + 1;
             $stok_akhir     = $stock->stok_akhir - 1;
-            $borrow_count   = $stock->borrow_count + 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar,
-                'borrow_count'    => $borrow_count
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
@@ -113,17 +112,17 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book->book_id)->first();
             $stok_keluar    = $stock->stok_keluar - 1;
             $stok_akhir     = $stock->stok_akhir + 1;
-            $borrow_count   = $stock->borrow_count - 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar,
-                'borrow_count'  => $borrow_count
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
         // Delete buku yang lama
-        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
+        BorrowItem::where('borrow_id',$request->borrow_id)->update([
+            'finished' => true
+        ]);
 
         // Buat buku yang dipinjam dan mengurangi stock
         foreach ($request->book_id as $key => $book) {
@@ -138,12 +137,10 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book)->first();
             $stok_keluar    = $stock->stok_keluar + 1;
             $stok_akhir     = $stock->stok_akhir - 1;
-            $borrow_count   = $stock->borrow_count + 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar,
-                'borrow_count'  => $borrow_count
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
@@ -167,17 +164,17 @@ class BorrowController extends Controller
             $stock = Stock::where('book_id', $book->book_id)->first();
             $stok_keluar    = $stock->stok_keluar - 1;
             $stok_akhir     = $stock->stok_akhir + 1;
-            $borrow_count   = $stock->borrow_count - 1;
     
             $stock->update([
                 'stok_akhir'    => $stok_akhir,
-                'stok_keluar'   => $stok_keluar,
-                'borrow_count'  => $borrow_count
+                'stok_keluar'   => $stok_keluar
             ]);
         }
 
         // Delete buku yang lama
-        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
+        BorrowItem::where('borrow_id',$request->borrow_id)->update([
+            'finished' => true
+        ]);
 
         toast('Peminjaman telah dibatalkan!','success');
         return redirect('/transaction/borrows');
@@ -191,13 +188,13 @@ class BorrowController extends Controller
            // Kalau hari sabtu / minggu balikinnya kamis
            $dayName = Carbon::parse(request()->tanggal_pinjam)->dayName;
            $tanggal_tempo = 0;
-           if($dayName == "Wednesday" || "Saturday" ){
-               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(5);
-           }elseif($dayName == "Thursday" || "Sunday"){
-               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(4);
-           }else{
-               $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
-           }
+           if($dayName == "Wednesday" ||  $dayName == "Saturday" ){
+            $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(5);
+            }elseif($dayName == "Thursday" ||  $dayName == "Sunday"){
+                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(4);
+            }else{
+                $tanggal_tempo = Carbon::parse(request()->tanggal_pinjam)->addDays(3);
+            }
 
         //variabel
         $dm = date('dm');
@@ -260,15 +257,6 @@ class BorrowController extends Controller
         $validatedData['pengambilan_buku'] = "Belum";
         $validatedData['created_by'] = auth()->user()->staff_id;
 
-        foreach ($request->book_id as $key => $book) {  
-            // Borrow count
-            $stock = Stock::where('book_id', $book)->first();
-            $borrow_count   = $stock->borrow_count+ 1;
-    
-            $stock->update([
-                'borrow_count'    => $borrow_count
-            ]);
-        }
         
         Borrow::where('id', $request->id)->update($validatedData);
 
@@ -348,8 +336,13 @@ class BorrowController extends Controller
         Borrow::where('id', $request->id)->update($rules);
         Notification::whereNotNull('member_id')->where('borrow_id',request()->id)->update(['viewed' => true]);
 
+        $dm = date('dm');
+        $yis = date('yis');
+        
+            
         Returns::create([
             'borrow_id' => request()->id,
+            'kode_pengembalian'   => $dm."/RB/".$yis,
             'dikembalikan' => "Belum",
             'created_by' => auth()->user()->staff_id
         ]);
