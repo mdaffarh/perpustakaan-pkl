@@ -92,22 +92,22 @@ class NotificationController extends Controller
 
     public function viewedAll()
     {
-        Notification::where('user_id', request()->user_id)->whereNull('viewed')->update(['viewed' => true]);
+        Notification::where('member_id', request()->member_id)->whereNull('viewed')->update(['viewed' => true]);
         return back();
     }
     public function viewedAllStaff()
     {
-        Notification::whereNull('user_id')->whereNull('viewed')->update(['viewed' => true]);
+        Notification::whereNull('member_id')->whereNull('viewed')->update(['viewed' => true]);
         return back();
     }
 
     public function deleteAll(Request $request){
-        Notification::where('user_id', $request->id)->delete();
+        Notification::where('member_id', $request->id)->delete();
         return back();
     }
 
     public function deleteAllStaff(Request $request){
-        Notification::whereNull('user_id')->delete();
+        Notification::whereNull('member_id')->delete();
         return back();
     }
 }
