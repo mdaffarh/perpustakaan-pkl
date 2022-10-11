@@ -559,7 +559,7 @@
                         <div class="">
                             <div class="card card-info">
                                 <div class="card-header">
-                                    <h3 class="card-title">Borrow</h3>
+                                    <h3 class="card-title">Monthly Borrow</h3>
                                     <div class="card-tools">
                                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
@@ -598,7 +598,7 @@
                             <div class="col-md-7">
                                 <div class="card card-success">
                                     <div class="card-header">
-                                        <h3 class="card-title">Bar Chart</h3>
+                                        <h3 class="card-title">Borrow By Class</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse">
                                                 <i class="fas fa-minus"></i>
@@ -1366,7 +1366,7 @@
                     datasets: [
                         {
                         data: JSON.parse('{!! json_encode($kategoriCount) !!}'),
-                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                        backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de','#009bb3','#cbdaa4','#f36b59','#023664','#fad105','#de793b','#6e7daa','#517594','#fe6a01','#fbda37','#039696'],
                         }
                     ]
                     }
