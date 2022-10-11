@@ -57,7 +57,20 @@ class DashboardController extends Controller
 
         // chart peminjaman by kelas
         $kelas  = Borrow::join('tb_members', 'tb_members.id', '=', 'trx_borrows.member_id')->select(DB::raw('kelas, count(kelas) as total'))->groupby('kelas')->get();
-
+        $className = [10,11,12,13];
+        $borrowCount = [0,0,0,0];
+        foreach ($kelas as $class) {
+            if ($class->kelas == 10) {
+                $key = 0;
+            }elseif($class->kelas == 11){
+                $key = 1;
+            }elseif($class->kelas == 12){
+                $key = 2;
+            }else{
+                $key = 3;
+            }
+            $borrowCount[$key]    = $class->total ;
+        }
 
         return view('dashboard.index',[
 
@@ -94,7 +107,9 @@ class DashboardController extends Controller
             'kategoriCount' => $kategoriCount,
 
             //chart by kelas
-            'kelas'         => $kelas
+            'kelas'         => $kelas,
+            'className' => $className,
+            'borrowCount' => $borrowCount
         ]);
         
     }

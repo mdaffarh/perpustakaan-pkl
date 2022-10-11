@@ -1316,7 +1316,7 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table>        
                         </div>
                     </div>
                 </div>
@@ -1387,10 +1387,21 @@
                     //- BAR CHART -
                     //-------------
                     var areaChartData = {
-                        labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                        labels  : ['Jumlah Peminjaman Buku'],
                         datasets: [
                             {
-                                label               : 'Digital Goods',
+                                label               : 'Kelas '+{{ $className[1] }},
+                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
+                                borderColor         : 'rgba(210, 214, 222, 1)',
+                                pointRadius         : false,
+                                pointColor          : 'rgba(210, 214, 222, 1)',
+                                pointStrokeColor    : '#c1c7d1',
+                                pointHighlightFill  : '#fff',
+                                pointHighlightStroke: 'rgba(220,220,220,1)',
+                                data                : [{{ $borrowCount[1] }}]
+                            },
+                            {
+                                label               : 'Kelas '+{{ $className[0] }},
                                 backgroundColor     : 'rgba(60,141,188,0.9)',
                                 borderColor         : 'rgba(60,141,188,0.8)',
                                 pointRadius          : false,
@@ -1398,30 +1409,31 @@
                                 pointStrokeColor    : 'rgba(60,141,188,1)',
                                 pointHighlightFill  : '#fff',
                                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                                data                : [28, 48, 40, 19, 86, 27, 90]
+                                data                : [{{ $borrowCount[0] }}]
                             },
                             {
-                                label               : 'Electronics',
-                                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                                label               : 'Kelas '+{{ $className[2] }},
+                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
                                 borderColor         : 'rgba(210, 214, 222, 1)',
                                 pointRadius         : false,
                                 pointColor          : 'rgba(210, 214, 222, 1)',
                                 pointStrokeColor    : '#c1c7d1',
                                 pointHighlightFill  : '#fff',
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                                data                : [65, 59, 80, 81, 56, 55, 40]
+                                data                : [{{ $borrowCount[2] }}]
                             },
                             {
-                                label               : 'Electronics',
-                                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                                label               : 'Kelas '+{{ $className[3] }},
+                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
                                 borderColor         : 'rgba(210, 214, 222, 1)',
                                 pointRadius         : false,
                                 pointColor          : 'rgba(210, 214, 222, 1)',
                                 pointStrokeColor    : '#c1c7d1',
                                 pointHighlightFill  : '#fff',
                                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                                data                : [65, 59, 80, 81, 56, 55, 40]
+                                data                : [{{ $borrowCount[3] }}]
                             },
+
                         ]
                     }
                     var barChartCanvas = $('#barChart').get(0).getContext('2d')
