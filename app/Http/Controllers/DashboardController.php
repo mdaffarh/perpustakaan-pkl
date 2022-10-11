@@ -78,7 +78,7 @@ class DashboardController extends Controller
             'books'     => Book::all()->count(),
             'members'   => Member::all()->count(),
             'borrowRequest'     => Borrow::where('status','Menunggu persetujuan')->count(),
-            'memberRegist'      => MemberRegistration::all()->count(),
+            'memberRegist'      => MemberRegistration::where('status','0')->count(),
 
             //chart peminjaman
             'data'      => $data,

@@ -272,6 +272,14 @@
                                     <p>Pendaftaran Anggota</p>
                                 </a>
                             </li> 
+                            @can('admin')
+                                <li class="nav-item">
+                                    <a href="/information/staff-registrations" class="nav-link {{ Request::is('/information/staff-registrations*') ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pendaftaran Staff</p>
+                                    </a>
+                                </li> 
+                            @endcan
                         </ul>
                     </li>
                 @endcan
