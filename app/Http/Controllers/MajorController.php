@@ -14,7 +14,7 @@ class MajorController extends Controller
      */
     public function index()
     {
-        return view('data.majors.index', [
+        return view('table.majors.index', [
             'majors' => Major::all()
         ]);
     }
@@ -26,7 +26,7 @@ class MajorController extends Controller
      */
     public function create()
     {
-        return view('data.majors.create', [
+        return view('table.majors.create', [
             'majors' => Major::all()
         ]);
     }
@@ -50,7 +50,7 @@ class MajorController extends Controller
         Major::create($validatedData);
 
         toast('Data Jurusan telah ditambahkan!','success');
-        return redirect('/data/majors');
+        return redirect('/table/majors');
 
     }
 
@@ -62,7 +62,7 @@ class MajorController extends Controller
      */
     public function show(major $major)
     {
-        return view('data.majors.show',[
+        return view('table.majors.show',[
             'major' => $major
         ]);
     }
@@ -75,7 +75,7 @@ class MajorController extends Controller
      */
     public function edit(major $major)
     {
-        return view('data.majors.edit',[
+        return view('table.majors.edit',[
             'major' => $major
         ]);
     }
@@ -98,7 +98,7 @@ class MajorController extends Controller
         Major::where('id',$major->id)->update($validatedData);
 
         toast('Data Jurusan telah diedit!','success');
-        return redirect('/data/majors');
+        return redirect('/table/majors');
 
     }
 
@@ -112,7 +112,7 @@ class MajorController extends Controller
     {
         Major::destroy($major->id);
         toast('Data Jurusan telah dihapus!','success');
-        return redirect('/data/majors');
+        return redirect('/table/majors');
 
     }
 }

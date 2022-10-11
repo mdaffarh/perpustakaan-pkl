@@ -146,10 +146,10 @@
 									<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                                                    
 										{{-- Show --}}
-										<button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#detil{{ $sr->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
+										<button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $sr->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
 											<i class="fas fa-eye "></i>
 										</button>
-										<div class="modal fade" id="#detil{{ $sr->id }}">
+										<div class="modal fade" id="showw{{ $sr->id }}">
 											<div class="modal-dialog modal-lg">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -159,38 +159,39 @@
 														</button>
 													</div>
 													<div class="modal-body">
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">NIP</label>
-															<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nama</label>
-															<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Email</label>
-															<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Jenis Kelamin</label>
-															<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Lahir</label>
-															<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nomor Telepon</label>
-															<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Alamat</label>
-															<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->alamat }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Pendaftaran</label>
-															<input class="form-control" id="floatingInput3" value="{{ $sr->created_at }}" disabled>
-														</div>
+														<form action="/table/staffRegistration/{{ $sr->id }}" method="post" enctype="multipart/form-data" class="p-4">
+															@method('put')
+															@csrf
+															
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">NIP</label>
+																<input required name="nip" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Nama</label>
+																<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Email</label>
+																<input required name="email" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Jenis Kelamin</label>
+																<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Tanggal Lahir</label>
+																<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Nomor Telepon</label>
+																<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
+															</div>
+															<div class="form-floating mb-3">
+																<label for="floatingInput3">Alamat</label>
+																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->alamat }}" disabled>
+															</div>
+														
 															
 														</form>
 													</div>
