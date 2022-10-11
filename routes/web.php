@@ -162,6 +162,6 @@ Route::controller(InformationController::class)->group(function(){
     Route::get('/information/returns','return')->middleware('staff');
     Route::get('/information/book-donations','bookDonation')->middleware('staff');      
     Route::get('/information/fines','fine')->middleware('staff');
-    Route::get('/information/member-registrations','memberRegistration')->middleware('admin');
-    Route::get('/information/staff-registrations','staffRegistration')->middleware('admin');
+    Route::get('/information/member-registrations','memberRegistration')->middleware('staff');
+    Route::get('/information/staff-registrations','staffRegistration')->middleware('staff');
 });

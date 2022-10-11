@@ -154,9 +154,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach( $memberRegistrations as $member)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            <td>1</td>
+                                            <td>{{ $member->nis }}</td>
                                             <td>{{ $member->nama }}</td>
                                             <td>{{ $member->kelas }}</td>
                                             <td>{{ $member->jurusan }}</td>
@@ -164,7 +164,6 @@
                                             <td>{{ $member->nomor_telepon }}</td>
                                             <td>{{ $member->alamat }}</td>
                                         </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>   
                             </div>    

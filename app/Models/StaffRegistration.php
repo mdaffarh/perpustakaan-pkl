@@ -26,4 +26,9 @@ class StaffRegistration extends Model
         return $this->belongsTo(Staff::class, 'updated_by');
     }
 
+    public function admin()
+    {
+        return $this->belongsTo(Staff::class, 'user_verifikasi');
+    }
+
 }
