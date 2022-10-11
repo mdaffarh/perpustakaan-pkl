@@ -73,6 +73,22 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
+        $validatedData = $request->validate([
+            'stok_awal'     => 'required',
+            'stok_akhir'    => 'required',
+            'stok_keluar'   => 'required',
+            'stok_semua'    => 'required'
+        ]);
+
+        $stock->update($validatedData);
+
+        toast('Stok Buku telah Diupdate!','success');
+        return redirect('/table/stocks');
+    }
+
+    public function plus(Request $request)
+    {
+        $stock = Stock::where('id', $request->id)->first();
 
         $stokAkhir      = $stock->stok_akhir + $request->stok_tambahan;
         $stokTambahan   = $stock->stok_tambahan  + $request->stok_tambahan;
@@ -82,6 +98,26 @@ class StockController extends Controller
             'stok_akhir'     => $stokAkhir,
             'stok_tambahan'  => $stokTambahan,
             'stok_semua'     => $stokSemua
+        ];
+
+        $stock->update($stok);
+
+        toast('Stok Buku telah ditambahkan!','success');
+        return redirect('/table/stocks');
+    }
+
+    public function minus(Request $request)
+    {
+        $stock = Stock::where('id', $request->id)->first();
+
+        $stokAkhir      = $stock->stok_akhir - $request->stok_kurang;
+        $stokKurang     = $stock->stok_kurang  - $request->stok_kurang;
+        $stokSemua      = $stock->stok_awal - $stokKurang;
+        
+        $stok = [
+            'stok_akhir'    => $stokAkhir,
+            'stok_kurang'   => $stokKurang,
+            'stok_semua'    => $stokSemua
         ];
 
         $stock->update($stok);
