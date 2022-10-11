@@ -577,7 +577,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div class="card card-danger">
                                     <div class="card-header">
                                         <h3 class="card-title">Book By Category</h3>
@@ -595,7 +595,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="card card-success">
                                     <div class="card-header">
                                         <h3 class="card-title">Bar Chart</h3>
@@ -1391,7 +1391,7 @@
                         datasets: [
                             {
                                 label               : 'Kelas '+{{ $className[1] }},
-                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
+                                backgroundColor     : 'rgba(0, 76, 153, 0.8)',
                                 borderColor         : 'rgba(210, 214, 222, 1)',
                                 pointRadius         : false,
                                 pointColor          : 'rgba(210, 214, 222, 1)',
@@ -1402,7 +1402,7 @@
                             },
                             {
                                 label               : 'Kelas '+{{ $className[0] }},
-                                backgroundColor     : 'rgba(60,141,188,0.9)',
+                                backgroundColor     : 'rgba(0,204,102,0.8)',
                                 borderColor         : 'rgba(60,141,188,0.8)',
                                 pointRadius          : false,
                                 pointColor          : '#3b8bba',
@@ -1413,7 +1413,7 @@
                             },
                             {
                                 label               : 'Kelas '+{{ $className[2] }},
-                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
+                                backgroundColor     : 'rgba(255, 255, 51, 0.8)',
                                 borderColor         : 'rgba(210, 214, 222, 1)',
                                 pointRadius         : false,
                                 pointColor          : 'rgba(210, 214, 222, 1)',
@@ -1424,7 +1424,7 @@
                             },
                             {
                                 label               : 'Kelas '+{{ $className[3] }},
-                                backgroundColor     : 'rgba(70, 151, 222, 0.9)',
+                                backgroundColor     : 'rgba(255, 51, 51, 0.8)',
                                 borderColor         : 'rgba(210, 214, 222, 1)',
                                 pointRadius         : false,
                                 pointColor          : 'rgba(210, 214, 222, 1)',
@@ -1446,7 +1446,7 @@
                     var barChartOptions = {
                         responsive              : true,
                         maintainAspectRatio     : false,
-                        datasetFill             : false
+                        datasetFill             : false,
                     }
 
                     new Chart(barChartCanvas, {
