@@ -48,7 +48,7 @@
 												</div>
 												<div class="form-floating mb-3">
 													<label for="floatingInput3">Jenis Kelamin</label>
-													<select class="form-select form-control select2" aria-label="Default select example" name="jenis_kelamin" required>
+													<select class="form-select form-control " aria-label="Default select example" name="jenis_kelamin" required>
 														<option value="" selected disabled></option>
 														<option value="Laki-laki">Laki-laki</option>
 														<option value="Perempuan">Perempuan</option>
@@ -184,7 +184,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $member->alamat }}</textarea>
 															</div>
 														
 															
@@ -243,7 +243,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $member->alamat }}</textarea>
 															</div>
 														
 															
@@ -320,7 +320,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $member->alamat }}</textarea>
 															</div>
 														
 															

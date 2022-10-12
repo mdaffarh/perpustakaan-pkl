@@ -173,7 +173,7 @@
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Jurusan</label>
 																<select class="form-select form-control select2" aria-label="Default select example" name="jurusan" required>
-																	<option value="" selected disabled></option>
+																	<option value="{{ $member->jurusan }}" selected disabled></option>
 																	@foreach ($majors as $major)	
 																		@if ($member->jurusan == $major->short)
 																			<option selected value="{{ $major->short }}">{{ $major->full }}</option>
@@ -193,7 +193,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}">
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" >{{ $member->alamat }}</textarea>
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Status</label>
@@ -270,7 +270,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $member->alamat }}</textarea>
 															</div>
 															<div class="form-floating mb-3">
 																<label for="">Status</label>
