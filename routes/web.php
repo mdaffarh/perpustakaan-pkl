@@ -160,6 +160,7 @@ Route::controller(ReportController::class)->group(function(){
 Route::controller(InformationController::class)->group(function(){
     Route::get('/information/borrows','borrow')->middleware('staff');
     Route::get('/information/returns','return')->middleware('staff');
+    Route::get('/information/books','book')->middleware('staff');
     Route::get('/information/book-donations','bookDonation')->middleware('staff');      
     Route::get('/information/fines','fine')->middleware('staff');
     Route::get('/information/member-registrations','memberRegistration')->middleware('staff');

@@ -241,7 +241,6 @@
                         </a>
 
                         <ul class="nav nav-treeview">
-                            <!-- Table Sekolah -->
                             <li class="nav-item">
                                 <a href="/information/borrows" class="nav-link {{ Request::is('information/borrows*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
@@ -252,6 +251,12 @@
                                 <a href="/information/returns" class="nav-link {{ Request::is('information/returns*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pengembalian Buku</p>
+                                </a>
+                            </li>  
+                            <li class="nav-item">
+                                <a href="/information/books" class="nav-link {{ Request::is('information/books*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Informasi Buku</p>
                                 </a>
                             </li>  
                             <li class="nav-item">

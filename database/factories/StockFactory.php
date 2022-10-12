@@ -17,9 +17,9 @@ class StockFactory extends Factory
     public function definition()
     {
         return [
-            'stok_awal'     => 1,
-            'stok_semua'    => 1,
-            'stok_akhir'    => 1    
+            'stok_awal'     => 5,
+            'stok_semua'    => 5,
+            'stok_akhir'    => 5    
         ];
     }
 }

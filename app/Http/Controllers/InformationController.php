@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\BookDonation;
 use App\Models\Borrow;
 use App\Models\MemberRegistration;
@@ -48,6 +49,12 @@ class InformationController extends Controller
     public function staffRegistration(){
         return view('information.staff-registrations.index',[
             'staffRegistrations' => StaffRegistration::latest()->get()
+        ]);
+    }
+
+    public function book(){
+        return view('information.books.index',[
+            'books' => Book::all()
         ]);
     }
 }
