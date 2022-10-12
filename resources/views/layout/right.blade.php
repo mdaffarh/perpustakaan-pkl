@@ -59,7 +59,7 @@
                         </form>  
                         <form action="/notification/viewedAll" method="post" class="flex-grow-1 text-center">
                             @csrf
-                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                            <input type="hidden" name="member_id" value="{{ auth()->user()->member_id }}">
                             <button type="submit" style="background-color:rgba(255,2,255,0); ; border: none;" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Tandai sudah dilihat semua">
                                 <span class="dropdown-item dropdown-header">{{ $notiCount }} Notifikasi Baru</span>
                             </button>
@@ -97,7 +97,7 @@
                             {{-- Delete end --}}
         
                             @if ($item->viewed == true)
-                                <p class="text-sm text-wrap mt-1 lh-1 pl-1 pr-2">{{ $item->message }}</p>
+                                <p class="text-sm text-wrap mt-1 lh-1 pl-1 pr-3 ">{{ $item->message }}</p>
                             @else
                             {{-- Viewed --}}
                                 <form action="/notification/viewed" method="post">

@@ -55,16 +55,6 @@ class BookDonationController extends Controller
    
         $bookDonations = BookDonation::create($validatedData);
 
-        if (auth()->user()->member) {
-            $message = [
-                'message'           => auth()->user()->member->nama." Mengajukan Penyumbangan buku ",
-                'bookDonation_id'   => $bookDonations->id
-            ];
-
-            Notification::create($message);
-        }
-            
-
         toast('Data sumbangan buku telah ditambahkan!','success');
         return redirect('/transaction/book-donations');
 
@@ -78,15 +68,6 @@ class BookDonationController extends Controller
             
         ];
         BookDonation::where('id', $request->id)->update($bukusumbangan);
-
-        // Notification
-        Notification::where('bookDonation_id', $request->id)->update(['viewed' => true]);
-            $message = [
-                'staff_approved'   => auth()->user()->staff_id,
-                'message'   => "Sumbangan Buku telah disetujui, Terimakasih atas Donasi anda" ,
-            ];
-
-        Notification::create($message);
 
         return redirect('/transaction/book-donations');
     }

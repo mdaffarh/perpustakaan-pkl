@@ -117,7 +117,7 @@ class StockController extends Controller
         $stok = [
             'stok_akhir'    => $stokAkhir,
             'stok_kurang'   => $stokKurang,
-            'stok_semua'    => $stokSemua
+            'stok_semua'     => $stokSemua
         ];
 
         $stock->update($stok);

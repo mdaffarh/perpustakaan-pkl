@@ -76,6 +76,20 @@
 															<span aria-hidden="true">&times;</span>
 														</button>
 													</div>
+									<a href="#modalEditData{{ $stock->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
+										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
+									</a>
+									
+									<div class="modal fade" id="modalEditData{{ $stock->id }}">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">Tambah Stok</h4>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
 													<div class="modal-body">
 														<div class="form-floating px-3 py-3">
 															<label for="floatingInput3">ISBN</label>

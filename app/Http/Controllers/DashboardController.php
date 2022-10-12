@@ -8,6 +8,7 @@ use App\Models\Staff;
 use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\Member;
+use App\Models\Major;
 use Illuminate\Http\Request;
 use App\Models\StaffRegistration;
 use App\Models\MemberRegistration;
@@ -25,8 +26,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $mostBorrowed = Stock::where('borrow_count','>','0')->get();
-        // dd($mostBorrowed);
         $random1        = Stock::inRandomOrder()->where('stok_akhir','>','0')->get();
         $borrow_su      = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
@@ -41,27 +40,37 @@ class DashboardController extends Controller
         $monthsCount = [];
 
         foreach ($data as $month => $values) {
-            $months[] = $month;
-            $monthsCount[]   = count($values);
+            $months[]       = $month;
+            $monthsCount[]  = count($values);
         }
         
         //chart Buku by kategori
         $kategoris = Book::select(DB::raw('kategori, count(id) as total'))->groupby('kategori')->get();
     
-        $kategoriName = [];
-        $kategoriCount = [];
+        $kategoriName   = [];
+        $kategoriCount  = [];
 
         foreach ($kategoris as $kat) {
-            $kategoriName[] = $kat->kategori;
-            $kategoriCount[]   = $kat->total ;
+            $kategoriName[]     = $kat->kategori;
+            $kategoriCount[]    = $kat->total ;
         }
 
-        //chart peminjaman by kelas
-        // $data       = Borrow::with('member')->select('kelas')->get()->groupBy(function($data)
-        // {
-        //     return Carbon::parse($data->kelas)->format('M');
-        // });
-        // dd($data);
+        // chart peminjaman by kelas
+        $kelas  = Borrow::join('tb_members', 'tb_members.id', '=', 'trx_borrows.member_id')->select(DB::raw('kelas, count(kelas) as total'))->groupby('kelas')->get();
+        $className = [10,11,12,13];
+        $borrowCount = [0,0,0,0];
+        foreach ($kelas as $class) {
+            if ($class->kelas == 10) {
+                $key = 0;
+            }elseif($class->kelas == 11){
+                $key = 1;
+            }elseif($class->kelas == 12){
+                $key = 2;
+            }else{
+                $key = 3;
+            }
+            $borrowCount[$key]    = $class->total ;
+        }
 
         return view('dashboard.index',[
 
@@ -77,10 +86,16 @@ class DashboardController extends Controller
             'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             // Tampilan Staff
-            'books'     => Book::all()->count(),
-            'members'   => Member::all()->count(),
+            'books'             => Book::all()->count(),
+            'members'           => Member::all()->count(),
             'borrowRequest'     => Borrow::where('status','Menunggu persetujuan')->count(),
-            'memberRegist'      => MemberRegistration::all()->count(),
+            'memberall'         => Member::all()->count(),
+            'borrows'           => Borrow::where('status', 'Menunggu persetujuan')->latest()->get(),
+            'member'            => Member::all(),
+            'stocksAll'         => Stock::all(),
+            'topRankBook'       => BorrowItem::select(DB::raw('book_id, count(id) as count'))->groupby('book_id')->orderBy('count', 'desc')->get(),
+            'memberse'          => Member::all(),
+            'majors'            => Major::all(),
 
             //chart peminjaman
             'data'      => $data,
@@ -89,7 +104,12 @@ class DashboardController extends Controller
 
             //chart Buku by kategori
             'kategoriName'  => $kategoriName,
-            'kategoriCount' => $kategoriCount
+            'kategoriCount' => $kategoriCount,
+
+            //chart by kelas
+            'kelas'         => $kelas,
+            'className' => $className,
+            'borrowCount' => $borrowCount
         ]);
         
     }

@@ -1,7 +1,7 @@
 @extends('layout.main')
 @section('title', "Informasi Pengembalian Buku")
 
-@can('admin')
+@can('staff')
     @section('content')
         @include('sweetalert::alert')
         <div class="row">
@@ -29,7 +29,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Kode Pinjam</th>
+                                    <th>Kode Pengembalian</th>
                                     <th>NIS</th>
                                     <th>Nama Peminjam</th>
                                     <th>Tanggal Tempo</th>
@@ -45,7 +45,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{  $return->borrow->id }}" onclick="showDetail{{  $return->borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
-                                                {{  $return->borrow->kode_peminjaman }}
+                                                {{  $return->kode_pengembalian }}
                                             </button>
                                         </td>
                                         <td>{{  $return->borrow->member->nis }}</td>
@@ -89,8 +89,8 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kode Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->borrow->kode_peminjaman }}</strong></div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">Kode Pengembalian</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->kode_pengembalian}}</strong></div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">NIS</div></div>
@@ -194,7 +194,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kode Pinjam</th>
+                                            <th>Kode Pengembalian</th>
                                             <th>Judul</th>
                                             <th>Jumlah</th>
                                             <th>Tanggal Tempo</th>
@@ -204,7 +204,7 @@
                                         @foreach( $return->borrow->borrowItem as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{  $return->borrow->kode_peminjaman }}</td>
+                                                <td>{{  $return->kode_pengembalian }}</td>
                                                 <td>{{ $item->book->judul }}</td>
                                                 <td>1</td>
                                                 <td>{{  $return->borrow->tanggal_tempo }}</td>

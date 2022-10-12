@@ -26,7 +26,7 @@
                                 <a class="nav-link active" id="tabs-waiting-tab" data-toggle="pill" href="#tabs-waiting" role="tab" aria-controls="tabs-waiting" aria-selected="trues">Menunggu Persetujuan</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="tabs-pengambilan-buku-tab" data-toggle="pill" href="#tabs-pengambilan-buku" role="tab" aria-controls="tabs-pengambilan-buku" aria-selected="false">Pengambilan Buku</a>
+                                <a class="nav-link" id="tabs-pengambilan-buku-tab" data-toggle="pill" href="#tabs-pengambilan-buku" role="tab" aria-controls="tabs-pengambilan-buku" aria-selected="false">Serah Terima Buku</a>
                             </li>
                         </ul>
             					
@@ -197,6 +197,24 @@
                                             <td>
 
                                                 <!-- Show Data -->
+                                                <!-- Form Approved -->
+                                                <form action="/transaction/book-donations/approved" method="post">
+                                                    @csrf
+                                                    <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
+                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approved">
+                                                        <i class="fas fa-check"></i> 
+                                                    </button>
+                                                </form>
+                                                
+                                                
+                                                <!-- Form Tolak -->
+                                                <form action="/transaction/book-donations/reject/{{ $bookDonation->id }}" method="post">
+                                                    @csrf
+                                                    <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
+                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolak{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak"> 
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </form>
                                                 <a href="#show{{ $bookDonation->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm" title="Show Data">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: msFilter" class="bi bi-eye" viewBox="0 0 16 16">
                                                         <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -248,19 +266,7 @@
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                                 
-                                                                <!-- Form Approved -->
-                                                                <form action="/transaction/book-donations/approved" method="post">
-                                                                    @csrf
-                                                                    <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
-                                                                    <button type="submit" class="btn btn-success">Approved</button>
-                                                                </form>
                                                                 
-                                                                <!-- Form Tolak -->
-                                                                <form action="/transaction/book-donations/reject/{{ $bookDonation->id }}" method="post">
-                                                                    @csrf
-                                                                    <input hidden type="text" value="{{ $bookDonation->id }}" name="id">
-                                                                    <button type="submit" class="btn btn-danger">Tolak</button>
-                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -388,6 +394,21 @@
                                                         <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                                                     </svg>
                                                 </a>
+                                                <form action="/transaction/book-donations/addBook" method="post">
+                                                    @csrf
+                                                    <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
+                                                    <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn" >
+                                                    <button type="submit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}{{ $bookDonation->isbn }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kirim ke Tabel Buku !">
+                                                        <i class="fas fa-check"></i> 
+                                                    </button>
+                                                </form>
+                                                <form action="/transaction/book-donations/cancel" method="post">
+                                                    @csrf
+                                                    <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
+                                                    <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak">
+                                                        <i class="fas fa-times"></i> 
+                                                    </button>
+                                                </form>
                                                 
                                                 <div class="modal fade" id="show{{ $bookDonation->id }}">
                                                     <div class="modal-dialog modal-lg">
@@ -431,20 +452,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                
-                                                                <form action="/transaction/book-donations/addBook" method="POST">
-                                                                    @csrf
-                                                                    <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
-                                                                    <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn" >
-                                                                    <button class="btn btn-success" type="submit"> Kirim ke Tabel Buku !</button>
-                                                                </form>
-
-                                                                <form action="/transaction/book-donations/cancel" method="POST">
-                                                                    @csrf
-                                                                    <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
-                                                                    <button class="btn btn-danger" type="submit"> Cancel</button>
-                                                                </form>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
                                                             </div>
                                                         </div>
                                                     </div>

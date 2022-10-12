@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('borrow_id')->unique();
             $table->foreignId('member_id');
+            $table->date('tanggal_kembali');
             $table->integer('waktu_tenggat');
             $table->double('total');
             $table->timestamps();

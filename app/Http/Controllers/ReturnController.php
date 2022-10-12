@@ -83,6 +83,7 @@ class ReturnController extends Controller
             Fine::create([
                 'borrow_id'     => $request->borrow_id,
                 'member_id'     => $request->member_id,
+                'tanggal_kembali'   => Carbon::now()->toDateString(),
                 'waktu_tenggat' => $q,
                 'total'         => $kali
             ]);  
