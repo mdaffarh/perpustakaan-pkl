@@ -85,10 +85,15 @@ use App\Http\Controllers\MemberRegistrationController;
     // Khusus staff dan admin
     Route::resource('/table/members', MemberController::class)->middleware('staff'); 
     Route::resource('/table/books', BookController::class)->middleware('staff');
-    Route::resource('/table/stocks', StockController::class)->middleware('staff');
     Route::resource('/table/shifts', ShiftController::class)->middleware('staff');
     Route::resource('/users/member-users', MemberUserController::class)->middleware('staff');
+    Route::resource('/transaction/fines', FineController::class)->middleware('staff');
 
+    Route::resource('/table/stocks', StockController::class)->middleware('staff');
+    Route::controller(StockController::class)->group(function(){
+        Route::post('/table/stocks/plus','plus')->middleware('staff');
+        Route::post('/table/stocks/minus','minus')->middleware('staff');
+    });
     // 
 
     //Khusus Admin

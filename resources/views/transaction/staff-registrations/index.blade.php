@@ -189,7 +189,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="floatingInput3">Alamat</label>
-																<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->alamat }}" disabled>
+																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
 															</div>
 														
 															
@@ -242,7 +242,7 @@
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Alamat</label>
-															<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->alamat }}" disabled>
+															<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Tanggal Pendaftaran</label>
@@ -315,7 +315,7 @@
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Alamat</label>
-															<input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->alamat }}" disabled>
+															<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
 														</div>
 														<div class="form-floating mb-3">
 															<label for="floatingInput3">Tanggal Pendaftaran</label>
