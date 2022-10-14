@@ -3,7 +3,6 @@
 
 @section('content')
     @include('sweetalert::alert')
-        {{-- Statistik --}}
             <div class="row">
                 <!-- ./col -->
                 @can('member')
@@ -68,7 +67,6 @@
                 @endcan
 
                 @can('staff')
-                    {{-- Total semua buku --}}
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-info">
@@ -79,7 +77,7 @@
                             <div class="icon">
                                 <i class="fa fa-chart-line"></i>
                             </div>
-                            <a class="small-box-footer nav-link"  id="nav-home-tab" data-toggle="pill" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
 
@@ -94,11 +92,10 @@
                             <div class="icon">
                                 <i class="fas fa-book-reader"></i>
                             </div>
-                            <a class="small-box-footer nav-link"  id="nav-borrow-tab" data-toggle="pill" href="#nav-borrow" role="tab" aria-controls="nav-borrow" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="borrow-tab" data-toggle="pill" href="#borrow" role="tab" aria-controls="borrow" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-
-                    <!-- ./col -->
+                  
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-gradient-red">
@@ -109,11 +106,10 @@
                             <div class="icon">
                                 <i class="fas fa-book"></i>
                             </div>
-                            <a class="small-box-footer  nav-link"  id="nav-topRankBook-tab" data-toggle="pill" href="#nav-topRankBook" role="tab"  aria-controls="nav-topRankBook" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="topRankBook-tab" data-toggle="pill" href="#topRankBook" role="tab"  aria-controls="topRankBook" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    
-                    <!-- ./col -->
+                  
                     <div class="col-lg-3 col-6">
                         <!-- small box -->
                         <div class="small-box bg-warning">
@@ -125,9 +121,10 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a class="small-box-footer  nav-link"  id="nav-member-tab" data-toggle="pill" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="member-tab" data-toggle="pill" href="#member" role="tab" aria-controls="member" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
+                    </div>                                   
+                            
                 @endcan
             </div>
         {{-- Statistik end --}}
@@ -208,7 +205,6 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="">
                         <div class="card-deck row">  
                                 @if($borrowes != 0)
                                     <div style="padding-top: 20px;" class="col-lg-6">
@@ -553,9 +549,8 @@
 
         {{-- Line Chart --}}
             @can('staff')
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <div class="">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="card card-info">
                                 <div class="card-header">
                                     <h3 class="card-title">Monthly Borrow</h3>
@@ -574,7 +569,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="card card-danger">
@@ -616,7 +610,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-borrow" role="tabpanel" aria-labelledby="nav-borrow-tab">
+                    <div class="tab-pane fade" id="borrow" role="tabpanel" aria-labelledby="borrow-tab">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="font-weight-bold">Permintaan Peminjaman</h3>
@@ -1049,7 +1043,7 @@
                         </div>
                          
                     </div>
-                    <div class="tab-pane fade" id="nav-topRankBook" role="tabpanel" aria-labelledby="nav-topRankBook-tab">
+                    <div class="tab-pane fade" id="topRankBook" role="tabpanel" aria-labelledby="topRankBook-tab">
                         <div class="card">
                             <div class="card-body">
                         
@@ -1087,6 +1081,7 @@
                                                                         <td style="border: none;">Penerbit</td>
                                                                         <td style="border: none;">: {{ $wishlist->book->penerbit }}</td>
                                                                     </tr>
+                                                                    <strong>Buku ini sudah dipinjam {{ $wishlist->count }} kali.</strong>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -1099,7 +1094,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
+                    <div class="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
                         <div class="card">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
@@ -1451,10 +1446,11 @@
                     new Chart(barChartCanvas, {
                         type: 'bar',
                         data: barChartData,
-                        options: barChartOptions
+                        options: barChartOptions,
                     })
+
                 </script>
             @endcan
-        {{-- Line Chart end --}}
+            
 
 @endsection
