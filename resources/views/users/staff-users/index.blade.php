@@ -134,6 +134,14 @@
 																	<label for="floatingInput3">Role</label>
 																	<input required name="role" type="text" required class="form-control" id="floatingInput3" value="{{ $staffUser->role }}">
 																</div>
+																<div class="form-floating mb-3">
+																	<label for="floatingInput3">Role</label>
+																	<select name="role" type="text" required class="select2 form-control" id="floatingInput3" value="{{ $staffUser->role }}">
+																		<option disabled selected>{{ $staffUser->role }}</option>
+																		<option>admin</option>
+																		<option>penjaga</option>
+																	</select>
+																</div>
 																<div class="input-group">
 																	<button class="btn btn-success rounded me-1" type="submit">Submit</button>
 																</div>

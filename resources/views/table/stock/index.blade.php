@@ -28,11 +28,12 @@
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>ISBN</th>
 								<th>Nama Buku</th>
 								<th>Penulis</th>
-								<th>Total Stok</th>
+								{{-- <th>Stok Semua</th> --}}
 								<th>Stok Tersedia</th>
-								<th>Stok Pinjam</th>
+								<th>Stok Yang Dipinjam</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -40,9 +41,14 @@
 							@foreach($stocks as $stock)
 							<tr>
 								<td>{{ $loop->iteration }}</td>
+								<td>
+									<button class="link-primary text-primary" type="button" id="detail{{ $stock->id }}" onclick="showDetail{{ $stock->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Stok" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
+										{{ $stock->book->isbn }}
+									</button>
+								</td>
 								<td>{{ $stock->book->judul }}</td>
 								<td>{{ $stock->book->penulis }}</td>
-								<td>{{ $stock->stok_semua }}</td>
+								{{-- <td>{{ $stock->stok_semua }}</td> --}}
 								<td>{{ $stock->stok_akhir }}</td>
 								<td>
 									@if ($stock->stok_keluar)
@@ -83,19 +89,19 @@
 																</div>
 																<div class="form-floating mb-3">
 																	<label for="floatingInput3">Stok Awal</label>
-																	<input required name="stok_awal" type="number" required class="form-control" id="floatingInput3" value="{{ $stock->stok_awal }}">
+																	<input  name="stok_awal" type="number"  class="form-control" id="floatingInput3" value="{{ $stock->stok_awal }}">
 																</div>
 																<div class="form-floating mb-3">
 																	<label for="floatingInput3">Stok Tersedia</label>
-																	<input required name="stok_akhir" type="number" required class="form-control" id="floatingInput3" value="{{ $stock->stok_akhir }}">
+																	<input  name="stok_akhir" type="number"  class="form-control" id="floatingInput3" value="{{ $stock->stok_akhir }}">
 																</div>
 																<div class="form-floating mb-3">
 																	<label for="floatingInput3">Stok Yang Dipinjam</label>
-																	<input required name="stok_keluar" type="number" required class="form-control" id="floatingInput3" value="{{ $stock->stok_keluar }}">
+																	<input  name="stok_keluar" type="number"  class="form-control" id="floatingInput3" value="{{ $stock->stok_keluar }}">
 																</div>
 																<div class="form-floating mb-3">
 																	<label for="floatingInput3">Semua Stok</label>
-																	<input required name="stok_semua" type="number" required class="form-control" id="floatingInput3" value="{{ $stock->stok_semua }}">
+																	<input  name="stok_semua" type="number"  class="form-control" id="floatingInput3" value="{{ $stock->stok_semua }}">
 																</div>
 															</div>
 														</div>	
@@ -111,7 +117,7 @@
 										
 
 										{{-- Tambah Stok --}}
-										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambah{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stok Tambahan"> 
+										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambah{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Penambahan Stok"> 
 											<i class="fas fa-plus"></i>
 										</button>
 										<div class="modal fade" id="tambah{{ $stock->id }}">
@@ -177,6 +183,59 @@
 							@endforeach
 						</tbody>
 					</table>
+				</div>
+				<div class="card-body">
+					@foreach ($stocks as $stock)
+						<div class="detail-table" id="detailTable{{ $stock->id }}" style="display: none;">
+							<div class="mb-2">
+								<h5 class="d-inline">Detail Buku</h5>
+							</div>
+										
+							{{-- Tabel Detail --}}
+							<table id="detailTable" class="table table-bordered table-striped" >
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Judul Buku</th>
+										{{-- <th>Stok Awal</th> --}}
+										<th>Stok Tersedia</th>
+										<th>Stok Total</th>
+										<th>Stok Tambahan</th>
+										<th>Stok Yang Dipinjam</th>
+										<th>Stok Hilang</th>
+										{{-- <th>Aksi</th> --}}
+									</tr>
+								</thead>
+								<tbody>
+										<tr>
+											<td>{{ $loop->iteration }}</td>
+											<td>{{ $stock->book->judul }}</td>
+											{{-- <td>{{ $stock->stok_awal }}</td> --}}
+											<td><span class="badge badge-success">{{ $stock->stok_akhir}}</span></td>
+											<td>{{ $stock->stok_semua }}</td>
+											<td>{{ $stock->stok_tambahan }}</td>
+											<td><span class="badge badge-warning">{{ $stock->stok_keluar }}</span></td>
+											<td><span class="badge badge-danger">{{ $stock->stok_akhir-$stock->stok_keluar }}</span></td>
+										</tr>
+								</tbody>
+							</table>   
+						</div>    
+						
+						<script>
+							function showDetail{{ $stock->id }}(){
+								const oldTable = document.querySelectorAll('.detail-table');
+								oldTable.forEach(element => {
+									element.style.display = 'none';
+								});
+								
+								const table = document.querySelector('#detailTable{{ $stock->id }}');
+								table.style.display = 'block';
+								table.scrollIntoView({
+									behavior: 'smooth'
+								});
+							}
+						</script>
+					@endforeach    
 				</div>
 			</div>
 		</div>

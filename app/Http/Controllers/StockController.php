@@ -74,10 +74,10 @@ class StockController extends Controller
     public function update(Request $request, Stock $stock)
     {
         $validatedData = $request->validate([
-            'stok_awal'     => 'required',
-            'stok_akhir'    => 'required',
-            'stok_keluar'   => 'required',
-            'stok_semua'    => 'required'
+            'stok_awal'     => '',
+            'stok_akhir'    => '',
+            'stok_keluar'   => '',
+            'stok_semua'    => ''
         ]);
 
         $stock->update($validatedData);

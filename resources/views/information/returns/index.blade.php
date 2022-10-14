@@ -75,7 +75,7 @@
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                                                 {{-- Show --}}
-                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $return->borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
+                                                <button class="btn btn-success   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $return->borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
                                                 <div class="modal fade" id="showw{{  $return->borrow->id }}">

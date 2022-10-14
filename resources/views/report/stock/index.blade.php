@@ -30,6 +30,7 @@
 								<th>No</th>
 								<th>Nama Buku</th>
 								<th>Penulis</th>
+								<th>Awal Stok</th>
 								<th>Total Stok</th>
 								<th>Stok Tersedia</th>
 								<th>Stok Pinjam</th>
@@ -42,6 +43,7 @@
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $stock->book->judul }}</td>
 								<td>{{ $stock->book->penulis }}</td>
+								<td>{{ $stock->stok_awal }}</td>
 								<td>{{ $stock->stok_semua }}</td>
 								<td>{{ $stock->stok_akhir }}</td>
 								<td>

@@ -79,7 +79,7 @@
                             <div class="icon">
                                 <i class="fa fa-chart-line"></i>
                             </div>
-                            <a class="small-box-footer nav-link"  id="nav-home-tab" data-toggle="pill" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="nav-home-tab" data-toggle="pill" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
                     </div>
 
@@ -94,7 +94,7 @@
                             <div class="icon">
                                 <i class="fas fa-book-reader"></i>
                             </div>
-                            <a class="small-box-footer nav-link"  id="nav-borrow-tab" data-toggle="pill" href="#nav-borrow" role="tab" aria-controls="nav-borrow" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer nav-link"  id="nav-borrow-tab" data-toggle="pill" href="#nav-borrow" role="tab" aria-controls="nav-borrow" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
                     </div>
 
@@ -109,7 +109,7 @@
                             <div class="icon">
                                 <i class="fas fa-book"></i>
                             </div>
-                            <a class="small-box-footer  nav-link"  id="nav-topRankBook-tab" data-toggle="pill" href="#nav-topRankBook" role="tab"  aria-controls="nav-topRankBook" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer  nav-link"  id="nav-topRankBook-tab" data-toggle="pill" href="#nav-topRankBook" role="tab"  aria-controls="nav-topRankBook" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
                     </div>
                     
@@ -125,7 +125,7 @@
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a class="small-box-footer  nav-link"  id="nav-member-tab" data-toggle="pill" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a class="small-box-footer  nav-link"  id="nav-member-tab" data-toggle="pill" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
                     </div>
                 @endcan
