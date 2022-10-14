@@ -128,7 +128,7 @@ class BookDonationController extends Controller
             'kategori'      => 'required',
             'tglTerbit'     => 'required',
             'tglMasuk'      => 'required',
-            'stock_masuk'    => 'required',
+            'stock_masuk'   => 'required',
             'image'         => 'image|file'
         ];
 

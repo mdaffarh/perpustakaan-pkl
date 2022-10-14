@@ -312,6 +312,12 @@
                                     <p>Denda</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/report/stocks" class="nav-link {{ Request::is('report/stocks*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Stok</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                   

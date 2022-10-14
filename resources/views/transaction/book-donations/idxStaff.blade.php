@@ -362,7 +362,7 @@
                                                     
                                                 </div>
                                                 <div class="input-group">
-                                                    <button class="btn btn-success rounded me-1" type="submit">Submit</button>
+                                                    <button class="btn btn-success rounded me-1" type="submit">Update</button>
                                                 </div>
                                             </form>  
                                         </div>
@@ -484,7 +484,7 @@
                                 <i class="fas fa-check"></i> 
                             </button>
                         </form> --}}
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Send it !"> 
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kirim !"> 
                             <i class="fas fa-arrow-up"></i>
                         </button>
                         <div class="modal fade" id="show{{ $bookDonation->id }}">
@@ -542,7 +542,7 @@
                                             @csrf
                                             <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
                                             <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn">
-                                            <button type="submit" class="btn btn-success">Send To Book's Table !</button>
+                                            <button type="submit" class="btn btn-success">Kirim Ke Tabel Buku !</button>
                                         </form>
                                     </div>
                                 </div>
@@ -682,7 +682,7 @@
                                         <form action="/transaction/book-donations/cancel" method="post">
                                             @csrf
                                             <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
-                                            <button type="submit" class="btn btn-danger">Cancel</button>
+                                            <button type="submit" class="btn btn-danger">Batal</button>
                                         </form>
                                     </div>
                                 </div>

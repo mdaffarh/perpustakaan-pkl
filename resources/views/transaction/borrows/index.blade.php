@@ -598,7 +598,7 @@
                                             <th>Jumlah</th>
                                             <th>Stok</th>
                                             <th>Tanggal Tempo</th>
-                                            <th>Aksi</th>
+                                            {{-- <th>Aksi</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Fine;
+use App\Models\Stock;
 use App\Models\Borrow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -77,6 +78,12 @@ class ReportController extends Controller
             'borrows' => Borrow::all(),
             'members' => Borrow::select(DB::raw('DISTINCT member_id'))->get(),
             'status' => Borrow::select(DB::raw('DISTINCT status'))->get()
+        ]);
+    }
+
+    public function stock(){
+        return view('report.stock.index',[
+            'stocks' => Stock::all()
         ]);
     }
 }

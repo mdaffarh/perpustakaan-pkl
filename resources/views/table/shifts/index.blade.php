@@ -47,9 +47,18 @@
                                                   @endforeach
                                                 </select>
                                               </div>
-                                              <div class="form-floating mb-3">
+                                              {{-- <div class="form-floating mb-3">
                                                   <label for="floatingInput3">Kategori Shift</label>
                                                   <input required name="kategori_shift" type="text" required class="form-control" id="floatingInput3">
+                                              </div> --}}
+                                              <div class="form-floating mb-3">
+                                                <label for="floatingInput3">Kategori Shift</label>
+                                                <select class="form-select form-control select2" type="text" aria-label="Default select example" name="kategori_shift" required>
+                                                  <option value="" selected disabled></option>
+                                                  <option value="Pagi">Pagi</option>
+                                                  <option value="Siang">Siang</option>
+                                                  <option value="Sore">Sore</option>
+                                                </select>
                                               </div>
                                               <div class="form-floating mb-3">
                                                   <label for="floatingInput3">Waktu Mulai</label>
@@ -120,9 +129,18 @@
                                                   @endforeach
                                                 </select>
                                               </div>
-                                              <div class="form-floating mb-3">
+                                              {{-- <div class="form-floating mb-3">
                                                 <label for="floatingInput3">Kategori Shift</label>
                                                 <input required name="kategori_shift" type="text" required class="form-control" id="floatingInput3" value="{{ $shift->kategori_shift }}">
+                                              </div> --}}
+                                              <div class="form-floating mb-3">
+                                                <label for="floatingInput3">Kategori Shift</label>
+                                                <select class="form-select form-control select2" type="text" aria-label="Default select example" name="kategori_shift" value="{{ $shift->kategori_shift }}" required>
+                                                  <option value="" selected disabled>{{ $shift->kategori_shift }}</option>
+                                                  <option value="Pagi">Pagi</option>
+                                                  <option value="Siang">Siang</option>
+                                                  <option value="Sore">Sore</option>
+                                                </select>
                                               </div>
                                               <div class="form-floating mb-3">
                                                 <label for="floatingInput3">Waktu Mulai</label>

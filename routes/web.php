@@ -161,6 +161,7 @@ Route::controller(ReportController::class)->group(function(){
     Route::get('/report/fines','fine')->middleware('admin');
     Route::post('/report/borrows','borrow')->middleware('admin');
     Route::get('/report/borrows/set','borrowSet')->middleware('admin');
+    Route::get('/report/stocks','stock')->middleware('admin');
 });
 
 Route::controller(FPDFController::class)->group(function(){
