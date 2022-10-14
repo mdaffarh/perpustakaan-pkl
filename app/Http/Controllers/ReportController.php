@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Fine;
+use App\Models\Stock;
 use App\Models\Borrow;
 use Illuminate\Http\Request;
 
@@ -30,5 +31,11 @@ class ReportController extends Controller
         }
 
         return redirect('/report/borrows');
+    }
+
+    public function stock(){
+        return view('report.stock.index',[
+            'stocks' => Stock::all()
+        ]);
     }
 }

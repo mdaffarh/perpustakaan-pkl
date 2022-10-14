@@ -362,7 +362,7 @@
                                                     
                                                 </div>
                                                 <div class="input-group">
-                                                    <button class="btn btn-success rounded me-1" type="submit">Submit</button>
+                                                    <button class="btn btn-success rounded me-1" type="submit">Update</button>
                                                 </div>
                                             </form>  
                                         </div>

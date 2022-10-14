@@ -112,17 +112,17 @@ class StockController extends Controller
 
         $stokAkhir      = $stock->stok_akhir - $request->stok_kurang;
         $stokKurang     = $stock->stok_kurang  - $request->stok_kurang;
-        $stokSemua      = $stock->stok_awal - $stokKurang;
+        // $stokSemua      = $stock->stok_awal - $stokKurang;
         
         $stok = [
             'stok_akhir'    => $stokAkhir,
             'stok_kurang'   => $stokKurang,
-            'stok_semua'     => $stokSemua
+            // 'stok_semua'     => $stokSemua
         ];
 
         $stock->update($stok);
 
-        toast('Stok Buku telah ditambahkan!','success');
+        toast('Stok Buku telah dikurangi!','success');
         return redirect('/table/stocks');
     }
 

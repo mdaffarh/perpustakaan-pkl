@@ -160,6 +160,7 @@ Route::controller(ReportController::class)->group(function(){
     Route::get('/report/fines','fine')->middleware('admin');
     Route::get('/report/borrows','borrow')->middleware('admin');
     Route::post('/report/borrows/set','borrowSet')->middleware('admin');
+    Route::get('/report/stocks','stock')->middleware('admin');
 });
 
 Route::controller(InformationController::class)->group(function(){

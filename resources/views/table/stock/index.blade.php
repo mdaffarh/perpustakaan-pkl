@@ -33,7 +33,6 @@
 								<th>Total Stok</th>
 								<th>Stok Tersedia</th>
 								<th>Stok Pinjam</th>
-								<th>Log Peminjaman</th>
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -53,78 +52,11 @@
 									@endif
 								</td>
 								<td>
-									@if ( $stock->borrow_count )
-										{{ $stock->borrow_count }}
-									@else
-										0
-									@endif
-									
-								</td>
-								<td>
 									<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-											
-										{{-- Show --}}
-										<button class="btn btn-success   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $stock->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Stok">
-											<i class="fas fa-eye "></i>
-										</button>
-										<div class="modal fade" id="showw{{ $stock->id }}">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h4 class="modal-title">Details Stok</h4>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-									<a href="#modalEditData{{ $stock->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
-										<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
-									</a>
-									
-									<div class="modal fade" id="modalEditData{{ $stock->id }}">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h4 class="modal-title">Tambah Stok</h4>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<div class="modal-body">
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">ISBN</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->book->isbn }}">
-														</div>
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">Nama Buku</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->book->judul }}">
-														</div>
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">Stok Awal</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->stok_awal }}">
-														</div>
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">Stok Tersedia</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->stok_akhir }}">
-														</div>
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">Stok Yang Dipinjam</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->stok_keluar }}">
-														</div>
-														<div class="form-floating px-3 py-3">
-															<label for="floatingInput3">Semua Stok</label>
-															<input disabled required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $stock->stok_semua }}">
-														</div>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-													</div>
-												</div>
-											</div>
-										</div>
+										
 
 										{{-- Edit data --}}
-										<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Stok">
+										<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-default{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Stok">
 											<i class="fas fa-pencil-alt"></i>
 										</button>
 										<div class="modal fade" id="modal-default{{ $stock->id }}">
@@ -179,7 +111,7 @@
 										
 
 										{{-- Tambah Stok --}}
-										<button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#tambah{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stok Tambahan"> 
+										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#tambah{{ $stock->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stok Tambahan"> 
 											<i class="fas fa-plus"></i>
 										</button>
 										<div class="modal fade" id="tambah{{ $stock->id }}">
