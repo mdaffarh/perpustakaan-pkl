@@ -24,40 +24,26 @@
 				</div>                    
                 <div class="card-body">
 					<div class="">
-						<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">Ganti Tanggal</button>
-						<div class="modal fade" id="modal-default">
-							<div class="modal-dialog modal-lg">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h4 class="modal-title">Ganti Tanggal</h4>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<div class="modal-body">
-											<form action="/report/borrows/set" method="post">
-												@csrf
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Tanggal Awal</label>
-													<input type="date" name="tanggal_awal" id="" class="form-control">
-												</div>
-												<div class="form-floating mb-3">
-													<label for="floatingInput3">Tanggal Akhir</label>
-													<input type="date" name="tanggal_akhir" id="" class="form-control">
-												</div>
-												<div class="input-group">
-													<button class="btn btn-success rounded me-1" type="submit">Submit</button>
-												</div>
-											</form>
-										</div>
-									</div>
-									<div class="modal-footer justify-content-between">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-									</div>
-								</div>
-							</div>
+						<div class="btn-group">
+							<a href="/report/borrows/set" class="btn btn-warning mr-1">Kembali</a>
+							<form action="/borrow-report" method="get" target="__blank">
+								@csrf
+								@if ($member_id != NULL)
+									<input type="hidden" name="member_id" value="{{ $member_id }}">
+								@endif
+								@if ($status != NULL)
+									<input type="hidden" name="status" value="{{ $status }}">
+								@endif
+								@if ($tanggal_awal != NULL)
+									<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
+								@endif
+								@if ($tanggal_akhir != NULL)
+									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
+								@endif
+								<button type="submit" class="btn btn-success">Cetak</button>
+							</form>
 						</div>
+						
 					</div>
 					<table id="example1" class="table table-bordered table-striped">
 						<thead>
