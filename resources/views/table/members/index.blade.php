@@ -105,7 +105,7 @@
 								<th>Nama</th>
 								<th>Kelas</th>
 								<th>Jurusan</th>
-								<th>Status</th>
+								{{-- <th>Status</th> --}}
 								<th>Aksi</th>
 							</tr>
 						</thead>
@@ -116,13 +116,13 @@
 								<td>{{ $member->nama }}</td>
 								<td>{{ $member->kelas }}</td>
 								<td>{{ $member->jurusan }}</td>
-								<td class="text-center">
+								{{-- <td class="text-center">
 									@if ($member->status == 1)
 										<span class="badge bg-success">Aktif</span> 
 									@else
 										<span class="badge bg-danger">Nonaktif</span>
 									@endif
-								</td>
+								</td> --}}
 								<td>
 									{{-- Edit --}}
 									<a href="#modalEditData{{ $member->id }}" data-toggle="modal" class="btn btn-outline-info btn-sm">
