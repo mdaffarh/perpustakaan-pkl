@@ -20,7 +20,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StaffUserController;
 use App\Http\Controllers\MemberUserController;
 use App\Http\Controllers\InformationController;
-use App\Http\Controllers\BookDonationController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StaffRegistrationController;
 use App\Http\Controllers\MemberRegistrationController;
@@ -105,16 +105,17 @@ use App\Http\Controllers\MemberRegistrationController;
 
 // Semua user ('auth')
     //Sumbangan Buku
-    Route::resource('/transaction/book-donations', BookDonationController::class)->middleware('auth');
-    Route::controller(BookDonationController::class)->group(function(){
-        Route::post('/transaction/book-donations/approved','approved')->middleware('auth');
-        Route::post('/transaction/book-donations/taken','status')->middleware('auth');
-        Route::post('/transaction/book-donations/addBook', 'addBook')->middleware('auth');  
-        Route::post('/transaction/book-donations/reject/{id}', 'reject')->middleware('auth');
-        Route::post('/transaction/book-donations/cancel', 'cancel')->middleware('auth'); 
+    Route::resource('/transaction/book-donations', DonationController::class)->middleware('auth');
+    Route::controller(DonationController::class)->group(function(){
+        Route::post('/transaction/book-donations/create','create')->middleware('auth');
+        Route::get('/transaction/book-donations/edit/{id}','edit')->middleware('auth');
+        Route::get('/transaction/book-donations/approved/{id}','setuju')->middleware('auth');
+        Route::get('/transaction/book-donations/reject/{id}','tolak')->middleware('auth');
+        Route::get('/transaction/book-donations/handover/{id}','serahTerima')->middleware('auth');
+        Route::get('/transaction/book-donations/delete/{id}','hapus')->middleware('auth');
+        Route::get('/transaction/book-donations/cancel/{id}','batalkan')->middleware('auth');
     });
 
-    Route::get('ajax-autocomplete-search', [BookDonationController::class,'search']);
     
 
     //Peminjaman

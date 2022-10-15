@@ -28,38 +28,6 @@ class BookDonationController extends Controller
         ]);
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'isbn'          => 'required',
-            'judul'         => 'required',
-            'penulis'       => 'required',
-            'penerbit'      => 'required',
-            'kategori'      => 'required',
-            'tglTerbit'     => 'required',
-            'tglMasuk'      => 'required',
-            'stock_masuk'    => 'required',
-            'image'         => 'image|file'
-        ]);
-
-        if($request->file('image')){
-            $validatedData['image'] = $request->file('image')->store('images');
-        }
-        
-        if (auth()->user()->member) {
-            $validatedData['member_id'] = auth()->user()->member_id;
-        } else {
-            $validatedData['member_id'] = $request->member_id;
-        }
-        $validatedData['status'] = "menunggu persetujuan";
-   
-        $bookDonations = BookDonation::create($validatedData);
-
-        toast('Data sumbangan buku telah ditambahkan!','success');
-        return redirect('/transaction/book-donations');
-
-
-    }
     public function approved(Request $request){
         $bukusumbangan = [
             'staff_approved' => auth()->user()->staff_id,

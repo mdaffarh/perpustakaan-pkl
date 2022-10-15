@@ -9,6 +9,7 @@ use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\Member;
 use App\Models\Major;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 use App\Models\StaffRegistration;
 use App\Models\MemberRegistration;
@@ -80,7 +81,7 @@ class DashboardController extends Controller
             'stock'     => Stock::where('stok_akhir' ,'>', 0 )->count(),
             'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
             'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
-            'donation'  => BookDonation::where('member_id',auth()->user()->member_id)->count(),
+            'donation'  => Donation::where('member_id',auth()->user()->member_id)->count(),
             'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->count(),
             'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
             'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),

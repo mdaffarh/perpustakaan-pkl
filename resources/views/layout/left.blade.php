@@ -312,6 +312,12 @@
                                     <p>Denda</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/report/fines" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pendaftaran Anggota</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                   

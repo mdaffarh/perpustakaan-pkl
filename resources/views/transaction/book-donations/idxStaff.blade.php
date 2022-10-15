@@ -2,286 +2,124 @@
     <div class="tab-pane fade show active" id="tabs-waiting" role="tabpanel" aria-labelledby="tabs-waiting-tab">
         
         <!-- Tambah data -->
-        <button type="button" class="btn btn-default mb-4" data-toggle="modal" data-target="#modal-default">Tambah Data</button>
-        <!-- Modal Tambah Data -->
-        <div class="modal fade" id="modal-default">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Tambah Data</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-body">
-                            <form action="/transaction/book-donations" method="post" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-floating mb-3">
-                                    <label for="floatingInput3">Nama Anggota</label>
-                                    <select name="member_id" id="" class="form-control select2">
-                                        <option disabled selected>Pilih Anggota</option>
-                                        @foreach($anggota as $a)
-                                        <option value="{{ $a->id }}">{{ $a->nama }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="floatingInput3">ISBN</label>
-                                    <input required name="isbn" type="text" required class="form-control @error('isbn') is-invalid @enderror " id="floatingInput3"  value="{{ old('isbn') }}">
-                                        @error('isbn')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="floatingInput3">Judul Buku</label>
-                                    <input required name="judul" type="text" required class="form-control @error('judul') is-invalid @enderror " id="floatingInput3" value="{{ old('judul') }}">
-                                        @error('judul')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                </div>
-                                <div class="input-group">
-                                    <div class="form-floating mb-3" style="width: 50%;">
-                                        <label for="floatingInput3">Penulis</label>
-                                        <input required name="penulis" type="text" required class="form-control @error('penulis') is-invalid @enderror " id="floatingInput3" value="{{ old('penulis') }}" >
-                                            @error('penulis')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                    </div>
-                                    <div class="form-floating mb-3" style="width: 50%;">
-                                        <label for="floatingInput3">Penerbit</label>
-                                        <input required name="penerbit" type="text" required class="form-control @error('penerbit') is-invalid @enderror " id="floatingInput3" value="{{ old('penerbit') }}" >
-                                            @error('penerbit')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                    </div>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="floatingInput3">Kategori</label>
-                                    <select name="kategori" type="text" required class="select2 form-control @error('kategori') is-invalid @enderror " id="floatingInput3" value="{{ old('kategori') }}">
-                                        <option disabled selected>Pilih Kategori</option>
-                                        <option>Novel</option>
-                                        <option>Komik</option>
-                                        <option>Ensiklopedia</option>
-                                        <option>Biografi</option>
-                                        <option>Majalah</option>
-                                        <option>Kamus</option>
-                                        <option>Buku Ilmiah</option>
-                                        <option>Tafsir</option>
-                                    </select>
-                                </div>
-                                <div class="input-group">
-                                    <div class="form-floating mb-3" style="width: 50%;">
-                                        <label for="floatingInput3">Tanggal Terbit</label>
-                                        <input required name="tglTerbit" type="date" required  class="form-control @error('tglTerbit') is-invalid @enderror " id="floatingInput3" value="{{ old('tglTerbit') }}">
-                                        @error('tglTerbit')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-floating mb-3" style="width: 50%;">
-                                        <label for="floatingInput3">Tanggal Masuk</label>
-                                        <input required name="tglMasuk" type="date" required class="form-control @error('tglMasuk') is-invalid @enderror " id="floatingInput3" value="{{ old('tglMasuk') }}">
-                                        @error('tglMasuk')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="floatingInput3">Kuantitas</label>
-                                    <input required name="stock_masuk" type="number" required class="form-control " id="floatingInput3">
-                                    
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <label for="image" class="form-label">Foto</label>
-                                    <img class="img-preview-add mb-3 col-sm-3 img-fluid">
-                                    <input id="imageAdd" name="image" class="form-control @error('image') is-invalid @enderror" type="file" onchange="previewImageAdd()" value="{{ old('image') }}"/>
-                                        @error('image')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
-                                        @enderror
-                                </div>
-                                <div class="input-group">
-                                    <button class="btn btn-success rounded me-1" type="submit">Submit</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-                            
-        </div>
-        <!-- End tambah data -->
+        <a href="/transaction/book-donations/create">
+            <button type="button" class="btn btn-default mb-4">Tambah Data</button>
+        </a>
 
         {{-- Tabel --}}
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>ISBN</th>
-                    <th>Judul Buku</th>
-                    <th>Penulis</th>
-                    <th>Kuantitas</th>
+                    <th>Kode Sumbangan</th>
+                    <th>Nama Penyumbang</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($bookDonationsWaiting as $bookDonation)
+                @foreach($donationsWaiting as $dw)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $bookDonation->isbn }}</td>
-                    <td>{{ $bookDonation->judul }}</td>
-                    <td>{{ $bookDonation->penulis }}</td>
-                    <td>{{ $bookDonation->stock_masuk }}</td>
+                    <td>{{ $dw->kode_sumbangan }}</td>
+                    <td>{{ $dw->member->nama }}</td>
+                    <td><span class="badge badge-warning">{{ $dw->status }}</span></td>
                     <td>
-                        @if($bookDonation->status=="menunggu persetujuan")
-                        <span class="badge badge-warning">Menunggu Persetujuan</span>
-                        @elseif($bookDonation->status=="disetujui")
-                        <span class="badge badge-success">Disetujui</span>
-                        @endif
-                    </td>
-                    <td>
+                        
+                        <!-- Edit -->
+                        <a href="/transaction/book-donations/edit/{{ $dw->id }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
 
-
-                        <!-- Form Approved -->
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Approved"> 
-                            <i class="fas fa-check"></i>
-                        </button>
-                        <div class="modal fade" id="show{{ $bookDonation->id }}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="/transaction/book-donations/approved" method="post">
-                                            @csrf
-                                            <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
-                                            <button type="submit" class="btn btn-success">Approved</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- End Form Approved --}}
-                        {{-- Detail show data --}}
-                        <button class="btn btn-primary   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $bookDonation->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Donasi">
+                        <!-- Detail -->
+                        <button class="btn btn-info   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#show{{ $dw->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
                             <i class="fas fa-eye "></i>
                         </button>
-                        <div class="modal fade" id="showw{{ $bookDonation->id }}">
+                        <div class="modal fade" id="show{{ $dw->id }}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Detail Donasi</h4>
+                                        <div class="form-floating">
+                                            <h5 class="font-weight-bold ml-3 mt-3">Detail Kode Sumbangan : {{ $dw->kode_sumbangan }}</h5>
+                                        </div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nis }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nama }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->kelas }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->jurusan }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nomor_telepon }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>Penulis</th>
+                                                        <th>Penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>Cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($dw->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if ($bd->image == "NULL")
+                                                                <span>-</span>
+                                                            @else
+                                                            <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
@@ -289,325 +127,323 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
-                        <!-- End Detail show data -->
 
-                        <!-- Edit Data -->
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Donasi Buku"> <i class="fas fa-pencil-alt"></i> </button>
-                            <div class="modal fade" id="modal-default{{ $bookDonation->id }}">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Edit Donasi Buku</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
-                                                @method('put')
-                                                @csrf
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">ISBN</label>
-                                                    <input required name="isbn" type="number" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Judul Buku</label>
-                                                    <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Penulis</label>
-                                                    <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Penerbit</label>
-                                                    <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Kategori</label>
-                                                    <select name="kategori" type="text" required class="select2 form-control" id="floatingInput3" value="{{ $bookDonation->kategori }}">
-                                                        <option disabled selected>{{ $bookDonation->kategori }}</option>
-                                                        <option>Novel</option>
-                                                        <option>Komik</option>
-                                                        <option>Ensiklopedia</option>
-                                                        <option>Biografi</option>
-                                                        <option>Majalah</option>
-                                                        <option>Kamus</option>
-                                                        <option>Buku Ilmiah</option>
-                                                        <option>Tafsir</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Tanggal Terbit</label>
-                                                    <input required name="tglTerbit" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglTerbit }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Tanggal Masuk</label>
-                                                    <input required name="tglMasuk" type="date" required class="form-control" id="floatingInput3" value="{{ $bookDonation->tglMasuk }}">
-                                                </div>                                                             
-                                                <div class="form-floating mb-3">
-                                                    <label for="floatingInput3">Kuantitas</label>
-                                                    <input required name="stock_masuk" type="number" required class="form-control" id="floatingInput3" value="{{ $bookDonation->stock_masuk }}">
-                                                </div>
-                                                <div class="form-floating mb-3">
-                                                    <label for="">Cover</label>
-                                                    @if (!$bookDonation->image)
-                                                        <img id="img-preview" class="img-fluid img-preview mb-3 col-sm-5">
-                                                    @else
-                                                        <img src="{{ asset('storage/' . $bookDonation->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
-                                                    @endif
-                                                    <input class="form-control" type="file" id="image" name="image" onchange="previewImage()">
-                                                    <input type="hidden" name="oldImage" value="{{ $bookDonation->image }}">
-                                                    
-                                                </div>
-                                                <div class="input-group">
-                                                    <button class="btn btn-success rounded me-1" type="submit">Submit</button>
-                                                </div>
-                                            </form>  
-                                        </div>
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>  
-                        <!-- End Edit data -->
-
-                        <!-- Form Tolak -->
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolak{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak"> 
-                            <i class="fas fa-times"></i>
+                        <!-- approved -->
+                        <button class="btn btn-success btn-sm btn-approved" type="button" data-toggle="modal" data-target="#approved{{ $dw->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Menyetujui">
+                            <i class="fas fa-check"></i> 
                         </button>
-                        <div class="modal fade" id="tolak{{ $bookDonation->id }}">
+                        <div class="modal fade" id="approved{{ $dw->id }}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Details</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <div class="modal-body">
-                                        <form action="/transaction/book-donations/reject/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+                                        <div class="form-floating mb-3 d-flex justify-content-end">
+                                            <label for="floatingInput3">Kode Sumbangan : {{ $dw->kode_sumbangan }}</label>
+                                        </div>
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nis }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nama }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->kelas }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->jurusan }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nomor_telepon }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>penulis</th>
+                                                        <th>penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($dw->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if (!$bd->image)
+                                                                <span>-</span>
+                                                            @else
+                                                                <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="/transaction/book-donations/reject/{{ $bookDonation->id }}" method="post">
-                                            @csrf
-                                            <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
-                                            <button type="submit" class="btn btn-danger">Tolak</button>
-                                        </form>
+                                        <a href="/transaction/book-donations/approved/{{ $dw->id }}" class="btn btn-success">Menyetujui</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- End Form Tolak --}}
+
+                        <!-- reject -->
+                        <button class="btn btn-success btn-sm btn-danger" type="button" data-toggle="modal" data-target="#reject{{ $dw->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="modal fade" id="reject{{ $dw->id }}">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Details</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-floating mb-3 d-flex justify-content-end">
+                                            <label for="floatingInput3">Kode Sumbangan : {{ $dw->kode_sumbangan }}</label>
+                                        </div>
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nis }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nama }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->kelas }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->jurusan }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $dw->member->nomor_telepon }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>penulis</th>
+                                                        <th>penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($dw->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if (!$bd->image)
+                                                                <span>-</span>
+                                                            @else
+                                                                <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <a href="/transaction/book-donations/reject/{{ $dw->id }}" class="btn btn-danger">Tolak</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+
     </div>
     <div class="tab-pane fade" id="tabs-pengambilan-buku" role="tabpanel" aria-labelledby="tabs-pengambilan-buku-tab">
+        
         {{-- Tabel --}}
-        <table id="example1" class="table table-bordered table-striped">
+        <table id="example2" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>ISBN</th>
-                    <th>Judul Buku</th>
-                    <th>Penulis</th>
-                    <th>Kuantitas</th>
+                    <th>Kode Sumbangan</th>
+                    <th>Nama Penyumbang</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($bookDonationsGet as $bookDonation)
+                @foreach($donationsGet as $donation)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $bookDonation->isbn }}</td>
-                    <td>{{ $bookDonation->judul }}</td>
-                    <td>{{ $bookDonation->penulis }}</td>
-                    <td>{{ $bookDonation->stock_masuk }}</td>
+                    <td>{{ $donation->kode_sumbangan }}</td>
+                    <td>{{ $donation->member->nama }}</td>
+                    <td><span class="badge badge-success">{{ $donation->status }}</span></td>
                     <td>
-                        @if($bookDonation->status=="menunggu persetujuan")
-                        <span class="badge badge-warning">Menunggu Persetujuan</span>
-                        @elseif($bookDonation->status=="disetujui")
-                        <span class="badge badge-success">Disetujui</span>
-                        @endif
-                    </td>
-                    <td>
-                        {{-- Form Approved --}}
-                        {{-- <form action="/transaction/book-donations/addBook" method="post">
-                            @csrf
-                            <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
-                            <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn">
-                            <button type="submit" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}{{ $bookDonation->isbn }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Kirim ke Tabel Buku !">
-                                <i class="fas fa-check"></i> 
-                            </button>
-                        </form> --}}
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#show{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Send it !"> 
-                            <i class="fas fa-arrow-up"></i>
-                        </button>
-                        <div class="modal fade" id="show{{ $bookDonation->id }}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-body">
-                                        <form action="/transaction/book-donations/addBook" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="/transaction/book-donations/addBook" method="post">
-                                            @csrf
-                                            <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
-                                            <input type="text" hidden value="{{ $bookDonation->isbn }}" name="isbn">
-                                            <button type="submit" class="btn btn-success">Send To Book's Table !</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- End Form Approved --}}
 
-                        {{-- Show --}}
-                        <button class="btn btn-primary   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $bookDonation->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Donasi">
+                        <!-- Detail -->
+                        <button class="btn btn-info btn-sm btn-detail" type="button" data-toggle="modal" data-target="#show{{ $donation->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
                             <i class="fas fa-eye "></i>
                         </button>
-                        <div class="modal fade" id="showw{{ $bookDonation->id }}">
+                        <div class="modal fade" id="show{{ $donation->id }}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Detail Donasi</h4>
+                                        <div class="form-floating">
+                                            <h5 class="font-weight-bold ml-3 mt-3">Detail Kode Sumbangan : {{ $donation->kode_sumbangan }}</h5>
+                                        </div>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/transaction/book-donations/{{ $bookDonation->id }}" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nis }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nama }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->kelas }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->jurusan }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nomor_telepon }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>Penulis</th>
+                                                        <th>Penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($donation->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if (!$bd->image)
+                                                                <span>-</span>
+                                                            @else
+                                                                <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
@@ -615,80 +451,203 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- End Show --}}
-                        
-                        {{-- Form Reject --}}
-                        {{-- <form action="/transaction/book-donations/cancel" method="post">
-                            @csrf
-                            <input type="text" hidden value="{{ $bookDonation->id }}" name="id" >
-                            <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-default{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak">
-                                <i class="fas fa-times"></i> 
-                            </button>
-                        </form> --}}
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolak{{ $bookDonation->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancel"> 
-                            <i class="fas fa-times"></i>
+
+                        <!-- serah terima -->
+                        <button class="btn btn-success btn-sm btn-handover" type="button" data-toggle="modal" data-target="#handover{{ $donation->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Serah Terima">
+                            <i class="fas fa-check"></i> 
                         </button>
-                        <div class="modal fade" id="tolak{{ $bookDonation->id }}">
+                        <div class="modal fade" id="handover{{ $donation->id }}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="form-floating">
+                                            <h5 class="font-weight-bold ml-3 mt-3">Detail Kode Sumbangan : {{ $donation->kode_sumbangan }}</h5>
+                                        </div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <div class="modal-body">
-                                        <form action="/transaction/book-donations/cancel" method="post" enctype="multipart/form-data">
-                                            @method('put')
-                                            @csrf
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">ISBN</label>
-                                                <input required name="isbn" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->isbn }}" disabled>
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nis }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Judul Buku</label>
-                                                <input required name="judul" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->judul }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nama }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penulis</label>
-                                                <input required name="penulis" type="text" required class="form-control" id="floatingInput3" value="{{ $bookDonation->penulis }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->kelas }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Penerbit</label>
-                                                <input required name="penerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->penerbit }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->jurusan }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kategori</label>
-                                                <input required name="kategori" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->kategori }}" disabled>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nomor_telepon }}" disabled>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Terbit</label>
-                                                <input required name="tglTerbit" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglTerbit }}" disabled>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
                                             </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Tanggal Masuk</label>
-                                                <input required name="tglMasuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->tglMasuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="floatingInput3">Kuantitas</label>
-                                                <input required name="stock_masuk" type="text" required class="form-control" id="floatingInput3"value="{{ $bookDonation->stock_masuk }}" disabled>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <label for="image" class="form-label">Cover</label>
-                                                @if ($bookDonation->image)
-                                                    <img src="{{ asset('storage/' . $bookDonation->image) }}" class="img-fluid mb-3 col-sm-5 d-block">
-                                                @else
-                                                    <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid mb-3 col-sm-4 d-block">
-                                                @endif
-                                            </div>
-                                        </form>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>Penulis</th>
+                                                        <th>Penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($donation->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if (!$bd->image)
+                                                                <span>-</span>
+                                                            @else
+                                                                <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <form action="/transaction/book-donations/cancel" method="post">
-                                            @csrf
-                                            <input type="text" name="id" hidden value="{{ $bookDonation->id }}">
-                                            <button type="submit" class="btn btn-danger">Cancel</button>
-                                        </form>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                        <a href="/transaction/book-donations/handover/{{ $donation->id }}" class="btn btn-success">Sudah Diterima</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{-- End Form Reject --}}
+
+                        <!-- cancel -->
+                        <button class="btn btn-danger btn-sm btn-cancel" type="button" data-toggle="modal" data-target="#cancel{{ $donation->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Batalkan Sumbangan">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="modal fade" id="cancel{{ $donation->id }}">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="form-floating">
+                                            <h5 class="font-weight-bold ml-3 mt-3">Detail Kode Sumbangan : {{ $donation->kode_sumbangan }}</h5>
+                                        </div>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-floating mb-3" style="text-align: center;">
+                                            <label for="floatingInput3">Yang Menyumbakan :</label>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">NIS</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nis }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Nama</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nama }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Kelas</label>
+                                            <div class="col-sm-10">
+                                                <input required name="kelas" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->kelas }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">Jurusan</label>
+                                            <div class="col-sm-10">
+                                                <input required name="jurusan" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->jurusan }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-2 col-form-label">No Telp</label>
+                                            <div class="col-sm-10">
+                                                <input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $donation->member->nomor_telepon }}" disabled>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="mt-4">
+                                            <div style="text-align: center;">
+                                                <label>Buku yang akan di sumbangkan :</label>
+                                            </div>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 10px">No</th>
+                                                        <th>ISBN</th>
+                                                        <th>Judul</th>
+                                                        <th>penulis</th>
+                                                        <th>penerbit</th>
+                                                        <th>Kategori</th>
+                                                        <th>Kuantitas</th>
+                                                        <th>cover</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($donation->bookDonation as $bd)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $bd->isbn }}</td>
+                                                        <td>{{ $bd->judul }}</td>
+                                                        <td>{{ $bd->penulis }}</td>
+                                                        <td>{{ $bd->penerbit }}</td>
+                                                        <td>{{ $bd->kategori }}</td>
+                                                        <td>{{ $bd->stok_masuk }}</td>
+                                                        <td>
+                                                            @if (!$bd->image)
+                                                                <span>-</span>
+                                                            @else
+                                                                <img src="{{ asset('storage/' . $bd->image) }}" id="img-preview" class="img-fluid img-preview mb-3 col-sm-5 d-block">
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                        <a href="/transaction/book-donations/cancel/{{ $donation->id }}" class="btn btn-danger">Batalkan Sumbangan</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
                 @endforeach

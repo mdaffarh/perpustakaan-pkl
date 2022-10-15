@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Fine;
 use App\Models\Borrow;
+use App\Models\MemberRegistration;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -30,5 +31,16 @@ class ReportController extends Controller
         }
 
         return redirect('/report/borrows');
+    }
+
+    public function memberRegistrations()
+    {
+        if (request()->tanggal_awal == request()->tanggal_akhir) {
+            return redirect('/report/borrows');
+        }
+
+        return view('report.member-registrations.index',[
+            'members' => MemberRegistration::all()
+        ]);
     }
 }

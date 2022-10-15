@@ -198,7 +198,7 @@
 										</div>
 
 										{{-- TERIMA --}}
-										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $member->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jadikan Anggota"><i class="fas fa-check"></i> </button>
+										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $member->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jadikan Anggota"><i class="fas fa-check"></i></button>
 										<div class="modal fade" id="modal-default{{ $member->id }}">
 											<div class="modal-dialog modal-lg">
 												<div class="modal-content">

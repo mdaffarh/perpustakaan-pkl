@@ -12,6 +12,7 @@ use App\Models\Stock;
 use App\Models\Member;
 use App\Models\School;
 use App\Models\StaffUser;
+use App\Models\CategoryBook;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -126,6 +127,39 @@ class DatabaseSeeder extends Seeder
 
         foreach ($majors as $major) {
             Major::create($major);
+        }    
+
+        //  category Buku
+        $categorys = 
+        [
+            [
+                'category' => 'Novel'
+            ],
+            [
+                'category' => 'Komik'
+            ],
+            [
+                'category' => 'Ensiklopedia'
+            ],
+            [
+                'category' => 'Biografi'
+            ],
+            [
+                'category' => 'Majalah'
+            ],
+            [
+                'category' => 'Kamus'
+            ],
+            [
+                'category' => 'Buku Ilmiah'
+            ],
+            [
+                'category' => 'Tafsir'
+            ],
+        ];
+
+        foreach ($categorys as $category) {
+            CategoryBook::create($category);
         }    
     }
 }

@@ -53,7 +53,6 @@
 	</div>
 
     @can('staff')
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script>
             
             $(function () {
@@ -65,57 +64,6 @@
 
         </script>
 
-        <script type="text/javascript">
-
-            $('.livesearch').select2({
-                ajax: {
-                    url: '/ajax-autocomplete-search',
-                    dataType: 'json',
-                    delay: 250,
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    nama: item.nama,
-                                    id: item.id,
-                                    nis: item.nis,
-                                    kelas: item.kelas,
-                                    jurusan: item.jurusan,
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                },
-                placeholder: 'Select Member',
-                minimumInputLength: 2,
-                templateResult: formatRepo,
-            });
-            
-            // container result
-            function formatRepo (repo) {
-                if (repo.loading) {
-                    return repo.text;
-                }
-
-                var $container = $(
-                    "<div class='select2-result-repository clearfix'>" +
-                        "<div class='select2-result-repository__meta'>" +
-                            "<div class='select2-result-repository__statistics'>" +
-                                "<div class='select2-result-repository__forks'>  NIS : " + repo.nis + "</div>" +
-                                "<div class='select2-result-repository__forks'>  Nama : " + repo.nama + "</div>" +
-                                "<div class='select2-result-repository__forks'>  Kelas : " + repo.kelas + "</div>" +
-                                "<div class='select2-result-repository__forks'>  Jurusan : " + repo.jurusan + "</div>" +
-                            "</div>" +
-                        "</div>" +
-                    "</div>"
-                );
-                    
-                return $container;
-            }
-            
-            
-        </script>
     @endcan
 
     @can('member')

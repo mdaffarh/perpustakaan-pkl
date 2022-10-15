@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\BookDonation;
+use App\Models\Donation;
 use App\Models\Borrow;
 use App\Models\MemberRegistration;
 use App\Models\StaffRegistration;
@@ -30,7 +31,7 @@ class InformationController extends Controller
     public function bookDonation()
     {
         return view('information.book-donations.index',[
-            'bookDonations' => BookDonation::latest()->get()
+            'donations' => Donation::latest()->get()
         ]);
     }
 
