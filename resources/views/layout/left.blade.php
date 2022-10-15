@@ -301,7 +301,7 @@
 
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/report/borrows" class="nav-link {{ Request::is('report/borrow*') ? 'active' : '' }}">
+                                <a href="/report/borrows/set" class="nav-link {{ Request::is('report/borrows*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Peminjaman</p>
                                 </a>
@@ -313,9 +313,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/fines" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                <a href="/report/stocks" class="nav-link {{ Request::is('report/stocks*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Pendaftaran Anggota</p>
+                                    <p>Stok</p>
                                 </a>
                             </li>
                         </ul>

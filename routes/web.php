@@ -4,6 +4,7 @@ use App\Models\BookDonation;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FineController;
+use App\Http\Controllers\FPDFController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ShiftController;
@@ -159,8 +160,13 @@ use App\Http\Controllers\MemberRegistrationController;
 
 Route::controller(ReportController::class)->group(function(){
     Route::get('/report/fines','fine')->middleware('admin');
-    Route::get('/report/borrows','borrow')->middleware('admin');
-    Route::post('/report/borrows/set','borrowSet')->middleware('admin');
+    Route::post('/report/borrows','borrow')->middleware('admin');
+    Route::get('/report/borrows/set','borrowSet')->middleware('admin');
+    Route::get('/report/stocks','stock')->middleware('admin');
+});
+
+Route::controller(FPDFController::class)->group(function(){
+    Route::get('/borrow-report','borrowReport')->middleware('admin');
 });
 
 Route::controller(InformationController::class)->group(function(){
