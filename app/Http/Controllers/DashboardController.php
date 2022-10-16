@@ -25,14 +25,20 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $random1        = Stock::inRandomOrder()->where('stok_akhir','>','0')->get();
         $borrow_su      = Borrow::where('member_id', auth()->user()->member_id)->value('id');
 
+        if ($request->filterTahun) {
+            $tahun = $request->filterTahun;
+        } else {
+            $tahun = date('Y');
+        }
+        
 
-        //chart peminjaman
-        $data           = Borrow::select('id', 'tanggal_pinjam')->get()->groupBy(function($data)
+        // chart peminjaman perbulan
+        $data           = Borrow::select('id', 'tanggal_pinjam')->whereYear('tanggal_pinjam', $tahun)->orderBy('tanggal_pinjam', 'asc')->get()->groupBy(function($data)
         {
             return Carbon::parse($data->tanggal_pinjam)->format('M');
         });
@@ -55,11 +61,12 @@ class DashboardController extends Controller
             $kategoriName[]     = $kat->kategori;
             $kategoriCount[]    = $kat->total ;
         }
-
+            
         // chart peminjaman by kelas
-        $kelas  = Borrow::join('tb_members', 'tb_members.id', '=', 'trx_borrows.member_id')->select(DB::raw('kelas, count(kelas) as total'))->groupby('kelas')->get();
+        $kelas  = Borrow::join('tb_members', 'tb_members.id', '=', 'trx_borrows.member_id')->whereYear('tanggal_pinjam', $tahun)->select(DB::raw('kelas, count(kelas) as total'))->groupby('kelas')->get();
         $className = [10,11,12,13];
         $borrowCount = [0,0,0,0];
+        
         foreach ($kelas as $class) {
             if ($class->kelas == 10) {
                 $key = 0;
@@ -78,25 +85,27 @@ class DashboardController extends Controller
             // Tampilan Anggota
             'stockBooks'    => $random1,
 
-            'stock'     => Stock::where('stok_akhir' ,'>', 0 )->count(),
-            'borrowed'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
-            'borrowReq' => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
-            'donation'  => Donation::where('member_id',auth()->user()->member_id)->count(),
-            'borrowes'  => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->count(),
-            'borrow'    => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
+            'stock'         => Stock::where('stok_akhir' ,'>', 0 )->count(),
+            'borrowed'      => Borrow::where('member_id', auth()->user()->member_id)->where('status','Disetujui')->count(),
+            'borrowReq'     => Borrow::where('member_id', auth()->user()->member_id)->where('status','Menunggu persetujuan')->count(),
+            'donation'      => Donation::where('member_id',auth()->user()->member_id)->count(),
+            'borrowes'      => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->count(),
+            'borrow'        => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
             'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
             // Tampilan Staff
-            'books'             => Book::all()->count(),
-            'members'           => Member::all()->count(),
-            'borrowRequest'     => Borrow::where('status','Menunggu persetujuan')->count(),
-            'memberall'         => Member::all()->count(),
-            'borrows'           => Borrow::where('status', 'Menunggu persetujuan')->latest()->get(),
+            'books'             => Book::whereYear('created_at', $tahun)->count(),
+            'members'           => Member::whereYear('created_at', $tahun)->count(),
+            'borrowRequest'     => Borrow::whereYear('created_at', $tahun)->where('status','Menunggu persetujuan')->count(),
+            'memberall'         => Member::whereYear('created_at', $tahun)->count(),
+            'borrows'           => Borrow::whereYear('tanggal_pinjam', $tahun)->where('status', 'Menunggu persetujuan')->latest()->get(),
             'member'            => Member::all(),
             'stocksAll'         => Stock::all(),
-            'topRankBook'       => BorrowItem::select(DB::raw('book_id, count(id) as count'))->groupby('book_id')->orderBy('count', 'desc')->get(),
+            'topRankBook'       => BorrowItem::whereYear('created_at', $tahun)->select(DB::raw('book_id, count(book_id) as count'))->groupby('book_id')->orderBy('count', 'desc')->get(),
             'memberse'          => Member::all(),
             'majors'            => Major::all(),
+            'years'             => range(2000, strftime("%Y", time())),
+            'tahun'             => $tahun,
 
             //chart peminjaman
             'data'      => $data,

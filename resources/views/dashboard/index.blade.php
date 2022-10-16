@@ -3,6 +3,32 @@
 
 @section('content')
     @include('sweetalert::alert')
+
+            <!-- filtering -->
+            @can('staff')
+                <div class="">
+                    <form action="/dashboard" method="post">
+                        @method('get')
+                        @csrf
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="offset-8 col-sm-1 col-form-label">Tahun</label>
+                            <div class="col-sm-2">
+                                <select name="filterTahun" class="form-control">
+                                    @foreach($years as $year)
+                                        @if($tahun == $year)
+                                            <option value="{{ $year }}" selected>{{ $year }}</option>
+                                        @else
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-info col-sm-1">filter</button>
+                        </div>
+                    </form>
+                </div>
+            @endcan
+            
             <div class="row">
                 <!-- ./col -->
                 @can('member')
@@ -65,65 +91,68 @@
                         </div>
                     </div>
                 @endcan
+                
 
                 @can('staff')
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-info">
-                            <div class="inner">
-                                <h3>3</h3>
-                                <p>Chart Statika</p>
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>3</h3>
+                                    <p>Chart Statika</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-chart-line"></i>
+                                </div>
+                                <a class="small-box-footer nav-link" id="home-tab" data-toggle="pill" href="#home" role="tab" aria-controls="home" aria-selected="true">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="fa fa-chart-line"></i>
-                            </div>
-                            <a class="small-box-footer nav-link"  id="nav-home-tab" data-toggle="pill" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
-                    </div>
 
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>{{ $borrowRequest }}</h3>
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>{{ $borrowRequest }}</h3>
+                        
+                                    <p>Permintaan Peminjaman</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-book-reader"></i>
+                                </div>
+                                <a class="small-box-footer nav-link"  id="borrow-tab" data-toggle="pill" href="#borrow" role="tab" aria-controls="borrow" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
+                            </div>
+                        </div>
                     
-                                <p>Permintaan Peminjaman</p>
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-gradient-red">
+                                <div class="inner">
+                                    <h3>{{ $books }}</h3>
+                                    <p>Top Rank Book</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <a class="small-box-footer  nav-link"  id="topRankBook-tab" data-toggle="pill" href="#topRankBook" role="tab"  aria-controls="topRankBook" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="fas fa-book-reader"></i>
-                            </div>
-                            <a class="small-box-footer nav-link"  id="nav-borrow-tab" data-toggle="pill" href="#nav-borrow" role="tab" aria-controls="nav-borrow" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                         </div>
-                    </div>
-                  
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-gradient-red">
-                            <div class="inner">
-                                <h3>{{ $books }}</h3>
-                                <p>Top Rank Book</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <a class="small-box-footer  nav-link"  id="nav-topRankBook-tab" data-toggle="pill" href="#nav-topRankBook" role="tab"  aria-controls="nav-topRankBook" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
-                        </div>
-                    </div>
-                  
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-warning">
-                            <div class="inner">
-                                <h3>{{ $memberall }}</h3>
                     
-                                <p>Semua Anggota</p>
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>{{ $memberall }}</h3>
+                        
+                                    <p>Semua Anggota</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a class="small-box-footer  nav-link"  id="member-tab" data-toggle="pill" href="#member" role="tab" aria-controls="member" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
                             </div>
-                            <div class="icon">
-                                <i class="ion ion-person-add"></i>
-                            </div>
-                            <a class="small-box-footer  nav-link"  id="nav-member-tab" data-toggle="pill" href="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">More info, Click Here <i class="fas fa-arrow-circle-down"></i></a>
-                        </div>
-                    </div>                                   
+                        </div>  
+                    
+                             
                             
                 @endcan
             </div>
@@ -547,28 +576,32 @@
         </div>
         {{-- Buku end --}}
 
+
         {{-- Line Chart --}}
             @can('staff')
+
+                <!-- Card -->
                 <div class="tab-content">
+
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <div class="card card-info">
-                                <div class="card-header">
-                                    <h3 class="card-title">Monthly Borrow</h3>
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <div>
-                                        <canvas id="myChart"></canvas>
-                                    </div>
+                        <div class="card card-info">
+                            <div class="card-header">
+                                <h3 class="card-title">Monthly Borrow</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <div>
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="card card-danger">
@@ -610,7 +643,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="borrow" role="tabpanel" aria-labelledby="borrow-tab">
+
+                    <!-- Card Borrowed -->
+                    <div  class="tab-pane fade" id="borrow" role="tabpanel" aria-labelledby="borrow-tab">
                         <div class="card">
                             <div class="card-header">
                                 <h3 class="font-weight-bold">Permintaan Peminjaman</h3>
@@ -1041,13 +1076,13 @@
                                 </table>
                             </div>
                         </div>
-                         
+                            
                     </div>
-                    <div class="tab-pane fade" id="topRankBook" role="tabpanel" aria-labelledby="topRankBook-tab">
+
+                    <!-- Card Top Rank Book -->
+                    <div  class="tab-pane fade" id="topRankBook" role="tabpanel" aria-labelledby="topRankBook-tab">
                         <div class="card">
                             <div class="card-body">
-                        
-                                {{-- Tabel --}}
                                 <table id="example1" class="table">
                                     <tbody>
                                         @foreach($topRankBook as $wishlist)
@@ -1094,6 +1129,9 @@
                             </div>
                         </div>
                     </div>
+                    <!-- End Card Top Rank Book -->
+
+                    <!-- Card Member -->
                     <div class="tab-pane fade" id="member" role="tabpanel" aria-labelledby="member-tab">
                         <div class="card">
                             <table id="example1" class="table table-bordered table-striped">
@@ -1313,6 +1351,8 @@
                             </table>        
                         </div>
                     </div>
+                    <!-- End Card Member -->
+
                 </div>
 
                 <script>
@@ -1398,7 +1438,7 @@
                                 label               : 'Kelas '+{{ $className[0] }},
                                 backgroundColor     : 'rgba(0,204,102,0.8)',
                                 borderColor         : 'rgba(60,141,188,0.8)',
-                                pointRadius          : false,
+                                pointRadius         : false,
                                 pointColor          : '#3b8bba',
                                 pointStrokeColor    : 'rgba(60,141,188,1)',
                                 pointHighlightFill  : '#fff',
