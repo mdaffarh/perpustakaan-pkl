@@ -12,9 +12,9 @@ class StaffRegistrationController extends Controller
     public function index(){
 
     	return view('transaction.staff-registrations.index',[
-            'staffRegistration' => StaffRegistration::all()->where('status', '0'),
-            'staffAccepted' => StaffRegistration::where('status','1')->get(),
-            'staffRejected' => StaffRegistration::where('status','2')->get()
+            'staffRegistration' => StaffRegistration::all()->where('status', '1'),
+            'staffAccepted' => StaffRegistration::where('status','2')->get(),
+            'staffRejected' => StaffRegistration::where('status','3')->get()
         ]);
     }
 
@@ -68,7 +68,8 @@ class StaffRegistrationController extends Controller
     public function approved(Request $request, StaffRegistration $staffRegistration){
         $rules = [
             'status'            => $request->status,
-            'user_verifikasi'   => auth()->user()->id
+            'user_verifikasi'   => auth()->user()->id,
+            'updated_by'   => auth()->user()->staff_id,
         ];
 
         $staff = [
@@ -83,7 +84,7 @@ class StaffRegistrationController extends Controller
 
         $validatedDataStaff     = $request->validate($staff);
 
-        $validatedData['created_by'] = auth()->user()->staff_id;
+    
 
         StaffRegistration::where('id', $request->id)->update($rules);
         Staff::create($validatedDataStaff);
@@ -96,7 +97,7 @@ class StaffRegistrationController extends Controller
         $registrasi = [
             'status'            => $request->status,
             'user_verifikasi'   => auth()->user()->id,
-            'created_by'        => auth()->user()->staff_id
+            'updated_by'        => auth()->user()->staff_id
         ];
 
         StaffRegistration::where('id', $request->id)->update($registrasi);
@@ -117,6 +118,8 @@ class StaffRegistrationController extends Controller
             'alamat'        => 'required'
         ]);
 
+        $validatedData['created_by'] = auth()->user()->staff_id;
+        $validatedData['status'] = 1;
         
         StaffRegistration::create($validatedData);
         alert()->success('success','Data akan didaftarkan setelah disetujui admin');

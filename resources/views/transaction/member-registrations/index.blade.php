@@ -117,11 +117,11 @@
 								<td>{{ $member->kelas }}</td>
 								<td>{{ $member->jurusan }}</td>
 								<td>
-									@if($member->status=="0")
+									@if($member->status=="1")
 									<span class="badge badge-warning">menunggu persetujuan</span>
-									@elseif($member->status=="1")
-									<span class="badge badge-success">Disetujui</span>
 									@elseif($member->status=="2")
+									<span class="badge badge-success">Disetujui</span>
+									@elseif($member->status=="3")
 									<span class="badge badge-danger">Ditolak</span>
 									@endif
 								</td>
@@ -257,7 +257,7 @@
 															<input hidden required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $member->tanggal_lahir }}">
 															<input hidden required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $member->nomor_telepon }}">
 															<input hidden required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}">
-															<input hidden required name="status" value="1">
+															<input hidden required name="status" value="2">
 															<button class="btn btn-success" type="submit" title="Detail Peminjaman">Jadikan Anggota</i></button>
 														</form>
 													</div>
@@ -325,7 +325,7 @@
 														<form action="/transaction/member-registrations/tolak/{member-id}" method="post" enctype="multipart/form-data">
 															@csrf
 															<input hidden required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $member->id }}">
-															<input hidden required name="status" value="2">
+															<input hidden required name="status" value="3">
 															<button class="btn btn-danger" type="submit">Tolak Pendaftaran</button>
 														</form>
 													</div>

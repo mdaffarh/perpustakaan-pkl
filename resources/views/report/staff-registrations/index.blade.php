@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Report Pendaftaran Anggota")
+@section('title', "Report Pendaftaran Staff")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -24,23 +24,17 @@
                 <div class="card-body">
 					<div class="">
 						<div class="btn-group">
-							<a href="/report/member-registrations/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
-							<form action="/member-registration-report" method="get" target="__blank">
+							<a href="/report/staff-registrations/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
+							<form action="/staff-registration-report" method="get" target="__blank">
 								@csrf
 								@if ($tanggal_awal != NULL)
-								<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
+									<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
 								@endif
 								@if ($tanggal_akhir != NULL)
-								<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
+									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
 								@endif
 								@if ($status != NULL)
-								<input type="hidden" name="status" value="{{ $status }}">
-								@endif
-								@if ($kelas != NULL)
-									<input type="hidden" name="kelas" value="{{ $kelas }}">
-								@endif
-								@if ($jurusan != NULL)
-									<input type="hidden" name="jurusan" value="{{ $jurusan }}">
+									<input type="hidden" name="status" value="{{ $status }}">
 								@endif
 								@if ($jenis_kelamin != NULL)
 									<input type="hidden" name="jenis_kelamin" value="{{ $jenis_kelamin }}">
@@ -57,43 +51,43 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>NIS</th>
+								<th>NIP</th>
 								<th>Nama</th>
+								<th>Email</th>
 								<th>Jenis Kelamin</th>
-								<th>Kelas</th>
-								<th>Jurusan</th>
 								<th>Tanggal Lahir</th>
+								<th>Nomor Telepon</th>
 								<th>Alamat</th>
 								<th>Tanggal Pendaftaran</th>
 								<th>Status</th>
-								<th>Nama Penjaga</th>
+								<th>Nama Admin</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($memberRegistrations as $member)
+							@foreach($staffRegistrations as $staff)
 								<tr>
 									<td>{{ $loop->iteration }}</td>
 									<td>
-										{{ $member->nis }}
+										{{ $staff->nip }}
 									</td>
-									<td>{{ $member->nama }}</td>
-									<td>{{ $member->jenis_kelamin }}</td>
-									<td>{{ $member->kelas }}</td>
-									<td>{{ $member->jurusan }}</td>
-									<td>{{ $member->tanggal_lahir }}</td>
-									<td>{{ $member->alamat }}</td>
-									<td>{{ $member->created_at }}</td>
+									<td>{{ $staff->nama }}</td>
+									<td>{{ $staff->email }}</td>
+									<td>{{ $staff->jenis_kelamin }}</td>
+									<td>{{ $staff->tanggal_lahir }}</td>
+									<td>{{ $staff->nomor_telepon }}</td>
+									<td>{{ $staff->alamat }}</td>
+									<td>{{ $staff->created_at }}</td>
 									<td>
-										@if ($member->status == 2)
+										@if ($staff->status == 2)
 											Diterima
-										@elseif($member->status == 3)
+										@elseif($staff->status == 3)
 											Ditolak
 										@else
 											Menunggu persetujuan
 										@endif
 									</td>
 									<td>
-										{{ $member->editor ? $member->editor->nama : $member->creator->nama}}
+										{{ $staff->editor ? $staff->editor->nama : $staff->creator->nama}}
 									</td>
 								</tr>
 							@endforeach

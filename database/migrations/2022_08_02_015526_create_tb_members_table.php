@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('tb_members', function (Blueprint $table) {
             // nis nama jenis_kelamin kelas jurusan tanggal_lahir nomor_telepon alamat
             $table->id();
-            $table->bigInteger('nis');//harusnya unique ini test doang
+            $table->bigInteger('nis')->unique();
             $table->string('nama');
             $table->string('jenis_kelamin');//
             $table->string('kelas');//

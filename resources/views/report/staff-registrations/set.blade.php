@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Report Pendaftaran Anggota")
+@section('title', "Report Pendaftaran Staff")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -23,7 +23,7 @@
                     </div><!-- /.container-fluid -->
 				</div>                    
                 <div class="card-body">
-                    <form action="/report/member-registrations" method="post">
+                    <form action="/report/staff-registrations" method="post">
                         @csrf
                         <div class="input-group">
                             <div class="form-floating mb-3" style="width: 50%;">
@@ -52,27 +52,6 @@
                                     </option>
                                 @endforeach
                             </select>
-                        </div>
-
-                        <div class="input-group">
-                            <div class="form-floating mb-3" style="width: 50%;">
-                                <label for="floatingInput3">Kelas</label>
-                                <select name="kelas" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($classes as $class)
-                                        <option value="{{ $class->kelas }}">{{ $class->kelas }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-floating mb-3" style="width: 50%;">
-                                <label for="floatingInput3">Jurusan</label>
-                                <select name="jurusan" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($majors as $major)
-                                        <option value="{{ $major->jurusan }}">{{ $major->jurusan }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
                         </div>
 
                         <div class="input-group">

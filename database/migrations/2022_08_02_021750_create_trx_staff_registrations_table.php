@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('trx_staff_registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('nip')->unique();
+            $table->string('nip');
             $table->string('nama');
             $table->string('email');
             $table->string('jenis_kelamin');//

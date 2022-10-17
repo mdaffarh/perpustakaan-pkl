@@ -167,6 +167,9 @@ Route::controller(ReportController::class)->group(function(){
 
     Route::post('/report/member-registrations','memberRegistration')->middleware('admin');
     Route::get('/report/member-registrations/set','memberRegistrationSet')->middleware('admin');
+
+    Route::post('/report/staff-registrations','staffRegistration')->middleware('admin');
+    Route::get('/report/staff-registrations/set','staffRegistrationSet')->middleware('admin');
     
     Route::get('/report/donations','donations')->middleware('admin');
 });
@@ -175,6 +178,7 @@ Route::controller(FPDFController::class)->group(function(){
     Route::get('/borrow-report','borrowReport')->middleware('admin');
     Route::get('/return-report','returnReport')->middleware('admin');
     Route::get('/member-registration-report','memberRegistrationReport')->middleware('admin');
+    Route::get('/staff-registration-report','staffRegistrationReport')->middleware('admin');
 });
 
 Route::controller(InformationController::class)->group(function(){
