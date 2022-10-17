@@ -70,10 +70,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($borrow->updated_by == NULL)
+                                            @if ($borrow->updated_by)
+                                                {{  $borrow->editor->nama }}    
+                                            @elseif($borrow->created_by)
                                                 {{ $borrow->creator->nama }}
                                             @else
-                                                {{  $borrow->editor->nama }}    
+                                                -
                                             @endif
                                         </td>
                                         <td>
@@ -128,11 +130,13 @@
                                                                     <div class="row mx-md-n3">
                                                                         <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
                                                                         <div class="col px-md-5"><div class="p-2">: 
-                                                                            @if ($borrow->updated_by == NULL)
+                                                                            @if ($borrow->updated_by)
+                                                                                {{  $borrow->editor->nama }}    
+                                                                            @elseif($borrow->created_by)
                                                                                 {{ $borrow->creator->nama }}
                                                                             @else
-                                                                                {{  $borrow->editor->nama }}    
-                                                                            @endif   
+                                                                                -
+                                                                            @endif
                                                                         </div></div>
                                                                     </div>
                                                                     

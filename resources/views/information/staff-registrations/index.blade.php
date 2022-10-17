@@ -148,7 +148,7 @@
                                     </thead>
                                     <tbody>
                                             <tr>
-                                                <td>{{ $loop->iteration }}</td>
+                                                <td>1</td>
                                                 <td>{{  $staff->nip }}</td>
                                                 <td>{{ $staff->nama }}</td>
                                                 <td>{{ $staff->jenis_kelamin }}</td>

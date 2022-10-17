@@ -178,12 +178,12 @@
                             </li>
 
                             <!-- Table Shift Jaga -->
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="/table/shifts" class="nav-link {{ Request::is('table/shifts*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Shift Jaga</p>
                                 </a>
-                            </li>    
+                            </li>     --}}
 
                             <li class="nav-item">
                                 <a href="/table/schools" class="nav-link {{ Request::is('table/schools*') ? 'active' : '' }}">
@@ -272,14 +272,14 @@
                                 </a>
                             </li> 
                             <li class="nav-item">
-                                <a href="/information/member-registrations" class="nav-link {{ Request::is('/information/member-registrations*') ? 'active' : '' }}">
+                                <a href="/information/member-registrations" class="nav-link {{ Request::is('information/member-registrations*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pendaftaran Anggota</p>
                                 </a>
                             </li> 
                             @can('admin')
                                 <li class="nav-item">
-                                    <a href="/information/staff-registrations" class="nav-link {{ Request::is('/information/staff-registrations*') ? 'active' : '' }}">
+                                    <a href="/information/staff-registrations" class="nav-link {{ Request::is('information/staff-registrations*') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Pendaftaran Staff</p>
                                     </a>

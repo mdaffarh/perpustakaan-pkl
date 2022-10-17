@@ -59,8 +59,8 @@
 													<label for="floatingInput3">Role</label>
 													<select name="role" type="text" required class="select2 form-control @error('role') is-invalid @enderror " id="floatingInput3" value="{{ old('role') }}">
 														<option disabled selected>Pilih Role</option>
-														<option>admin</option>
-														<option>penjaga</option>
+														<option>Admin</option>
+														<option>Penjaga</option>
 													</select>
 												</div>
 												<div class="input-group">
@@ -130,16 +130,15 @@
 																	<label for="floatingInput3">Password</label>
 																	<input required name="password" type="password" required class="form-control" id="floatingInput3" value="{{ $staffUser->password }}">
 																</div>
-																<div class="form-floating mb-3">
+																{{-- <div class="form-floating mb-3">
 																	<label for="floatingInput3">Role</label>
 																	<input required name="role" type="text" required class="form-control" id="floatingInput3" value="{{ $staffUser->role }}">
-																</div>
+																</div> --}}
 																<div class="form-floating mb-3">
 																	<label for="floatingInput3">Role</label>
 																	<select name="role" type="text" required class="select2 form-control" id="floatingInput3" value="{{ $staffUser->role }}">
-																		<option disabled selected>{{ $staffUser->role }}</option>
-																		<option>admin</option>
-																		<option>penjaga</option>
+																		<option {{ $staffUser->role == "admin" ? "selected" : '' }}>Admin</option>
+																		<option {{ $staffUser->role != "admin" ? "selected" : '' }}>Penjaga</option>
 																	</select>
 																</div>
 																<div class="input-group">
