@@ -7,6 +7,8 @@ use App\Models\Fine;
 use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\Returns;
+use App\Models\Donation;
+use App\Models\BookDonation;
 use Illuminate\Http\Request;
 use App\Models\StaffRegistration;
 use App\Models\MemberRegistration;
@@ -235,6 +237,16 @@ class ReportController extends Controller
         ]);
     }
 
+<<<<<<< HEAD
+    // report donasi
+    public function donations(Request $request)
+    {
+        return view('report.donations.index',[
+            'donations'     => Donation::all(),
+            'bookDonations' => BookDonation::all()
+        ]);
+    }
+=======
     // Pendaftaran Staff
     public function staffRegistration()
     {
@@ -311,4 +323,5 @@ class ReportController extends Controller
     }
 
 
+>>>>>>> c8dea68f4126608fab8d8a0ccda39530c3dc75ef
 }

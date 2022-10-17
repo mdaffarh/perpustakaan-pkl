@@ -407,4 +407,118 @@ class FPDFController extends Controller
         $pdf->output('I','Report Pendaftaran Staff '.$now.'.pdf',false);
         exit;
 	}
+
+    // Donasi
+    public function donations(Request $request)
+    {
+        // Ambil data sesuai filter
+        $donation =  MemberRegistration::when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+            $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+            return $q->whereBetween(('created_at'),[request()->tanggal_awal,$endDate]);
+            })
+            ->when(request()->tanggal_akhir, function($q){
+                $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+                return $q->whereBetween('created_at',[0000-00-00, $endDate]);
+            })
+            ->when(request()->tanggal_awal, function($q){
+                return $q->whereBetween('created_at',[request()->tanggal_awal,'2099-10-17']);
+            })
+            ->when(request()->status, function($q){
+                return $q->where('status',request()->status);
+            })
+            ->when(request()->kelas,function($q){
+                return $q->where('kelas',request()->kelas);
+            })
+            ->when(request()->jurusan,function($q){
+                return $q->where('jurusan',request()->jurusan);
+            })
+            ->when(request()->jenis_kelamin,function($q){
+                return $q->where('jenis_kelamin',request()->jenis_kelamin);
+            })
+            ->when(request()->tahun_lahir,function($q){
+                return $q->where(DB::raw('YEAR(tanggal_lahir)'),request()->tahun_lahir);
+            })
+            ->when(true, function($q){
+                return $q->where('id','!=',NULL);
+        })
+        ->get();
+        
+        // FPDF
+        $pdf = new Fpdf('L','mm','A4');
+        
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        // Header
+            // Judul
+            $pdf->SetFont('Helvetica','B',16);
+            $pdf->Cell(275,0,'Report Pendaftaran Anggota',0,0,'C',0);
+            $pdf->Ln(6);
+
+            //Keterangan kelas jurusan jenis kelamin tanggal lahir
+            $kelas = (request()->kelas ? 'Kelas : '.request()->kelas.' | ' : '');
+            $jurusan = (request()->jurusan ? 'Jurusan : '.request()->jurusan.' | ' : '');
+            $jenis_kelamin = (request()->jenis_kelamin ? 'Jenis Kelamin : '.request()->jenis_kelamin.' | ' : '');
+            $tahun_lahir = (request()->tahun_lahir ? 'Tahun Lahir : '.request()->tahun_lahir.' | ' : '');
+            $status = "";
+            if (request()->status == 1) {
+                $status = " | Status : Disetujui";
+            }elseif(request()->status == 2){
+                $status = " | Status : Ditolak";
+            }else{
+                $status = " | Status : Menunggu persetujuan";
+            }
+
+            $tanggal_awal = (request()->tanggal_awal ? Carbon::parse(request('tanggal_awal'))->format('d/m/Y') : '');
+            $tanggal_akhir = (request()->tanggal_akhir ? Carbon::parse(request('tanggal_akhir'))->format('d/m/Y') : '');
+
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell(275,0,'( '.$kelas.$jurusan.$jenis_kelamin.$tahun_lahir.'Tanggal : '.$tanggal_awal.' - '.$tanggal_akhir.$status.' ) ',0,0,'C',0);    
+            $pdf->Ln(10);
+     
+        // Field dan isi data
+        $fields = ['No.','NIS','Nama','Jenis Kelamin','Kelas','Jurusan','Tanggal Lahir','Tanggal Pendaftaran','Status','Nama Penjaga'];
+        $fieldWidth = [8,30,50,25,13,15,35,35,20,45]; //275
+
+        foreach ($fields as $key => $value) {
+            $pdf->SetFont('Helvetica','',10);
+            if ( $key == 0 || $key == 8) {
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'C',0);
+            }elseif($key == 6 || $key == 7){
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'R',0);
+            }else{
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'L',0);
+            }
+        }
+            
+        $no = 1;
+        foreach ($donation as $key => $member) {
+            if ($member->status == 1) {
+                $status = "Disetujui";
+            }elseif($member->status == 2){
+                $status = "Ditolak";
+            }else{
+                $status = "Menunggu persetujuan";
+            }
+            $pdf->Ln(8);
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell($fieldWidth[0],8,$no,1,0,'C',0);
+            $pdf->Cell($fieldWidth[1],8,$member->nis,1,0,'L',0);
+            $pdf->Cell($fieldWidth[2],8,$member->nama,1,0,'L',0);
+            $pdf->Cell($fieldWidth[3],8,$member->jenis_kelamin,1,0,'L',0);
+            $pdf->Cell($fieldWidth[4],8,$member->kelas,1,0,'L',0);
+            $pdf->Cell($fieldWidth[5],8,$member->jurusan,1,0,'L',0);
+            $pdf->Cell($fieldWidth[6],8,Carbon::parse($member->tanggal_lahir)->format('d/m/Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[7],8,Carbon::parse($member->created_at)->format('d/m/Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[8],8,$status,1,0,'C',0);
+            $pdf->Cell($fieldWidth[9],8, $member->editor ? $member->editor->nama : $member->creator->nama ,1,0,'L',0);
+            $no++;
+        
+        }
+
+
+        $now = Carbon::now();
+        $pdf->output('I','Report Pengembalian Buku '.$now.'.pdf',false);
+        exit;
+	}
 }

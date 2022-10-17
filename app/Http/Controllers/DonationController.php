@@ -67,7 +67,9 @@ class DonationController extends Controller
                 'stok_masuk'    => $request->kuatitas[$key]
             ];
 
-            if($request->image[$key]){
+            if ($request->image[$key] == "NULL") {
+            }
+            else {
                 $bukuDonasi['image'] = $request->image[$key]->store('images');
             }
 
@@ -118,8 +120,11 @@ class DonationController extends Controller
                 'tglMasuk'      => $request->tanggal_masuk[$key],
                 'stok_masuk'   => $request->kuatitas[$key]
             ];
-
-            if($request->image[$key]){
+            
+            if ($request->image[$key] == "NULL") {
+                # code...
+            }
+            else{
 
                 if ($request->oldImage[$key]){
                     Storage::delete($request->oldImage);

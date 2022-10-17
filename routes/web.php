@@ -171,7 +171,7 @@ Route::controller(ReportController::class)->group(function(){
     Route::post('/report/staff-registrations','staffRegistration')->middleware('admin');
     Route::get('/report/staff-registrations/set','staffRegistrationSet')->middleware('admin');
     
-
+    Route::get('/report/donations','donations')->middleware('admin');
 });
 
 Route::controller(FPDFController::class)->group(function(){

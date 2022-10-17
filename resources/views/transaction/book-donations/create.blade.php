@@ -99,7 +99,7 @@
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Foto</label>
                                     <div class="col-sm-10">
                                         <div class="custom-file">
-                                            <input id="imageAdd" name="image[]" class="form-control @error('image') is-invalid @enderror" type="file" onchange="previewImageAdd()" value="{{ old('image') }}"/>
+                                            <input id="imageAdd" name="image[]" class="form-control" type="file" onchange="previewImageAdd()"/>
                                         </div>
                                     </div>
                                     <img class="img-preview-add mb-3 col-sm-3 img-fluid">
@@ -200,7 +200,7 @@
                                     <label for="inputPassword3" class="col-sm-2 col-form-label">Foto</label>
                                     <div class="col-sm-10">
                                         <div class="custom-file">
-                                            <input id="imageAdd" name="image[]" class="form-control @error('image') is-invalid @enderror" type="file" onchange="previewImageAdd()" value="{{ old('image') }}"/>
+                                            <input id="imageAdd" name="image[]" class="form-control" type="file" onchange="previewImageAdd()" />
                                         </div>
                                     </div>
                                     <img class="img-preview-add mb-3 col-sm-3 img-fluid">
