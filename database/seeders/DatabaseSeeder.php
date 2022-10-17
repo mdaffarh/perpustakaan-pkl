@@ -9,10 +9,12 @@ use App\Models\User;
 use App\Models\Major;
 use App\Models\Staff;
 use App\Models\Stock;
+use App\Models\Borrow;
 use App\Models\Member;
 use App\Models\School;
 use App\Models\StaffUser;
 use App\Models\CategoryBook;
+use App\Models\Returns;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,17 +26,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        
         // Anggota dan Staff
         Member::factory(20)->create();
         Staff::factory(10)->create();
-
+        
         // Buku dan Stock
         foreach (range(11, 30) as $iteration) {
             $randomNumber = rand(10000000000,99999999999);
             $isbn = $randomNumber.$iteration;
             Book::factory(1)->create(['isbn' => $isbn]);
         }
-
+        
+        // Borrow factory 
+        foreach (range(11, 70) as $iteration) {
+            $randomNumber = rand(1000,9999);
+            $randomNumber2 = rand(1000,9999);
+            $kode = $randomNumber.'/PB/'.$randomNumber2.$iteration;
+            Borrow::factory(1)->create(['kode_peminjaman' => $kode]);
+        }
+        
+        // Return factory 
+        foreach (range(11, 60) as $iteration) {
+            $randomNumber = rand(1000,9999);
+            $randomNumber2 = rand(1000,9999);
+            $kode = $randomNumber.'/RB/'.$randomNumber2.$iteration;
+            Returns::factory(1)->create(['kode_pengembalian' => $kode , 'borrow_id' => $iteration]);
+        }
         
         foreach (range(1, 20) as $iteration) {
             Stock::factory(1)->create(['book_id' => $iteration]);

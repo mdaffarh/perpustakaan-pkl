@@ -47,8 +47,8 @@
                                                 {{ $return->kode_pengembalian }}
                                             </button>
                                         </td>
-                                        <td>{{  $return->borrow->member->nis }}</td>
-                                        <td>{{  $return->borrow->member->nama }}</td>
+                                        <td>{{  $return->member->nis }}</td>
+                                        <td>{{  $return->member->nama }}</td>
                                         <td>{{  $return->borrow->tanggal_pinjam }}</td>
                                         <td>{{  $return->borrow->tanggal_tempo }}</td>
                                         <td>
@@ -64,7 +64,7 @@
                                                         @csrf
                                                         <div style="display: none;">
                                                             <input name="borrow_id" value="{{  $return->borrow->id }}">
-                                                            <input name="member_id" value="{{  $return->borrow->member->id }}">
+                                                            <input name="member_id" value="{{  $return->memberid }}">
                                                         </div>
                                                         <button class="btn btn-success btn-sm" type="submit" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pengembalian Buku"><i class="fas fa-arrow-down"></i></button>
                                                     </form> 
@@ -88,15 +88,15 @@
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">NIS</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nis }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nis }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nama }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nama }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->kelas }} {{  $return->borrow->member->jurusan }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->kelas }} {{  $return->member->jurusan }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>

@@ -25,7 +25,7 @@
                 <div class="card-body">
 					<div class="">
 						<div class="btn-group">
-							<a href="/report/borrows/set" class="btn btn-warning mr-1">Kembali</a>
+							<a href="/report/borrows/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
 							<form action="/borrow-report" method="get" target="__blank">
 								@csrf
 								@if ($member_id != NULL)
@@ -40,7 +40,7 @@
 								@if ($tanggal_akhir != NULL)
 									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
 								@endif
-								<button type="submit" class="btn btn-success">Cetak</button>
+								<button type="submit" class="btn btn-success">Cetak <i class="fas fa-print"></i></button>
 							</form>
 						</div>
 						
@@ -70,7 +70,7 @@
 									<td>{{ $borrow->tanggal_pinjam }}</td>
 									<td>{{ $borrow->tanggal_tempo }}</td>
 									<td>{{ $borrow->status }}</td>
-									<td>{{ $borrow->creator->nama }}</td>
+									<td>{{ $borrow->editor ? $borrow->editor->nama : $borrow->creator->nama}}</td>
 								</tr>
 							@endforeach
 						</tbody>

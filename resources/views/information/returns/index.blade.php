@@ -48,8 +48,8 @@
                                                 {{  $return->kode_pengembalian }}
                                             </button>
                                         </td>
-                                        <td>{{  $return->borrow->member->nis }}</td>
-                                        <td>{{  $return->borrow->member->nama }}</td>
+                                        <td>{{  $return->member->nis }}</td>
+                                        <td>{{  $return->member->nama }}</td>
                                         <td>{{  $return->borrow->tanggal_tempo }}</td>
                                         <td>
                                             @if ($return->tanggal_kembali == "0000-00-00")
@@ -94,15 +94,15 @@
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">NIS</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nis }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nis }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->nama }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nama }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->member->kelas }} {{  $return->borrow->member->jurusan }}</div></div>
+                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->kelas }} {{  $return->member->jurusan }}</div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>

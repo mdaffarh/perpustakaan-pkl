@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Report Pendaftaran Anggota")
+@section('title', "Report Peminjaman Buku")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -24,29 +24,20 @@
                 <div class="card-body">
 					<div class="">
 						<div class="btn-group">
-							<a href="/report/member-registrations/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
-							<form action="/member-registration-report" method="get" target="__blank">
+							<a href="/report/returns/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
+							<form action="/return-report" method="get" target="__blank">
 								@csrf
-								@if ($tanggal_awal != NULL)
-								<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
-								@endif
-								@if ($tanggal_akhir != NULL)
-								<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
+								@if ($member_id != NULL)
+									<input type="hidden" name="member_id" value="{{ $member_id }}">
 								@endif
 								@if ($status != NULL)
-								<input type="hidden" name="status" value="{{ $status }}">
+									<input type="hidden" name="status" value="{{ $status }}">
 								@endif
-								@if ($kelas != NULL)
-									<input type="hidden" name="kelas" value="{{ $kelas }}">
+								@if ($tanggal_awal != NULL)
+									<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
 								@endif
-								@if ($jurusan != NULL)
-									<input type="hidden" name="jurusan" value="{{ $jurusan }}">
-								@endif
-								@if ($jenis_kelamin != NULL)
-									<input type="hidden" name="jenis_kelamin" value="{{ $jenis_kelamin }}">
-								@endif
-								@if ($tahun_lahir != NULL)
-									<input type="hidden" name="tahun_lahir" value="{{ $tahun_lahir }}">
+								@if ($tanggal_akhir != NULL)
+									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
 								@endif
 								<button type="submit" class="btn btn-success">Cetak <i class="fas fa-print"></i></button>
 							</form>
@@ -57,43 +48,27 @@
 						<thead>
 							<tr>
 								<th>No</th>
+								<th>Kode Pengembalian</th>
 								<th>NIS</th>
-								<th>Nama</th>
-								<th>Jenis Kelamin</th>
-								<th>Kelas</th>
-								<th>Jurusan</th>
-								<th>Tanggal Lahir</th>
-								<th>Alamat</th>
-								<th>Tanggal Pendaftaran</th>
+								<th>Nama Peminjam</th>
+								<th>Tanggal Kembali</th>
 								<th>Status</th>
 								<th>Nama Penjaga</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($memberRegistrations as $member)
+							@foreach($returns as $return)
 								<tr>
 									<td>{{ $loop->iteration }}</td>
 									<td>
-										{{ $member->nis }}
+										{{ $return->kode_pengembalian }}
 									</td>
-									<td>{{ $member->nama }}</td>
-									<td>{{ $member->jenis_kelamin }}</td>
-									<td>{{ $member->kelas }}</td>
-									<td>{{ $member->jurusan }}</td>
-									<td>{{ $member->tanggal_lahir }}</td>
-									<td>{{ $member->alamat }}</td>
-									<td>{{ $member->created_at }}</td>
+									<td>{{ $return->member->nis }}</td>
+									<td>{{ $return->member->nama }}</td>
+									<td>{{ $return->tanggal_kembali }}</td>
+									<td>{{ ($return->dikembalikan == "Sudah") ? "Selesai" : "Belum dikembalikan"}}</td>
 									<td>
-										@if ($member->status == 1)
-											Diterima
-										@elseif($member->status == 2)
-											Ditolak
-										@else
-											Menunggu persetujuan
-										@endif
-									</td>
-									<td>
-										{{ $member->editor ? $member->editor->nama : $member->creator->nama}}
+										{{ $return->editor ? $return->editor->nama : $return->creator->nama}}
 									</td>
 								</tr>
 							@endforeach
@@ -116,6 +91,15 @@
                 "autoWidth": false,
                 "responsive": true,
 			});
+			// $('#example1').DataTable({
+			//   "paging": true,
+			//   "lengthChange": false,
+			//   "searching": false,
+			//   "ordering": true,
+			//   "info": true,
+			//   "autoWidth": false,
+			//   "responsive": true,
+			// });
 		});
     </script>
 @endsection

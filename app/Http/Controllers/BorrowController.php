@@ -344,7 +344,8 @@ class BorrowController extends Controller
             'borrow_id' => request()->id,
             'kode_pengembalian'   => $dm."/RB/".$yis,
             'dikembalikan' => "Belum",
-            'created_by' => auth()->user()->staff_id
+            'created_by' => auth()->user()->staff_id,
+            'member_id' => request()->member_id
         ]);
 
         alert()->success('Buku telah Di ambil!','Success');

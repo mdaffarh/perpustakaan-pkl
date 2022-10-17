@@ -14,11 +14,16 @@ class Returns extends Model
         'id'
     ];
 
-    protected $with = ['borrow','creator','editor'];
+    protected $with = ['borrow','creator','editor','member'];
 
     public function borrow()
     {
         return $this->belongsTo(Borrow::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
     }
 
     public function creator()

@@ -159,14 +159,22 @@ use App\Http\Controllers\MemberRegistrationController;
     });
 
 Route::controller(ReportController::class)->group(function(){
-    Route::get('/report/fines','fine')->middleware('admin');
     Route::post('/report/borrows','borrow')->middleware('admin');
     Route::get('/report/borrows/set','borrowSet')->middleware('admin');
-    Route::get('/report/stocks','stock')->middleware('admin');
+
+    Route::post('/report/returns','return')->middleware('admin');
+    Route::get('/report/returns/set','returnSet')->middleware('admin');
+
+    Route::post('/report/member-registrations','memberRegistration')->middleware('admin');
+    Route::get('/report/member-registrations/set','memberRegistrationSet')->middleware('admin');
+    
+
 });
 
 Route::controller(FPDFController::class)->group(function(){
     Route::get('/borrow-report','borrowReport')->middleware('admin');
+    Route::get('/return-report','returnReport')->middleware('admin');
+    Route::get('/member-registration-report','memberRegistrationReport')->middleware('admin');
 });
 
 Route::controller(InformationController::class)->group(function(){

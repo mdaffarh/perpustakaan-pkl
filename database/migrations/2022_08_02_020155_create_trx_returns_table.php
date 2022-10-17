@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('trx_returns', function (Blueprint $table) {
             $table->id();
             $table->foreignId('borrow_id')->unique();
+            $table->foreignId('member_id');
             $table->string('kode_pengembalian');
             $table->string('dikembalikan');
             $table->date('tanggal_kembali');

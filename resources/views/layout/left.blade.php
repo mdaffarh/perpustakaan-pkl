@@ -307,15 +307,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/fines" class="nav-link {{ Request::is('report/fine*') ? 'active' : '' }}">
+                                <a href="/report/returns/set" class="nav-link {{ Request::is('report/returns*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Denda</p>
+                                    <p>Pengembalian</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/report/stocks" class="nav-link {{ Request::is('report/stocks*') ? 'active' : '' }}">
+                                <a href="/report/member-registrations/set" class="nav-link {{ Request::is('report/member-registrations*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Stok</p>
+                                    <p>Pendaftaran Anggota</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/report/staff-registrations/set" class="nav-link {{ Request::is('report/staff-registrations*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Pendaftaran Staff</p>
                                 </a>
                             </li>
                         </ul>

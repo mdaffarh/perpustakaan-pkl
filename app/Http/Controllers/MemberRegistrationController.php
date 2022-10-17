@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Major;
 use App\Models\Member;
 use App\Models\MemberRegistration;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class MemberRegistrationController extends Controller
         return view('transaction.member-registrations.index',[
             'memberRegistration' => MemberRegistration::all()->where('status', '0'),
             'memberAccepted'     => MemberRegistration::where('status','1')->get(),
-            'memberRejected'     => MemberRegistration::where('status','2')->get()
+            'memberRejected'     => MemberRegistration::where('status','2')->get(),
+            'majors' => Major::all()
         ]);
     }
 
@@ -77,11 +79,12 @@ class MemberRegistrationController extends Controller
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required'
+            'alamat'=> 'required',
         ];
 
         $validatedData = $request->validate($rules);
         $validatedDataMember = $request->validate($member);
+        $validatedDataMember['status'] = 1;
 
         $validatedData['created_by'] = auth()->user()->staff_id;
 

@@ -295,6 +295,7 @@
                                                                     <form action="/transaction/pengambilan_buku/{{ $borrow->id }}" method="post">
                                                                         @csrf
                                                                         <input type="text" name="id" hidden value="{{ $borrow->id }}">
+                                                                        <input type="text" name="member_id" hidden value="{{ $borrow->member_id }}">
                                                                         <button type="submit" class="btn btn-success">Diambil</button>
                                                                     </form>
                                                                 </div>
