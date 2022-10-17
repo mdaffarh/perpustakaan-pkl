@@ -42,7 +42,7 @@ use App\Http\Controllers\MemberRegistrationController;
     })->middleware('auth');
 
 // Dashboard
-    Route::resource('/dashboard', DashboardController::class)->middleware('auth'); 
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth'); 
 
 // Profile
     Route::controller(ProfileController::class)->group(function(){
