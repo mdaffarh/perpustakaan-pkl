@@ -12,9 +12,9 @@ class MemberRegistrationController extends Controller
     public function index()
     {
         return view('transaction.member-registrations.index',[
-            'memberRegistration' => MemberRegistration::all()->where('status', '0'),
-            'memberAccepted'     => MemberRegistration::where('status','1')->get(),
-            'memberRejected'     => MemberRegistration::where('status','2')->get(),
+            'memberRegistration' => MemberRegistration::all()->where('status', '1'),
+            'memberAccepted'     => MemberRegistration::where('status','2')->get(),
+            'memberRejected'     => MemberRegistration::where('status','3')->get(),
             'majors' => Major::all()
         ]);
     }
@@ -36,7 +36,7 @@ class MemberRegistrationController extends Controller
             'nomor_telepon'=> 'required',
             'alamat'=> 'required'
         ]);
-
+        $validatedData['status'] = 1;
         MemberRegistration::create($validatedData);
         alert()->success('Success','Data akan didaftarkan setelah disetujui staff');
 
@@ -46,7 +46,6 @@ class MemberRegistrationController extends Controller
 
     public function directStore(Request $request)
     {
-
         $validatedData = $request->validate([
             'nis' => 'required|unique:tb_members',
             'nama' => 'required',
@@ -57,7 +56,8 @@ class MemberRegistrationController extends Controller
             'nomor_telepon'=> 'required',
             'alamat'=> 'required'
         ]);
-
+        $validatedData['status'] = 1;
+        $validatedData['created_by'] = auth()->user()->staff_id;
         MemberRegistration::create($validatedData);
 
         toast('Data anggota telah ditambahkan!','success');
@@ -79,14 +79,13 @@ class MemberRegistrationController extends Controller
             'jurusan' => 'required',
             'tanggal_lahir' => 'required',
             'nomor_telepon'=> 'required',
-            'alamat'=> 'required',
+            'alamat'=> 'required'
         ];
 
         $validatedData = $request->validate($rules);
         $validatedDataMember = $request->validate($member);
-        $validatedDataMember['status'] = 1;
 
-        $validatedData['created_by'] = auth()->user()->staff_id;
+        $validatedData['updated_by'] = auth()->user()->staff_id;
 
         MemberRegistration::where('id', $request->id)->update($validatedData);
         Member::create($validatedDataMember);
@@ -98,7 +97,7 @@ class MemberRegistrationController extends Controller
     public function tolak(Request $request, MemberRegistration $memberRegistration){
         $registrasi = [
             'status' => $request->status,
-            'created_by' =>  auth()->user()->staff_id
+            'updated_by' => auth()->user()->staff_id
         ];
 
 

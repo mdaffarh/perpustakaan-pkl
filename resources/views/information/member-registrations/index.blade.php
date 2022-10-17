@@ -34,6 +34,7 @@
                                     <th>Kelas</th>
                                     <th>Jurusan</th>
                                     <th>Status</th>
+                                    <th>Nama Penjaga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -50,13 +51,16 @@
                                         <td>{{ $member->kelas }}</td>
                                         <td>{{ $member->jurusan }}</td>
                                         <td>
-                                            @if($member->status=="0")
-                                            <span class="badge badge-warning">menunggu persetujuan</span>
-                                            @elseif($member->status=="1")
-                                            <span class="badge badge-success">Disetujui</span>
+                                            @if($member->status=="1")
+                                            <span class="badge badge-warning">Menunggu persetujuan</span>
                                             @elseif($member->status=="2")
+                                            <span class="badge badge-success">Disetujui</span>
+                                            @elseif($member->status=="3")
                                             <span class="badge badge-danger">Ditolak</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            {{ $member->editor ? $member->editor->nama : $member->creator->nama }}
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
@@ -110,6 +114,10 @@
                                                                     <div class="form-floating mb-3">
                                                                         <label for="floatingInput3">Alamat</label>
                                                                         <input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->alamat }}" disabled>
+                                                                    </div>
+                                                                    <div class="form-floating mb-3">
+                                                                        <label for="floatingInput3">Nama Penjaga</label>
+                                                                        <input required name="alamat" type="text" required class="form-control" id="floatingInput3" value="{{ $member->editor ? $member->editor->nama : $member->creator->nama }}" disabled>
                                                                     </div>
                                                                 
                                                                     

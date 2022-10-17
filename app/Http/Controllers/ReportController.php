@@ -6,9 +6,10 @@ use Carbon\Carbon;
 use App\Models\Fine;
 use App\Models\Stock;
 use App\Models\Borrow;
-use App\Models\MemberRegistration;
 use App\Models\Returns;
 use Illuminate\Http\Request;
+use App\Models\StaffRegistration;
+use App\Models\MemberRegistration;
 use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
@@ -139,7 +140,7 @@ class ReportController extends Controller
         ]);
     }
 
-    // Pengembalian
+    // Pendaftaran Anggota
     public function memberRegistration()
     {
         // Filter
@@ -154,9 +155,6 @@ class ReportController extends Controller
             ->when(request()->tanggal_awal, function($q){
                 return $q->whereBetween('created_at',[request()->tanggal_awal,'2099-10-17']);
             })
-            ->when(request()->status, function($q){
-                return $q->where('status',request()->status);
-            })
             ->when(request()->kelas,function($q){
                 return $q->where('kelas',request()->kelas);
             })
@@ -168,6 +166,9 @@ class ReportController extends Controller
             })
             ->when(request()->tahun_lahir,function($q){
                 return $q->where(DB::raw('YEAR(tanggal_lahir)'),request()->tahun_lahir);
+            })
+            ->when(request()->status, function($q){
+                return $q->where('status',request()->status);
             })
             ->when(true, function($q){
                 return $q->where('id','!=',NULL);
@@ -231,6 +232,81 @@ class ReportController extends Controller
             'majors' => MemberRegistration::select(DB::raw('DISTINCT jurusan'))->get(),
             'status' => MemberRegistration::select(DB::raw('DISTINCT status'))->get(),
             'bornYears' => MemberRegistration::select(DB::raw('DISTINCT YEAR(tanggal_lahir) as tahun_lahir'))->orderBy('tahun_lahir')->get()
+        ]);
+    }
+
+    // Pendaftaran Staff
+    public function staffRegistration()
+    {
+        // Filter
+        $query = StaffRegistration::when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+            $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+            return $q->whereBetween(('created_at'),[request()->tanggal_awal,$endDate]);
+            })
+            ->when(request()->tanggal_akhir, function($q){
+                $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+                return $q->whereBetween('created_at',[0000-00-00, $endDate]);
+            })
+            ->when(request()->tanggal_awal, function($q){
+                return $q->whereBetween('created_at',[request()->tanggal_awal,'2099-10-17']);
+            })
+            ->when(request()->status, function($q){
+                return $q->where('status',request()->status);
+            })
+            ->when(request()->jenis_kelamin,function($q){
+                return $q->where('jenis_kelamin',request()->jenis_kelamin);
+            })
+            ->when(request()->tahun_lahir,function($q){
+                return $q->where(DB::raw('YEAR(tanggal_lahir)'),request()->tahun_lahir);
+            })
+            ->when(true, function($q){
+                return $q->where('id','!=',NULL);
+        })
+        ->get();
+
+        // Kirim data ke report
+        if(request()->tanggal_awal){
+            $tanggal_awal = request()->tanggal_awal;
+        }else{
+            $tanggal_awal = NULL;
+        }
+        if(request()->tanggal_akhir){
+            $tanggal_akhir = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+        }else{
+            $tanggal_akhir = NULL;
+        }
+        if(request()->status){
+            $status = request()->status;
+        }else{
+            $status = NULL;
+        }
+        if(request()->jenis_kelamin){
+            $jenis_kelamin = request()->jenis_kelamin;
+        }else{
+            $jenis_kelamin = NULL;
+        }
+        if(request()->tahun_lahir){
+            $tahun_lahir = request()->tahun_lahir;
+        }else{
+            $tahun_lahir = NULL;
+        }
+
+        return view('report.staff-registrations.index',[
+            'staffRegistrations' => $query,
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'status' => $status,
+            'jenis_kelamin' => $jenis_kelamin,
+            'tahun_lahir' => $tahun_lahir
+        ]);
+    }
+
+    public function staffRegistrationSet()
+    {
+        return view('report.staff-registrations.set',[
+            'genders' => StaffRegistration::select(DB::raw('DISTINCT jenis_kelamin'))->get(),
+            'status' => StaffRegistration::select(DB::raw('DISTINCT status'))->get(),
+            'bornYears' => StaffRegistration::select(DB::raw('DISTINCT YEAR(tanggal_lahir) as tahun_lahir'))->orderBy('tahun_lahir')->get()
         ]);
     }
 

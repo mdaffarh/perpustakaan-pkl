@@ -133,11 +133,11 @@
 								<td>{{ $sr->nama }}</td>
 								<td>{{ $sr->jenis_kelamin }}</td>
 								<td>
-									@if($sr->status=="0")
+									@if($sr->status=="1")
 									<span class="badge badge-warning">menunggu persetujuan</span>
-									@elseif($sr->status=="1")
-									<span class="badge badge-success">Disetujui</span>
 									@elseif($sr->status=="2")
+									<span class="badge badge-success">Disetujui</span>
+									@elseif($sr->status=="3")
 									<span class="badge badge-danger">Ditolak</span>
 									@endif
 								</td>
@@ -266,7 +266,7 @@
 																<input name="tanggal_lahir" value="{{ $sr->tanggal_lahir }}">
 																<input name="nomor_telepon" value="{{ $sr->nomor_telepon }}">
 																<input name="alamat" value="{{ $sr->alamat }}">
-																<input name="status" value="1">
+																<input name="status" value="2">
 															</div>
 															<button class="btn btn-success rounded me-1" type="submit">Jadikan Staff</button>
 														</form>
@@ -332,7 +332,7 @@
 															@csrf
 															<div style="display: none;">
 																<input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->id }}">
-																<input required name="status" value="2">
+																<input required name="status" value="3">
 															</div>
 															<button class="btn btn-danger rounded me-1" type="submit">Tolak Pengajuan</button>
 														</form>

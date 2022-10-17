@@ -49,23 +49,21 @@
                                         <td>{{  $staff->nama }}</td>
                                         <td>{{  $staff->email }}</td>
                                         <td>
-                                            @if ($staff->status == TRUE)
+                                            @if ($staff->status == 2)
                                                 <span class="badge badge-success">Disetujui</span>
-                                            @else
+                                            @elseif ($staff->status == 1)
                                                 <span class="badge badge-warning">Menunggu persetujuan</span>
+                                            @else
+                                                <span class="badge badge-danger">Ditolak</span>
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($staff->user_verifikasi == FALSE)
-                                                -
-                                            @else
-                                                {{ $staff->admin->nama }}
-                                            @endif
+                                            {{ $staff->editor ? $staff->editor->nama : $staff->creator->nama }}
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
                                                 {{-- Show --}}
-                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $staff->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
+                                                <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $staff->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
                                                 <div class="modal fade" id="showw{{  $staff->id }}">
@@ -93,21 +91,19 @@
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Status</div></div>
                                                                     <div class="col px-md-5"><div class="p-2">:
-                                                                        @if ($staff->status == TRUE)
+                                                                        @if ($staff->status == 2)
                                                                             <span class="badge badge-success">Disetujui</span>
-                                                                        @else
+                                                                        @elseif ($staff->status == 1)
                                                                             <span class="badge badge-warning">Menunggu persetujuan</span>
+                                                                        @else
+                                                                            <span class="badge badge-danger">Ditolak</span>
                                                                         @endif
                                                                     </div></div>
                                                                 </div>
                                                                 <div class="row mx-md-n3">
                                                                     <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
                                                                     <div class="col px-md-5"><div class="p-2">: 
-                                                                        @if ($staff->user_verifikasi == FALSE)
-                                                                            -
-                                                                        @else
-                                                                            {{ $staff->admin->nama }}
-                                                                        @endif
+                                                                        {{ $staff->editor ? $staff->editor->nama : $staff->creator->nama }}
                                                                     </div></div>
                                                                 </div>
                                                                     

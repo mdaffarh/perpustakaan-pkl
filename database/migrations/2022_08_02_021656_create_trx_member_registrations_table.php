@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('trx_member_registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('nis')->unique();
+            $table->string('nis');
             $table->string('nama');
             $table->string('jenis_kelamin');//
             $table->string('kelas');//
@@ -23,8 +23,8 @@ return new class extends Migration
             $table->date('tanggal_lahir');
             $table->string('nomor_telepon');
             $table->string('alamat');
-            $table->integer('status');
-            $table->integer('user_verifikasi');
+            $table->integer('status')->nullable();
+            $table->integer('user_verifikasi')->nullable();
             $table->timestamps();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Member>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MemberRegistration>
  */
-class MemberFactory extends Factory
+class MemberRegistrationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,7 +16,6 @@ class MemberFactory extends Factory
      */
     public function definition()
     {
-        // nis nama jenis_kelamin kelas jurusan tanggal_lahir nomor_telepon alamat
         $jk = rand(0, 1) ? 'Laki-laki' : 'Perempuan';
         $a=array("RPL","TKJ","MM","SIJA","TP","TKR","TFLM","BKP","DPIB");
         $jurusan=array_rand($a,1);
@@ -29,7 +28,10 @@ class MemberFactory extends Factory
             'tanggal_lahir' => fake()->date(),
             'nomor_telepon' => fake()->phoneNumber(),
             'alamat' => fake()->address(),
-            'status' => 1
+            'status' => mt_rand(1,3),
+            'created_by' => mt_rand(1,10),
+            'updated_by' => mt_rand(1,10)
+
         ];
     }
 }

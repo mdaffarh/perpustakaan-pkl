@@ -12,10 +12,12 @@ use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\Member;
 use App\Models\School;
+use App\Models\Returns;
 use App\Models\StaffUser;
 use App\Models\CategoryBook;
-use App\Models\Returns;
 use Illuminate\Database\Seeder;
+use App\Models\StaffRegistration;
+use App\Models\MemberRegistration;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,8 +30,24 @@ class DatabaseSeeder extends Seeder
     {
         
         // Anggota dan Staff
-        Member::factory(20)->create();
-        Staff::factory(10)->create();
+        foreach(range(11,30) as $iteration){
+            $randomNumber = rand(10000000,99999999);
+            $nis = $randomNumber.$iteration;
+            Member::factory(1)->create(['nis' => $nis]);
+            $randomNumber1 = rand(1000000000000000,9999999999999999);
+            $nip = $randomNumber1.$iteration;
+            Staff::factory(1)->create(['nip' => $nip]);
+        }
+        
+        // Pendaftaran buat report doang
+        foreach(range(11,80) as $iteration){
+            $randomNumber = rand(10000000,99999999);
+            $nis = $randomNumber.$iteration;
+            MemberRegistration::factory(1)->create(['nis' => $nis]);
+            $randomNumber1 = rand(1000000000000000,9999999999999999);
+            $nip = $randomNumber1.$iteration;
+            StaffRegistration::factory(1)->create(['nip' => $nip]);
+        }
         
         // Buku dan Stock
         foreach (range(11, 30) as $iteration) {
@@ -38,7 +56,7 @@ class DatabaseSeeder extends Seeder
             Book::factory(1)->create(['isbn' => $isbn]);
         }
         
-        // Borrow factory 
+        // Borrow factory buat report doang
         foreach (range(11, 70) as $iteration) {
             $randomNumber = rand(1000,9999);
             $randomNumber2 = rand(1000,9999);
@@ -46,7 +64,7 @@ class DatabaseSeeder extends Seeder
             Borrow::factory(1)->create(['kode_peminjaman' => $kode]);
         }
         
-        // Return factory 
+        // Return factory buat report doang
         foreach (range(11, 60) as $iteration) {
             $randomNumber = rand(1000,9999);
             $randomNumber2 = rand(1000,9999);
