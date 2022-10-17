@@ -31,23 +31,23 @@ class DatabaseSeeder extends Seeder
         
         // Anggota dan Staff
         foreach(range(11,30) as $iteration){
-            $randomNumber = rand(10000000,99999999);
-            $nis = $randomNumber.$iteration;
-            Member::factory(1)->create(['nis' => $nis]);
             $randomNumber1 = rand(1000000000000000,9999999999999999);
             $nip = $randomNumber1.$iteration;
             Staff::factory(1)->create(['nip' => $nip]);
+            $randomNumber = rand(10000000,99999999);
+            $nis = $randomNumber.$iteration;
+            Member::factory(1)->create(['nis' => $nis]);
         }
         
         // Pendaftaran buat report doang
-        foreach(range(11,80) as $iteration){
-            $randomNumber = rand(10000000,99999999);
-            $nis = $randomNumber.$iteration;
-            MemberRegistration::factory(1)->create(['nis' => $nis]);
-            $randomNumber1 = rand(1000000000000000,9999999999999999);
-            $nip = $randomNumber1.$iteration;
-            StaffRegistration::factory(1)->create(['nip' => $nip]);
-        }
+        // foreach(range(11,80) as $iteration){
+        //     $randomNumber = rand(10000000,99999999);
+        //     $nis = $randomNumber.$iteration;
+        //     MemberRegistration::factory(1)->create(['nis' => $nis]);
+        //     $randomNumber1 = rand(1000000000000000,9999999999999999);
+        //     $nip = $randomNumber1.$iteration;
+        //     StaffRegistration::factory(1)->create(['nip' => $nip]);
+        // }
         
         // Buku dan Stock
         foreach (range(11, 30) as $iteration) {
@@ -57,20 +57,20 @@ class DatabaseSeeder extends Seeder
         }
         
         // Borrow factory buat report doang
-        foreach (range(11, 70) as $iteration) {
-            $randomNumber = rand(1000,9999);
-            $randomNumber2 = rand(1000,9999);
-            $kode = $randomNumber.'/PB/'.$randomNumber2.$iteration;
-            Borrow::factory(1)->create(['kode_peminjaman' => $kode]);
-        }
+        // foreach (range(11, 70) as $iteration) {
+        //     $randomNumber = rand(1000,9999);
+        //     $randomNumber2 = rand(1000,9999);
+        //     $kode = $randomNumber.'/PB/'.$randomNumber2.$iteration;
+        //     Borrow::factory(1)->create(['kode_peminjaman' => $kode]);
+        // }
         
         // Return factory buat report doang
-        foreach (range(11, 60) as $iteration) {
-            $randomNumber = rand(1000,9999);
-            $randomNumber2 = rand(1000,9999);
-            $kode = $randomNumber.'/RB/'.$randomNumber2.$iteration;
-            Returns::factory(1)->create(['kode_pengembalian' => $kode , 'borrow_id' => $iteration]);
-        }
+        // foreach (range(11, 60) as $iteration) {
+        //     $randomNumber = rand(1000,9999);
+        //     $randomNumber2 = rand(1000,9999);
+        //     $kode = $randomNumber.'/RB/'.$randomNumber2.$iteration;
+        //     Returns::factory(1)->create(['kode_pengembalian' => $kode , 'borrow_id' => $iteration]);
+        // }
         
         foreach (range(1, 20) as $iteration) {
             Stock::factory(1)->create(['book_id' => $iteration]);

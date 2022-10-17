@@ -313,6 +313,18 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="/report/members/set" class="nav-link {{ Request::is('report/members*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Anggota</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/report/staffs/set" class="nav-link {{ Request::is('report/staffs*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Staff</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="/report/member-registrations/set" class="nav-link {{ Request::is('report/member-registrations*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pendaftaran Anggota</p>
