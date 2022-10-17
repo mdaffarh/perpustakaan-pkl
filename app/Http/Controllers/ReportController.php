@@ -8,6 +8,8 @@ use App\Models\Stock;
 use App\Models\Borrow;
 use App\Models\MemberRegistration;
 use App\Models\Returns;
+use App\Models\Donation;
+use App\Models\BookDonation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -234,5 +236,12 @@ class ReportController extends Controller
         ]);
     }
 
-
+    // report donasi
+    public function donations(Request $request)
+    {
+        return view('report.donations.index',[
+            'donations'     => Donation::all(),
+            'bookDonations' => BookDonation::all()
+        ]);
+    }
 }
