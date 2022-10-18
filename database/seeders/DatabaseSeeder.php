@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
         
         // Anggota dan Staff
         foreach(range(11,30) as $iteration){
-            $randomNumber = rand(10000000,99999999);
-            $nis = $randomNumber.$iteration;
-            Member::factory(1)->create(['nis' => $nis]);
             $randomNumber1 = rand(1000000000000000,9999999999999999);
             $nip = $randomNumber1.$iteration;
             Staff::factory(1)->create(['nip' => $nip]);
+            $randomNumber = rand(10000000,99999999);
+            $nis = $randomNumber.$iteration;
+            Member::factory(1)->create(['nis' => $nis]);
         }
         
         // Pendaftaran buat report doang
