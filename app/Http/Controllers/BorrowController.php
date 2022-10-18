@@ -120,9 +120,7 @@ class BorrowController extends Controller
         }
 
         // Delete buku yang lama
-        BorrowItem::where('borrow_id',$request->borrow_id)->update([
-            'finished' => true
-        ]);
+        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
 
         // Buat buku yang dipinjam dan mengurangi stock
         foreach ($request->book_id as $key => $book) {
@@ -172,9 +170,7 @@ class BorrowController extends Controller
         }
 
         // Delete buku yang lama
-        BorrowItem::where('borrow_id',$request->borrow_id)->update([
-            'finished' => true
-        ]);
+        BorrowItem::where('borrow_id',$request->borrow_id)->delete();
 
         toast('Peminjaman telah dibatalkan!','success');
         return redirect('/transaction/borrows');

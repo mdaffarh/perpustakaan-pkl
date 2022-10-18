@@ -238,16 +238,6 @@ class ReportController extends Controller
         ]);
     }
 
-<<<<<<< HEAD
-    // report donasi
-    public function donations(Request $request)
-    {
-        return view('report.donations.index',[
-            'donations'     => Donation::all(),
-            'bookDonations' => BookDonation::all()
-        ]);
-    }
-=======
     // Pendaftaran Staff
     public function staffRegistration()
     {
@@ -501,7 +491,4 @@ class ReportController extends Controller
     //         'bornYears' => StaffRegistration::select(DB::raw('DISTINCT YEAR(tanggal_lahir) as tahun_lahir'))->orderBy('tahun_lahir')->get()
     //     ]);
     // }
-
-
->>>>>>> c8dea68f4126608fab8d8a0ccda39530c3dc75ef
 }
