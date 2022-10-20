@@ -313,6 +313,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="/report/fines/set" class="nav-link {{ Request::is('report/fines*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Denda</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="/report/members/set" class="nav-link {{ Request::is('report/members*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Anggota</p>

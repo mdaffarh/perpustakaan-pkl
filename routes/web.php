@@ -165,6 +165,9 @@ Route::controller(ReportController::class)->group(function(){
     Route::post('/report/returns','return')->middleware('admin');
     Route::get('/report/returns/set','returnSet')->middleware('admin');
 
+    Route::post('/report/fines','fine')->middleware('admin');
+    Route::get('/report/fines/set','fineSet')->middleware('admin');
+
     Route::post('/report/member-registrations','memberRegistration')->middleware('admin');
     Route::get('/report/member-registrations/set','memberRegistrationSet')->middleware('admin');
 
@@ -183,6 +186,7 @@ Route::controller(ReportController::class)->group(function(){
 Route::controller(FPDFController::class)->group(function(){
     Route::get('/borrow-report','borrowReport')->middleware('admin');
     Route::get('/return-report','returnReport')->middleware('admin');
+    Route::get('/fine-report','fineReport')->middleware('admin');
     Route::get('/member-registration-report','memberRegistrationReport')->middleware('admin');
     Route::get('/staff-registration-report','staffRegistrationReport')->middleware('admin');
     Route::get('/member-report','memberReport')->middleware('admin');

@@ -85,7 +85,8 @@ class ReturnController extends Controller
                 'member_id'     => $request->member_id,
                 'tanggal_kembali'   => Carbon::now()->toDateString(),
                 'waktu_tenggat' => $q,
-                'total'         => $kali
+                'total'         => $kali,
+                'created_by' => auth()->user()->staff_id
             ]);  
         }
 

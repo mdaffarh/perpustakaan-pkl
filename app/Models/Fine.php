@@ -29,4 +29,9 @@ class Fine extends Model
     {
         return $this->belongsTo(Returns::class);
     }
+    public function creator()
+    {
+        return $this->belongsTo(Staff::class, 'created_by');
+    }
+
 }

@@ -36,7 +36,7 @@ class BorrowController extends Controller
             'borrowedSelesai'               => Borrow::where('member_id', auth()->user()->member_id)->where('status',"Selesai")->latest()->get(),
             'borrow_count'      => BorrowItem::where('borrow_id', $borrow_su)->count(),
 
-            'members'   => Member::where('status',true)->get(),
+            'members'   => Member::where('status',2)->get(),
             'stocks' => Stock::where('stok_akhir','>',0)->get(),
             'stocksAll' => Stock::all()
         ]);

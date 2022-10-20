@@ -144,6 +144,70 @@ class ReportController extends Controller
         ]);
     }
 
+        // Pengembalian
+        public function Fine()
+        {
+            // Filter
+            $query = Fine::when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+                return $q->whereBetween('tanggal_kembali',[request()->tanggal_awal,request()->tanggal_akhir]);
+            })
+            ->when(request()->tanggal_akhir, function($q){
+                return $q->whereBetween('tanggal_kembali',[0000-00-00,request()->tanggal_akhir]);
+            })
+            ->when(request()->tanggal_awal, function($q){
+                return $q->whereBetween('tanggal_kembali',[request()->tanggal_awal,'2099-10-17']);
+            })
+            ->when(request()->member_id,function($q){
+                return $q->where('member_id',request()->member_id);
+            })
+            ->when(request()->days, function($q){
+                return $q->where('waktu_tenggat',request()->days);
+            })
+            ->when(true, function($q){
+                return $q->where('id','!=',NULL);
+            })
+            ->get();
+    
+            // Kirim data ke report
+            if(request()->member_id){
+                $member_id = request()->member_id;
+            }else{
+                $member_id = NULL;
+            }
+            if(request()->days){
+                $days = request()->days;
+            }else{
+                $days = NULL;
+            }
+            if(request()->tanggal_awal){
+                $tanggal_awal = request()->tanggal_awal;
+            }else{
+                $tanggal_awal = NULL;
+            }
+            if(request()->tanggal_akhir){
+                $tanggal_akhir = request()->tanggal_akhir;
+            }else{
+                $tanggal_akhir = NULL;
+            }
+    
+            return view('report.fines.index',[
+                'fines' => $query,
+                'member_id' => $member_id,
+                'days' => $days,
+                'tanggal_awal' => $tanggal_awal,
+                'tanggal_akhir' => $tanggal_akhir
+            ]);
+        }
+    
+        public function fineSet()
+        {
+            return view('report.fines.set',[
+                'members' => Fine::select(DB::raw('DISTINCT member_id'))->get(),
+                'lateDays' => Fine::select(DB::raw('DISTINCT waktu_tenggat'))->orderBy('waktu_tenggat')->get()
+            ]);
+        }
+    
+
     // Pendaftaran Anggota
     public function memberRegistration()
     {

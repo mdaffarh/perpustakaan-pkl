@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Fine;
 use App\Models\Staff;
 use App\Models\Borrow;
 use App\Models\Member;
@@ -183,6 +184,91 @@ class FPDFController extends Controller
 
         $now = Carbon::now()->format('d-m-Y\ H:i:s');
         $pdf->output('I','Report Pengembalian Buku '.$now.'.pdf',false);
+        exit;
+	}
+
+    // Pengembalian
+    public function fineReport()
+    {
+        // Ambil data sesuai filter
+        $fines = Fine::when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+            return $q->whereBetween('tanggal_kembali',[request()->tanggal_awal,request()->tanggal_akhir]);
+        })
+        ->when(request()->tanggal_akhir, function($q){
+            return $q->whereBetween('tanggal_kembali',[0000-00-00,request()->tanggal_akhir]);
+        })
+        ->when(request()->tanggal_awal, function($q){
+            return $q->whereBetween('tanggal_kembali',[request()->tanggal_awal,'2099-10-17']);
+        })
+        ->when(request()->member_id,function($q){
+            return $q->where('member_id',request()->member_id);
+        })
+        ->when(request()->days, function($q){
+            return $q->where('waktu_tenggat',request()->days);
+        })
+        ->when(true, function($q){
+            return $q->where('id','!=',NULL);
+        })
+        ->get();
+        
+        // FPDF
+        $pdf = new Fpdf('L','mm','A4');
+        
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        // Header
+            // Judul
+            $pdf->SetFont('Helvetica','B',16);
+            $pdf->Cell(275,0,'Report Denda Peminjaman',0,0,'C',0);
+            $pdf->Ln(6);
+
+            //Keterangan
+            $member = Member::where('id',request()->member_id)->first();
+            
+            $nama = (request()->member_id ? 'Nama : '.$member->nama.' | ' : '');
+            $telat = (request()->days ? ' | Telat : '.request()->days.' Hari' : '');
+            $tanggal_awal = (request()->tanggal_awal ? Carbon::parse(request('tanggal_awal'))->format('d/m/Y') : '');
+            $tanggal_akhir = (request()->tanggal_akhir ? Carbon::parse(request('tanggal_akhir'))->format('d/m/Y') : '');
+
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell(275,0,'( '.$nama.'Tanggal : '.$tanggal_awal.' - '.$tanggal_akhir.$telat.' ) ',0,0,'C',0);    
+            $pdf->Ln(10);
+     
+        // Field dan isi data
+        $fields = ['No.','Kode Peminjaman','NIS','Nama Peminjam','Tanggal Kembali','Telat','Denda','Nama Penjaga'];
+        $fieldWidth = [8,45,45,60,40,25,25,25]; //275
+
+        foreach ($fields as $key => $value) {
+            $pdf->SetFont('Helvetica','',10);
+            if ( $key == 0 || $key == 5) {
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'C',0);
+            }elseif($key == 4 || $key == 6){
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'R',0);
+            }else{
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'L',0);
+            }
+        }
+            
+        $no = 1;
+        foreach ($fines as $key => $fine) {
+            $pdf->Ln(8);
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell($fieldWidth[0],8,$no,1,0,'C',0);
+            $pdf->Cell($fieldWidth[1],8,$fine->borrow->kode_peminjaman,1,0,'L',0);
+            $pdf->Cell($fieldWidth[2],8,$fine->member->nis,1,0,'L',0);
+            $pdf->Cell($fieldWidth[3],8,$fine->member->nama,1,0,'L',0);
+            $pdf->Cell($fieldWidth[4],8,Carbon::parse($fine->tanggal_kembali)->format('d/m/Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[5],8,$fine->waktu_tenggat.' Hari',1,0,'C',0);
+            $pdf->Cell($fieldWidth[6],8,$fine->total,1,0,'R',0);
+            $pdf->Cell($fieldWidth[7],8, $fine->editor ? strtok($fine->editor->nama , " ") : strtok($fine->creator->nama , " ") ,1,0,'L',0);
+            $no++;
+        
+        }
+
+
+        $now = Carbon::now()->format('d-m-Y\ H:i:s');
+        $pdf->output('I','Report Denda Peminjaman '.$now.'.pdf',false);
         exit;
 	}
 

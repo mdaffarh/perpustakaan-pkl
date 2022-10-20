@@ -1,9 +1,8 @@
 @extends('layout.main')
-@section('title', "Laporan Denda")
+@section('title', "Report Denda Peminjaman")
 
 @section('content')
 	@include('sweetalert::alert')
-
 	<div class="row">
 		<div class="col">
 			<div class="card card-outline-tabs">
@@ -21,53 +20,62 @@
                             </div><!-- /.col -->
                         </div><!-- /.row -->
                     </div><!-- /.container-fluid -->
-				</div>                 
-				<!-- Card body -->
+				</div>                    
                 <div class="card-body">
-					{{-- Tabel --}}
-					<table id="example" class="table table-bordered table-striped">
+					<div class="">
+						<div class="btn-group">
+							<a href="/report/fines/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
+							<form action="/fine-report" method="get" target="__blank">
+								@csrf
+								@if ($member_id != NULL)
+									<input type="hidden" name="member_id" value="{{ $member_id }}">
+								@endif
+								@if ($days != NULL)
+									<input type="hidden" name="days" value="{{ $days }}">
+								@endif
+								@if ($tanggal_awal != NULL)
+									<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
+								@endif
+								@if ($tanggal_akhir != NULL)
+									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
+								@endif
+								<button type="submit" class="btn btn-success">Cetak <i class="fas fa-print"></i></button>
+							</form>
+						</div>
+						
+					</div>
+					<table id="example1" class="table table-bordered table-striped">
 						<thead>
 							<tr>
 								<th>No</th>
 								<th>Kode Peminjaman</th>
+								<th>NIS</th>
 								<th>Nama Peminjam</th>
-								<th>Kelas</th>
-								<th>Jurusan</th>
-								<th>Tanggal Tempo</th>
-								<th>Tanggal Pengembalian</th>
+								<th>Tanggal Kembali</th>
 								<th>Telat</th>
-                                <th>Denda</th>
+								<th>Denda</th>
+								<th>Nama Penjaga</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach($fines as $fine)
-							<tr>
-								<td>{{ $loop->iteration }}</td>
-								<td>{{ $fine->borrow->kode_peminjaman }}</td>
-								<td>{{ $fine->borrow->member->nama }}</td>
-								<td>{{ $fine->borrow->member->kelas }}</td>
-								<td>{{ $fine->borrow->member->jurusan }}</td>
-								<td>{{ $fine->borrow->tanggal_tempo }}</td>
-								<td>{{ $fine->borrow->return->tanggal_kembali }}</td>
-								<td>{{ $fine->waktu_tenggat }} Hari</td>
-								<td>{{ $fine->total }}</td>
-							</tr>
+								<tr>
+									<td>{{ $loop->iteration }}</td>
+									<td>
+										{{ $fine->borrow->kode_peminjaman }}
+									</td>
+									<td>{{ $fine->member->nis }}</td>
+									<td>{{ $fine->member->nama }}</td>
+									<td>{{ $fine->tanggal_kembali }}</td>
+									<td>{{ $fine->waktu_tenggat }}</td>
+									<td>{{ $fine->total }}</td>
+									<td>
+										{{ $fine->editor ? $fine->editor->nama : $fine->creator->nama}}
+									</td>
+								</tr>
 							@endforeach
 						</tbody>
-						<tfoot>
-							<tr>
-								<th>No</th>
-								<th>Kode Peminjaman</th>
-								<th>Nama Peminjam</th>
-								<th>Kelas</th>
-								<th>Jurusan</th>
-								<th>Tanggal Tempo</th>
-								<th>Tanggal Pengembalian</th>
-								<th>Telat</th>
-                                <th>Denda</th>
-							</tr>
-						</tfoot>
-					</table>
+					</table> 
 				</div>
 			</div>
 		</div>
@@ -75,31 +83,25 @@
 
 
     <script>
-        $(document).ready(function () {
-			$('#example').DataTable({
-				initComplete: function () {
-					this.api()
-						.columns()
-						.every(function () {
-							var column = this;
-							var select = $('<select><option value=""></option></select>')
-								.appendTo($(column.footer()).empty())
-								.on('change', function () {
-									var val = $.fn.dataTable.util.escapeRegex($(this).val());
-		
-									column.search(val ? '^' + val + '$' : '', true, false).draw();
-								});
-		
-							column
-								.data()
-								.unique()
-								.sort()
-								.each(function (d, j) {
-									select.append('<option value="' + d + '">' + d + '</option>');
-								});
-						});
-				},
+        $(function () {
+			$("#example1").DataTable({
+				"paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": false,
+                "autoWidth": false,
+                "responsive": true,
 			});
+			// $('#example1').DataTable({
+			//   "paging": true,
+			//   "lengthChange": false,
+			//   "searching": false,
+			//   "ordering": true,
+			//   "info": true,
+			//   "autoWidth": false,
+			//   "responsive": true,
+			// });
 		});
     </script>
 @endsection
