@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Report Anggota")
+@section('title', "Report Staff")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -23,7 +23,7 @@
                     </div><!-- /.container-fluid -->
 				</div>                    
                 <div class="card-body">
-                    <form action="/report/members" method="post">
+                    <form action="/report/staffs" method="post">
                         @csrf
                         <div class="input-group">
                             <div class="form-floating mb-3" style="width: 50%;">
@@ -36,50 +36,16 @@
                             </div>
                         </div>
 
-                        <div class="input-group">
-                            <div class="form-floating mb-3" style="width: 50%">
-                                <label for="floatingInput3">Status Keanggotaan</label>
-                                <select name="status" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($status as $stat)
-                                        <option value="{{ $stat->status }}">
-                                            {{ $stat->status == 2 ? "Aktif" : "Nonaktif" }}  
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-floating mb-3" style="width: 50%">
-                                <label for="floatingInput3">User</label>
-                                <select name="user" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->signed }}">
-                                            {{ $user->signed == 1 ? "Terdaftar" : "Tidak terdaftar" }}  
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="input-group">
-                            <div class="form-floating mb-3" style="width: 50%;">
-                                <label for="floatingInput3">Kelas</label>
-                                <select name="kelas" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($classes as $class)
-                                        <option value="{{ $class->kelas }}">{{ $class->kelas }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-floating mb-3" style="width: 50%;">
-                                <label for="floatingInput3">Jurusan</label>
-                                <select name="jurusan" id="" class="select2 form-control">
-                                    <option value="" disabled selected></option>
-                                    @foreach ($majors as $major)
-                                        <option value="{{ $major->jurusan }}">{{ $major->jurusan }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        <div class="form-floating mb-3">
+                            <label for="floatingInput3">User</label>
+                            <select name="user" id="" class="select2 form-control">
+                                <option value="" disabled selected></option>
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->signed }}">
+                                        {{ $user->signed == 2 ? "Terdaftar" : "Tidak terdaftar" }}  
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="input-group">

@@ -28,8 +28,8 @@ return new class extends Migration
             $table->boolean('status');
             $table->string('profile')->nullable(); 
             $table->timestamps();
-            $table->foreignId('created_by');
-            $table->foreignId('updated_by');
+            $table->foreignId('created_by')->nullable();
+            $table->foreignId('updated_by')->nullable();
         });
     }
 

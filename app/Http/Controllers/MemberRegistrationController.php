@@ -86,7 +86,7 @@ class MemberRegistrationController extends Controller
         $validatedDataMember = $request->validate($member);
 
         $validatedData['updated_by'] = auth()->user()->staff_id;
-
+        $validatedDataMember['status'] = 2;
         MemberRegistration::where('id', $request->id)->update($validatedData);
         Member::create($validatedDataMember);
 

@@ -18,7 +18,7 @@ class MemberUserController extends Controller
     {
         return view('users.member-users.index',[
             'memberUsers' => User::whereNotNull('member_id')->get(), //milih user yang ada member idnya
-            'memberUnsigned' => Member::whereNull('signed')->get(), //milih anggota yang belum terdaftar
+            'memberUnsigned' => Member::where('signed','!=','2')->get(), //milih anggota yang belum terdaftar
             'members' => Member::all() //milih semua anggota
         ]);
     }
@@ -50,7 +50,7 @@ class MemberUserController extends Controller
         // $validatedData['password'] = bcrypt($validatedData['password']);
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        Member::where('id',$validatedData['member_id'])->update(['signed' => true]);
+        Member::where('id',$validatedData['member_id'])->update(['signed' => 2]);
 
         User::create($validatedData);
 
@@ -123,7 +123,7 @@ class MemberUserController extends Controller
      */
     public function destroy(User $memberUser)
     {
-        Member::where('id',$memberUser->member_id)->update(['signed' => null]);
+        Member::where('id',$memberUser->member_id)->update(['signed' => 1]);
         User::destroy($memberUser->id);
         toast('User anggota telah dihapus!','success');
         return redirect('/users/member-users');

@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', "Report Anggota")
+@section('title', "Report Staff")
 
 @section('content')
 	@include('sweetalert::alert')
@@ -24,23 +24,14 @@
                 <div class="card-body">
 					<div class="">
 						<div class="btn-group">
-							<a href="/report/members/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
-							<form action="/member-report" method="get" target="__blank">
+							<a href="/report/staffs/set" class="btn btn-warning mr-1">Kembali <i class="far fa-arrow-alt-circle-left"></i></a>
+							<form action="/staff-report" method="get" target="__blank">
 								@csrf
 								@if ($tanggal_awal != NULL)
-								<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
+									<input type="hidden" name="tanggal_awal" value="{{ $tanggal_awal }}">
 								@endif
 								@if ($tanggal_akhir != NULL)
-								<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
-								@endif
-								@if ($status != NULL)
-								<input type="hidden" name="status" value="{{ $status }}">
-								@endif
-								@if ($kelas != NULL)
-									<input type="hidden" name="kelas" value="{{ $kelas }}">
-								@endif
-								@if ($jurusan != NULL)
-									<input type="hidden" name="jurusan" value="{{ $jurusan }}">
+									<input type="hidden" name="tanggal_akhir" value="{{ $tanggal_akhir }}">
 								@endif
 								@if ($jenis_kelamin != NULL)
 									<input type="hidden" name="jenis_kelamin" value="{{ $jenis_kelamin }}">
@@ -60,45 +51,40 @@
 						<thead>
 							<tr>
 								<th>No</th>
-								<th>NIS</th>
+								<th>NIP</th>
 								<th>Nama</th>
+								<th>Email</th>
 								<th>Jenis Kelamin</th>
-								<th>Kelas</th>
-								<th>Jurusan</th>
 								<th>Tanggal Lahir</th>
+								<th>Nomor Telepon</th>
 								<th>Alamat</th>
-								<th>Status</th>
+								<th>Tanggal Terdaftar</th>
 								<th>User</th>
-								<th>Terdaftar</th>
-								<th>Nama Penjaga</th>
+								<th>Nama Admin</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($members as $member)
+							@foreach($staffs as $staff)
 								<tr>
 									<td>{{ $loop->iteration }}</td>
 									<td>
-										{{ $member->nis }}
+										{{ $staff->nip }}
 									</td>
-									<td>{{ $member->nama }}</td>
-									<td>{{ $member->jenis_kelamin }}</td>
-									<td>{{ $member->kelas }}</td>
-									<td>{{ $member->jurusan }}</td>
-									<td>{{ $member->tanggal_lahir }}</td>
-									<td>{{ $member->alamat }}</td>
+									<td>{{ $staff->nama }}</td>
+									<td>{{ $staff->email }}</td>
+									<td>{{ $staff->jenis_kelamin }}</td>
+									<td>{{ $staff->tanggal_lahir }}</td>
+									<td>{{ $staff->nomor_telepon }}</td>
+									<td>{{ $staff->alamat }}</td>
+									<td>{{ $staff->created_at }}</td>
 									<td>
-										{{ $member->status == 2 ? "Aktif" : "Nonaktif" }}
+										{{ $staff->signed == 2 ? "Terdaftar" : "Tidak" }}
 									</td>
 									<td>
-										{{ $member->signed == 2 ? "Terdaftar" : "Tidak" }}
-									</td>
-									<td>{{ $member->created_at }}</td>
-									<td>
-										{{-- {{ $member->editor ? $member->editor->nama : $member->creator->nama}} --}}
-										@if ($member->editor)
-											{{ $member->editor->nama }}
-										@elseif($member->creator)
-											{{ $member->creator->nama }}
+										@if ($staff->editor)
+											{{ $staff->editor->nama }}
+										@elseif ($staff->creator)
+											{{ $staff->creator->nama }}
 										@else
 											-
 										@endif

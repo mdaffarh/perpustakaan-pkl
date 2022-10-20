@@ -25,7 +25,8 @@ class StaffFactory extends Factory
               'tanggal_lahir' => fake()->date(),
               'nomor_telepon' => fake()->phoneNumber(),
               'alamat' => fake()->address(),
-              'email' => fake()->email()
+              'email' => fake()->email(),
+              'signed' => 1
           ];
     }
 }

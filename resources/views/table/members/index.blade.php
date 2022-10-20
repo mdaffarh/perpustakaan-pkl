@@ -199,8 +199,8 @@
 																<label for="floatingInput3">Status</label>
 																<select class="form-select form-control" aria-label="Default select example" name="status" required>
 																	<option value="" selected disabled></option>
-																	<option value="1" {{ $member->status == "1" ? 'selected' : ''  }}>Aktif</option>
-																	<option value="0" {{ $member->status == "0" ? 'selected' : ''  }}>Nonaktif</option>
+																	<option value="2" {{ $member->status == "2" ? 'selected' : ''  }}>Aktif</option>
+																	<option value="1" {{ $member->status == "1" ? 'selected' : ''  }}>Nonaktif</option>
 																</select>
 															</div>
 															<div class="input-group">
@@ -274,7 +274,7 @@
 															</div>
 															<div class="form-floating mb-3">
 																<label for="">Status</label>
-																@if ($member->status == 1)
+																@if ($member->status == 2)
 																	<input required name="" type="text" required class="form-control" id="floatingInput3" value="Aktif" disabled>
 																@else
 																<input required name="" type="text" required class="form-control" id="floatingInput3" value="Nonaktif" disabled>

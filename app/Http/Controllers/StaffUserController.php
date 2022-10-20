@@ -12,7 +12,7 @@ class StaffUserController extends Controller
     public function index(){
         return view('users.staff-users.index', [
             'staffUsers' => User::whereNotNull('staff_id')->get(),
-            'staffUnsigned' => Staff::whereNull('signed')->get(),
+            'staffUnsigned' => Staff::where('signed','!=','2')->get(),
             'staffs' => Staff::all()
         ]);
     }
@@ -33,7 +33,7 @@ class StaffUserController extends Controller
 
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        Staff::where('id',$validatedData['staff_id'])->update(['signed' => true]);
+        Staff::where('id',$validatedData['staff_id'])->update(['signed' => 2]);
 
         User::create($validatedData);
 
@@ -76,7 +76,7 @@ class StaffUserController extends Controller
     }
 
     public function destroy(User $staffUser){
-        Staff::where('id',$staffUser->staff_id)->update(['signed' => null]);
+        Staff::where('id',$staffUser->staff_id)->update(['signed' => 1]);
         User::destroy($staffUser->id);
 
         toast('User staff telah dihapus!','success');

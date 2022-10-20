@@ -56,6 +56,7 @@ class StaffRegistrationController extends Controller
 
         $validatedData['status'] = 1;
         $validatedData['created_by'] = auth()->user()->staff_id;
+        $validatedData['signed'] = 1;
         StaffRegistration::create($validatedData);
         
         Staff::create($validatedData);
@@ -83,6 +84,8 @@ class StaffRegistrationController extends Controller
         ];
 
         $validatedDataStaff     = $request->validate($staff);
+        $validatedDataStaff['created_by'] = auth()->user()->staff_id;
+        $validatedDataStaff['signed'] = 1;
 
     
 

@@ -29,7 +29,10 @@ class MemberFactory extends Factory
             'tanggal_lahir' => fake()->date(),
             'nomor_telepon' => fake()->phoneNumber(),
             'alamat' => fake()->address(),
-            'status' => 1
+            'status' => 2,
+            'signed' => 2,
+            'created_by' => 1,
+            'updated_by' => 1
         ];
     }
 }

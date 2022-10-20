@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
         // Anggota dan Staff
         foreach(range(11,30) as $iteration){
             $randomNumber1 = rand(1000000000000000,9999999999999999);
@@ -98,9 +97,9 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach($user as $key => $value) {
-            Staff::where('id',1)->update(['signed' => true]);
-            Staff::where('id',2)->update(['signed' => true]);
-            Member::where('id',1)->update(['signed' => true]);
+            Staff::where('id',1)->update(['signed' => 2]);
+            Staff::where('id',2)->update(['signed' => 2]);
+            Member::where('id',1)->update(['signed' => 2]);
             User::create($value);
         }    
             

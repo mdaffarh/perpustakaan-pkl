@@ -36,7 +36,7 @@ class MemberController extends Controller
             'alamat'=> 'required',
         ]);
 
-        $validatedData['status'] = 1;
+        $validatedData['status'] = 2;
         $validatedData['created_by'] = auth()->user()->staff_id;
         
         Member::create($validatedData);

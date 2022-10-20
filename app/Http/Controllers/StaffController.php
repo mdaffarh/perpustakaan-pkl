@@ -30,7 +30,7 @@ class StaffController extends Controller
         ]);
 
         $validatedData['created_by'] = auth()->user()->staff_id;
-        
+        $validatedData['signed'] = 1;
         Staff::create($validatedData);
 
         toast('Data staff telah ditambahkan!','success');
