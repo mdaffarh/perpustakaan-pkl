@@ -49,12 +49,12 @@
 								<td>{{ $stock->book->judul }}</td>
 								<td>{{ $stock->book->penulis }}</td>
 								{{-- <td>{{ $stock->stok_semua }}</td> --}}
-								<td>{{ $stock->stok_akhir }}</td>
+								<td><span class="badge badge-success">{{ $stock->stok_akhir}}</span></td>
 								<td>
 									@if ($stock->stok_keluar)
-									{{ $stock->stok_keluar }}
+									<span class="badge badge-warning">{{ $stock->stok_keluar }}</span>
 									@else
-									0
+									<span class="badge badge-warning">0</span> 
 									@endif
 								</td>
 								<td>
@@ -188,7 +188,7 @@
 					@foreach ($stocks as $stock)
 						<div class="detail-table" id="detailTable{{ $stock->id }}" style="display: none;">
 							<div class="mb-2">
-								<h5 class="d-inline">Detail Buku</h5>
+								<h5 class="d-inline">Detail Stok</h5>
 							</div>
 										
 							{{-- Tabel Detail --}}
@@ -198,8 +198,8 @@
 										<th>No</th>
 										<th>Judul Buku</th>
 										{{-- <th>Stok Awal</th> --}}
-										<th>Stok Tersedia</th>
 										<th>Stok Total</th>
+										<th>Stok Tersedia</th>
 										<th>Stok Tambahan</th>
 										<th>Stok Yang Dipinjam</th>
 										<th>Stok Hilang</th>
@@ -211,11 +211,32 @@
 											<td>{{ $loop->iteration }}</td>
 											<td>{{ $stock->book->judul }}</td>
 											{{-- <td>{{ $stock->stok_awal }}</td> --}}
+											<td><span class="badge badge-primary">{{ $stock->stok_semua }}</span></td>
 											<td><span class="badge badge-success">{{ $stock->stok_akhir}}</span></td>
-											<td>{{ $stock->stok_semua }}</td>
-											<td>{{ $stock->stok_tambahan }}</td>
-											<td><span class="badge badge-warning">{{ $stock->stok_keluar }}</span></td>
-											<td><span class="badge badge-danger">{{ $stock->stok_akhir-$stock->stok_keluar }}</span></td>
+
+											<td>
+												@if ($stock->stok_tambahan == 0)
+													<span class="badge badge-info">{{ $stock->stok_tambahan }}0</span>
+												@elseif ($stock->stok_tambahan)
+													<span class="badge badge-info">{{ $stock->stok_tambahan }}+</span>
+												@endif
+											</td>
+
+											<td>
+												@if ($stock->stok_keluar == 0)
+													<span class="badge badge-warning">0</span>
+												@elseif ($stock->stok_keluar)
+													<span class="badge badge-warning">{{ $stock->stok_keluar }}</span>
+												@endif
+											</td>
+											<td>
+												@if($stock->stok_kurang == 0)
+													<span class="badge badge-danger">0</span>
+												@elseif($stock->stok_kurang)
+													<span class="badge badge-danger">{{ $stock->stok_kurang}}</span>
+												@endif
+											</td>
+											
 										</tr>
 								</tbody>
 							</table>   

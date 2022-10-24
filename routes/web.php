@@ -201,7 +201,6 @@ Route::controller(ReportController::class)->group(function(){
     Route::post('/report/borrow-ranks','borrowRank')->middleware('admin');
     Route::get('/report/borrow-ranks/set','borrowRankSet')->middleware('admin');
     
-
 });
 
 // Pdf Report
