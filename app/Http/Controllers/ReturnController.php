@@ -92,8 +92,8 @@ class ReturnController extends Controller
 
         // Pengembalian stock
         $items = BorrowItem::where('borrow_id',$request->borrow_id)->get();
-        
         foreach ($items as $item) {
+
             $stock = Stock::where('book_id', $item->book_id)->first();
             
 
@@ -106,6 +106,9 @@ class ReturnController extends Controller
                 'stok_keluar'   => $stok_keluar
             ]);
         }
+
+        // Update borrow item
+        BorrowItem::where('borrow_id',$request->borrow_id)->update(['finished' => 2]);
 
         alert()->success('Buku Sudah Di Kembalikan!','Success');
         return redirect('/transaction/returns');

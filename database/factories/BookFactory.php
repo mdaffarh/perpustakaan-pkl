@@ -20,9 +20,10 @@ class BookFactory extends Factory
         $category=array_rand($a,1);
         return [
             //isbn,judul,penulis,penerbit,cover,kategori
-            'judul' => fake()->sentence(mt_rand(1,5)),
+            'isbn' => fake()->ean13(),
+            'judul' => fake()->sentence(mt_rand(1,2)),
             'penulis' => fake()->name(),
-            'penerbit' => fake()->company(),
+            'penerbit' => fake()->company(2),
             'kategori' => $a[$category],
             'tglTerbit' => fake()->date(),
             'tglMasuk' => fake()->date(),

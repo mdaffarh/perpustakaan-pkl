@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Book;
 use App\Models\Fine;
 use App\Models\Staff;
 use App\Models\Borrow;
 use App\Models\Member;
 use App\Models\Returns;
+use App\Models\BorrowItem;
 use Codedge\Fpdf\Fpdf\Fpdf;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -720,6 +722,317 @@ class FPDFController extends Controller
         exit;
 	}
 
+    
+    // Book
+    public function bookReport()
+    {
+        // Ambil data sesuai filter
+        $books = Book::join('tb_stocks', 'tb_books.id', '=', 'tb_stocks.book_id')
+        ->when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+            return $q->whereBetween(('tglMasuk'),request()->tanggal_awal,request()->tanggal_akhir);
+        })
+        ->when(request()->tanggal_akhir, function($q){
+            return $q->whereBetween('tglMasuk',[0000-00-00, request()->tanggal_akhir]);
+        })
+        ->when(request()->tanggal_awal, function($q){
+            return $q->whereBetween('tglMasuk',[request()->tanggal_awal,'2099-10-17']);
+        })
+        ->when(request()->penulis,function($q){
+            return $q->where('penulis',request()->penulis);
+        })
+        ->when(request()->kategori,function($q){
+            return $q->where('kategori',request()->kategori);
+        })
+        ->when(request()->penerbit,function($q){
+            return $q->where('penerbit',request()->penerbit);
+        })
+        ->when(request()->tahun_terbit,function($q){
+            return $q->where(DB::raw('YEAR(tglTerbit)'),request()->tahun_terbit);
+        })
+        ->when(request()->status == 2,function($q){
+            return $q->where('stok_akhir','>','0');
+        })
+        ->when(request()->status == 1,function($q){
+            return $q->where('stok_akhir','<=','0');
+        })
+        ->when(true, function($q){
+            return $q->where('tb_books.id','!=',NULL);
+        })
+        ->get();
+        
+        // FPDF
+        $pdf = new Fpdf('L','mm','A4');
+        
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        // Header
+            // Judul
+            $pdf->SetFont('Helvetica','B',16);
+            $pdf->Cell(275,0,'Report Buku',0,0,'C',0);
+            $pdf->Ln(6);
+
+            //Keterangan
+            $penulis = (request()->penulis ? 'Penulis : '.request()->penulis.' | ' : '');
+            $kategori = (request()->kategori ? 'Kategori : '.request()->kategori.' | ' : '');
+            $penerbit = (request()->penerbit ? 'Penerbit : '.request()->penerbit.' | ' : '');
+            $tahun_terbit = (request()->tahun_terbit ? 'Tahun Terbit : '.request()->tahun_terbit.' | ' : '');
+            $status = "";
+            if(request()->status == 2){
+                $status = ' | Stok : Tersedia';
+            }elseif(request()->status == 1){
+                $status = ' | Stok : Tidak Tersedia';
+            }else{
+                $status = "";
+            }
+            $tanggal_awal = (request()->tanggal_awal ? Carbon::parse(request('tanggal_awal'))->format('d/m/Y') : '');
+            $tanggal_akhir = (request()->tanggal_akhir ? Carbon::parse(request('tanggal_akhir'))->format('d/m/Y') : '');
+
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell(275,0,'( '.$penulis.$kategori.$penerbit.$tahun_terbit.'Tanggal : '.$tanggal_awal.' - '.$tanggal_akhir.$status.' ) ',0,0,'C',0);    
+            $pdf->Ln(10);
+     
+        // Field dan isi data
+        $fields = ['No.','ISBN','Judul','Penulis','Kategori','Penerbit','Tahun Terbit','Tanggal Masuk','Stok'];
+        $fieldWidth = [8,30,50,25,25,70,25,30,15]; //275
+
+        foreach ($fields as $key => $value) {
+            $pdf->SetFont('Helvetica','',10);
+            if ( $key == 0 || $key == 8) {
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'C',0);
+            }elseif($key == 7 || $key == 6){
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'R',0);
+            }else{
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'L',0);
+            }
+        }
+            
+        $no = 1;
+        foreach ($books as $key => $book) {
+            $pdf->Ln(8);
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell($fieldWidth[0],8,$no,1,0,'C',0);
+            $pdf->Cell($fieldWidth[1],8,$book->isbn,1,0,'L',0);
+            $pdf->Cell($fieldWidth[2],8,$book->judul,1,0,'L',0);
+            $pdf->Cell($fieldWidth[3],8,strtok($book->penulis , " ") ,1,0,'L',0);
+            $pdf->Cell($fieldWidth[4],8,$book->kategori,1,0,'L',0);
+            $pdf->Cell($fieldWidth[5],8,$book->penerbit,1,0,'L',0);
+            $pdf->Cell($fieldWidth[6],8,Carbon::parse($book->tglTerbit)->format('Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[7],8,Carbon::parse($book->tglMasuk)->format('d-m-Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[8],8,($book->stok_akhir > 0 ? $book->stok_akhir : '-'),1,0,'C',0);
+            $no++;
+        
+        }
+
+
+        $now = Carbon::now()->format('d-m-Y\ H:i:s');
+        $pdf->output('I','Report Buku '.$now.'.pdf',false);
+        exit;
+	}
+
+    // Borrow Item
+    public function borrowItemReport()
+    {
+        // Ambil data sesuai filter
+        $books = Borrow::join('borrow_item', 'trx_borrows.id', '=', 'borrow_item.borrow_id')
+        ->join('tb_books','borrow_item.book_id','=','tb_books.id')
+        ->when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+            return $q->whereBetween(('tanggal_pinjam'),request()->tanggal_awal,request()->tanggal_akhir);
+        })
+        ->when(request()->tanggal_akhir, function($q){
+            return $q->whereBetween('tanggal_pinjam',[0000-00-00, request()->tanggal_akhir]);
+        })
+        ->when(request()->tanggal_awal, function($q){
+            return $q->whereBetween('tanggal_pinjam',[request()->tanggal_awal,'2099-10-17']);
+        })
+        ->when(request()->isbn,function($q){
+            return $q->where('isbn',request()->isbn);
+        })
+        ->when(request()->judul,function($q){
+            return $q->where('judul',request()->judul);
+        })
+        ->when(request()->penerbit,function($q){
+            return $q->where('penerbit',request()->penerbit);
+        })
+        ->when(request()->kode_peminjaman,function($q){
+            return $q->where('kode_peminjaman',request()->kode_peminjaman);
+        })
+        ->when(request()->status,function($q){
+            return $q->where('finished',request()->status);
+        })
+        ->when(request()->member_id,function($q){
+            return $q->where('member_id',request()->member_id);
+        })
+        ->when(true, function($q){
+            return $q->where('trx_borrows.id','!=',NULL);
+        })
+        ->get();
+        
+        // FPDF
+        $pdf = new Fpdf('L','mm','A4');
+        
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        // Header
+            // Judul
+            $pdf->SetFont('Helvetica','B',16);
+            $pdf->Cell(275,0,'Report Histori Buku',0,0,'C',0);
+            $pdf->Ln(6);
+
+            //Keterangan isbn judul kode_peminjaman status member_id
+            $isbn = (request()->isbn ? 'Isbn : '.request()->isbn.' | ' : '');
+            $judul = (request()->judul ? 'Judul : '.request()->judul.' | ' : '');
+            $kode_peminjaman = (request()->kode_peminjaman ? 'Kode : '.request()->kode_peminjaman.' | ' : '');
+            $member_id = (request()->member_id ? 'Nama Anggota : '.strtok(request()->nama ," ").' | ' : '');
+            $status = "";
+            if(request()->status == 2){
+                $status = ' | Status : Selesai';
+            }elseif(request()->status == 1){
+                $status = ' | Status : Dipinjam';
+            }else{
+                $status = "";
+            }
+            $tanggal_awal = (request()->tanggal_awal ? Carbon::parse(request('tanggal_awal'))->format('d/m/Y') : '');
+            $tanggal_akhir = (request()->tanggal_akhir ? Carbon::parse(request('tanggal_akhir'))->format('d/m/Y') : '');
+
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell(275,0,'( '.$isbn.$judul.$kode_peminjaman.$member_id.'Tanggal : '.$tanggal_awal.' - '.$tanggal_akhir.$status.' ) ',0,0,'C',0);    
+            $pdf->Ln(10);
+     
+        // Field dan isi data
+        $fields = ['No.','ISBN','Judul','Kode Peminjaman','Anggota','Tanggal Pinjam','Tanggal Kembali','Status','Penjaga'];
+        $fieldWidth = [8,30,70,35,25,30,30,25,25]; //275
+
+        foreach ($fields as $key => $value) {
+            $pdf->SetFont('Helvetica','',10);
+            if ( $key == 0 || $key == 7) {
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'C',0);
+            }elseif($key == 5 || $key == 6){
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'R',0);
+            }else{
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'L',0);
+            }
+        }
+            
+        $no = 1;
+        foreach ($books as $key => $book) {
+            $pdf->Ln(8);
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell($fieldWidth[0],8,$no,1,0,'C',0);
+            $pdf->Cell($fieldWidth[1],8,$book->isbn,1,0,'L',0);
+            $pdf->Cell($fieldWidth[2],8,$book->judul,1,0,'L',0);
+            $pdf->Cell($fieldWidth[3],8,$book->kode_peminjaman ,1,0,'L',0);
+            $pdf->Cell($fieldWidth[4],8,strtok($book->member->nama, " "),1,0,'L',0);
+            $pdf->Cell($fieldWidth[5],8,Carbon::parse($book->tanggal_pinjam)->format('d-m-Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[6],8,($book->finished == 2 ? Carbon::parse($book->updated_at)->format('d-m-Y') : '-'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[7],8,$book->finished == 1 ? "Dipinjam" : "Selesai",1,0,'C',0);
+            $pdf->Cell($fieldWidth[8],8,$book->updated_by ? strtok($book->editor->nama, " ") : strtok($book->creator->nama, " "),1,0,'L',0);
+            $no++;
+        
+        }
+
+
+        $now = Carbon::now()->format('d-m-Y\ H:i:s');
+        $pdf->output('I','Report Buku '.$now.'.pdf',false);
+        exit;
+	}
+
+    // Peringkat Buku
+    public function borrowRankReport()
+    {
+        // Ambil data sesuai filter
+        $books = BorrowItem::join('tb_books', 'borrow_item.book_id', '=', 'tb_books.id')
+            ->when(request()->tanggal_awal && request()->tanggal_akhir, function($q){
+                $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+                return $q->whereBetween(('borrow_item.created_at'),[request()->tanggal_awal,$endDate]);
+                })
+            ->when(request()->tanggal_akhir, function($q){
+                $endDate = Carbon::parse(request('tanggal_akhir'))->addHours(23)->addMinutes(59)->addSeconds(59);
+                return $q->whereBetween('borrow_item.created_at',[0000-00-00, $endDate]);
+            })
+            ->when(request()->tanggal_awal, function($q){
+                return $q->whereBetween('borrow_item.created_at',[request()->tanggal_awal,'2099-10-17']);
+            })
+            ->when(request()->penulis,function($q){
+                return $q->where('penulis',request()->penulis);
+            })
+            ->when(request()->kategori,function($q){
+                return $q->where('kategori',request()->kategori);
+            })
+            ->when(request()->penerbit,function($q){
+                return $q->where('penerbit',request()->penerbit);
+            })
+            ->when(request()->tahun_terbit,function($q){
+                return $q->where(DB::raw('YEAR(tglTerbit)'),request()->tahun_terbit);
+            })
+            ->when(true, function($q){
+                return $q->where('borrow_item.id','!=',NULL);
+        })
+        ->select(DB::raw('*, count(book_id) as count'))
+        ->groupby('book_id')
+        ->orderby('count','DESC')
+        ->get();
+        
+        // FPDF
+        $pdf = new Fpdf('L','mm','A4');
+        
+
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        // Header
+            // Judul
+            $pdf->SetFont('Helvetica','B',16);
+            $pdf->Cell(275,0,'Report Peringkat Buku',0,0,'C',0);
+            $pdf->Ln(6);
+
+            $penulis = (request()->penulis ? 'Penulis : '.request()->penulis.' | ' : '');
+            $kategori = (request()->kategori ? 'Kategori : '.request()->kategori.' | ' : '');
+            $penerbit = (request()->penerbit ? 'Penerbit : '.request()->penerbit.' | ' : '');
+            $tahun_terbit = (request()->tahun_terbit ? 'Tahun Terbit : '.request()->tahun_terbit.' | ' : '');
+            $tanggal_awal = (request()->tanggal_awal ? Carbon::parse(request('tanggal_awal'))->format('d/m/Y') : '');
+            $tanggal_akhir = (request()->tanggal_akhir ? Carbon::parse(request('tanggal_akhir'))->format('d/m/Y') : '');
+
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell(275,0,'( '.$penulis.$kategori.$penerbit.$tahun_terbit.'Tanggal : '.$tanggal_awal.' - '.$tanggal_akhir.' ) ',0,0,'C',0);    
+            $pdf->Ln(10);
+     
+        // Field dan isi data
+        $fields = ['No.','ISBN','Judul','Penulis','Kategori','Penerbit','Tahun Terbit','Dipinjam'];
+        $fieldWidth = [8,30,70,30,25,70,25,20]; //275
+
+        foreach ($fields as $key => $value) {
+            $pdf->SetFont('Helvetica','',10);
+            if ( $key == 0 || $key == 7) {
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'C',0);
+            }elseif($key == 6){
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'R',0);
+            }else{
+                $pdf->Cell($fieldWidth[$key],8,$fields[$key],1,0,'L',0);
+            }
+        }
+            
+        $no = 1;
+        foreach ($books as $key => $book) {
+            $pdf->Ln(8);
+            $pdf->SetFont('Helvetica','',10);
+            $pdf->Cell($fieldWidth[0],8,$no,1,0,'C',0);
+            $pdf->Cell($fieldWidth[1],8,$book->isbn,1,0,'L',0);
+            $pdf->Cell($fieldWidth[2],8,$book->judul,1,0,'L',0);
+            $pdf->Cell($fieldWidth[3],8,strtok($book->penulis, " ") ,1,0,'L',0);
+            $pdf->Cell($fieldWidth[4],8,$book->kategori ,1,0,'L',0);
+            $pdf->Cell($fieldWidth[5],8,$book->penerbit ,1,0,'L',0);
+            $pdf->Cell($fieldWidth[6],8,Carbon::parse($book->tglTerbit)->format('Y'),1,0,'R',0);
+            $pdf->Cell($fieldWidth[7],8,$book->count,1,0,'C',0);
+            $no++;
+        
+        }
+
+
+        $now = Carbon::now()->format('d-m-Y\ H:i:s');
+        $pdf->output('I','Report Peringkat Buku '.$now.'.pdf',false);
+        exit;
+	}
 
 
 }

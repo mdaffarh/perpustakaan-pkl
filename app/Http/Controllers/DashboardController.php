@@ -91,7 +91,7 @@ class DashboardController extends Controller
             'donation'      => Donation::where('member_id',auth()->user()->member_id)->count(),
             'borrowes'      => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->count(),
             'borrow'        => Borrow::where('member_id', auth()->user()->member_id)->where('status','!=','Ditolak')->where('status','!=','Selesai')->latest()->get(),
-            'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->count(),
+            'borrow_count'  => BorrowItem::where('borrow_id', $borrow_su)->where('finished','!=',2)->count(),
 
             // Tampilan Staff
             'books'             => Book::whereYear('created_at', $tahun)->count(),

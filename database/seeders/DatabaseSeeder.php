@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Book::factory(30)->create();
         // Anggota dan Staff
         foreach(range(11,30) as $iteration){
             $randomNumber1 = rand(1000000000000000,9999999999999999);
@@ -49,11 +50,11 @@ class DatabaseSeeder extends Seeder
         // }
         
         // Buku dan Stock
-        foreach (range(11, 30) as $iteration) {
-            $randomNumber = rand(10000000000,99999999999);
-            $isbn = $randomNumber.$iteration;
-            Book::factory(1)->create(['isbn' => $isbn]);
-        }
+        // foreach (range(11, 30) as $iteration) {
+        //     $randomNumber = rand(10000000000,99999999999);
+        //     $isbn = $randomNumber.$iteration;
+        //     Book::factory(1)->create(['isbn' => $isbn]);
+        // }
         
         // Borrow factory buat report doang
         // foreach (range(11, 70) as $iteration) {

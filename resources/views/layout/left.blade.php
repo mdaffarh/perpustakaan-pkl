@@ -301,6 +301,35 @@
 
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                    Buku
+                                    <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/report/books/set" class="nav-link {{ Request::is('report/books*') ? 'active' : '' }}">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Buku</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/report/borrow-items/set" class="nav-link {{ Request::is('report/borrow-items') ? 'active' : '' }}">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Histori Buku</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/report/borrow-ranks/set" class="nav-link {{ Request::is('report/borrow-ranks') ? 'active' : '' }}">
+                                        <i class="far fa-dot-circle nav-icon"></i>
+                                        <p>Peringkat Buku</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                                </li>
+                            <li class="nav-item">
                                 <a href="/report/borrows/set" class="nav-link {{ Request::is('report/borrows*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Peminjaman</p>
@@ -310,6 +339,12 @@
                                 <a href="/report/returns/set" class="nav-link {{ Request::is('report/returns*') ? 'active' : '' }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Pengembalian</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/report/returns/set" class="nav-link {{ Request::is('report/returns*') ? 'active' : '' }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Sumbangan Buku</p>
                                 </a>
                             </li>
                             <li class="nav-item">

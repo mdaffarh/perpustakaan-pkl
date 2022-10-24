@@ -158,6 +158,18 @@ use App\Http\Controllers\MemberRegistrationController;
         Route::post('/notification/viewedAllStaff','viewedAllStaff')->name('viewedAllStaff')->middleware('staff');
     });
 
+    // Informasi
+    Route::controller(InformationController::class)->group(function(){
+        Route::get('/information/borrows','borrow')->middleware('staff');
+        Route::get('/information/returns','return')->middleware('staff');
+        Route::get('/information/books','book')->middleware('staff');
+        Route::get('/information/book-donations','bookDonation')->middleware('staff');      
+        Route::get('/information/fines','fine')->middleware('staff');
+        Route::get('/information/member-registrations','memberRegistration')->middleware('staff');
+        Route::get('/information/staff-registrations','staffRegistration')->middleware('staff');
+    });
+
+    // Halaman Report
 Route::controller(ReportController::class)->group(function(){
     Route::post('/report/borrows','borrow')->middleware('admin');
     Route::get('/report/borrows/set','borrowSet')->middleware('admin');
@@ -179,10 +191,20 @@ Route::controller(ReportController::class)->group(function(){
 
     Route::post('/report/staffs','staff')->middleware('admin');
     Route::get('/report/staffs/set','staffSet')->middleware('admin');
+
+    Route::post('/report/books','book')->middleware('admin');
+    Route::get('/report/books/set','bookSet')->middleware('admin');
+
+    Route::post('/report/borrow-items','borrowItem')->middleware('admin');
+    Route::get('/report/borrow-items/set','borrowItemSet')->middleware('admin');
+    
+    Route::post('/report/borrow-ranks','borrowRank')->middleware('admin');
+    Route::get('/report/borrow-ranks/set','borrowRankSet')->middleware('admin');
     
 
 });
 
+// Pdf Report
 Route::controller(FPDFController::class)->group(function(){
     Route::get('/borrow-report','borrowReport')->middleware('admin');
     Route::get('/return-report','returnReport')->middleware('admin');
@@ -191,14 +213,7 @@ Route::controller(FPDFController::class)->group(function(){
     Route::get('/staff-registration-report','staffRegistrationReport')->middleware('admin');
     Route::get('/member-report','memberReport')->middleware('admin');
     Route::get('/staff-report','staffReport')->middleware('admin');
-});
-
-Route::controller(InformationController::class)->group(function(){
-    Route::get('/information/borrows','borrow')->middleware('staff');
-    Route::get('/information/returns','return')->middleware('staff');
-    Route::get('/information/books','book')->middleware('staff');
-    Route::get('/information/book-donations','bookDonation')->middleware('staff');      
-    Route::get('/information/fines','fine')->middleware('staff');
-    Route::get('/information/member-registrations','memberRegistration')->middleware('staff');
-    Route::get('/information/staff-registrations','staffRegistration')->middleware('staff');
+    Route::get('/book-report','bookReport')->middleware('admin');
+    Route::get('/borrow-item-report','borrowItemReport')->middleware('admin');
+    Route::get('/borrow-rank-report','borrowRankReport')->middleware('admin');
 });
