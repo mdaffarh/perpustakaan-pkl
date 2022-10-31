@@ -70,7 +70,15 @@
 									<td>{{ $borrow->tanggal_pinjam }}</td>
 									<td>{{ $borrow->tanggal_tempo }}</td>
 									<td>{{ $borrow->status }}</td>
-									<td>{{ $borrow->editor ? $borrow->editor->nama : $borrow->creator->nama}}</td>
+									<td>
+										@if ($borrow->editor)
+											{{ $borrow->editor->nam }}
+										@elseif($borrow->creator)
+											{{ $borrow->creator->nama }}
+										@else
+											-
+										@endif
+									</td>
 								</tr>
 							@endforeach
 						</tbody>

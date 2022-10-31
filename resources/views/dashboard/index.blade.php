@@ -1153,7 +1153,7 @@
                                         <td>{{ $member->kelas }}</td>
                                         <td>{{ $member->jurusan }}</td>
                                         <td class="text-center">
-                                            @if ($member->status == 1)
+                                            @if ($member->status == 2)
                                                 <span class="badge bg-success">Aktif</span> 
                                             @else
                                                 <span class="badge bg-danger">Nonaktif</span>
