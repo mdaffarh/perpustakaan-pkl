@@ -118,7 +118,7 @@
         
                                                                         <div class="row mx-md-n3">
                                                                             <div class="col px-md-5"><div class="p-2">Stok Tersedia</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->stock->stok_akhir }}</div></div>
+                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->stok_akhir }}</div></div>
                                                                         </div>
         
                                                                     </div>

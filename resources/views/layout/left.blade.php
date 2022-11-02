@@ -377,12 +377,6 @@
                                     <p>Pendaftaran Staff</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="/report/donations" class="nav-link {{ Request::is('report/donations*') ? 'active' : '' }}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Sumbangan Buku</p>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                   

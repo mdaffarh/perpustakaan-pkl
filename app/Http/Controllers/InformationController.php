@@ -3,14 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\BookDonation;
-use App\Models\Donation;
-use App\Models\Borrow;
-use App\Models\MemberRegistration;
-use App\Models\StaffRegistration;
-use App\Models\Returns;
-use Illuminate\Http\Request;
 use App\Models\Fine;
+use App\Models\Borrow;
+use App\Models\Returns;
+use App\Models\Donation;
+use App\Models\BookDonation;
+use Illuminate\Http\Request;
+use App\Models\StaffRegistration;
+use App\Models\MemberRegistration;
+use Illuminate\Support\Facades\DB;
 
 class InformationController extends Controller
 {
@@ -55,7 +56,7 @@ class InformationController extends Controller
 
     public function book(){
         return view('information.books.index',[
-            'books' => Book::all()
+            'books' => Book::join('tb_stocks', 'tb_books.id', '=', 'tb_stocks.book_id')->get()
         ]);
     }
 }
