@@ -42,6 +42,89 @@
                             <tbody>
                                 @foreach($borrows as  $borrow)
                                     <tr>
+                                        {{-- Modal Show --}}
+                                        <div class="modal fade" id="showw{{  $borrow->id }}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Peminjaman</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Kode Pinjam</div></div>
+                                                            <div class="col px-md-5"><div class="p-2"><strong>: {{  $borrow->kode_peminjaman }}</strong></div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">NIS</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nis }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Nama</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nama }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->kelas }} {{  $borrow->member->jurusan }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_pinjam }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_tempo }}</div></div>
+                                                        </div>
+                            
+                                                    
+                                                            <div class="row mx-md-n3">
+                                                                <div class="col px-md-5"><div class="p-2">Status</div></div>
+                                                                <div class="col px-md-5"><div class="p-2">
+                                                                <strong>: 
+                                                                    {{  $borrow->status }}
+                                                                </strong></div></div>
+                                                            </div>
+                                                            <div class="row mx-md-n3">
+                                                                <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
+                                                                <div class="col px-md-5"><div class="p-2">: 
+                                                                    @if ($borrow->updated_by)
+                                                                        {{  $borrow->editor->nama }}    
+                                                                    @elseif($borrow->created_by)
+                                                                        {{ $borrow->creator->nama }}
+                                                                    @else
+                                                                        -
+                                                                    @endif
+                                                                </div></div>
+                                                            </div>
+                                                            
+
+                                                        <hr>
+                                                        <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
+                                                        <ol>
+                                                            <p style="display: none">{{ $outOfStock = 0}}</p>
+                                                            @foreach( $borrow->borrowItem as $bi)
+                                                                @if ($bi->book->stock->stok_akhir < 0)
+                                                                    <p style="display: none">{{ $outOfStock = true }}</p> 
+                                                                @endif
+                                                                <li>
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">1</div></div>
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ol>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{  $borrow->id }}" onclick="showDetail{{  $borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
@@ -84,88 +167,6 @@
                                                 <button class="btn btn-success   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
-                                                <div class="modal fade" id="showw{{  $borrow->id }}">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Peminjaman</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kode Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $borrow->kode_peminjaman }}</strong></div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">NIS</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nis }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->nama }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->member->kelas }} {{  $borrow->member->jurusan }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_pinjam }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $borrow->tanggal_tempo }}</div></div>
-                                                                </div>
-                                    
-                                                            
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2">
-                                                                        <strong>: 
-                                                                            {{  $borrow->status }}
-                                                                        </strong></div></div>
-                                                                    </div>
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2">: 
-                                                                            @if ($borrow->updated_by)
-                                                                                {{  $borrow->editor->nama }}    
-                                                                            @elseif($borrow->created_by)
-                                                                                {{ $borrow->creator->nama }}
-                                                                            @else
-                                                                                -
-                                                                            @endif
-                                                                        </div></div>
-                                                                    </div>
-                                                                    
-        
-                                                                <hr>
-                                                                <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
-                                                                <ol>
-                                                                    <p style="display: none">{{ $outOfStock = 0}}</p>
-                                                                    @foreach( $borrow->borrowItem as $bi)
-                                                                        @if ($bi->book->stock->stok_akhir < 0)
-                                                                            <p style="display: none">{{ $outOfStock = true }}</p> 
-                                                                        @endif
-                                                                        <li>
-                                                                            <div class="row mx-md-n3">
-                                                                                <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
-                                                                                <div class="col px-md-5"><div class="p-2">1</div></div>
-                                                                            </div>
-                                                                        </li>
-                                                                    @endforeach
-
-                                                                </ol>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
                                             </div>
                                         </td>
                                     </tr>

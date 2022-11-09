@@ -42,6 +42,77 @@
                             <tbody>
                                 @foreach($books as  $book)
                                     <tr>
+                                        {{-- Modal Show --}}
+                                        <div class="modal fade" id="showw{{  $book->id }}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Informasi Buku</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="media">
+                                                            <div class="row">
+                                                                <div class="sq align-self-center col-sm-5">
+                                                                    @if ($book->image)
+                                                                        <img src="{{ asset('storage/' . $book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="270" height="270">
+                                                                    @else
+                                                                        <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="270" height="270">
+                                                                    @endif
+                                                                </div>
+                                                                <div class="media-body my-auto col-sm-7">
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">ISBN</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2"><strong>: {{  $book->isbn }}</strong></div></div>
+                                                                    </div>
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Judul</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->judul }}</div></div>
+                                                                    </div>
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Penulis</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: 
+                                                                            {{  $book->penulis }} 
+                                                                        </div></div>
+                                                                    </div>
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Penerbit</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->penerbit }}</div></div>
+                                                                    </div>
+    
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Kategori</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->kategori }}</div></div>
+                                                                    </div>
+    
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Tanggal Terbit</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->tglTerbit }}</div></div>
+                                                                    </div>
+    
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Tanggal Masuk</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->tglMasuk }}</div></div>
+                                                                    </div>
+    
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">Stok Tersedia</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">: {{  $book->stok_akhir }}</div></div>
+                                                                    </div>
+    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{ $book->id }}" onclick="showDetail{{  $book->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Buku" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
@@ -63,74 +134,6 @@
                                                 <button class="btn btn-success   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $book->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Buku">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
-                                                <div class="modal fade" id="showw{{  $book->id }}">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Informasi Buku</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="media">
-                                                                    <div class="sq align-self-center ">
-                                                                        @if ($book->image)
-                                                                            <img src="{{ asset('storage/' . $book->image) }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="270" height="270">
-                                                                        @else
-                                                                            <img src="{{ asset("assets/img/book_cover_default.png") }}" class="img-fluid  my-auto align-self-center mr-2 mr-md-4 pl-0 p-0 m-0" width="270" height="270">
-                                                                        @endif
-                                                                    </div>
-                                                                    <div class="media-body my-auto">
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">ISBN</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2"><strong>: {{  $book->isbn }}</strong></div></div>
-                                                                        </div>
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Judul</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->judul }}</div></div>
-                                                                        </div>
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Penulis</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: 
-                                                                                {{  $book->penulis }} 
-                                                                            </div></div>
-                                                                        </div>
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Penerbit</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->penerbit }}</div></div>
-                                                                        </div>
-        
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Kategori</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->kategori }}</div></div>
-                                                                        </div>
-        
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Tanggal Terbit</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->tglTerbit }}</div></div>
-                                                                        </div>
-        
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Tanggal Masuk</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->tglMasuk }}</div></div>
-                                                                        </div>
-        
-                                                                        <div class="row mx-md-n3">
-                                                                            <div class="col px-md-5"><div class="p-2">Stok Tersedia</div></div>
-                                                                            <div class="col px-md-5"><div class="p-2">: {{  $book->stok_akhir }}</div></div>
-                                                                        </div>
-        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
                                             </div>
                                         </td>
                                     </tr>

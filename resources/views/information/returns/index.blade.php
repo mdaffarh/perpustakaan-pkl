@@ -42,6 +42,100 @@
                             <tbody>
                                 @foreach($returns as  $return)
                                     <tr>
+                                        {{-- Modal Show --}}
+                                        <div class="modal fade" id="showw{{  $return->borrow->id }}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Pengembalian</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Kode Pengembalian</div></div>
+                                                            <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->kode_pengembalian}}</strong></div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">NIS</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $return->member->nis }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Nama</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $return->member->nama }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $return->member->kelas }} {{  $return->member->jurusan }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_pinjam }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_tempo }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">:
+                                                                @if ($return->tanggal_kembali == "0000-00-00")
+                                                                    Belum
+                                                                @else
+                                                                    {{  $return->tanggal_kembali }}
+                                                                @endif
+                                                            </div></div>
+                                                        </div>
+                                                    
+                                                            <div class="row mx-md-n3">
+                                                                <div class="col px-md-5"><div class="p-2">Status</div></div>
+                                                                <div class="col px-md-5"><div class="p-2">
+                                                                <strong>: 
+                                                                    @if ($return->dikembalikan == "Sudah")
+                                                                        Selesai
+                                                                    @else
+                                                                        Belum dikembalikan
+                                                                    @endif 
+                                                                </strong></div></div>
+                                                            </div>
+                                                            <div class="row mx-md-n3">
+                                                                <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
+                                                                <div class="col px-md-5"><div class="p-2">: 
+                                                                    @if ($return->updated_by == NULL)
+                                                                        {{ $return->creator->nama }}
+                                                                    @else
+                                                                        {{  $return->editor->nama }}    
+                                                                    @endif   
+                                                                </div></div>
+                                                            </div>
+                                                            
+
+                                                        <hr>
+                                                        <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
+                                                        <ol>
+                                                            <p style="display: none">{{ $outOfStock = 0}}</p>
+                                                            @foreach( $return->borrow->borrowItem as $bi)
+                                                                @if ($bi->book->stock->stok_akhir < 0)
+                                                                    <p style="display: none">{{ $outOfStock = true }}</p> 
+                                                                @endif
+                                                                <li>
+                                                                    <div class="row mx-md-n3">
+                                                                        <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
+                                                                        <div class="col px-md-5"><div class="p-2">1</div></div>
+                                                                    </div>
+                                                                </li>
+                                                            @endforeach
+
+                                                        </ol>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{  $return->borrow->id }}" onclick="showDetail{{  $return->borrow->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
@@ -77,100 +171,7 @@
                                                 {{-- Show --}}
                                                 <button class="btn btn-success   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $return->borrow->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Peminjaman">
                                                     <i class="fas fa-eye "></i>
-                                                </button>
-                                                <div class="modal fade" id="showw{{  $return->borrow->id }}">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Pengembalian</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kode Pengembalian</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $return->kode_pengembalian}}</strong></div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">NIS</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nis }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->nama }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Kelas / Jurusan</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->member->kelas }} {{  $return->member->jurusan }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_pinjam }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Tempo</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $return->borrow->tanggal_tempo }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Kembali</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">:
-                                                                        @if ($return->tanggal_kembali == "0000-00-00")
-                                                                            Belum
-                                                                        @else
-                                                                            {{  $return->tanggal_kembali }}
-                                                                        @endif
-                                                                    </div></div>
-                                                                </div>
-                                                            
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2">
-                                                                        <strong>: 
-                                                                            @if ($return->dikembalikan == "Sudah")
-                                                                                Selesai
-                                                                            @else
-                                                                                Belum dikembalikan
-                                                                            @endif 
-                                                                        </strong></div></div>
-                                                                    </div>
-                                                                    <div class="row mx-md-n3">
-                                                                        <div class="col px-md-5"><div class="p-2">Nama Penjaga</div></div>
-                                                                        <div class="col px-md-5"><div class="p-2">: 
-                                                                            @if ($return->updated_by == NULL)
-                                                                                {{ $return->creator->nama }}
-                                                                            @else
-                                                                                {{  $return->editor->nama }}    
-                                                                            @endif   
-                                                                        </div></div>
-                                                                    </div>
-                                                                    
-        
-                                                                <hr>
-                                                                <p class="px-4"><strong>Buku Yang Dipinjam :</strong></p>
-                                                                <ol>
-                                                                    <p style="display: none">{{ $outOfStock = 0}}</p>
-                                                                    @foreach( $return->borrow->borrowItem as $bi)
-                                                                        @if ($bi->book->stock->stok_akhir < 0)
-                                                                            <p style="display: none">{{ $outOfStock = true }}</p> 
-                                                                        @endif
-                                                                        <li>
-                                                                            <div class="row mx-md-n3">
-                                                                                <div class="col px-md-5"><div class="p-2">{{ $bi->book->judul }}</div></div>
-                                                                                <div class="col px-md-5"><div class="p-2">1</div></div>
-                                                                            </div>
-                                                                        </li>
-                                                                    @endforeach
-
-                                                                </ol>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
+                                                </button>                                    
                                             </div>
                                         </td>
                                     </tr>

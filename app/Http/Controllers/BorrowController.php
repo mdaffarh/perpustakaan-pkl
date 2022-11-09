@@ -124,7 +124,7 @@ class BorrowController extends Controller
 
         // Buat buku yang dipinjam dan mengurangi stock
         foreach ($request->book_id as $key => $book) {
-
+            
             // Buat di borrow_item
             BorrowItem::create([
                 'borrow_id' => $borrow->id,

@@ -128,6 +128,187 @@
 						<tbody>
 							@foreach($staffRegistration as $sr)
 							<tr>
+								<div class="modal fade" id="show{{ $sr->id }}">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Details</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form action="/table/staffRegistration/{{ $sr->id }}" method="post" enctype="multipart/form-data" class="p-4">
+													@method('put')
+													@csrf
+													
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">NIP</label>
+														<input required name="nip" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Nama</label>
+														<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Email</label>
+														<input required name="email" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Jenis Kelamin</label>
+														<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Tanggal Lahir</label>
+														<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Nomor Telepon</label>
+														<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
+													</div>
+													<div class="form-floating mb-3">
+														<label for="floatingInput3">Alamat</label>
+														<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
+													</div>
+												
+													
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal fade" id="accept{{ $sr->id }}">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title">Terima Pendaftaran</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">NIP</label>
+													<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Nama</label>
+													<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Email</label>
+													<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Jenis Kelamin</label>
+													<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Lahir</label>
+													<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Nomor Telepon</label>
+													<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Alamat</label>
+													<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Pendaftaran</label>
+													<input class="form-control" id="floatingInput3" value="{{ $sr->created_at }}" disabled>
+												</div>
+													
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+												<!-- Form Jadikan staff -->
+												<form action="/transaction/staff-registrations/approved/{sr->id}" method="post" enctype="multipart/form-data">
+													@csrf
+													<div style="display: none;">
+														<input name="id" value="{{ $sr->id }}">
+														<input name="nip" value="{{ $sr->nip }}">
+														<input name="nama" value="{{ $sr->nama }}">
+														<input name="email" value="{{ $sr->email }}">
+														<input name="jenis_kelamin" value="{{ $sr->jenis_kelamin }}">
+														<input name="tanggal_lahir" value="{{ $sr->tanggal_lahir }}">
+														<input name="nomor_telepon" value="{{ $sr->nomor_telepon }}">
+														<input name="alamat" value="{{ $sr->alamat }}">
+														<input name="status" value="2">
+													</div>
+													<button class="btn btn-success rounded me-1" type="submit">Jadikan Staff</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="modal fade" id="decline{{ $sr->id }}">
+									<div class="modal-dialog modal-lg">
+										<div class="modal-content">
+											<div class="modal-header" style="border: none;">
+												<h4 class="modal-title">Tolak Pendaftaran</h4>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">NIP</label>
+													<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Nama</label>
+													<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Email</label>
+													<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Jenis Kelamin</label>
+													<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Lahir</label>
+													<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Nomor Telepon</label>
+													<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Alamat</label>
+													<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
+												</div>
+												<div class="form-floating mb-3">
+													<label for="floatingInput3">Tanggal Pendaftaran</label>
+													<input class="form-control" id="floatingInput3" value="{{ $sr->created_at }}" disabled>
+												</div>
+													
+												</form>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+
+												<!-- Form tolak -->
+												<form action="/transaction/staff-registrations/tolak/{id}" method="post" enctype="multipart/form-data">
+													@csrf
+													<div style="display: none;">
+														<input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->id }}">
+														<input required name="status" value="3">
+													</div>
+													<button class="btn btn-danger rounded me-1" type="submit">Tolak Pengajuan</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
 								<td>{{ $loop->iteration }}</td>
 								<td>{{ $sr->nip }}</td>
 								<td>{{ $sr->nama }}</td>
@@ -143,203 +324,21 @@
 								</td>
 								<td>
 									
-									<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                                   
+									<div class="btn-group btn-group-sm" role="group" aria-label="Small button group">  
 										{{-- Show --}}
-										<button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{ $sr->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
+										<button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#show{{ $sr->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
 											<i class="fas fa-eye "></i>
 										</button>
-										<div class="modal fade" id="showw{{ $sr->id }}">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h4 class="modal-title">Details</h4>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														<form action="/table/staffRegistration/{{ $sr->id }}" method="post" enctype="multipart/form-data" class="p-4">
-															@method('put')
-															@csrf
-															
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">NIP</label>
-																<input required name="nip" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Nama</label>
-																<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Email</label>
-																<input required name="email" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Jenis Kelamin</label>
-																<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Tanggal Lahir</label>
-																<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Nomor Telepon</label>
-																<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
-															</div>
-															<div class="form-floating mb-3">
-																<label for="floatingInput3">Alamat</label>
-																<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
-															</div>
-														
-															
-														</form>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-													</div>
-												</div>
-											</div>
-										</div>
 
 										{{-- TERIMA --}}
-										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default{{ $sr->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jadikan Anggota">
+										<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#accept{{ $sr->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Jadikan Anggota">
 											<i class="fas fa-check"></i> 
-										</button>
-										<div class="modal fade" id="modal-default{{ $sr->id }}">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h4 class="modal-title">Terima Pendaftaran</h4>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">NIP</label>
-															<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nama</label>
-															<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Email</label>
-															<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Jenis Kelamin</label>
-															<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Lahir</label>
-															<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nomor Telepon</label>
-															<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Alamat</label>
-															<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Pendaftaran</label>
-															<input class="form-control" id="floatingInput3" value="{{ $sr->created_at }}" disabled>
-														</div>
-															
-														</form>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-														<!-- Form Jadikan staff -->
-														<form action="/transaction/staff-registrations/approved/{sr->id}" method="post" enctype="multipart/form-data">
-															@csrf
-															<div style="display: none;">
-																<input name="id" value="{{ $sr->id }}">
-																<input name="nip" value="{{ $sr->nip }}">
-																<input name="nama" value="{{ $sr->nama }}">
-																<input name="email" value="{{ $sr->email }}">
-																<input name="jenis_kelamin" value="{{ $sr->jenis_kelamin }}">
-																<input name="tanggal_lahir" value="{{ $sr->tanggal_lahir }}">
-																<input name="nomor_telepon" value="{{ $sr->nomor_telepon }}">
-																<input name="alamat" value="{{ $sr->alamat }}">
-																<input name="status" value="2">
-															</div>
-															<button class="btn btn-success rounded me-1" type="submit">Jadikan Staff</button>
-														</form>
-													</div>
-												</div>
-											</div>
-										</div>		
+										</button>		
 
 										{{-- TOLAK --}}
-										<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#tolak{{ $sr->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak"> 
+										<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#decline{{ $sr->id }}" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tolak"> 
 											<i class="fas fa-times"></i>
 										</button>
-										<div class="modal fade" id="tolak{{ $sr->id }}">
-											<div class="modal-dialog modal-lg">
-												<div class="modal-content">
-													<div class="modal-header" style="border: none;">
-														<h4 class="modal-title">Tolak Pendaftaran</h4>
-														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">NIP</label>
-															<input required name="nis" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->nip }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nama</label>
-															<input required name="nama" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nama }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Email</label>
-															<input required name="email" type="email" required class="form-control" id="floatingInput3" value="{{ $sr->email }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Jenis Kelamin</label>
-															<input required name="jenis_kelamin" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->jenis_kelamin }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Lahir</label>
-															<input required name="tanggal_lahir" type="date" required class="form-control" id="floatingInput3" value="{{ $sr->tanggal_lahir }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Nomor Telepon</label>
-															<input required name="nomor_telepon" type="text" required class="form-control" id="floatingInput3" value="{{ $sr->nomor_telepon }}" disabled>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Alamat</label>
-															<textarea name="alamat" id="floatingInput3" cols="99" rows="3" disabled>{{ $sr->alamat }}</textarea>
-														</div>
-														<div class="form-floating mb-3">
-															<label for="floatingInput3">Tanggal Pendaftaran</label>
-															<input class="form-control" id="floatingInput3" value="{{ $sr->created_at }}" disabled>
-														</div>
-															
-														</form>
-													</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-
-														<!-- Form tolak -->
-														<form action="/transaction/staff-registrations/tolak/{id}" method="post" enctype="multipart/form-data">
-															@csrf
-															<div style="display: none;">
-																<input required name="id" type="number" maxlength="11" required class="form-control" id="floatingInput3" value="{{ $sr->id }}">
-																<input required name="status" value="3">
-															</div>
-															<button class="btn btn-danger rounded me-1" type="submit">Tolak Pengajuan</button>
-														</form>
-													</div>
-												</div>
-											</div>
-										</div>
 									</div>
 								</td>
 							</tr>

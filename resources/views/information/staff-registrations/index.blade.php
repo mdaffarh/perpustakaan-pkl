@@ -40,6 +40,56 @@
                             <tbody>
                                 @foreach($staffRegistrations as  $staff)
                                     <tr>
+                                        {{-- Modal Show --}}
+                                        <div class="modal fade" id="showw{{  $staff->id }}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Pendaftaran Staff</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">NIP</div></div>
+                                                            <div class="col px-md-5"><div class="p-2"><strong>: {{  $staff->nip }}</strong></div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Nama</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $staff->nama }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Email</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: {{  $staff->email }}</div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Status</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">:
+                                                                @if ($staff->status == 2)
+                                                                    <span class="badge badge-success">Disetujui</span>
+                                                                @elseif ($staff->status == 1)
+                                                                    <span class="badge badge-warning">Menunggu persetujuan</span>
+                                                                @else
+                                                                    <span class="badge badge-danger">Ditolak</span>
+                                                                @endif
+                                                            </div></div>
+                                                        </div>
+                                                        <div class="row mx-md-n3">
+                                                            <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
+                                                            <div class="col px-md-5"><div class="p-2">: 
+                                                                {{ $staff->editor ? $staff->editor->nama : $staff->creator->nama }}
+                                                            </div></div>
+                                                        </div>
+                                                            
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
                                             <button class="link-primary text-primary" type="button" id="detail{{ $staff->id }}" onclick="showDetail{{  $staff->id }}()" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail Staff" style="border: none; cursor: pointer; background-color:rgba(255,255,255,0);">
@@ -66,55 +116,6 @@
                                                 <button class="btn btn-warning   btn-sm btn-detail" type="button" data-toggle="modal" data-target="#showw{{  $staff->id }}"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Detail">
                                                     <i class="fas fa-eye "></i>
                                                 </button>
-                                                <div class="modal fade" id="showw{{  $staff->id }}">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Pendaftaran Staff</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">NIP</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2"><strong>: {{  $staff->nip }}</strong></div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Nama</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $staff->nama }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Email</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: {{  $staff->email }}</div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Status</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">:
-                                                                        @if ($staff->status == 2)
-                                                                            <span class="badge badge-success">Disetujui</span>
-                                                                        @elseif ($staff->status == 1)
-                                                                            <span class="badge badge-warning">Menunggu persetujuan</span>
-                                                                        @else
-                                                                            <span class="badge badge-danger">Ditolak</span>
-                                                                        @endif
-                                                                    </div></div>
-                                                                </div>
-                                                                <div class="row mx-md-n3">
-                                                                    <div class="col px-md-5"><div class="p-2">Tanggal Pinjam</div></div>
-                                                                    <div class="col px-md-5"><div class="p-2">: 
-                                                                        {{ $staff->editor ? $staff->editor->nama : $staff->creator->nama }}
-                                                                    </div></div>
-                                                                </div>
-                                                                    
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                    
                                             </div>
                                         </td>
                                     </tr>
