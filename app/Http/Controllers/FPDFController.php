@@ -88,8 +88,8 @@ class FPDFController extends Controller
             $nama = "";
             if ( $borrow->editor ) {
                 $nama = $borrow->editor->nama;
-            }elseif( $borrow->editor ){
-                $nama = $borrow->editor->nama;
+            }elseif( $borrow->creator ){
+                $nama = $borrow->creator->nama;
             }else{
                 $nama = "-";
             }
@@ -102,7 +102,7 @@ class FPDFController extends Controller
             $pdf->Cell($fieldWidth[4],8,Carbon::parse($borrow->tanggal_pinjam)->format('d/m/Y'),1,0,'R',0);
             $pdf->Cell($fieldWidth[5],8,Carbon::parse($borrow->tanggal_tempo)->format('d/m/Y'),1,0,'R',0);
             $pdf->Cell($fieldWidth[6],8,$borrow->status,1,0,'C',0);
-            $pdf->Cell($fieldWidth[7],8,strtok($nama),1,0,'L',0);
+            $pdf->Cell($fieldWidth[7],8,strtok($nama," "),1,0,'L',0);
             $no++;
         
         }
